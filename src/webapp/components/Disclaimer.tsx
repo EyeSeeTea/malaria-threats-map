@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import Dialog from "@material-ui/core/Dialog";
-import CloseIcon from "@material-ui/icons/Close";
-import { createStyles, DialogActions, DialogContent, Hidden, IconButton, makeStyles, Theme } from "@material-ui/core";
+import Dialog from "@mui/material/Dialog";
+import CloseIcon from "@mui/icons-material/Close";
+import { DialogActions, DialogContent, IconButton, Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { useTranslation } from "react-i18next";
+import Hidden from "./hidden/Hidden";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -58,7 +61,7 @@ const Disclaimer = () => {
                     }}
                 >
                     <DialogActions>
-                        <IconButton onClick={handleClose}>
+                        <IconButton onClick={handleClose} size="large">
                             <CloseIcon />
                         </IconButton>
                     </DialogActions>
@@ -66,7 +69,7 @@ const Disclaimer = () => {
                     <DialogActions />
                 </Dialog>
             </Hidden>
-            <Hidden xsDown>
+            <Hidden smDown>
                 <DisclaimerText>{renderDisclaimer()}</DisclaimerText>
             </Hidden>
         </div>

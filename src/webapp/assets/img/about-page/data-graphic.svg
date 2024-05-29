@@ -1,0 +1,416 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="776.303" height="450.5" viewBox="0 0 776.303 450.5">
+  <g id="Data_Grapic_image" data-name="Data Grapic image" transform="translate(-788.78 -553.953)">
+    <g id="graph" transform="translate(380.226 -159.547)">
+      <g id="line" transform="translate(408.554 743.891)">
+        <line id="Line_128" data-name="Line 128" x1="776.303" transform="translate(0 399.88)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_409" data-name="Line 409" x1="776.303" transform="translate(0 371.317)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_410" data-name="Line 410" x1="776.303" transform="translate(0 342.754)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_418" data-name="Line 418" x1="776.303" transform="translate(0 314.191)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_411" data-name="Line 411" x1="776.303" transform="translate(0 285.628)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_419" data-name="Line 419" x1="776.303" transform="translate(0 257.066)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_412" data-name="Line 412" x1="776.303" transform="translate(0 228.503)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_420" data-name="Line 420" x1="776.303" transform="translate(0 199.94)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_413" data-name="Line 413" x1="776.303" transform="translate(0 171.377)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_421" data-name="Line 421" x1="776.303" transform="translate(0 142.814)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_422" data-name="Line 422" x1="776.303" transform="translate(0 114.251)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_414" data-name="Line 414" x1="776.303" transform="translate(0 85.689)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_415" data-name="Line 415" x1="776.303" transform="translate(0 57.126)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_416" data-name="Line 416" x1="776.303" transform="translate(0 28.563)" fill="none" stroke="#eaeaea" stroke-width="1"/>
+        <line id="Line_417" data-name="Line 417" x1="776.303" fill="none" stroke="#eaeaea" stroke-width="1"/>
+      </g>
+      <line id="Line_424" data-name="Line 424" y2="450.5" transform="translate(582.199 713.5)" fill="none" stroke="#d3e0ed" stroke-width="2"/>
+      <g id="graph-2" data-name="graph" transform="translate(416.588 759.957)">
+        <g id="_1" data-name="1" transform="translate(0 0)">
+          <line id="Line_425" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          <circle id="Ellipse_1008" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.479)" fill="rgba(47,85,151,0.5)"/>
+        </g>
+        <g id="_2" data-name="2" transform="translate(42.844 39.274)">
+          <line id="Line_425-2" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          <circle id="Ellipse_1008-2" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.479 0)" fill="rgba(47,85,151,0.5)"/>
+        </g>
+        <g id="_3" data-name="3" transform="translate(86.135 18.744)">
+          <circle id="Ellipse_1012" data-name="Ellipse 1012" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 11.604)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1011" data-name="Ellipse 1011" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 42.844)" fill="rgba(47,85,151,0.5)"/>
+          <g id="_1-2" data-name="1" transform="translate(0 0)">
+            <circle id="Ellipse_1008-3" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+            <line id="Line_425-3" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+          <g id="_1-3" data-name="1" transform="translate(0 113.359)">
+            <circle id="Ellipse_1008-4" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="#a9bdd4"/>
+            <line id="Line_425-4" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+          <g id="Rectangle_792" data-name="Rectangle 792" transform="translate(0 8.033)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+            <rect width="22.315" height="73.192" stroke="none"/>
+            <rect x="0.5" y="0.5" width="21.315" height="72.192" fill="none"/>
+          </g>
+          <line id="Line_426" data-name="Line 426" y2="5.356" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_428" data-name="Line 428" y2="35.257" transform="translate(11.157 81.226)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_427" data-name="Line 427" x2="22.315" transform="translate(0 29.455)" fill="none" stroke="#707070" stroke-width="1"/>
+        </g>
+        <g id="_6" data-name="6" transform="translate(214.668 87.474)">
+          <circle id="Ellipse_1014" data-name="Ellipse 1014" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 15.174)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1015" data-name="Ellipse 1015" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 121.392)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1016" data-name="Ellipse 1016" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 140.136)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1607" data-name="Group 1607" transform="translate(0)">
+            <g id="_1-4" data-name="1">
+              <circle id="Ellipse_1008-5" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-5" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-5" data-name="1" transform="translate(0 197.262)">
+              <circle id="Ellipse_1008-6" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-6" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_794" data-name="Rectangle 794" transform="translate(0 16.959)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="119.607" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="118.607" fill="none"/>
+            </g>
+            <line id="Line_431" data-name="Line 431" y2="14.281" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_433" data-name="Line 433" y2="64.266" transform="translate(11.157 136.12)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_432" data-name="Line 432" x2="22.315" transform="translate(0 123.177)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_7" data-name="7" transform="translate(258.405 87.474)">
+          <circle id="Ellipse_1017" data-name="Ellipse 1017" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 121.392)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1018" data-name="Ellipse 1018" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 124.962)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1020" data-name="Ellipse 1020" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 160.666)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1021" data-name="Ellipse 1021" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 216.899)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1022" data-name="Ellipse 1022" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 243.677)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1019" data-name="Ellipse 1019" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 15.174)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1608" data-name="Group 1608">
+            <g id="_1-6" data-name="1">
+              <circle id="Ellipse_1008-7" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-7" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-7" data-name="1" transform="translate(0 259.743)">
+              <circle id="Ellipse_1008-8" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-8" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_796" data-name="Rectangle 796" transform="translate(0 70.515)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="164.236" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="163.236" fill="none"/>
+            </g>
+            <line id="Line_437" data-name="Line 437" y2="67.837" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_438" data-name="Line 438" y2="28.563" transform="translate(11.157 234.305)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_439" data-name="Line 439" x2="22.315" transform="translate(0 145.492)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_8" data-name="8" transform="translate(302.141 40.167)">
+          <circle id="Ellipse_1023" data-name="Ellipse 1023" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 305.265)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1024" data-name="Ellipse 1024" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 297.232)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1025" data-name="Ellipse 1025" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 282.951)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1026" data-name="Ellipse 1026" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 274.917)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1027" data-name="Ellipse 1027" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 266.884)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1028" data-name="Ellipse 1028" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 168.699)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1029" data-name="Ellipse 1029" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 160.666)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1030" data-name="Ellipse 1030" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 144.599)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1031" data-name="Ellipse 1031" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 132.103)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1032" data-name="Ellipse 1032" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 99.97)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1033" data-name="Ellipse 1033" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 91.937)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1034" data-name="Ellipse 1034" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 85.689)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1035" data-name="Ellipse 1035" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 74.977)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1036" data-name="Ellipse 1036" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 54.448)" fill="rgba(47,85,151,0.8)"/>
+          <g id="Group_1609" data-name="Group 1609" transform="translate(0 0)">
+            <g id="_1-8" data-name="1">
+              <circle id="Ellipse_1008-9" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-9" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-9" data-name="1" transform="translate(0 315.084)">
+              <circle id="Ellipse_1008-10" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-10" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_797" data-name="Rectangle 797" transform="translate(0 94.614)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="191.014" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="190.014" fill="none"/>
+            </g>
+            <line id="Line_440" data-name="Line 440" y2="91.937" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_442" data-name="Line 442" y2="32.133" transform="translate(11.157 286.075)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_441" data-name="Line 441" x2="22.315" transform="translate(0 164.236)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_9" data-name="9" transform="translate(345.878 114.251)">
+          <circle id="Ellipse_1037" data-name="Ellipse 1037" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 11.604)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1038" data-name="Ellipse 1038" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 19.637)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1039" data-name="Ellipse 1039" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 51.77)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1040" data-name="Ellipse 1040" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 56.233)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1041" data-name="Ellipse 1041" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 70.515)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1042" data-name="Ellipse 1042" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 87.474)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1043" data-name="Ellipse 1043" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 98.185)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1044" data-name="Ellipse 1044" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 102.648)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1045" data-name="Ellipse 1045" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 190.121)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1046" data-name="Ellipse 1046" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 208.866)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1047" data-name="Ellipse 1047" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 216.899)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1048" data-name="Ellipse 1048" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 224.932)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1049" data-name="Ellipse 1049" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 231.181)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1050" data-name="Ellipse 1050" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 234.751)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1610" data-name="Group 1610" transform="translate(0 0)">
+            <g id="_1-10" data-name="1">
+              <circle id="Ellipse_1008-11" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-11" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-11" data-name="1" transform="translate(0 240.999)">
+              <circle id="Ellipse_1008-12" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-12" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_798" data-name="Rectangle 798" transform="translate(0 55.341)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="168.699" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="167.699" fill="none"/>
+            </g>
+            <line id="Line_444" data-name="Line 444" y2="52.663" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_445" data-name="Line 445" y2="20.53" transform="translate(11.157 223.594)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_443" data-name="Line 443" x2="22.315" transform="translate(0 102.648)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_10" data-name="10" transform="translate(389.615 3.57)">
+          <circle id="Ellipse_1051" data-name="Ellipse 1051" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 281.166)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1052" data-name="Ellipse 1052" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 99.077)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1053" data-name="Ellipse 1053" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 84.796)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1054" data-name="Ellipse 1054" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 15.174)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1055" data-name="Ellipse 1055" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 10.711)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1611" data-name="Group 1611" transform="translate(0)">
+            <g id="_1-12" data-name="1">
+              <circle id="Ellipse_1008-13" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-13" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-13" data-name="1" transform="translate(0 204.403)">
+              <circle id="Ellipse_1008-14" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-14" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_799" data-name="Rectangle 799" transform="translate(0 12.496)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="89.259" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="88.259" fill="none"/>
+            </g>
+            <line id="Line_447" data-name="Line 447" y2="9.818" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_448" data-name="Line 448" y2="106.218" transform="translate(11.157 101.309)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_446" data-name="Line 446" x2="22.315" transform="translate(0 17.852)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_14" data-name="14" transform="translate(605.622 95.507)">
+          <circle id="Ellipse_1063" data-name="Ellipse 1063" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 148.17)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1064" data-name="Ellipse 1064" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 57.126)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1065" data-name="Ellipse 1065" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 49.092)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1066" data-name="Ellipse 1066" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 22.315)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1615" data-name="Group 1615">
+            <g id="_1-14" data-name="1">
+              <circle id="Ellipse_1008-15" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="#a9bdd4"/>
+              <line id="Line_425-15" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-15" data-name="1" transform="translate(0 192.799)">
+              <circle id="Ellipse_1008-16" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="#a9bdd4"/>
+              <line id="Line_425-16" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_803" data-name="Rectangle 803" transform="translate(0 24.992)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="125.855" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="124.855" fill="none"/>
+            </g>
+            <line id="Line_457" data-name="Line 457" y2="22.315" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_458" data-name="Line 458" y2="45.522" transform="translate(11.157 150.401)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_456" data-name="Line 456" x2="22.315" transform="translate(0 58.911)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_16" data-name="16" transform="translate(692.203 33.026)">
+          <circle id="Ellipse_1069" data-name="Ellipse 1069" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 58.018)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1070" data-name="Ellipse 1070" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 61.589)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1128" data-name="Ellipse 1128" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1129" data-name="Ellipse 1129" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 3.57)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1071" data-name="Ellipse 1071" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 85.689)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1072" data-name="Ellipse 1072" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 99.97)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1073" data-name="Ellipse 1073" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 151.74)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1074" data-name="Ellipse 1074" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 181.196)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1075" data-name="Ellipse 1075" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 184.766)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1076" data-name="Ellipse 1076" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 204.403)" fill="rgba(47,85,151,0.2)"/>
+          <circle id="Ellipse_1077" data-name="Ellipse 1077" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 209.758)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1078" data-name="Ellipse 1078" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 216.007)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1079" data-name="Ellipse 1079" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 241.892)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1080" data-name="Ellipse 1080" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 252.603)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1081" data-name="Ellipse 1081" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 255.28)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1082" data-name="Ellipse 1082" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 265.992)" fill="rgba(47,85,151,0.2)"/>
+          <circle id="Ellipse_1083" data-name="Ellipse 1083" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 269.562)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1084" data-name="Ellipse 1084" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 272.24)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1085" data-name="Ellipse 1085" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 278.488)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1086" data-name="Ellipse 1086" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 282.058)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1087" data-name="Ellipse 1087" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 285.628)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1088" data-name="Ellipse 1088" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 286.521)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1089" data-name="Ellipse 1089" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 288.306)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1090" data-name="Ellipse 1090" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 299.017)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1091" data-name="Ellipse 1091" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 306.158)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1092" data-name="Ellipse 1092" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 308.836)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1093" data-name="Ellipse 1093" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 315.084)" fill="rgba(47,85,151,0.2)"/>
+          <circle id="Ellipse_1094" data-name="Ellipse 1094" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 319.547)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1095" data-name="Ellipse 1095" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 330.258)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1096" data-name="Ellipse 1096" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 333.828)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1097" data-name="Ellipse 1097" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 340.076)" fill="rgba(47,85,151,0.2)"/>
+          <circle id="Ellipse_1098" data-name="Ellipse 1098" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 342.754)" fill="rgba(47,85,151,0.8)"/>
+          <g id="Group_1617" data-name="Group 1617" transform="translate(0 33.918)">
+            <g id="_1-16" data-name="1" transform="translate(0 0)">
+              <circle id="Ellipse_1008-17" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="#a9bdd4"/>
+              <line id="Line_425-17" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-17" data-name="1" transform="translate(0 313.299)">
+              <circle id="Ellipse_1008-18" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="#a9bdd4"/>
+              <line id="Line_425-18" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_805" data-name="Rectangle 805" transform="translate(0 153.525)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="114.251" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="113.251" fill="none"/>
+            </g>
+            <line id="Line_462" data-name="Line 462" y2="150.848" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_464" data-name="Line 464" y2="48.2" transform="translate(11.157 268.223)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_463" data-name="Line 463" x2="22.315" transform="translate(0 237.429)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_17" data-name="17" transform="translate(735.94 18.744)">
+          <circle id="Ellipse_1099" data-name="Ellipse 1099" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 94.614)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1100" data-name="Ellipse 1100" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 173.162)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1101" data-name="Ellipse 1101" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 182.981)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1102" data-name="Ellipse 1102" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 196.37)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1103" data-name="Ellipse 1103" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 205.295)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1104" data-name="Ellipse 1104" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 216.007)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1105" data-name="Ellipse 1105" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 226.718)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1106" data-name="Ellipse 1106" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 241.892)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1107" data-name="Ellipse 1107" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 244.569)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1108" data-name="Ellipse 1108" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 248.14)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1109" data-name="Ellipse 1109" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 257.066)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1112" data-name="Ellipse 1112" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 285.628)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1110" data-name="Ellipse 1110" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 260.636)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1111" data-name="Ellipse 1111" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 283.843)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1123" data-name="Ellipse 1123" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 341.862)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1121" data-name="Ellipse 1121" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 340.076)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1124" data-name="Ellipse 1124" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 348.11)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1125" data-name="Ellipse 1125" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 352.573)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1126" data-name="Ellipse 1126" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 357.036)" fill="rgba(47,85,151,0.8)"/>
+          <circle id="Ellipse_1122" data-name="Ellipse 1122" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 337.399)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1117" data-name="Ellipse 1117" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 309.728)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1118" data-name="Ellipse 1118" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 315.977)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1113" data-name="Ellipse 1113" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 291.877)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1114" data-name="Ellipse 1114" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 295.447)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1130" data-name="Ellipse 1130" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1131" data-name="Ellipse 1131" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 19.637)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1115" data-name="Ellipse 1115" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 298.125)" fill="rgba(47,85,151,0.2)"/>
+          <circle id="Ellipse_1116" data-name="Ellipse 1116" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 303.48)" fill="rgba(47,85,151,0.2)"/>
+          <circle id="Ellipse_1119" data-name="Ellipse 1119" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 323.117)" fill="rgba(47,85,151,0.2)"/>
+          <circle id="Ellipse_1120" data-name="Ellipse 1120" cx="3.124" cy="3.124" r="3.124" transform="translate(7.141 329.365)" fill="rgba(47,85,151,0.2)"/>
+          <g id="Group_1618" data-name="Group 1618" transform="translate(0 121.838)">
+            <g id="_1-18" data-name="1" transform="translate(0)">
+              <circle id="Ellipse_1008-19" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="#a9bdd4"/>
+              <line id="Line_425-19" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-19" data-name="1" transform="translate(0 239.66)">
+              <circle id="Ellipse_1008-20" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="#a9bdd4"/>
+              <line id="Line_425-20" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_806" data-name="Rectangle 806" transform="translate(0 123.624)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="95.507" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="94.507" fill="none"/>
+            </g>
+            <line id="Line_465" data-name="Line 465" y2="120.946" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_467" data-name="Line 467" y2="23.654" transform="translate(11.157 219.131)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_466" data-name="Line 466" x2="22.315" transform="translate(0 190.568)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_15" data-name="15" transform="translate(649.358 10.711)">
+          <circle id="Ellipse_1067" data-name="Ellipse 1067" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 240.106)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1068" data-name="Ellipse 1068" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 232.073)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1127" data-name="Ellipse 1127" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1616" data-name="Group 1616" transform="translate(0 159.773)">
+            <g id="_1-20" data-name="1" transform="translate(0 84.796)">
+              <circle id="Ellipse_1008-21" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="#a9bdd4"/>
+              <line id="Line_425-21" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_804" data-name="Rectangle 804" transform="translate(0 0)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="84.796" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="83.796" fill="none"/>
+            </g>
+            <line id="Line_461" data-name="Line 461" x2="22.315" transform="translate(0 75.87)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_12" data-name="12" transform="translate(519.04 0)">
+          <circle id="Ellipse_1059" data-name="Ellipse 1059" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 18.744)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1060" data-name="Ellipse 1060" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 57.126)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1061" data-name="Ellipse 1061" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 88.366)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1062" data-name="Ellipse 1062" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 361.499)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1614" data-name="Group 1614" transform="translate(0)">
+            <g id="_1-21" data-name="1">
+              <circle id="Ellipse_1008-22" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="#a9bdd4"/>
+              <line id="Line_425-22" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="_1-22" data-name="1" transform="translate(0 374.218)">
+              <circle id="Ellipse_1008-23" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="#a9bdd4"/>
+              <line id="Line_425-23" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_802" data-name="Rectangle 802" transform="translate(0 58.911)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="306.158" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="305.158" fill="none"/>
+            </g>
+            <line id="Line_454" data-name="Line 454" y2="56.233" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_455" data-name="Line 455" y2="12.496" transform="translate(11.157 364.623)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_453" data-name="Line 453" x2="22.315" transform="translate(0 90.151)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_11" data-name="11" transform="translate(476.196 41.059)">
+          <circle id="Ellipse_1057" data-name="Ellipse 1057" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 8.033)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1132" data-name="Ellipse 1132" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 193.692)" fill="rgba(47,85,151,0.5)"/>
+          <circle id="Ellipse_1058" data-name="Ellipse 1058" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 47.307)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1613" data-name="Group 1613" transform="translate(0)">
+            <g id="_1-23" data-name="1">
+              <circle id="Ellipse_1008-24" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="#a9bdd4"/>
+              <line id="Line_425-24" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_801" data-name="Rectangle 801" transform="translate(0 10.711)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="66.052" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="65.052" fill="none"/>
+            </g>
+            <line id="Line_452" data-name="Line 452" y2="8.033" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_451" data-name="Line 451" x2="22.315" transform="translate(0 50.878)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_10-2" data-name="10" transform="translate(434.245 17.852)">
+          <g id="_1-24" data-name="1">
+            <circle id="Ellipse_1008-25" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+            <line id="Line_425-25" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+          <g id="Rectangle_800" data-name="Rectangle 800" transform="translate(0 2.678)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+            <rect width="22.315" height="25.885" stroke="none"/>
+            <rect x="0.5" y="0.5" width="21.315" height="24.885" fill="none"/>
+          </g>
+          <line id="Line_450" data-name="Line 450" x2="22.315" transform="translate(0 16.067)" fill="none" stroke="#707070" stroke-width="1"/>
+        </g>
+        <g id="_4" data-name="4" transform="translate(130.318 242.784)">
+          <g id="_1-25" data-name="1" transform="translate(0 0)">
+            <circle id="Ellipse_1008-26" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033)" fill="rgba(47,85,151,0.5)"/>
+            <line id="Line_425-26" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+          <g id="_1-26" data-name="1" transform="translate(0 99.524)">
+            <circle id="Ellipse_1008-27" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="rgba(47,85,151,0.5)"/>
+            <line id="Line_425-27" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+          <g id="Rectangle_795" data-name="Rectangle 795" transform="translate(0 32.133)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+            <rect width="22.315" height="51.77" stroke="none"/>
+            <rect x="0.5" y="0.5" width="21.315" height="50.77" fill="none"/>
+          </g>
+          <line id="Line_434" data-name="Line 434" y2="29.455" transform="translate(11.157 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_436" data-name="Line 436" y2="19.191" transform="translate(11.157 83.903)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_435" data-name="Line 435" x2="22.315" transform="translate(0 65.159)" fill="none" stroke="#707070" stroke-width="1"/>
+        </g>
+        <g id="_5" data-name="5" transform="translate(173.609 1.785)">
+          <circle id="Ellipse_1013" data-name="Ellipse 1013" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 6.248)" fill="rgba(47,85,151,0.5)"/>
+          <g id="Group_1605" data-name="Group 1605" transform="translate(0)">
+            <g id="_1-27" data-name="1" transform="translate(0 9.818)">
+              <circle id="Ellipse_1008-28" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.033 0)" fill="rgba(47,85,151,0.5)"/>
+              <line id="Line_425-28" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+            </g>
+            <g id="Rectangle_793" data-name="Rectangle 793" transform="translate(0)" fill="rgba(234,234,234,0.7)" stroke="#707070" stroke-width="1">
+              <rect width="22.315" height="9.818" stroke="none"/>
+              <rect x="0.5" y="0.5" width="21.315" height="8.818" fill="none"/>
+            </g>
+            <line id="Line_430" data-name="Line 430" y2="3.57" transform="translate(11.157 9.372)" fill="none" stroke="#707070" stroke-width="1"/>
+            <line id="Line_429" data-name="Line 429" x2="22.315" transform="translate(0 2.678)" fill="none" stroke="#707070" stroke-width="1"/>
+          </g>
+        </g>
+        <g id="_13" data-name="13" transform="translate(562.331 124.962)">
+          <line id="Line_425-29" data-name="Line 425" x2="22.315" transform="translate(0 3.124)" fill="none" stroke="#707070" stroke-width="1"/>
+          <circle id="Ellipse_1008-29" data-name="Ellipse 1008" cx="3.124" cy="3.124" r="3.124" transform="translate(8.479 0)" fill="#a9bdd4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import _ from "lodash";
 
 /* Non-redux GA analytics helpers. For Redux, check for example the <Citation> component. Steps:
@@ -9,7 +9,7 @@ import _ from "lodash";
     - Call dispatcher from props.
 */
 
-type AnalyticsData = Event | PageView | OutboundLink;
+export type AnalyticsData = Event | PageView | OutboundLink;
 
 interface Event {
     type: "event";
@@ -35,14 +35,11 @@ export function sendAnalytics(data: AnalyticsData) {
             break;
         case "pageView":
             ReactGA.set({ page: data.path });
-            ReactGA.pageview(data.path);
+            ReactGA.send({ hitType: "pageview", page: data.path });
             if (window.hj) {
                 const hotjarPath = getHotjarPath(data.path);
                 window.hj("stateChange", hotjarPath);
             }
-            break;
-        case "outboundLink":
-            ReactGA.outboundLink({ label: data.label }, () => {});
             break;
     }
 }

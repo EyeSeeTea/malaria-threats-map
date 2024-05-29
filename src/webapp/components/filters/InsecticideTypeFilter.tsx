@@ -8,10 +8,10 @@ import {
     selectPreventionFilters,
     selectPreventionStudies,
 } from "../../store/reducers/prevention-reducer";
-import * as R from "ramda";
 import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import { filterByInsecticideClass } from "../layers/studies-filters";
+import { extractInsecticideTypeOptions } from "../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
     insecticideTypes: selectInsecticideTypes(state),
@@ -35,20 +35,17 @@ const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, se
 
     const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
-    const uniques = R.uniq(R.map(R.prop("INSECTICIDE_TYPE"), filteredStudies));
-
-    const suggestions: any[] = uniques.map((type: string) => ({
-        label: type,
-        value: type,
-    }));
+    const suggestions = extractInsecticideTypeOptions(filteredStudies);
 
     return (
         <MultiFilter
             label={t("common.filters.insecticide_type")}
+            placeholder={t("common.filters.select_insecticide_placeholder")}
             options={suggestions}
             onChange={setInsecticideTypes}
             value={preventionFilters.insecticideTypes}
             analyticsMultiFilterAction={"insecticideType"}
+            isClearable={true}
         />
     );
 };

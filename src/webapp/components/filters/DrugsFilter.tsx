@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { State } from "../../store/types";
+import { State, TreatmentMapType } from "../../store/types";
 import { selectDrugs } from "../../store/reducers/translations-reducer";
 import { selectTreatmentFilters, selectTreatmentStudies } from "../../store/reducers/treatment-reducer";
-import { setTreatmentDrug } from "../../store/actions/treatment-actions";
+import { setTreatmentDrugs } from "../../store/actions/treatment-actions";
 import {
     filterByDimensionId,
     filterByPlasmodiumSpecies,
@@ -17,6 +17,7 @@ import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 import SingleFilter from "./common/SingleFilter";
 import { useTranslation } from "react-i18next";
 import { OptionType } from "../BasicSelect";
+import MultiFilter from "./common/MultiFilter";
 
 const mapStateToProps = (state: State) => ({
     drugs: selectDrugs(state),
@@ -27,23 +28,33 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-    setDrug: setTreatmentDrug,
+    setDrugs: setTreatmentDrugs,
     logEventAction: logEventAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = {
+    isMulti?: boolean;
+};
+type Props = DispatchProps & StateProps & OwnProps;
 
-const DrugsFilter: React.FC<Props> = ({ setDrug, treatmentFilters, studies, yearFilter, region }) => {
+const DrugsFilter: React.FC<Props> = ({ setDrugs, treatmentFilters, studies, yearFilter, region, isMulti = false }) => {
     const { t } = useTranslation();
 
-    const filters = [
-        filterByDimensionId(256),
-        filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
-        filterByYearRange(yearFilter),
-        filterByRegion(region),
-    ];
+    const filters = isMulti
+        ? [
+              filterByDimensionId(300),
+              filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+              filterByYearRange(yearFilter),
+              filterByRegion(region),
+          ]
+        : [
+              filterByDimensionId(256),
+              filterByPlasmodiumSpecies(treatmentFilters.plasmodiumSpecies),
+              filterByYearRange(yearFilter),
+              filterByRegion(region),
+          ];
 
     const filteredStudies: TreatmentStudy[] = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
@@ -54,16 +65,46 @@ const DrugsFilter: React.FC<Props> = ({ setDrug, treatmentFilters, studies, year
         value: drug,
     }));
 
-    return (
+    const options = React.useMemo(() => {
+        return treatmentFilters.mapType === TreatmentMapType.DELAYED_PARASITE_CLEARANCE
+            ? suggestions.filter((drug: OptionType) => drug.label !== "DRUG_AQ+SP" && drug.label !== "DRUG_AP")
+            : suggestions;
+    }, [suggestions, treatmentFilters.mapType]);
+
+    const handleChange = React.useCallback(
+        (selection?: string | string[]) => {
+            if (isMulti && Array.isArray(selection)) {
+                setDrugs(selection);
+            } else {
+                const selectedDrug = selection && typeof selection === "string" ? [selection] : [];
+                setDrugs(selectedDrug);
+            }
+        },
+        [isMulti, setDrugs]
+    );
+
+    const value: string | string[] = React.useMemo(() => {
+        if (isMulti) {
+            return treatmentFilters.drugs ?? [];
+        }
+        return treatmentFilters.drugs ? treatmentFilters.drugs[0] : null;
+    }, [isMulti, treatmentFilters.drugs]);
+
+    return isMulti ? (
+        <MultiFilter
+            placeholder={t("common.filters.select_drugs")}
+            options={options}
+            onChange={handleChange}
+            value={value as string[]}
+            analyticsMultiFilterAction={"drug"}
+            isClearable={true}
+        />
+    ) : (
         <SingleFilter
             label={t("common.filters.drug")}
-            options={
-                treatmentFilters.mapType === 1
-                    ? suggestions.filter((drug: OptionType) => drug.label !== "DRUG_AQ+SP" && drug.label !== "DRUG_AP")
-                    : suggestions
-            }
-            onChange={setDrug}
-            value={treatmentFilters.drug}
+            options={options}
+            onChange={handleChange}
+            value={value as string}
             analyticsFilterAction={"drug"}
             isClearable={false}
         />

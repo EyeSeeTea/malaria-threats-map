@@ -4,7 +4,7 @@ import { State } from "../../../store/types";
 import { Translation } from "../../../types/Translation";
 import IntegrationReactSelect, { OptionType } from "../../BasicSelect";
 import { selectCountries } from "../../../store/reducers/translations-reducer";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import T from "../../../translations/T";
 import { Divider, FilterWrapper } from "../../filters/Filters";
 import { useTranslation } from "react-i18next";

@@ -1,24 +1,13 @@
-import React from "react";
-import resistanceStatusSymbols, { ResistanceStatusColors } from "./ResistanceStatus/symbols";
+import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import intensityStatusSymbols from "./IntensityStatus/symbols";
 import resistanceMechanismSymbols from "./ResistanceMechanisms/symbols";
 import levelOfInvolvementSymbols from "./Involvement/symbols";
-import { default as ResistanceStatusLegend } from "./ResistanceStatus/legend";
-import { default as IntensityStatusLegend } from "./IntensityStatus/legend";
-import { default as ResistanceMechanismsLegend } from "./ResistanceMechanisms/legend";
 import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import * as R from "ramda";
 import { filterByAssayTypes, filterByInsecticideClass, filterByType, filterByYearRange } from "../studies-filters";
-import CountrySymbols from "./Countries/PreventionCountrySymbols";
-import PreventionCountryLegend from "./Countries/PreventionCountryLegend";
-import LevelOfInvolvementLegend from "./Involvement/LevelOfInvolvementLegend";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import _ from "lodash";
 
-export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, countryMode: boolean) => {
-    if (countryMode) {
-        return CountrySymbols;
-    }
+export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters) => {
     switch (preventionFilters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return resistanceStatusSymbols;
@@ -30,24 +19,6 @@ export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters, coun
             return levelOfInvolvementSymbols;
         default:
             return;
-    }
-};
-
-export const resolveMapTypeLegend = (preventionFilters: PreventionFilters, countryMode: boolean) => {
-    if (countryMode) {
-        <PreventionCountryLegend />;
-    }
-    switch (preventionFilters.mapType) {
-        case PreventionMapType.RESISTANCE_STATUS:
-            return <ResistanceStatusLegend />;
-        case PreventionMapType.INTENSITY_STATUS:
-            return <IntensityStatusLegend />;
-        case PreventionMapType.RESISTANCE_MECHANISM:
-            return <ResistanceMechanismsLegend />;
-        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-            return <LevelOfInvolvementLegend />;
-        default:
-            return <span />;
     }
 };
 
@@ -68,9 +39,9 @@ export function filterByCriteria1(group: PreventionStudy[]) {
         const maxYear = R.reduce(
             R.max,
             0,
-            baseStudies.map(study => parseInt(study.YEAR_START))
+            baseStudies.map(study => study.YEAR_START)
         );
-        filteredStudies = baseStudies.filter(study => maxYear === parseInt(study.YEAR_START));
+        filteredStudies = baseStudies.filter(study => maxYear === study.YEAR_START);
     }
     return filteredStudies;
 }
@@ -116,11 +87,35 @@ export function getMostRecent(studies: PreventionStudy[]): PreventionStudy | und
     return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
 }
 
-const filterByMostRecentYear = (group: any[]) => {
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
+const filterByMostRecentYear = (group: PreventionStudy[]) => {
+    const sortedStudies = R.sortBy(study => -study.YEAR_START, group);
     // We filter all studies conducted that year.
-    return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
+    return R.filter(study => study.YEAR_START === sortedStudies[0].YEAR_START, group);
 };
+
+export function getByMostRecentYearAndMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {
+    const filteredStudies = filterByMostRecentYear(studies);
+
+    return getMostPriorityUsignResistanceStatus(filteredStudies);
+}
+
+export function getMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {
+    const priorities: Record<string, number> = {
+        CONFIRMED_RESISTANCE: 1,
+        UNDETERMINED: 2,
+        POSSIBLE_RESISTANCE: 3,
+        SUSCEPTIBLE: 4,
+    };
+
+    const studiesWithPriority = studies.map(study => {
+        return {
+            ...study,
+            priority: priorities[study.RESISTANCE_STATUS],
+        };
+    });
+
+    return R.sortBy(study => study.priority, studiesWithPriority)[0];
+}
 
 const ResistanceIntensityOrder: { [value: string]: number } = {
     NA: 0,
@@ -165,59 +160,18 @@ const InvolvementOrder: { [value: string]: number } = {
     FULL_INVOLVEMENT: 2,
 };
 
-function getByMostRecentYearAndInvolvement(group: any[]) {
+export function getByMostRecentYearAndInvolvement(group: any[]) {
     const filteredStudies = filterByMostRecentYear(group);
     // We sort remaining records by RESISTANCE INTENSITY
     const filteredSortedStudies = R.sortBy(study => -InvolvementOrder[study.MECHANISM_PROXY] || 0, filteredStudies);
     return filteredSortedStudies[0];
 }
-function getByMostRecentYearAndMortalityAdjusted(group: any[]) {
-    const filteredStudies = filterByMostRecentYear(group);
-    // We sort remaining records by MORTALITY_ADJUSTED
-    const filteredSortedStudies = R.sortBy(study => parseFloat(study.MORTALITY_ADJUSTED), filteredStudies);
-    return filteredSortedStudies[0];
-}
-function getPyrrolesResistanceStatusColor(group: any[]) {
-    const chlorfenapyrResistanceStatus = group.map(study => study.RESISTANCE_STATUS);
-    const countConfirmedResistance = _.countBy(chlorfenapyrResistanceStatus);
-    if (countConfirmedResistance["CONFIRMED_RESISTANCE"] >= 3) {
-        return ResistanceStatusColors.Confirmed;
-    } else if (countConfirmedResistance["UNDETERMINED"] === chlorfenapyrResistanceStatus.length) {
-        return ResistanceStatusColors.Undetermined;
-    } else if (countConfirmedResistance["SUSCEPTIBLE"] === chlorfenapyrResistanceStatus.length) {
-        return ResistanceStatusColors.Susceptible;
-    } else return ResistanceStatusColors.Possible;
-}
 
-function getDefaultResistanceStatusColor(group: any[]) {
-    const filteredStudies = getByMostRecentYearAndMortalityAdjusted(group);
-    switch (filteredStudies.RESISTANCE_STATUS) {
-        case "CONFIRMED_RESISTANCE":
-            return ResistanceStatusColors.Confirmed;
-        case "POSSIBLE_RESISTANCE":
-            return ResistanceStatusColors.Possible;
-        case "SUSCEPTIBLE":
-            return ResistanceStatusColors.Susceptible;
-        default:
-            return ResistanceStatusColors.Undetermined;
-    }
-}
-export function getResistanceStatusColor(group: any[], insecticideClass: string) {
-    const groupColor =
-        insecticideClass === "PYRROLES"
-            ? getPyrrolesResistanceStatusColor(group)
-            : getDefaultResistanceStatusColor(group);
-    const changedGroup = group.map(study => ({
-        ...study,
-        RESISTANCE_STATUS_COLOR: groupColor,
-    }));
-    return insecticideClass === "PYRROLES" ? getByMostRecentYearAndMortalityAdjusted(changedGroup) : changedGroup[0];
-}
-
-export const studySelector = (group: any[], mapType: PreventionMapType, insecticideClass: string) => {
+export const studySelector = (group: PreventionStudy[], mapType: PreventionMapType) => {
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
-            return getResistanceStatusColor(group, insecticideClass);
+            //return getByMostRecentYearAndMortalityAdjusted(group);
+            return getByMostRecentYearAndMostPriorityUsignResistanceStatus(group);
         case PreventionMapType.INTENSITY_STATUS:
             return getByMostRecentYearAndResistanceIntensity(group);
         case PreventionMapType.RESISTANCE_MECHANISM:

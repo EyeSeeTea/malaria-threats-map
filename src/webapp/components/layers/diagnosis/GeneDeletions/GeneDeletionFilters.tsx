@@ -4,7 +4,7 @@ import YearRangeSelector from "../../../YearRangeSelector";
 import SurveyTypeFilter from "../../../filters/SurveyTypeFilter";
 import PatientTypeFilter from "../../../filters/PatientTypeFilter";
 import DeletionTypeFilter from "../../../filters/DeletionTypeFilter";
-import { Snackbar } from "../../../filters/container/Filters";
+import { Snackbar } from "../../common/Snackbar";
 
 export default function GeneDeletionFilters() {
     const { t } = useTranslation();
@@ -14,7 +14,7 @@ export default function GeneDeletionFilters() {
             <DeletionTypeFilter />
             <SurveyTypeFilter />
             <PatientTypeFilter />
-            <YearRangeSelector minYear={1998} maxYear={new Date().getFullYear()} />
+            <YearRangeSelector />
             <Snackbar>
                 <Trans i18nKey="common.filters.pfhrp23_note" t={t}>
                     Across surveys, the criteria for selecting samples to test for<i>pfhrp 2/3</i>deletions varies;

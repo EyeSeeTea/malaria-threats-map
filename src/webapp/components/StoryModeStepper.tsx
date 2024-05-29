@@ -1,49 +1,56 @@
-import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Stepper, Step, StepLabel, Button, Paper, Typography, AppBar, Toolbar, IconButton } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import React, { useEffect } from "react";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { Step, StepLabel, Button, Paper } from "@mui/material";
 import styled from "styled-components";
-import { State } from "../store/types";
-import { selectFilters, selectStoryModeStep, selectTheme } from "../store/reducers/base-reducer";
-import { setStoryModeAction, setStoryModeStepAction } from "../store/actions/base-actions";
-import { connect } from "react-redux";
-import PreventionSteps from "./story/prevention/PreventionSteps";
-import DiagnosisSteps from "./story/diagnosis/DiagnosisSteps";
 import { useTranslation } from "react-i18next";
-import TreatmentSteps from "./story/treatment/TreatmentSteps";
-import InvasiveSteps from "./story/invasive/InvasiveSteps";
 import { useSwipeable, SwipeEventData } from "react-swipeable";
-
-const FlexGrow = styled.div`
-    flex-grow: 1;
-`;
+import PaperStepper from "./PaperStepper/PaperStepper";
+import StoryStep from "./story/StoryStep";
 
 const StyledStepLabel = styled(StepLabel)`
     cursor: pointer;
 `;
-
-const StyledStep = styled(Step)`
-    cursor: pointer;
-`;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {},
+        root: {
+            height: "100%",
+        },
         title: {
             flexGrow: 1,
         },
         button: {
             marginRight: theme.spacing(1),
+            padding: "10px 50px",
+            backgroundColor: "#1899CC",
+            color: "white",
+            fontWeight: "bold",
+            fontSize: "17px",
+            "@media(max-width: 768px)": {
+                fontSize: "13px",
+                padding: "8px 35px",
+            },
         },
         instructions: {
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1),
         },
         paper: {
+            position: "relative",
             margin: theme.spacing(2),
+            marginTop: "55px",
             padding: theme.spacing(2),
+            paddingBottom: "80px",
+            height: "88%",
         },
         buttons: {
-            marginLeft: theme.spacing(2),
+            position: "absolute",
+            display: "flex",
+            bottom: "20px",
+            width: "90%",
+            justifyContent: "space-between",
+            marginLeft: "7px",
             marginRight: theme.spacing(2),
         },
         appBar: {
@@ -55,28 +62,30 @@ const useStyles = makeStyles((theme: Theme) =>
 function getSteps() {
     return ["", "", "", ""];
 }
-const mapStateToProps = (state: State) => ({
-    theme: selectTheme(state),
-    filters: selectFilters(state),
-    storyModeStep: selectStoryModeStep(state),
-});
 
-const mapDispatchToProps = {
-    setStoryMode: setStoryModeAction,
-    setStoryModeStep: setStoryModeStepAction,
+type Props = {
+    theme: "prevention" | "invasive" | "treatment" | "diagnosis";
+    storyModeStep: number;
+    setStoryModeStep: React.Dispatch<React.SetStateAction<number>>;
 };
 
-type StateProps = ReturnType<typeof mapStateToProps>;
-type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Steps = { [value: string]: string[] };
 
-type Steps = { [value: string]: any[] };
+const themeMap = {
+    invasive: ["invasiveStory_step1", "invasiveStory_step2", "invasiveStory_step3"],
+    diagnosis: ["diagnosisStory_step1", "diagnosisStory_step2", "diagnosisStory_step3"],
+    treatment: ["treatmentStory_step1", "treatmentStory_step2", "treatmentStory_step3"],
+    prevention: ["preventionStory_step1", "preventionStory_step2", "preventionStory_step3"],
+} as Steps;
 
-function StoryModeStepper({ theme, setStoryMode, setStoryModeStep, storyModeStep }: Props) {
+function StoryModeStepper({ theme, storyModeStep, setStoryModeStep }: Props) {
+    const { t } = useTranslation();
     const classes = useStyles({});
     const steps = getSteps();
 
-    const { t } = useTranslation();
+    useEffect(() => {
+        setStoryModeStep(0);
+    }, [setStoryModeStep, theme]);
 
     const handleNext = () => {
         setStoryModeStep(storyModeStep + 1);
@@ -103,88 +112,82 @@ function StoryModeStepper({ theme, setStoryMode, setStoryModeStep, storyModeStep
         rotationAngle: 0, // set a rotation angle
     });
 
-    const handleClose = () => {
-        setStoryMode(false);
-    };
+    const themeSteps = React.useMemo(() => themeMap[theme], [theme]);
 
-    const themeMap = {
-        invasive: InvasiveSteps,
-        diagnosis: DiagnosisSteps,
-        treatment: TreatmentSteps,
-        prevention: PreventionSteps,
-    } as Steps;
+    const selectedStep = React.useMemo(() => themeSteps[storyModeStep], [themeSteps, storyModeStep]);
 
-    const selectedSteps = themeMap[theme];
-
-    const SelectedStep = selectedSteps[storyModeStep];
-
-    if (storyModeStep < 0 || storyModeStep > selectedSteps.length - 1) {
+    if (storyModeStep < 0 || storyModeStep > themeSteps.length - 1) {
         setStoryModeStep(0);
     }
 
     return (
-        <div {...swipeableHandlers}>
+        <div {...swipeableHandlers} style={{ height: "100%" }}>
             <div className={classes.root}>
-                <AppBar className={classes.appBar}>
-                    <Toolbar variant="dense">
-                        <Typography variant="subtitle1" className={classes.title}>
-                            {t(`common.themes.${theme}`)}
-                        </Typography>
-                        <FlexGrow />
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleClose}
-                            size={"small"}
-                            aria-label="close"
-                        >
-                            <CloseIcon fontSize={"small"} />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Stepper activeStep={storyModeStep}>
-                    {selectedSteps.map((step: any, index: number) => {
-                        const stepProps: { completed?: boolean } = {};
-                        const labelProps: { optional?: React.ReactNode } = {};
-                        return (
-                            <StyledStep key={index} {...stepProps} onClick={() => setStoryModeStep(index)}>
-                                <StyledStepLabel {...labelProps}>{""}</StyledStepLabel>
-                            </StyledStep>
-                        );
-                    })}
-                </Stepper>
-                <div>
-                    <div>
-                        <Paper className={classes.paper}>{SelectedStep ? <SelectedStep /> : <div />}</Paper>
-                        <div className={classes.buttons}>
-                            {storyModeStep > 0 && (
-                                <Button
-                                    variant="contained"
-                                    color="default"
-                                    onClick={handleBack}
-                                    disabled={storyModeStep === 0}
-                                    className={classes.button}
+                <Paper className={classes.paper}>
+                    <PaperStepper activeStep={storyModeStep}>
+                        {themeMap[theme].map((_step: any, index: number) => {
+                            const stepProps: { completed?: boolean } = {};
+                            const labelProps: { optional?: React.ReactNode } = {};
+                            return (
+                                <Step
+                                    key={index}
+                                    {...stepProps}
+                                    onClick={() => setStoryModeStep(index)}
+                                    sx={{
+                                        "& .MuiSvgIcon-root": {
+                                            zIndex: 1,
+                                            color: "#fff",
+                                            width: 33,
+                                            height: 33,
+                                            display: "flex",
+                                            fill: "#D3D3D3",
+                                            cursor: "pointer",
+                                        },
+                                        "& .MuiSvgIcon-root.Mui-active": {
+                                            fill: "#1899CC",
+                                        },
+                                        "& .MuiSvgIcon-root.Mui-completed": {
+                                            fill: "#1899CC",
+                                        },
+                                        "& .MuiStepIcon-text": {
+                                            fill: "white",
+                                            fontSize: "11px",
+                                        },
+                                    }}
                                 >
-                                    Back
-                                </Button>
-                            )}
-                            {storyModeStep < selectedSteps.length - 1 && (
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={handleNext}
-                                    disabled={storyModeStep === steps.length - 1}
-                                    className={classes.button}
-                                >
-                                    Next
-                                </Button>
-                            )}
-                        </div>
+                                    <StyledStepLabel {...labelProps}>{""}</StyledStepLabel>
+                                </Step>
+                            );
+                        })}
+                    </PaperStepper>
+                    {selectedStep ? <StoryStep i18nKey={selectedStep} /> : <div />}
+                    <div className={classes.buttons}>
+                        {storyModeStep > 0 && (
+                            <Button
+                                variant="contained"
+                                onClick={handleBack}
+                                disabled={storyModeStep === 0}
+                                className={classes.button}
+                            >
+                                {t("common.storiesPage.stepper.back")}
+                            </Button>
+                        )}
+                        {storyModeStep < themeSteps.length - 1 && (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleNext}
+                                disabled={storyModeStep === steps.length - 1}
+                                className={classes.button}
+                            >
+                                {t("common.storiesPage.stepper.next")}
+                            </Button>
+                        )}
                     </div>
-                </div>
+                </Paper>
             </div>
         </div>
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StoryModeStepper);
+export default StoryModeStepper;

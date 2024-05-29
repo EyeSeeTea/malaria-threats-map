@@ -1,7 +1,9 @@
 import React from "react";
-import Backdrop from "@material-ui/core/Backdrop";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { State } from "../store/types";
 import { selectTheme } from "../store/reducers/base-reducer";
 import { selectPreventionStudiesLoading } from "../store/reducers/prevention-reducer";
@@ -11,6 +13,7 @@ import { selectTreatmentStudiesLoading } from "../store/reducers/treatment-reduc
 import { connect } from "react-redux";
 import { selectDistrictsAreLoading } from "../store/reducers/districts-reducer";
 import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
+import { Stack, Typography } from "@mui/material";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         backdrop: {
@@ -55,7 +58,10 @@ function SimpleBackdrop(props: Props) {
     return (
         <div>
             <Backdrop className={classes.backdrop} open={isLoading()}>
-                <CircularProgress color="inherit" />
+                <Stack direction="column" alignItems="center">
+                    <CircularProgress color="inherit" />
+                    <Typography variant="h4">Data is loading</Typography>
+                </Stack>
             </Backdrop>
         </div>
     );

@@ -5,7 +5,7 @@ import { RegionState, State } from "../../store/types";
 import * as R from "ramda";
 import { selectCountryLayer } from "../../store/reducers/country-layer-reducer";
 import { selectRegion } from "../../store/reducers/base-reducer";
-import { setRegionAction, setSelection } from "../../store/actions/base-actions";
+import { setSelection } from "../../store/actions/base-actions";
 import { CountryLayer } from "../../../domain/entities/CountryLayer";
 
 const REGION_LAYER_ID = "regions-layer";
@@ -34,7 +34,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setSelection: setSelection,
-    setRegion: setRegionAction,
 };
 
 interface OwnProps {
@@ -42,10 +41,7 @@ interface OwnProps {
 }
 
 const MEKONG_BOUNDS: [number, number, number, number] = [
-    65.39066990951679,
-    -1.6114593755411022,
-    146.6850042235456,
-    45.83706104249836,
+    65.39066990951679, -1.6114593755411022, 146.6850042235456, 45.83706104249836,
 ];
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -79,7 +75,7 @@ class RegionLayer extends Component<Props> {
             this.zoomToCountry(region.country);
             this.highlightToCountry(region.country);
             this.showLayer();
-            region.site && this.zoomToSite(region.site, region.siteIso2, region.siteCoordinates);
+            region.site && this.zoomToSite(region.siteCoordinates);
         } else if (region.subRegion) {
             this.zoomToSubRegion(region.subRegion);
             this.highlightToSubRegion(region.subRegion);
@@ -89,7 +85,7 @@ class RegionLayer extends Component<Props> {
             this.highlightToRegion(region.region);
             this.showLayer();
         } else if (region.site) {
-            this.zoomToSite(region.site, region.siteIso2, region.siteCoordinates);
+            this.zoomToSite(region.siteCoordinates);
         } else {
             this.hideLayer();
         }
@@ -209,25 +205,16 @@ class RegionLayer extends Component<Props> {
         });
     };
 
-    zoomToSite = (site: string, iso2: string, coords: [number, number]) => {
+    zoomToSite = (coords: [number, number]) => {
         const coordinates: [number, number] = [coords[1], coords[0]];
-
-        this.props.map.once("moveend", ({ _originalEvent }: any) => {
-            const selection = {
-                ISO_2_CODE: iso2,
-                SITE_ID: site,
-                coordinates: coordinates,
-            };
-            setTimeout(() => {
-                this.props.setSelection(selection);
-            }, 100);
-        });
 
         this.props.map.flyTo({
             center: coordinates,
             zoom: 5,
             essential: true,
             maxDuration: 5000,
+            speed: 0.8,
+            padding: { top: 200, bottom: 0, left: 0, right: 350 },
         });
     };
 

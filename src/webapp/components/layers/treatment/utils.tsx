@@ -1,22 +1,20 @@
 import React from "react";
 import { TreatmentFilters, TreatmentMapType } from "../../../store/types";
-import TreatmentFailureLeyend from "./TreatmentFailure/TreatmentFailureLegend";
-import DelayedParasiteClearanceLeyend from "./DelayedParasiteClearance/DelayedParasiteClearanceLegend";
-import MolecularMarkerLegend from "./MolecularMarkers/MolecularMarkerLegend";
 import treatmentLayerSymbols from "./TreatmentFailure/treatmentLayerSymbols";
 import delayedParasiteClearanceSymbols from "./DelayedParasiteClearance/delayedParasiteClearanceSymbols";
 import molecularMarkerSymbols from "./MolecularMarkers/molecularMarkerSymbols";
 import * as R from "ramda";
 import { TREATMENT_FAILURE_STATUS } from "./TreatmentFailure/utils";
-import TreatmentCountryLegend from "./Countries/TreatmentCountryLegend";
-import treatmentCountrySymbols from "./Countries/treatment-country-symbols";
 import { DELAYED_PARASITE_CLEARANCE_STATUS } from "./DelayedParasiteClearance/utils";
 import { MOLECULAR_MARKER_STATUS } from "./MolecularMarkers/utils";
+import { MolecularMarkerStudy, TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
+import therapeuticEfficacyStudiesSymbols from "./TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
+import { getTherapeuticEfficacyStudiesStatusFromStatusId } from "./TherapeuticEfficacyStudies/utils";
+import molecularMarkersOngoingStudiesSymbols from "./MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
+import { getMolecularMarkersOngoingStudiesStatusFromStatusId } from "./MolecularMarkersOngoingStudies/utils";
+import { sortOngoingAndPlannedStudies } from "../../../store/epics/treatment/utils";
 
-export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters, countryMode: boolean) => {
-    if (countryMode) {
-        return treatmentCountrySymbols;
-    }
+export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters) => {
     switch (treatmentFilters.mapType) {
         case TreatmentMapType.TREATMENT_FAILURE:
             return treatmentLayerSymbols;
@@ -24,31 +22,19 @@ export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters, countr
             return delayedParasiteClearanceSymbols;
         case TreatmentMapType.MOLECULAR_MARKERS:
             return molecularMarkerSymbols;
-        default:
-            return <span />;
-    }
-};
-
-export const resolveMapTypeLegend = (treatmentFilters: TreatmentFilters, countryMode: boolean) => {
-    if (countryMode) {
-        return <TreatmentCountryLegend />;
-    }
-    switch (treatmentFilters.mapType) {
-        case TreatmentMapType.TREATMENT_FAILURE:
-            return <TreatmentFailureLeyend />;
-        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
-            return <DelayedParasiteClearanceLeyend />;
-        case TreatmentMapType.MOLECULAR_MARKERS:
-            return <MolecularMarkerLegend />;
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+            return therapeuticEfficacyStudiesSymbols;
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return molecularMarkersOngoingStudiesSymbols;
         default:
             return <span />;
     }
 };
 
 const filterByMostRecentYear = (group: any[]) => {
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
+    const sortedStudies = R.sortBy(study => -study.YEAR_START, group);
     // We filter all studies conducted that year.
-    return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
+    return R.filter(study => study.YEAR_START === sortedStudies[0].YEAR_START, group);
 };
 
 const resolveTreatmentFailureStatus = (percentage: number) => {
@@ -68,7 +54,7 @@ function getByMostRecentYearAndTreatmentFailure(group: any[]) {
     const enrichedGroup = group.map(study => ({
         ...study,
         TREATMENT_FAILURE:
-            study.TREATMENT_FAILURE_PP.trim() !== "NA" ? study.TREATMENT_FAILURE_PP : study.TREATMENT_FAILURE_KM,
+            study.TREATMENT_FAILURE_PP !== null ? study.TREATMENT_FAILURE_PP : study.TREATMENT_FAILURE_KM,
     }));
     const filteredStudies = filterByMostRecentYear(enrichedGroup);
     // We sort remaining records by RESISTANCE INTENSITY
@@ -117,20 +103,47 @@ const resolveMolecularMarker = (value: number) => {
     return MOLECULAR_MARKER_STATUS.UNKNOWN;
 };
 
-function getByMostRecentYearAndMolecularMarker(group: any[]) {
-    const filteredStudies = filterByMostRecentYear(group);
-
-    const valueStudies = filteredStudies.map(study => {
+export function getMolecularMarkerStudies(studies: TreatmentStudy[]): MolecularMarkerStudy[] {
+    return studies.map(study => {
         const value = study.groupStudies.reduce((acc: number, item: any) => {
             return acc + (item.GENOTYPE === "WT" ? 0 : parseFloat(item.PROPORTION));
         }, 0);
         return { ...study, VALUE: value };
     });
+}
+
+function getByMostRecentYearAndMolecularMarker(group: any[]) {
+    const filteredStudies = filterByMostRecentYear(group);
+
+    const valueStudies = getMolecularMarkerStudies(filteredStudies);
+
     // We sort remaining records by RESISTANCE INTENSITY
     const filteredSortedStudies = R.sortBy(study => -study.VALUE, valueStudies);
     return {
         ...filteredSortedStudies[0],
         MOLECULAR_MARKER_STATUS: resolveMolecularMarker(filteredSortedStudies[0].VALUE),
+    };
+}
+
+function getByStudySeqAndTherapeuticEfficacyStudiesStatus(group: any[]) {
+    const sortedStudiesByStudySeq = sortOngoingAndPlannedStudies(group);
+
+    return {
+        ...sortedStudiesByStudySeq[0],
+        THERAPEUTIC_EFFICACY_STUDIES_STATUS: getTherapeuticEfficacyStudiesStatusFromStatusId(
+            sortedStudiesByStudySeq[0].SURV_STATUS
+        ),
+    };
+}
+
+function getByStudySeqAndMolecularMarkersOngoingStudiesStatus(group: any[]) {
+    const sortedStudiesByStudySeq = sortOngoingAndPlannedStudies(group);
+
+    return {
+        ...sortedStudiesByStudySeq[0],
+        MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS: getMolecularMarkersOngoingStudiesStatusFromStatusId(
+            sortedStudiesByStudySeq[0].SURV_STATUS
+        ),
     };
 }
 
@@ -142,6 +155,10 @@ export const studySelector = (group: any[], mapType: TreatmentMapType) => {
             return getByMostRecentYearAndPositiveDay3(group);
         case TreatmentMapType.MOLECULAR_MARKERS:
             return getByMostRecentYearAndMolecularMarker(group);
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
+            return getByStudySeqAndTherapeuticEfficacyStudiesStatus(group);
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return getByStudySeqAndMolecularMarkersOngoingStudiesStatus(group);
         default:
             return group[0];
     }

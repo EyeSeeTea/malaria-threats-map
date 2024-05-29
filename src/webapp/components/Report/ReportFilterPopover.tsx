@@ -1,13 +1,16 @@
 import React from "react";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
-import Popover from "@material-ui/core/Popover";
-import Button from "@material-ui/core/Button";
-import FilterListIcon from "@material-ui/icons/FilterList";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Popover from "@mui/material/Popover";
+import Button from "@mui/material/Button";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import CountriesSelector from "../DataDownload/filters/CountriesSelector";
 import T from "../../translations/T";
 import DrugsSelector from "../filters/DrugsSelector";
 import PlasmodiumSpecieSelector from "../filters/PlasmodiumSpecieSelector";
 import SpeciesSelector from "../filters/SpeciesSelector";
+import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
+import { extractSpeciesOptions, PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -28,6 +31,8 @@ interface Props {
     setPlasmodiumSpecie?: any;
     species?: string[];
     setSpecies?: any;
+    preventionStudies?: PreventionStudy[];
+    treatmentStudies?: TreatmentStudy[];
 }
 
 const ReportFilterPopover: React.FC<Props> = ({
@@ -39,6 +44,8 @@ const ReportFilterPopover: React.FC<Props> = ({
     setPlasmodiumSpecie,
     species,
     setSpecies,
+    preventionStudies,
+    treatmentStudies,
 }) => {
     const classes = useStyles({});
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -83,11 +90,17 @@ const ReportFilterPopover: React.FC<Props> = ({
                 {plasmodiumSpecie && setPlasmodiumSpecie && (
                     <PlasmodiumSpecieSelector onChange={setPlasmodiumSpecie} value={plasmodiumSpecie} />
                 )}
-                {drugs && setDrugs && <DrugsSelector onChange={setDrugs} value={drugs} />}
+                {drugs && setDrugs && <DrugsSelector studies={treatmentStudies} onChange={setDrugs} value={drugs} />}
 
                 <CountriesSelector onChange={setCountries} value={countries} />
 
-                {species && setSpecies && <SpeciesSelector onChange={setSpecies} value={species} />}
+                {species && setSpecies && (
+                    <SpeciesSelector
+                        options={extractSpeciesOptions(preventionStudies)}
+                        onChange={setSpecies}
+                        value={species}
+                    />
+                )}
             </Popover>
         </div>
     );

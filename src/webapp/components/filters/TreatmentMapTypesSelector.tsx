@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { State, TreatmentMapType } from "../../store/types";
-import IntegrationReactSelect, { OptionType } from "../BasicSelect";
-import { ValueType } from "react-select/src/types";
 import { selectTreatmentFilters } from "../../store/reducers/treatment-reducer";
 import { setTreatmentMapType } from "../../store/actions/treatment-actions";
 import { useTranslation } from "react-i18next";
-import { setMapTitleAction } from "../../store/actions/base-actions";
+import { setActionGroupSelected, setMapTitleAction } from "../../store/actions/base-actions";
 import { sendAnalyticsMapMenuChange } from "../../store/analytics";
+import { ListSelectorItem } from "../list-selector/ListSelector";
+import MapTypeStudyGroups from "./common/MapTypeStudyGroups";
 
 const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
@@ -16,47 +16,111 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setTreatmentMapType: setTreatmentMapType,
     setMapTitle: setMapTitleAction,
+    setActionGroupSelected: setActionGroupSelected,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const treatmentSuggestions: OptionType[] = [
+const treatmentStudyResultsSuggestions: ListSelectorItem[] = [
     {
-        label: "common.treatment.treatment_failure",
+        title: "common.treatment.treatment_failure",
+        subtitle: "common.treatment.treatment_failure_subtitle",
         value: TreatmentMapType.TREATMENT_FAILURE,
     },
     {
-        label: "common.treatment.delayed_parasite_clearance",
+        title: "common.treatment.delayed_parasite_clearance",
+        subtitle: "common.treatment.delayed_parasite_clearance_subtitle",
         value: TreatmentMapType.DELAYED_PARASITE_CLEARANCE,
     },
     {
-        label: "common.treatment.molecular_markers",
+        title: "common.treatment.molecular_markers",
+        subtitle: "common.treatment.molecular_markers_subtitle",
         value: TreatmentMapType.MOLECULAR_MARKERS,
     },
 ];
 
-function TreatmentMapTypesSelector({ setTreatmentMapType, setMapTitle, treatmentFilters }: Props) {
+const treatmentOngoingAndPlannedStudiesSuggestions: ListSelectorItem[] = [
+    {
+        title: "common.treatment.therapeutic_efficacy_studies",
+        subtitle: "common.treatment.therapeutic_efficacy_studies_subtitle",
+        value: TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES,
+    },
+    {
+        title: "common.treatment.molecular_markers_ongoing_studies",
+        subtitle: "common.treatment.molecular_markers_ongoing_studies_subtitle",
+        value: TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES,
+    },
+];
+
+export const treatmentSuggestions: ListSelectorItem[] = [
+    ...treatmentStudyResultsSuggestions,
+    ...treatmentOngoingAndPlannedStudiesSuggestions,
+];
+
+function TreatmentMapTypesSelector({
+    setTreatmentMapType,
+    setMapTitle,
+    treatmentFilters,
+    setActionGroupSelected,
+}: Props) {
     const { t } = useTranslation();
 
-    const onChange = (value: ValueType<OptionType, false>) => {
-        const selection = value as OptionType;
-        setTreatmentMapType(selection.value);
-        setMapTitle(t(selection.label));
-        sendAnalyticsMapMenuChange("treatment", selection.value);
+    const onChange = (selection: ListSelectorItem) => {
+        setTreatmentMapType(selection.value as TreatmentMapType);
+        setMapTitle(t(selection.title));
+        sendAnalyticsMapMenuChange("treatment", selection.value as TreatmentMapType);
+        setActionGroupSelected("DATA");
+    };
+
+    const onMouseOver = (selection: ListSelectorItem) => {
+        setTreatmentMapType(selection.value as TreatmentMapType);
     };
 
     React.useEffect(() => {
         const selection = treatmentSuggestions.find(s => s.value === treatmentFilters.mapType);
-        setMapTitle(t(selection.label));
+        setMapTitle(t(selection.title));
     });
 
+    const studyResultsItems = React.useMemo(
+        () =>
+            treatmentStudyResultsSuggestions.map(item => ({
+                ...item,
+                title: t(item.title),
+                subtitle: t(item.subtitle),
+            })),
+        [t]
+    );
+
+    const ongoingAndPlannedStudiesItems = React.useMemo(
+        () =>
+            treatmentOngoingAndPlannedStudiesSuggestions.map(item => ({
+                ...item,
+                title: t(item.title),
+                subtitle: t(item.subtitle),
+            })),
+        [t]
+    );
+
+    const studyResultsValue = React.useMemo(
+        () => studyResultsItems.find(s => s.value === treatmentFilters.mapType),
+        [studyResultsItems, treatmentFilters.mapType]
+    );
+
+    const ongoingAndPlannedStudiesValue = React.useMemo(
+        () => ongoingAndPlannedStudiesItems.find(s => s.value === treatmentFilters.mapType),
+        [ongoingAndPlannedStudiesItems, treatmentFilters.mapType]
+    );
+
     return (
-        <IntegrationReactSelect
-            suggestions={treatmentSuggestions}
+        <MapTypeStudyGroups
             onChange={onChange}
-            value={treatmentSuggestions.find(s => s.value === treatmentFilters.mapType)}
+            onMouseOver={onMouseOver}
+            studyResults={studyResultsItems}
+            ongoingAndPlannedStudies={ongoingAndPlannedStudiesItems}
+            studyResultsValue={studyResultsValue}
+            ongoingAndPlannedStudiesValue={ongoingAndPlannedStudiesValue}
         />
     );
 }

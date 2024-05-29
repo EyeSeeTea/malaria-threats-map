@@ -1,21 +1,25 @@
 import * as R from "ramda";
 import { createSelector } from "reselect";
-import { MalariaState, RegionState, SiteSelection, State } from "../types";
+import { ActionGroup, MalariaState, RegionState, SiteSelection, State } from "../types";
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
+import { SelectionData } from "../SelectionData";
+import { getFromLocalStorage } from "../../utils/browserCache";
+import { TotalStudiesInThemes } from "../../../domain/entities/TotalStudiesInThemes";
 
 const query = window.location.search.substring(1);
 
-const isTourInitiallyOpen = localStorage.getItem("tour") !== "visited" && !query;
+const isTourInitiallyOpen = getFromLocalStorage("tour") !== "visited" && !query;
 
 const initialState: MalariaState = Object.freeze({
-    theme: "prevention",
+    theme: "invasive",
     any: null,
     endemicity: false,
     countryMode: false,
     storyMode: false,
     storyModeStep: 0,
     filters: [2010, new Date().getFullYear()],
+    maxMinYears: [2010, new Date().getFullYear()],
     region: {
         country: "",
         region: "",
@@ -26,14 +30,19 @@ const initialState: MalariaState = Object.freeze({
     },
     lastUpdatedDates: {
         prevention: null,
+        diagnosisOngoing: null,
         diagnosis: null,
         treatment: null,
+        treatmentMMOngoing: null,
+        treatmentTESOngoing: null,
         invasive: null,
     },
-    initialDialogOpen: !query,
+    actionGroupSelected: null,
     filtersOpen: true,
     filtersMode: "filters",
     selection: null,
+    hoverSelection: null,
+    selectionData: null,
     mobileOptionsOpen: false,
     zoom: 2,
     setZoom: null,
@@ -43,62 +52,71 @@ const initialState: MalariaState = Object.freeze({
         open: isTourInitiallyOpen,
         step: 0,
     },
-    dataDownloadOpen: false,
     reportOpen: false,
     mapTitle: "",
+    subscriptionOpen: false,
     uploadFileOpen: false,
     feedbackOpen: false,
     theaterMode: false,
     legendExpanded: false,
+    isSubmittingSubscription: false,
     isUploadingFile: false,
+    totalStudiesInThemes: {
+        prevention: null,
+        diagnosis: null,
+        treatment: null,
+        invasive: null,
+    },
 });
 
 export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.MalariaSetTheme]: (theme: string) => R.assoc("theme", theme),
     [ActionTypeEnum.MalariaSetAny]: (any: any) => R.assoc("any", any),
-    [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => state => ({
-        ...state,
-        region: region ? { ...initialState.region, ...region } : null,
-    }),
-    [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
-        R.assoc("filters", filters || initialState.filters),
-    [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) => R.assoc("endemicity", visible),
-    [ActionTypeEnum.MalariaSetCountryMode]: (countryMode: boolean) => R.assoc("countryMode", countryMode),
-    [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) => R.assoc("storyMode", storyMode),
-    [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),
-    [ActionTypeEnum.MalariaSetInitialDialogOpen]: (initialDialogOpen: boolean) =>
-        R.assoc("initialDialogOpen", initialDialogOpen),
-    [ActionTypeEnum.SetFiltersOpen]: (filtersOpen: boolean) => R.assoc("filtersOpen", filtersOpen),
-    [ActionTypeEnum.SetFiltersMode]: (filtersMode: string) => R.assoc("filtersMode", filtersMode || "filters"),
-    [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => state => {
-        const propsHasChanged = () =>
-            state.selection?.SITE_ID !== selection.SITE_ID && state.selection?.coordinates !== selection.coordinates;
-
-        const newSelection =
-            (state.selection === null && selection !== null) || selection == null || propsHasChanged()
-                ? selection
-                : state.selection;
-
+    [ActionTypeEnum.MalariaSetRegion]: (region: RegionState | null) => (state: MalariaState) => {
         return {
             ...state,
-            selection: newSelection,
+            region: region ? { ...initialState.region, ...region } : {},
         };
     },
+    [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
+        R.assoc("filters", filters || initialState.filters),
+    [ActionTypeEnum.MalariaSetMaxMinYears]: (maxMinYears: number[] | undefined) =>
+        R.assoc("maxMinYears", maxMinYears || initialState.maxMinYears),
+    [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) => R.assoc("endemicity", visible),
+    [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) => R.assoc("storyMode", storyMode),
+    [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),
+    [ActionTypeEnum.MalariaActionGroupSelected]: (value: ActionGroup | null) => R.assoc("actionGroupSelected", value),
+    [ActionTypeEnum.SetSelection]: (selection: SiteSelection) => (state: MalariaState) => {
+        return {
+            ...state,
+            selection,
+        };
+    },
+    [ActionTypeEnum.SetHoverSelection]: (hoverSelection: SiteSelection) => (state: MalariaState) => {
+        return {
+            ...state,
+            hoverSelection,
+        };
+    },
+    [ActionTypeEnum.SetSelectionData]: (selectionData: SelectionData) => (state: MalariaState) => ({
+        ...state,
+        selectionData,
+    }),
     [ActionTypeEnum.SetMobileOptionsOpen]: (mobileOptionsOpen: boolean) =>
         R.assoc("mobileOptionsOpen", mobileOptionsOpen),
     [ActionTypeEnum.UpdateZoom]: (zoom: number) => R.assoc("zoom", zoom),
     [ActionTypeEnum.SetZoom]: (zoom: number) => R.assoc("setZoom", zoom),
     [ActionTypeEnum.UpdateBounds]: (bounds: Array<Array<number>>) => R.assoc("bounds", bounds),
     [ActionTypeEnum.SetBounds]: (bounds: Array<Array<number>>) => R.assoc("setBounds", bounds),
-    [ActionTypeEnum.SetTourOpen]: (open: boolean) => state => ({
+    [ActionTypeEnum.SetTourOpen]: (open: boolean) => (state: MalariaState) => ({
         ...state,
         tour: { ...initialState.tour, open },
     }),
-    [ActionTypeEnum.SetTourStep]: (step: number) => state => ({
+    [ActionTypeEnum.SetTourStep]: (step: number) => (state: MalariaState) => ({
         ...state,
         tour: { ...initialState.tour, step },
     }),
-    [ActionTypeEnum.SetDataDownloadOpen]: (dataDownloadOpen: boolean) => R.assoc("dataDownloadOpen", dataDownloadOpen),
+
     [ActionTypeEnum.SetReportOpen]: (reportOpen: boolean) => R.assoc("reportOpen", reportOpen),
     [ActionTypeEnum.SetMapTitle]: (mapTitle: string) => R.assoc("mapTitle", mapTitle),
     [ActionTypeEnum.SetUploadFileOpen]: (uploadFileOpen: boolean) => R.assoc("uploadFileOpen", uploadFileOpen),
@@ -109,39 +127,43 @@ export default createReducer<MalariaState>(initialState, {
     [ActionTypeEnum.UploadFileSuccess]: () => R.assoc("isUploadingFile", false),
     [ActionTypeEnum.UploadFileError]: () => R.assoc("isUploadingFile", false),
     [ActionTypeEnum.GetLastUpdatedSuccess]: (lastUpdatedDates: any) => R.assoc("lastUpdatedDates", lastUpdatedDates),
+    [ActionTypeEnum.GetTotalStudiesInThemesSuccess]: (totalStudiesInThemes: TotalStudiesInThemes) =>
+        R.assoc("totalStudiesInThemes", totalStudiesInThemes),
 });
 
 const selectMalariaState = (state: State) => state.malaria;
 
-export const selectTheme = createSelector(selectMalariaState, R.prop("theme"));
-export const selectStoryMode = createSelector(selectMalariaState, R.prop("storyMode"));
-export const selectAny = createSelector(selectMalariaState, R.prop("any"));
-export const selectEndemicity = createSelector(selectMalariaState, R.prop("endemicity"));
-export const selectCountryMode = createSelector(selectMalariaState, R.prop("countryMode"));
-export const selectFilters = createSelector(selectMalariaState, R.prop("filters"));
-export const selectRegion = createSelector(selectMalariaState, R.prop("region"));
-export const selectIsInitialDialogOpen = createSelector(selectMalariaState, R.prop("initialDialogOpen"));
-export const selectAreFiltersOpen = createSelector(selectMalariaState, R.prop("filtersOpen"));
-export const selectFiltersMode = createSelector(selectMalariaState, R.prop("filtersMode"));
-export const selectStoryModeStep = createSelector(selectMalariaState, R.prop("storyModeStep"));
-export const selectSelection = createSelector(selectMalariaState, R.prop("selection"));
-export const selectAreMobileOptionsOpen = createSelector(selectMalariaState, R.prop("mobileOptionsOpen"));
-export const selectSetZoom = createSelector(selectMalariaState, R.prop("setZoom"));
-export const selectSetBounds = createSelector(selectMalariaState, R.prop("setBounds"));
-export const selectTour = createSelector(selectMalariaState, R.prop("tour"));
-export const selectIsDataDownloadOpen = createSelector(selectMalariaState, R.prop("dataDownloadOpen"));
-export const selectIsReportOpen = createSelector(selectMalariaState, R.prop("reportOpen"));
+export const selectTheme = createSelector(selectMalariaState, state => state.theme);
+export const selectStoryMode = createSelector(selectMalariaState, state => state.storyMode);
+export const selectAny = createSelector(selectMalariaState, state => state.any);
+export const selectEndemicity = createSelector(selectMalariaState, state => state.endemicity);
+export const selectFilters = createSelector(selectMalariaState, state => state.filters);
+export const selectMaxMinYears = createSelector(selectMalariaState, state => state.maxMinYears);
+export const selectRegion = createSelector(selectMalariaState, state => state.region);
+export const selectActionGroupSelected = createSelector(selectMalariaState, state => state.actionGroupSelected);
+export const selectStoryModeStep = createSelector(selectMalariaState, state => state.storyModeStep);
+export const selectSelection = createSelector(selectMalariaState, state => state.selection);
+export const selectHoverSelection = createSelector(selectMalariaState, state => state.hoverSelection);
+export const selectAreMobileOptionsOpen = createSelector(selectMalariaState, state => state.mobileOptionsOpen);
+export const selectSetZoom = createSelector(selectMalariaState, state => state.setZoom);
+export const selectSetBounds = createSelector(selectMalariaState, state => state.setBounds);
+export const selectTour = createSelector(selectMalariaState, state => state.tour);
+export const selectIsReportOpen = createSelector(selectMalariaState, state => state.reportOpen);
 
-export const selectMapTitle = createSelector(selectMalariaState, R.prop("mapTitle"));
+export const selectMapTitle = createSelector(selectMalariaState, state => state.mapTitle);
 
-export const selectUploadFileOpen = createSelector(selectMalariaState, R.prop("uploadFileOpen"));
+export const selectUploadFileOpen = createSelector(selectMalariaState, state => state.uploadFileOpen);
 
-export const selectIsFeedbackOpen = createSelector(selectMalariaState, R.prop("feedbackOpen"));
+export const selectIsFeedbackOpen = createSelector(selectMalariaState, state => state.feedbackOpen);
 
-export const selectTheaterMode = createSelector(selectMalariaState, R.prop("theaterMode"));
+export const selectTheaterMode = createSelector(selectMalariaState, state => state.theaterMode);
 
-export const selectLegendExpanded = createSelector(selectMalariaState, R.prop("legendExpanded"));
+export const selectLegendExpanded = createSelector(selectMalariaState, state => state.legendExpanded);
 
-export const selectIsUploadingFile = createSelector(selectMalariaState, R.prop("isUploadingFile"));
+export const selectIsUploadingFile = createSelector(selectMalariaState, state => state.isUploadingFile);
 
-export const selectLastUpdatedDates = createSelector(selectMalariaState, R.prop("lastUpdatedDates"));
+export const selectLastUpdatedDates = createSelector(selectMalariaState, state => state.lastUpdatedDates);
+
+export const selectSelectionData = createSelector(selectMalariaState, state => state.selectionData);
+
+export const selectTotalStudiesInThemes = createSelector(selectMalariaState, state => state.totalStudiesInThemes);

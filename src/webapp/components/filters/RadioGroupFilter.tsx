@@ -1,65 +1,71 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { Paper } from "@material-ui/core";
-import { Divider, FilterWrapper } from "./Filters";
-import FormLabel from "@material-ui/core/FormLabel";
+import { Divider, FilterColumContainer } from "./Filters";
 import { Option } from "../BasicSelect";
+import { Typography } from "@mui/material";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
         padding: 2px;
+        font-size: 14px;
+    }
+    & svg {
+        left: 2px;
     }
 `;
 
 type RadioGroupProps = {
-    label: string;
+    label?: string;
+    labelFontSize?: string;
+    labelFontWeight?: string;
     options: Option[];
     handleChange: (event: React.ChangeEvent<unknown>) => void;
     value: string;
+    margin?: string;
+    padding?: string;
+    background?: string;
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            display: "flex",
-        },
-        formControl: {
-            margin: theme.spacing(3),
-        },
-        group: {
-            padding: theme.spacing(1, 2),
-        },
-        radio: {
-            padding: theme.spacing(0.5, 0),
-        },
-    })
-);
-
-function RadioGroupFilter({ label, options, handleChange, value }: RadioGroupProps) {
-    const classes = useStyles({});
-
+function RadioGroupFilter({
+    label,
+    options,
+    handleChange,
+    value,
+    margin,
+    padding,
+    background,
+    labelFontSize,
+    labelFontWeight,
+}: RadioGroupProps) {
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">{label}</FormLabel>
+        <FilterColumContainer margin={margin} padding={padding} background={background}>
+            {label && (
+                <Typography
+                    color="dimgray"
+                    component="legend"
+                    fontSize={labelFontSize}
+                    fontWeight={labelFontWeight}
+                    variant="body2"
+                >
+                    {label}
+                </Typography>
+            )}
             <Divider />
-            <Paper className={classes.group}>
-                <RadioGroup value={value} onChange={handleChange}>
-                    {options.map((option: Option) => (
-                        <StyledFormControlLabel
-                            key={option.value}
-                            value={option.value}
-                            control={<Radio color="primary" />}
-                            label={option.label}
-                        />
-                    ))}
-                </RadioGroup>
-            </Paper>
-        </FilterWrapper>
+            <RadioGroup value={value} onChange={handleChange} sx={{ paddingLeft: 2 }}>
+                {options.map((option: Option) => (
+                    <StyledFormControlLabel
+                        key={option.value}
+                        value={option.value}
+                        control={<Radio />}
+                        label={option.label}
+                    />
+                ))}
+            </RadioGroup>
+        </FilterColumContainer>
     );
 }
 

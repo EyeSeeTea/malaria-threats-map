@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./webapp/App";
 import "./webapp/config/i18next";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import { initHotjar } from "./hotjar";
 import config from "./webapp/config";
 
@@ -33,7 +33,9 @@ if (feedbackConfig) {
 }
 
 ReactGA.initialize(gaAppId, {
-    debug: false,
+    gaOptions: {
+        debug: false,
+    },
 });
 
 ReactDOM.render(<App />, document.getElementById("root"));

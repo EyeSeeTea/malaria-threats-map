@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { setRegionAction } from "../../store/actions/base-actions";
+import { setRegionAction, setSelection } from "../../store/actions/base-actions";
 import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
-import FormLabel from "@material-ui/core/FormLabel";
-import { Divider, FilterWrapper } from "./Filters";
 import { selectFilteredPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { selectFilteredDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
 import { selectFilteredTreatmentStudies } from "../../store/reducers/treatment-reducer";
 import { selectFilteredInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import * as R from "ramda";
 import { sendAnalytics } from "../../utils/analytics";
-import { Study } from "../../../domain/entities/Study";
-import IntegrationReactSelect from "../BasicSelect";
+import { getRegionBySite, Study } from "../../../domain/entities/Study";
 import { useTranslation } from "react-i18next";
+import SingleFilter from "./common/SingleFilter";
+import { isNotNull } from "../../utils/number-utils";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -26,6 +25,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setRegion: setRegionAction,
+    setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -40,20 +40,11 @@ function SiteSelector({
     invasiveStudies,
     region,
     setRegion,
+    setSelection,
 }: Props) {
     const { t } = useTranslation();
-    const [input, setInput] = useState("");
-    const onChange = (selection: any) => {
-        const label = selection ? selection.value : undefined;
-        if (label) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label });
-        setRegion({
-            site: selection ? selection.value : undefined,
-            siteIso2: selection ? selection.iso2 : undefined,
-            siteCoordinates: selection ? selection.coords : undefined,
-            country: selection ? selection.iso2 : undefined,
-        });
-    };
-    const studies: Study[] = (() => {
+
+    const studies: Study[] = React.useMemo(() => {
         switch (theme) {
             case "prevention":
                 return preventionStudies;
@@ -64,37 +55,50 @@ function SiteSelector({
             case "invasive":
                 return invasiveStudies;
         }
-    })();
+    }, [theme, preventionStudies, diagnosisStudies, treatmentStudies, invasiveStudies]);
 
-    const sortedStudies = studies.sort((a, b) => (a.YEAR_START < b.YEAR_START ? 1 : -1));
+    const siteRegions = React.useMemo(() => {
+        return R.uniqBy(
+            study => study.site && study.siteLabel,
+            studies.map(study => getRegionBySite(study))
+        )
+            .filter(s => isNotNull(s.siteLabel))
+            .sort((a, b) => (a.siteLabel < b.siteLabel ? -1 : 1));
+    }, [studies]);
 
-    const SITES_SUGGESTIONS = R.uniqBy(
-        study => study.value && study.label,
-        sortedStudies.map(study => ({
-            label: study.SITE_NAME || study.VILLAGE_NAME,
-            value: study.SITE_ID,
-            iso2: study.ISO2,
-            coords: [study.Latitude, study.Longitude],
-        }))
-    );
+    const suggestions = React.useMemo(() => {
+        return siteRegions.map(siteRegion => {
+            return {
+                label: siteRegion.siteLabel,
+                value: siteRegion.site,
+            };
+        });
+    }, [siteRegions]);
 
-    const suggestions = SITES_SUGGESTIONS.filter(
-        suggestion => suggestion.label && suggestion.label.toLowerCase().startsWith(input.toLowerCase())
-    ).sort((a, b) => (a.label < b.label ? -1 : 1));
+    const onChange = (selection?: string) => {
+        const site = siteRegions.find(site => site.site === selection);
+        if (site) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
+        setRegion(site);
+
+        if (site) {
+            setSelection({
+                ISO_2_CODE: site.siteIso2,
+                SITE_ID: site.site,
+                coordinates: site.siteCoordinates,
+                OBJECTIDs: [],
+            });
+        }
+    };
 
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">Site</FormLabel>
-            <Divider />
-            <IntegrationReactSelect
-                isClearable
-                placeholder={t("common.filters.select_site")}
-                suggestions={suggestions}
-                onChange={onChange}
-                onInputChange={setInput}
-                value={SITES_SUGGESTIONS.find((s: any) => s.value === region.site) || null}
-            />
-        </FilterWrapper>
+        <SingleFilter
+            optimizePerformance={true}
+            label={t("common.filters.site")}
+            placeholder={t("common.filters.select_site")}
+            options={suggestions}
+            onChange={onChange}
+            value={region.site}
+        />
     );
 }
 

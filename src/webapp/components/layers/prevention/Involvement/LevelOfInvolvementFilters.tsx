@@ -1,6 +1,7 @@
 import React from "react";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
+
 import SynergistTypeFilter from "../../../filters/SynergistTypeFilter";
 import ProxyTypeFilter from "../../../filters/ProxyTypeFilter";
 
@@ -8,9 +9,9 @@ export default function LevelOfInvolvementFilters() {
     return (
         <div>
             <ProxyTypeFilter />
-            <SpeciesFilter />
             <SynergistTypeFilter />
-            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
+            <SpeciesFilter />
+            <YearRangeSelector />
         </div>
     );
 }

@@ -10,10 +10,11 @@ import {
     filterByInsecticideTypes,
     filterByIntensityStatus,
     filterByLevelOfInvolvement,
+    filterByProxyType,
     filterByRegion,
     filterByResistanceMechanism,
     filterByResistanceStatus,
-    filterByType,
+    filterByTypes,
     filterByTypeSynergist,
     filterByYearRange,
 } from "../layers/studies-filters";
@@ -47,7 +48,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             filterByIntensityStatus,
             filterByInsecticideClass(preventionFilters.insecticideClass),
             filterByInsecticideTypes(preventionFilters.insecticideTypes),
-            filterByType(preventionFilters.type),
+            filterByTypes(preventionFilters.type),
             filterByYearRange(yearFilter),
             filterByRegion(region),
         ],
@@ -55,20 +56,20 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
             filterByResistanceStatus,
             filterByInsecticideClass(preventionFilters.insecticideClass),
             filterByInsecticideTypes(preventionFilters.insecticideTypes),
-            filterByType(preventionFilters.type),
+            filterByTypes(preventionFilters.type),
             filterByYearRange(yearFilter),
             filterByRegion(region),
         ],
         [PreventionMapType.RESISTANCE_MECHANISM]: [
             filterByResistanceMechanism,
-            filterByType(preventionFilters.type),
+            filterByTypes(preventionFilters.type),
             filterByAssayTypes(preventionFilters.assayTypes),
             filterByYearRange(yearFilter),
             filterByRegion(region),
         ],
         [PreventionMapType.LEVEL_OF_INVOLVEMENT]: [
             filterByLevelOfInvolvement,
-            filterByType(preventionFilters.type),
+            filterByProxyType(preventionFilters.proxyType),
             filterByTypeSynergist(preventionFilters.synergistTypes),
             filterByYearRange(yearFilter),
             filterByRegion(region),
@@ -90,6 +91,7 @@ const SpeciesFilter: React.FC<Props> = ({ preventionFilters, studies, yearFilter
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
+            placeholder={t("common.filters.select_vector_species_placeholder")}
             options={suggestions}
             onChange={setSpecies}
             value={preventionFilters.species}

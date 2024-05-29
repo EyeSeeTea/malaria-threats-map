@@ -23,8 +23,8 @@ export default createReducer<DistrictsState>(initialState, {
 
 const selectDistrictsState = (state: State) => state.district;
 
-export const selectDistrictsLayer = createSelector(selectDistrictsState, R.prop("layer"));
+export const selectDistrictsLayer = createSelector(selectDistrictsState, districtState => districtState.layer);
 
-export const selectDistricts = createSelector(selectDistrictsState, R.prop("districts"));
+export const selectDistricts = createSelector(selectDistrictsState, districtState => districtState.districts);
 
-export const selectDistrictsAreLoading = createSelector(selectDistrictsState, R.prop("loading"));
+export const selectDistrictsAreLoading = createSelector(selectDistrictsState, districtState => districtState.loading);

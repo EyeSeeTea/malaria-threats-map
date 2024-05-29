@@ -1,13 +1,16 @@
+import baseSymbols from "../../common/baseSymbols";
 import { INVASIVE_STATUS } from "./utils";
 
 export const InvasiveStatusColors: { [key: string]: string[] } = {
     [INVASIVE_STATUS.INVASIVE]: ["#ed5565", "#de182c"],
     [INVASIVE_STATUS.NATIVE]: ["#5abe86", "#3a926f"],
+    [INVASIVE_STATUS.NOTFOUND]: ["#BEBEBE", "#838383"],
     [INVASIVE_STATUS.UNKNOWN]: ["#d3d3d3", "#adadad"],
 };
 
 const vectorOcurranceSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
+    ...baseSymbols,
+    "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2, 4, 7],
     "circle-color": [
         "match",
         ["get", "INVASIVE_STATUS"],
@@ -15,13 +18,12 @@ const vectorOcurranceSymbols = {
         InvasiveStatusColors[INVASIVE_STATUS.INVASIVE][0],
         INVASIVE_STATUS.NATIVE,
         InvasiveStatusColors[INVASIVE_STATUS.NATIVE][0],
+        INVASIVE_STATUS.NOTFOUND,
+        InvasiveStatusColors[INVASIVE_STATUS.NOTFOUND][0],
         InvasiveStatusColors[INVASIVE_STATUS.UNKNOWN][0],
     ],
-    "circle-opacity": 1,
     "circle-stroke-color": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
+        ...baseSymbols["circle-stroke-color"],
         [
             "match",
             ["get", "INVASIVE_STATUS"],
@@ -29,11 +31,11 @@ const vectorOcurranceSymbols = {
             InvasiveStatusColors[INVASIVE_STATUS.INVASIVE][1],
             INVASIVE_STATUS.NATIVE,
             InvasiveStatusColors[INVASIVE_STATUS.NATIVE][1],
+            INVASIVE_STATUS.NOTFOUND,
+            InvasiveStatusColors[INVASIVE_STATUS.NOTFOUND][1],
             InvasiveStatusColors[INVASIVE_STATUS.UNKNOWN][1],
         ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
 };
 
 export default vectorOcurranceSymbols;

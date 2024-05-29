@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { State, TreatmentMapType, TreatmentState } from "../types";
+import { State, TreatmentDataset, TreatmentMapType, TreatmentState } from "../types";
 import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
 
 const initialState: TreatmentState = Object.freeze({
@@ -12,12 +12,14 @@ const initialState: TreatmentState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: TreatmentMapType.TREATMENT_FAILURE,
-        plasmodiumSpecies: "P._FALCIPARUM",
-        drug: "DRUG_AL",
-        molecularMarker: 1,
+        dataset: "THERAPEUTIC_EFFICACY_STUDY",
+        plasmodiumSpecies: [],
+        drugs: [],
+        molecularMarkers: [],
         excludeLowerPatients: false,
         excludeLowerSamples: false,
     },
+    selectionStudies: [],
 });
 
 function updateFilter<T>(key: string, value: T, def?: T) {
@@ -36,16 +38,20 @@ function updateMapType(mapType: TreatmentMapType) {
     return updateFilter("mapType", mapType, TreatmentMapType.TREATMENT_FAILURE);
 }
 
-function updatePlasmodiumSpecies(plasmodiumSpecies: string) {
-    return updateFilter("plasmodiumSpecies", plasmodiumSpecies, "P._FALCIPARUM");
+function updateDataset(dataset: TreatmentDataset) {
+    return updateFilter("dataset", dataset, "THERAPEUTIC_EFFICACY_STUDY");
 }
 
-function updateDrug(drug: string) {
-    return updateFilter("drug", drug, "DRUG_AL");
+function updatePlasmodiumSpecies(plasmodiumSpecies: string[]) {
+    return updateFilter("plasmodiumSpecies", plasmodiumSpecies, []);
 }
 
-function updateMolecularMarker(molecularMarker: number) {
-    return updateFilter("molecularMarker", molecularMarker, 1);
+function updateDrugs(drugs: string[]) {
+    return updateFilter("drugs", drugs, []);
+}
+
+function updateMolecularMarkers(molecularMarkers: number[]) {
+    return updateFilter("molecularMarkers", molecularMarkers);
 }
 
 function updateExcludeLowerPatients(value: boolean) {
@@ -57,24 +63,25 @@ function updateExcludeLowerSamples(value: boolean) {
 }
 
 export default createReducer<TreatmentState>(initialState, {
-    [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesRequest]: () => (state: TreatmentState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesSuccess]: (studies: TreatmentStudy[]) => (state: TreatmentState) => ({
         ...state,
         loading: false,
         studies: studies,
     }),
-    [ActionTypeEnum.FetchTreatmentStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchTreatmentStudiesError]: () => (state: TreatmentState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
     }),
     [ActionTypeEnum.SetTreatmentMapType]: updateMapType,
+    [ActionTypeEnum.SetTreatmentDataset]: updateDataset,
     [ActionTypeEnum.SetPlasmodiumSpecies]: updatePlasmodiumSpecies,
-    [ActionTypeEnum.SetDrug]: updateDrug,
-    [ActionTypeEnum.SetMolecularMarker]: updateMolecularMarker,
+    [ActionTypeEnum.SetDrugs]: updateDrugs,
+    [ActionTypeEnum.SetMolecularMarkers]: updateMolecularMarkers,
     [ActionTypeEnum.SetExcludeLowerPatients]: updateExcludeLowerPatients,
     [ActionTypeEnum.SetExcludeLowerSamples]: updateExcludeLowerSamples,
     [ActionTypeEnum.SetTreatmentFilteredStudies]: (filteredStudies: TreatmentStudy[]) =>
@@ -83,12 +90,12 @@ export default createReducer<TreatmentState>(initialState, {
 
 const selectTreatmentState = (state: State) => state.treatment;
 
-export const selectTreatmentStudies = createSelector(selectTreatmentState, R.prop("studies"));
+export const selectTreatmentStudies = createSelector(selectTreatmentState, state => state.studies);
 
-export const selectTreatmentStudiesLoading = createSelector(selectTreatmentState, R.prop("loading"));
+export const selectTreatmentStudiesLoading = createSelector(selectTreatmentState, state => state.loading);
 
-export const selectTreatmentStudiesError = createSelector(selectTreatmentState, R.prop("error"));
+export const selectTreatmentStudiesError = createSelector(selectTreatmentState, state => state.error);
 
-export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, R.prop("filteredStudies"));
+export const selectFilteredTreatmentStudies = createSelector(selectTreatmentState, state => state.filteredStudies);
 
-export const selectTreatmentFilters = createSelector(selectTreatmentState, R.prop("filters"));
+export const selectTreatmentFilters = createSelector(selectTreatmentState, state => state.filters);

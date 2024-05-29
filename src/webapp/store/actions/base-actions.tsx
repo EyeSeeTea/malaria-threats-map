@@ -1,18 +1,22 @@
-import { createAction } from "typesafe-actions";
+import { createAction, createCustomAction } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import { RegionState, SiteSelection } from "../types";
-import { AjaxError } from "rxjs/ajax";
+import { ActionGroup, RegionState, SiteSelection } from "../types";
+import { SelectionData } from "../SelectionData";
 import { UploadFileData } from "../../../domain/usecases/UploadFileUseCase";
+import { Option } from "../../components/BasicSelect";
+import { TotalStudiesInThemes } from "../../../domain/entities/TotalStudiesInThemes";
 
-interface SetThemeOptions {
-    fromHome?: boolean;
-}
+export type Source = "map" | "download";
 
-export const setThemeAction = createAction(ActionTypeEnum.MalariaSetTheme, action => {
-    return (theme: string, options: SetThemeOptions = {}) => action(theme, options);
-});
+export const setThemeAction = createCustomAction(
+    ActionTypeEnum.MalariaSetTheme,
+    (theme: string, from: Source = "map") => ({
+        payload: theme,
+        from,
+    })
+);
 
-interface GAEvent {
+export interface GAEvent {
     category: string;
     action: string;
     label?: string;
@@ -22,134 +26,81 @@ export interface GAPageView {
     path: string;
 }
 
-export const logEventAction = createAction(ActionTypeEnum.MalariaLogEvent, action => {
-    return (event: GAEvent) => action(event);
-});
+export const logEventAction = createAction(ActionTypeEnum.MalariaLogEvent)<GAEvent>();
 
-export const logPageViewAction = createAction(ActionTypeEnum.MalariaLogPageView, action => {
-    return (pageView: GAPageView | undefined) => (pageView ? action(pageView) : null);
-});
+export const logPageViewAction = createAction(
+    ActionTypeEnum.MalariaLogPageView,
+    (pageView: GAPageView | undefined) => pageView || null
+)<GAPageView | undefined>();
 
-export const logOutboundLinkAction = createAction(ActionTypeEnum.MalariaLogOutboundLink, action => {
-    return (url: string) => action(url);
-});
+export const logOutboundLinkAction = createAction(ActionTypeEnum.MalariaLogOutboundLink)<string>();
 
-export const setRegionAction = createAction(ActionTypeEnum.MalariaSetRegion, action => {
-    return (region: RegionState | null) => action(region);
-});
+export const setRegionAction = createAction(ActionTypeEnum.MalariaSetRegion)<RegionState | null>();
 
-export const setFiltersAction = createAction(ActionTypeEnum.MalariaSetFilters, action => {
-    return (filters: number[] | undefined) => action(filters);
-});
+export const setFiltersAction = createAction(ActionTypeEnum.MalariaSetFilters)<number[] | undefined>();
 
-export const toggleEndemicityLayerAction = createAction(ActionTypeEnum.MalariaToogleEndemicityLayer, action => {
-    return (visible: boolean) => action(visible);
-});
+export const setMaxMinYearsAction = createAction(ActionTypeEnum.MalariaSetMaxMinYears)<number[] | undefined>();
 
-export const setCountryModeAction = createAction(ActionTypeEnum.MalariaSetCountryMode, action => {
-    return (countryMode: boolean) => action(countryMode);
-});
+export const toggleEndemicityLayerAction = createAction(ActionTypeEnum.MalariaToogleEndemicityLayer)<boolean>();
 
-export const setStoryModeAction = createAction(ActionTypeEnum.MalariaSetStoryMode, action => {
-    return (storyMode: boolean) => action(storyMode);
-});
+export const setStoryModeAction = createAction(ActionTypeEnum.MalariaSetStoryMode)<boolean>();
 
-export const setStoryModeStepAction = createAction(ActionTypeEnum.MalariaSetStoryModeStep, action => {
-    return (storyModeStep: number) => action(storyModeStep);
-});
+export const setStoryModeStepAction = createAction(ActionTypeEnum.MalariaSetStoryModeStep)<number>();
 
-export const setInitialDialogOpen = createAction(ActionTypeEnum.MalariaSetInitialDialogOpen, action => {
-    return (initialDialogOpen: boolean) => action(initialDialogOpen);
-});
+export const setActionGroupSelected = createAction(ActionTypeEnum.MalariaActionGroupSelected)<ActionGroup | null>();
 
-export const setFiltersOpen = createAction(ActionTypeEnum.SetFiltersOpen, action => {
-    return (filtersOpen: boolean) => action(filtersOpen);
-});
+export const setSelection = createAction(ActionTypeEnum.SetSelection)<SiteSelection | null>();
 
-export const setFiltersMode = createAction(ActionTypeEnum.SetFiltersMode, action => {
-    return (filtersMode: string) => action(filtersMode);
-});
+export const setHoverSelection = createAction(ActionTypeEnum.SetHoverSelection)<SiteSelection | null>();
 
-export const setSelection = createAction(ActionTypeEnum.SetSelection, action => {
-    return (selection: SiteSelection | null) => action(selection);
-});
+export const setSelectionData = createAction(ActionTypeEnum.SetSelectionData)<SelectionData | null>();
 
-export const setMobileOptionsOpen = createAction(ActionTypeEnum.SetMobileOptionsOpen, action => {
-    return (mobileOptionsOpen: boolean) => action(mobileOptionsOpen);
-});
+export const setSelectionDataFilterSelection = createAction(ActionTypeEnum.SetSelectionDataFilterSelection)<Option[]>();
 
-export const updateZoomAction = createAction(ActionTypeEnum.UpdateZoom, action => {
-    return (zoom: number) => action(zoom);
-});
+export const setMobileOptionsOpen = createAction(ActionTypeEnum.SetMobileOptionsOpen)<boolean>();
 
-export const updateBoundsAction = createAction(ActionTypeEnum.UpdateBounds, action => {
-    return (bounds: Array<Array<number>>) => action(bounds);
-});
+export const updateZoomAction = createAction(ActionTypeEnum.UpdateZoom)<number>();
 
-export const setBoundsAction = createAction(ActionTypeEnum.SetBounds, action => {
-    return (bounds: Array<Array<number>>) => action(bounds);
-});
+export const updateBoundsAction = createAction(ActionTypeEnum.UpdateBounds)<Array<Array<number>>>();
 
-export const setTourOpenAction = createAction(ActionTypeEnum.SetTourOpen, action => {
-    return (open: boolean) => action(open);
-});
+export const setBoundsAction = createAction(ActionTypeEnum.SetBounds)<Array<Array<number>>>();
 
-export const setTourStepAction = createAction(ActionTypeEnum.SetTourStep, action => {
-    return (step: number) => action(step);
-});
+export const setTourOpenAction = createAction(ActionTypeEnum.SetTourOpen)<boolean>();
 
-export const setDataDownloadOpenAction = createAction(ActionTypeEnum.SetDataDownloadOpen, action => {
-    return (dataDownloadOpen: boolean) => action(dataDownloadOpen);
-});
+export const setTourStepAction = createAction(ActionTypeEnum.SetTourStep)<number>();
 
-export const setReportOpenAction = createAction(ActionTypeEnum.SetReportOpen, action => {
-    return (reportOpen: boolean) => action(reportOpen);
-});
+export const setReportOpenAction = createAction(ActionTypeEnum.SetReportOpen)<boolean>();
 
-export const setMapTitleAction = createAction(ActionTypeEnum.SetMapTitle, action => {
-    return (mapTitle: string) => action(mapTitle);
-});
+export const setMapTitleAction = createAction(ActionTypeEnum.SetMapTitle)<string>();
 
-export const setUploadFileOpenAction = createAction(
-    ActionTypeEnum.SetUploadFileOpen,
-    action => (uploadFileOpen: boolean) => action(uploadFileOpen)
-);
+export const setUploadFileOpenAction = createAction(ActionTypeEnum.SetUploadFileOpen)<boolean>();
 
-export const setFeedbackOpenAction = createAction(ActionTypeEnum.SetFeedbackOpen, action => (feedbackOpen: boolean) =>
-    action(feedbackOpen)
-);
+export const setFeedbackOpenAction = createAction(ActionTypeEnum.SetFeedbackOpen)<boolean>();
 
-export const setTheaterModeAction = createAction(ActionTypeEnum.SetTheaterMode, action => (theaterMode: boolean) =>
-    action(theaterMode)
-);
+export const setTheaterModeAction = createAction(ActionTypeEnum.SetTheaterMode)<boolean>();
 
-export const setLegendExpandedAction = createAction(
-    ActionTypeEnum.SetLegendExpanded,
-    action => (legendExpanded: boolean) => action(legendExpanded)
-);
+export const setLegendExpandedAction = createAction(ActionTypeEnum.SetLegendExpanded)<boolean>();
 
-export const getLastUpdatedRequestAction = createAction(ActionTypeEnum.GetLastUpdatedRequest, action => () => action());
+export const getLastUpdatedRequestAction = createAction(ActionTypeEnum.GetLastUpdatedRequest)();
 
-export const getLastUpdatedSuccessAction = createAction(
-    ActionTypeEnum.GetLastUpdatedSuccess,
-    action => (lastUpdated: { prevention: Date; diagnosis: Date; treatment: Date; invasive: Date }) =>
-        action(lastUpdated)
-);
+type LastUpdated = { prevention: Date; diagnosis: Date; treatment: Date; invasive: Date };
 
-export const getLastUpdatedFailureAction = createAction(
-    ActionTypeEnum.GetLastUpdatedFailure,
-    action => (_error: AjaxError | string) => action()
-);
+export const getLastUpdatedSuccessAction = createAction(ActionTypeEnum.GetLastUpdatedSuccess)<LastUpdated>();
 
-export const uploadFileRequestAction = createAction(
-    ActionTypeEnum.UploadFileRequest,
-    action => (data: UploadFileData) => action(data)
-);
+export const getLastUpdatedFailureAction = createAction(ActionTypeEnum.GetLastUpdatedFailure)<Error | string>();
 
-export const uploadFileSuccessAction = createAction(ActionTypeEnum.UploadFileSuccess, action => {
-    return () => action();
-});
+export const uploadFileRequestAction = createAction(ActionTypeEnum.UploadFileRequest)<UploadFileData>();
 
-export const uploadFileErrorAction = createAction(ActionTypeEnum.UploadFileError, action => {
-    return () => action();
-});
+export const uploadFileSuccessAction = createAction(ActionTypeEnum.UploadFileSuccess)();
+
+export const uploadFileErrorAction = createAction(ActionTypeEnum.UploadFileError)();
+
+export const getTotalStudiesInThemesRequestAction = createAction(ActionTypeEnum.GetTotalStudiesInThemesRequest)();
+
+export const getTotalStudiesInThemesSuccessAction = createAction(
+    ActionTypeEnum.GetTotalStudiesInThemesSuccess
+)<TotalStudiesInThemes>();
+
+export const getTotalStudiesInThemesFailureAction = createAction(ActionTypeEnum.GetTotalStudiesInThemesFailure)<
+    Error | string
+>();

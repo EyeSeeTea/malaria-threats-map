@@ -1,9 +1,7 @@
 import React from "react";
 import { style } from "./style";
 import styled from "styled-components";
-import Layers from "./Layers";
 import mapboxgl from "mapbox-gl";
-import { isMobile } from "react-device-detect";
 import { State } from "../store/types";
 import { connect } from "react-redux";
 import PreventionLayer from "./layers/prevention/PreventionLayer";
@@ -11,15 +9,14 @@ import DiagnosisLayer from "./layers/diagnosis/DiagnosisLayer";
 import TreatmentLayer from "./layers/treatment/TreatmentLayer";
 import InvasiveLayer from "./layers/invasive/InvasiveLayer";
 import EndemicityLayer from "./layers/EndemicityLayer";
-import Filters from "./filters/container/Filters";
-import MapTypesSelector from "./MapTypesSelector";
-import TopicSelector from "./TopicSelector";
 import RegionLayer from "./layers/RegionLayer";
-import WhoLogo from "./WhoLogo";
+import WhoLogoBlue from "./WhoLogoBlue";
+
 import {
     selectAny,
-    selectIsInitialDialogOpen,
     selectRegion,
+    selectSelection,
+    selectSelectionData,
     selectSetBounds,
     selectSetZoom,
     selectTheaterMode,
@@ -31,91 +28,116 @@ import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
-import { setRegionAction, setThemeAction, updateBoundsAction, updateZoomAction } from "../store/actions/base-actions";
-import { Fade, Hidden } from "@material-ui/core";
-import Country from "./Country";
-import LeyendPopover from "./LegendPopover";
-import Leyend from "./Leyend";
-import StoryModeSelector from "./StoryModeSelector";
-import LanguageSelectorSelect from "./LanguageSelectorSelect";
+import {
+    setThemeAction,
+    updateBoundsAction,
+    updateZoomAction,
+    setActionGroupSelected,
+    setSelection,
+} from "../store/actions/base-actions";
+import { Fade, Box, Fab, Drawer, Tooltip, Stack } from "@mui/material";
+import { Add as ZoomInIcon, Remove as ZoomOutIcon, OpenInFull as MapOnlyIcon } from "@mui/icons-material";
+import LeyendPopover from "./legend/LegendPopover";
 import MalariaTour from "./tour/MalariaTour";
 import MekongLayer from "./layers/MekongLayer";
-import DataDownload from "./DataDownload";
-import Screenshot from "./Screenshot";
 import Report from "./Report";
-import Feedback from "./Feedback";
-import InitialDisclaimer from "./InitialDisclaimer";
 import TheaterMode from "./TheaterMode";
-import TheaterModeIcon from "./TheaterMode/TheaterModeIcon";
-import InitialDialog from "./InitialDialog";
-import TourIcon from "./TourIcon";
-import ShareIcon from "./ShareIcon";
-import { getAnalyticsPageViewFromString } from "../store/analytics";
-import { sendAnalytics } from "../utils/analytics";
 import { WithTranslation, withTranslation } from "react-i18next";
+import Hidden from "./hidden/Hidden";
+import MapActions from "./map-actions/MapActions";
+import { dispatchCustomEvent } from "../utils/dom-utils";
+import LastUpdated from "./last-updated/LastUpdated";
+import FloatingLegend from "./legend/FloatingLegendContainer";
+import InfoToastLink from "./InfoToastLink";
+import SecondaryHeader from "../pages/secondary-layout/SecondaryHeader";
+import SelectionDataContent from "./site-selection-content/SelectionDataContent";
+import { getLayerSource } from "./layers/common/utils";
+import { resetSelectionInFeatures } from "./layers/effects";
+import MapScreenshot from "./MapScreenshot";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
 
-const Separator = styled.div`
-    width: 20px;
-`;
+// Fix bug in production build
+// https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-750489778
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
+const drawerWidth = 100;
+const rightSideBarWidth = 500;
 
 const BaseContainer = styled.div`
     max-width: 600px;
-    margin: 20px;
+    margin: 30px;
     outline: none;
+    position: absolute;
 `;
 
-const TopRightContainer = styled(BaseContainer)`
-    position: absolute;
-    top: 0;
-    right: 0;
+const BaseFlexAlignStartContainer = styled(BaseContainer)`
     display: flex;
-    align-items: center;
+    align-items: start;
+    flex-direction: column;
 `;
 
-const TopRightVerticalContainer = styled(BaseContainer)`
-    position: absolute;
-    top: 0;
-    right: 0;
+const SearchContainer = styled(BaseFlexAlignStartContainer)`
+    pointer-events: none;
+    top: 7%;
+    left: 360px;
+    z-index: 1;
+    right: 16px;
     display: flex;
     flex-direction: column;
     align-items: start;
 `;
 
-const BottomRightContainer = styled(BaseContainer)`
+const LegendContainer = styled(BaseContainer)<{ rightOpen: boolean }>`
     position: absolute;
-    bottom: 0;
-    right: 0;
+    top: 7%;
+    right: ${props => (props.rightOpen ? `${rightSideBarWidth}px` : "10px")};
 `;
 
 const BottomLeftContainer = styled(BaseContainer)`
-    position: absolute;
     bottom: 0;
-    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+const TopMiddleContainer = styled(BaseContainer)<{ rightOpen: boolean }>`
+    top: 7%;
+    left: ${props => (props.rightOpen ? `30%` : "40%")};
+    width: 310px;
 `;
 
 const BottomMiddleContainer = styled(BaseContainer)`
-    position: absolute;
-    margin: 10px auto;
-    left: 0;
+    bottom: 0;
+    left: 40%;
+    width: 310px;
+`;
+
+const BottomRightContainer = styled(BaseContainer)`
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
     bottom: 0;
     right: 0;
 `;
 
-const SearchContainer = styled(BaseContainer)`
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    z-index: 1;
+const FloatingActionContainer = styled(BaseContainer)`
+    top: 7%;
+    z-index: 99;
+    pointer-events: all;
 `;
 
-const Divider = styled.div`
-    height: 10px;
+const PushoverContainer = styled.div`
+    margin-left: ${(props: { menuOpen: boolean }) => (props.menuOpen ? `${drawerWidth}px` : "0")};
+`;
+
+// A Fab ("floating action button") looks like a rounded button.
+const MapFab = styled(Fab)`
+    margin: 5px;
+    width: 36px;
+    height: 11px;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -129,29 +151,47 @@ const mapStateToProps = (state: State) => ({
     diagnosisStudies: selectDiagnosisStudies(state),
     treatmentStudies: selectTreatmentStudies(state),
     invasiveStudies: selectInvasiveStudies(state),
-    initialDialogOpen: selectIsInitialDialogOpen(state),
     tour: selectTour(state),
+    selection: selectSelection(state),
+    selectionData: selectSelectionData(state),
 });
 
 const mapDispatchToProps = {
     setTheme: setThemeAction,
-    setRegion: setRegionAction,
+    setSelection: setSelection,
     updateZoom: updateZoomAction,
     updateBounds: updateBoundsAction,
     addNotification: addNotificationAction,
+    setActionGroupSelected: setActionGroupSelected,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = StateProps & DispatchProps & WithTranslation;
+type StateTypes = {
+    ready: boolean;
+    theme: string;
+    menuOpen: boolean;
+    sidebarOpen: boolean;
+    viewMapOnly: boolean; // show only the legend and last-data-update boxes
+    viewport: {
+        latitude: number;
+        longitude: number;
+        zoom: number;
+        bearing: number;
+        pitch: number;
+    };
+};
 
-class Map extends React.Component<Props> {
+class Map extends React.Component<Props, StateTypes> {
     map: mapboxgl.Map;
     mapContainer: any;
     state = {
         ready: false,
-        theme: "prevention",
-        style: style,
+        theme: "invasive",
+        menuOpen: false,
+        sidebarOpen: false,
+        viewMapOnly: false, // show only the legend and last-data-update boxes
         viewport: {
             latitude: 40,
             longitude: 0,
@@ -171,8 +211,8 @@ class Map extends React.Component<Props> {
             container: this.mapContainer,
             style: style,
             center: [0.0, 28.291565],
-            maxZoom: 8.99999,
-            minZoom: 1,
+            maxZoom: 10,
+            minZoom: 1.2,
             zoom: 1.5,
             maxBounds: undefined,
             preserveDrawingBuffer: true,
@@ -200,27 +240,77 @@ class Map extends React.Component<Props> {
             this.props.updateBounds(cc);
         });
 
-        const pageView = getAnalyticsPageViewFromString({ page: this.props.theme });
-        if (pageView && !this.props.initialDialogOpen) {
-            sendAnalytics({ type: "pageView", ...pageView });
-        }
+        setTimeout(() => dispatchCustomEvent("resize"), 100);
+
+        document.addEventListener("fullscreenchange", _ => {
+            if (document.fullscreenElement === null && this.state.viewMapOnly) {
+                this.switchViewMapOnly();
+            }
+        });
     }
 
-    componentDidUpdate(prevProps: any, _prevState: any, _snapshot?: any): void {
-        if (this.props.setBounds !== prevProps.setBounds) {
+    componentDidUpdate(prevProps: any, prevState: any, _snapshot?: any): void {
+        if (this.props.setBounds && this.props.setBounds !== prevProps.setBounds) {
             const [[b0, b1], [b2, b3]] = this.props.setBounds;
             this.map.fitBounds([b0, b1, b2, b3], {
                 padding: 100,
             });
         }
+        if (
+            this.props.selection !== null &&
+            this.props.selectionData !== null &&
+            this.props.selectionData !== prevProps.selectionData
+        ) {
+            resetSelectionInFeatures(this.map, getLayerSource(this.props.theme), prevProps.selection);
+
+            this.setState({ sidebarOpen: true });
+        }
+
+        if (this.props.selection === null && this.props.selectionData === null && prevState.sidebarOpen) {
+            this.setState({ sidebarOpen: false });
+        }
+    }
+
+    zoom(factor: number) {
+        const newZoom = this.map.getZoom() * factor;
+        this.setState({ viewport: { ...this.state.viewport, zoom: newZoom } });
+        this.map.flyTo({ zoom: newZoom });
+    }
+
+    switchViewMapOnly() {
+        const viewMapOnly = !this.state.viewMapOnly; // new state
+        this.setState({ viewMapOnly }); // will change the rendered components
+        if (viewMapOnly && !document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+            this.props.setActionGroupSelected(null); // fold the selection box
+        }
+        if (!viewMapOnly && document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    }
+
+    handleSidebarClose() {
+        this.setState({ sidebarOpen: false });
+        this.props.setSelection(null);
+
+        resetSelectionInFeatures(this.map, getLayerSource(this.props.theme), this.props.selection);
     }
 
     render() {
-        const { theme, initialDialogOpen } = this.props;
-        const showOptions = isMobile || !initialDialogOpen;
-
-        const isInvasive = theme === "invasive";
+        const { theme, t } = this.props;
+        const showOptions = true;
         const ready = this.map && this.state.ready;
+        const viewMapOnly = this.state.viewMapOnly;
+        const classes = {
+            icon: { marginRight: 5 },
+            fab: {
+                pointerEvents: "all" as const,
+                margin: 0.5,
+            },
+            menuOptionBox: { flexGrow: 1, display: { xs: "flex" } },
+            screenshotBox: { flexGrow: 0 },
+            appBar: { backgroundColor: "white", zIndex: 1400 },
+        };
 
         return (
             <React.Fragment>
@@ -229,78 +319,113 @@ class Map extends React.Component<Props> {
                     style={{ position: "absolute", bottom: 0, top: 0, right: 0, left: 0 }}
                 />
                 {ready && <EndemicityLayer map={this.map} />}
+
                 {ready && <RegionLayer map={this.map} />}
                 {ready && <PreventionLayer map={this.map} />}
                 {ready && <MekongLayer map={this.map} />}
                 {ready && <DiagnosisLayer map={this.map} />}
                 {ready && <TreatmentLayer map={this.map} />}
                 {ready && <InvasiveLayer map={this.map} />}
+                {ready && (
+                    <TopMiddleContainer rightOpen={this.state.sidebarOpen}>
+                        <Stack spacing={1}>
+                            {!this.state.viewMapOnly && (
+                                <InfoToastLink text={this.props.t("common.takeATour")} type="tour" />
+                            )}
+                            {/* {theme === "treatment" && (
+                                <InfoToastLink text={this.props.t("common.mekong_link")} type="greaterMekong" />
+                            )} */}
+                        </Stack>
+                    </TopMiddleContainer>
+                )}
+                {/* TODO:Refactor SecondaryHeader from here and use Secondary Layout in MapPage */}
+                {viewMapOnly || (
+                    <Hidden smDown>
+                        <SecondaryHeader
+                            action={
+                                <Box sx={classes.screenshotBox}>
+                                    <MapScreenshot map={this.map} showMapSidebar={this.state.sidebarOpen} />
+                                </Box>
+                            }
+                            onDrawerOpenChange={open => this.setState({ menuOpen: open })}
+                        />
+                    </Hidden>
+                )}
+                {viewMapOnly || (
+                    <Fade in={showOptions}>
+                        <PushoverContainer menuOpen={this.state.menuOpen}>
+                            <SearchContainer>
+                                <Hidden smDown>
+                                    <MalariaTour />
+                                </Hidden>
+                                <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
+                            </SearchContainer>
+                        </PushoverContainer>
+                    </Fade>
+                )}
                 <Fade in={showOptions}>
-                    <SearchContainer>
-                        <Hidden xsDown>
-                            <div id={"third"}>
-                                <TopicSelector />
-                            </div>
-                            <Divider />
-                            <MapTypesSelector />
-                            <Divider />
-                            <Filters />
-                            <MalariaTour />
-                        </Hidden>
-                        <TheaterModeIcon />
-                        <Layers />
-                        <Country disabled={isInvasive} />
-                        {!isMobile && <DataDownload />}
-                        <Hidden smUp>
-                            <ShareIcon />
-                        </Hidden>
-                        <Hidden xsDown>
-                            <Screenshot map={this.map} />
-                            {["prevention", "treatment"].includes(theme) && <Report />}
-                        </Hidden>
-                    </SearchContainer>
+                    <PushoverContainer menuOpen={this.state.menuOpen}>
+                        <FloatingActionContainer>
+                            <MapActions isMinimizedVersion={this.state.viewMapOnly} />
+                        </FloatingActionContainer>
+                    </PushoverContainer>
                 </Fade>
-                <Hidden xsDown>
-                    <Fade in={showOptions}>
-                        <TopRightContainer>
-                            <StoryModeSelector />
-                            <InitialDisclaimer />
-
-                            <Feedback />
-                            <TourIcon />
-                            {/* {["prevention", "diagnosis"].includes(theme) && <UploadFile />} */}
-                            <Separator />
-                            {showOptions && <LanguageSelectorSelect section="menu" />}
-                        </TopRightContainer>
-                    </Fade>
-                </Hidden>
-                <Hidden smUp>
-                    <Fade in={showOptions}>
-                        <TopRightVerticalContainer>
-                            <StoryModeSelector />
-                            <InitialDisclaimer />
-
-                            <Feedback />
-                        </TopRightVerticalContainer>
-                    </Fade>
-                </Hidden>
                 <Fade in={showOptions}>
-                    <BottomRightContainer id={"legend"}>
+                    <LegendContainer id={"legend"} rightOpen={this.state.sidebarOpen}>
                         <Hidden smUp>
                             <LeyendPopover />
                         </Hidden>
-                        <Hidden xsDown>
-                            <Leyend />
+                        <Hidden smDown>
+                            <FloatingLegend isMinimizedVersion={this.state.viewMapOnly} /> {/* Legend box */}
                         </Hidden>
-                    </BottomRightContainer>
+                        {!this.state.viewMapOnly && <LastUpdated /> /* Last updated box */}
+                    </LegendContainer>
                 </Fade>
-                <BottomLeftContainer>
-                    <WhoLogo />
-                </BottomLeftContainer>
+                <PushoverContainer menuOpen={this.state.menuOpen}>
+                    <BottomLeftContainer>
+                        {/* {viewMapOnly || <LayersButton />}  */}
+                        <Box width={20} />
+                        <WhoLogoBlue width="180px" />
+                    </BottomLeftContainer>
+                </PushoverContainer>
                 <BottomMiddleContainer>{this.props.theaterMode ? <TheaterMode /> : <div />}</BottomMiddleContainer>
-                <Hidden xsDown>
-                    <InitialDialog />
-                </Hidden>
+                <BottomRightContainer>
+                    <Tooltip title={t("common.zoomIn")} placement="left">
+                        <MapFab size="small" onClick={() => this.zoom(1.25)}>
+                            <ZoomInIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
+                    <Tooltip title={t("common.zoomOut")} placement="left">
+                        <MapFab size="small" onClick={() => this.zoom(0.8)}>
+                            <ZoomOutIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
+                    <Tooltip title={t("common.fullscreen")} placement="left">
+                        <MapFab
+                            size="small"
+                            onClick={() => this.switchViewMapOnly()}
+                            sx={
+                                viewMapOnly
+                                    ? { bgcolor: "#2fb3af", "&:hover": { bgcolor: "#1f938f" } }
+                                    : { bgcolor: "white" }
+                            }
+                        >
+                            <MapOnlyIcon sx={{ fontSize: "14px" }} />
+                        </MapFab>
+                    </Tooltip>
+                </BottomRightContainer>
+                <Drawer
+                    variant="persistent"
+                    anchor={"right"}
+                    open={this.state.sidebarOpen}
+                    PaperProps={{
+                        sx: {
+                            backgroundColor: "#f3f3f3",
+                        },
+                    }}
+                >
+                    <SelectionDataContent onClose={() => this.handleSidebarClose()} />
+                </Drawer>
             </React.Fragment>
         );
     }

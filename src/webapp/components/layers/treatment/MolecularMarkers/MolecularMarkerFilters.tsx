@@ -1,14 +1,14 @@
 import React from "react";
 import YearRangeSelector from "../../../YearRangeSelector";
-import MolecularMarkerFilter from "../../../filters/MolecularMarkerFilter";
+import MolecularMarkerRadioFilter from "../../../filters/MolecularMarkerRadioFilter";
 import ExcludeLowerSamplesFilter from "../../../filters/ExcludeLowerSamplesFilter";
 
 export default function MolecularMarkerFilters() {
     return (
         <>
-            <MolecularMarkerFilter />
+            <MolecularMarkerRadioFilter />
             <ExcludeLowerSamplesFilter />
-            <YearRangeSelector minYear={2015} maxYear={new Date().getFullYear()} />
+            <YearRangeSelector />
         </>
     );
 }

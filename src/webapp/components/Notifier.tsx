@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { selectNotifications } from "../store/reducers/notifier-reducer";
 import { addNotificationAction, dismissNotificationAction } from "../store/actions/notifier-actions";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { State } from "../store/types";
 
 const mapStateToProps = (state: State) => ({

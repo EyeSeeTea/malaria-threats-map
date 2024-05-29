@@ -3,35 +3,24 @@ import { ActionTypeEnum } from "../actions";
 import { DiagnosisMapType } from "../types";
 import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
 
-export const fetchDiagnosisStudiesRequest = createAction(ActionTypeEnum.FetchDiagnosisStudiesRequest, action => {
-    return () => action();
-});
+export const fetchDiagnosisStudiesRequest = createAction(ActionTypeEnum.FetchDiagnosisStudiesRequest)();
 
-export const fetchDiagnosisStudiesSuccess = createAction(
-    ActionTypeEnum.FetchDiagnosisStudiesSuccess,
-    action => (studies: DiagnosisStudy[]) => action(studies)
-);
+export const fetchDiagnosisStudiesSuccess = createAction(ActionTypeEnum.FetchDiagnosisStudiesSuccess)<
+    DiagnosisStudy[]
+>();
 
-export const fetchDiagnosisStudiesError = createAction(ActionTypeEnum.FetchDiagnosisStudiesError, action => () =>
-    action()
-);
+export const fetchDiagnosisStudiesError = createAction(ActionTypeEnum.FetchDiagnosisStudiesError)();
 
-export const setDiagnosisSurveyTypes = createAction(ActionTypeEnum.SetSurveyTypes, action => {
-    return (surveyTypes: string[]) => action(surveyTypes);
-});
+export const setDiagnosisSurveyTypes = createAction(ActionTypeEnum.SetSurveyTypes)<string[]>();
 
-export const setDiagnosisPatientType = createAction(ActionTypeEnum.SetPatientType, action => {
-    return (patientType: string) => action(patientType);
-});
+export const setDiagnosisPatientType = createAction(ActionTypeEnum.SetPatientType)<string>();
 
-export const setDiagnosisMapType = createAction(ActionTypeEnum.SetDiagnosisMapType, action => {
-    return (mapType: DiagnosisMapType) => action(mapType);
-});
+export const setDiagnosisMapType = createAction(ActionTypeEnum.SetDiagnosisMapType)<DiagnosisMapType | null>();
 
-export const setDiagnosisDeletionType = createAction(ActionTypeEnum.SetDeletionType, action => {
-    return (deletionType: string) => action(deletionType);
-});
+export const setDiagnosisDataset = createAction(ActionTypeEnum.SetDiagnosisDataset)<string | null>();
 
-export const setDiagnosisFilteredStudiesAction = createAction(ActionTypeEnum.SetDiagnosisFilteredStudies, action => {
-    return (filteredStudies: DiagnosisStudy[]) => action(filteredStudies);
-});
+export const setDiagnosisDeletionType = createAction(ActionTypeEnum.SetDeletionType)<string>();
+
+export const setDiagnosisFilteredStudiesAction = createAction(ActionTypeEnum.SetDiagnosisFilteredStudies)<
+    DiagnosisStudy[]
+>();

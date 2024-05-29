@@ -1,20 +1,14 @@
-import {
-    createStyles,
-    lighten,
-    makeStyles,
-    Theme,
-    Button,
-    Toolbar,
-    Typography,
-    IconButton,
-    Tooltip,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import { lighten, Theme, Button, Toolbar, Typography, IconButton, Tooltip } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import React from "react";
 import ReportFilterPopover from "./ReportFilterPopover";
+import { TreatmentStudy } from "../../../domain/entities/TreatmentStudy";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 interface ReportToolbarProps {
     title: string;
@@ -29,6 +23,8 @@ interface ReportToolbarProps {
     plasmodiumSpecie?: string;
     setPlasmodiumSpecie?: any;
     onClick: any;
+    preventionStudies?: PreventionStudy[];
+    treatmentStudies?: TreatmentStudy[];
 }
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
@@ -38,7 +34,7 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
             paddingRight: theme.spacing(1),
         },
         highlight:
-            theme.palette.type === "light"
+            theme.palette.mode === "light"
                 ? {
                       color: theme.palette.secondary.main,
                       backgroundColor: lighten(theme.palette.secondary.light, 0.85),
@@ -71,6 +67,8 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
     plasmodiumSpecie,
     setPlasmodiumSpecie,
     onClick,
+    preventionStudies,
+    treatmentStudies,
 }) => {
     const { t } = useTranslation();
     const classes = useToolbarStyles({});
@@ -100,7 +98,7 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
             )}
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="delete" size="large">
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
@@ -109,23 +107,26 @@ const ReportToolbar: React.FC<ReportToolbarProps> = ({
                 <>
                     <Button
                         variant="contained"
-                        color="default"
                         className={classes.button}
                         startIcon={<CloudDownloadIcon />}
                         onClick={onClick}
                     >
                         {t("common.data_download.buttons.download")}
                     </Button>
-                    <ReportFilterPopover
-                        countries={countries}
-                        setCountries={setCountries}
-                        species={species}
-                        setSpecies={setSpecies}
-                        drugs={drugs}
-                        setDrugs={setDrugs}
-                        plasmodiumSpecie={plasmodiumSpecie}
-                        setPlasmodiumSpecie={setPlasmodiumSpecie}
-                    />
+                    {(treatmentStudies !== undefined || preventionStudies !== undefined) && (
+                        <ReportFilterPopover
+                            countries={countries}
+                            setCountries={setCountries}
+                            species={species}
+                            setSpecies={setSpecies}
+                            drugs={drugs}
+                            setDrugs={setDrugs}
+                            plasmodiumSpecie={plasmodiumSpecie}
+                            setPlasmodiumSpecie={setPlasmodiumSpecie}
+                            treatmentStudies={treatmentStudies}
+                            preventionStudies={preventionStudies}
+                        />
+                    )}
                 </>
             )}
         </Toolbar>

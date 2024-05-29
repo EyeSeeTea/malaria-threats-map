@@ -1,21 +1,16 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import Slide, { SlideProps } from "@material-ui/core/Slide";
+import { Theme } from "@mui/material/styles";
+import { createStyles, makeStyles } from "@mui/styles";
+import { Dialog, Button, ListItemText, ListItem, List, AppBar, Toolbar, IconButton, Typography } from "@mui/material";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import Slide, { SlideProps } from "@mui/material/Slide";
 import { State } from "../store/types";
 import { selectAreMobileOptionsOpen } from "../store/reducers/base-reducer";
 import { setMobileOptionsOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
-import LanguageSelectorSelect from "./LanguageSelectorSelect";
+import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
+import { changeLanguage } from "../config/i18next";
 import { useTranslation } from "react-i18next";
 
 const FlexGrow = styled.div`
@@ -50,10 +45,22 @@ type Props = DispatchProps & StateProps;
 
 function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
     const classes = useStyles({});
+    const [isLanguageOpen, setIsLanguageOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState(LANGUAGES[0].value);
 
     function handleClose() {
         setMobileOptionsOpen(false);
     }
+
+    const handleButtonClickOpen = () => {
+        setIsLanguageOpen(true);
+    };
+
+    const handleClickClose = (value: string) => {
+        changeLanguage(value);
+        setIsLanguageOpen(false);
+        setSelectedValue(value);
+    };
     const { t } = useTranslation();
     return (
         <>
@@ -77,9 +84,16 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
                 </AppBar>
                 <List>
                     <ListItem button>
-                        <ListItemText primary={t("common.options.select_language")} />
+                        <ListItemText primary={t("common.options.language")} />
                         <FlexGrow />
-                        <LanguageSelectorSelect />
+                        <Button onClick={handleButtonClickOpen} variant="contained">
+                            {t("common.options.select_language")}
+                        </Button>
+                        <LanguageSelectorDialog
+                            selectedValue={selectedValue}
+                            open={isLanguageOpen}
+                            onClose={handleClickClose}
+                        />
                     </ListItem>
                 </List>
             </Dialog>

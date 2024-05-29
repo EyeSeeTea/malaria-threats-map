@@ -8,7 +8,7 @@ import {
     TableRow,
     Typography,
     Paper,
-} from "@material-ui/core";
+} from "@mui/material";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
@@ -34,47 +34,47 @@ function EnhancedTableHead(props: EnhancedTableProps<Data>) {
     return (
         <TableHead>
             <TableRow>
-                <StyledCell isBold colSpan={3} />
-                <StyledCell isBold colSpan={8} divider>
+                <StyledCell $isBold colSpan={3} />
+                <StyledCell $isBold colSpan={8} divider>
                     {t("common.report.prevention.resistance")}
                 </StyledCell>
-                <StyledCell isBold colSpan={7} divider>
+                <StyledCell $isBold colSpan={7} divider>
                     {t("common.report.prevention.mechanism")}
                 </StyledCell>
             </TableRow>
             <TableRow>
-                <StyledCell isBold colSpan={3} />
-                <StyledCell isBold colSpan={2} divider>
+                <StyledCell $isBold colSpan={3} />
+                <StyledCell $isBold colSpan={2} divider>
                     Pyrethroids
                 </StyledCell>
-                <StyledCell isBold colSpan={2}>
+                <StyledCell $isBold colSpan={2}>
                     Organochlorines
                 </StyledCell>
-                <StyledCell isBold colSpan={2}>
+                <StyledCell $isBold colSpan={2}>
                     Carbamates
                 </StyledCell>
-                <StyledCell isBold colSpan={2}>
+                <StyledCell $isBold colSpan={2}>
                     Organophosphates
                 </StyledCell>
-                <StyledCell isBold colSpan={1} divider>
+                <StyledCell $isBold colSpan={1} divider>
                     Mono oxygenases
                 </StyledCell>
-                <StyledCell isBold colSpan={1}>
+                <StyledCell $isBold colSpan={1}>
                     Esterases
                 </StyledCell>
-                <StyledCell isBold colSpan={1}>
+                <StyledCell $isBold colSpan={1}>
                     GSTs
                 </StyledCell>
-                <StyledCell isBold colSpan={1}>
+                <StyledCell $isBold colSpan={1}>
                     kdr (K1014S)
                 </StyledCell>
-                <StyledCell isBold colSpan={1}>
+                <StyledCell $isBold colSpan={1}>
                     kdr (K1014F)
                 </StyledCell>
-                <StyledCell isBold colSpan={1}>
+                <StyledCell $isBold colSpan={1}>
                     kdr (unspecified mutation)
                 </StyledCell>
-                <StyledCell isBold colSpan={1}>
+                <StyledCell $isBold colSpan={1}>
                     Ace-1R
                 </StyledCell>
             </TableRow>
@@ -323,6 +323,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         species={species}
                         setSpecies={setSpecies}
                         onClick={downloadData}
+                        preventionStudies={studies}
                     />
                     <TableContainer>
                         <Table
@@ -399,7 +400,7 @@ function PreventionReport({ studies: baseStudies }: Props) {
                                                             scope="row"
                                                             padding="none"
                                                             color={error ? "red" : grey ? darkGrey : undefined}
-                                                            isRight={header.align === "right"}
+                                                            $isRight={header.align === "right"}
                                                             divider={header.divider}
                                                         >
                                                             {header && header.numeric && isNumber
@@ -424,8 +425,8 @@ function PreventionReport({ studies: baseStudies }: Props) {
                         count={groups.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                     <Typography variant={"body2"}>{t("common.data_download.footer")}</Typography>
                     <br />

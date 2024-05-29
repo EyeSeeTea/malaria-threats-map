@@ -4,6 +4,8 @@ import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import TypeFilter from "../../../filters/TypeFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
+import OnlyByHealthMinistriesFilter from "../../../filters/OnlyByHealthMinistriesFilter";
+import OnlyIncludeBioassaysWithMoreMosquitoesFilter from "../../../filters/OnlyIncludeBioassaysWithMoreMosquitoesFilter";
 
 function ResistanceStatusFilters() {
     return (
@@ -12,7 +14,9 @@ function ResistanceStatusFilters() {
             <InsecticideTypeFilter />
             <TypeFilter />
             <SpeciesFilter />
-            <YearRangeSelector minYear={2010} maxYear={new Date().getFullYear()} />
+            <YearRangeSelector />
+            <OnlyIncludeBioassaysWithMoreMosquitoesFilter />
+            <OnlyByHealthMinistriesFilter />
         </div>
     );
 }

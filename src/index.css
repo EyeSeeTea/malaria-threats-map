@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-        "Droid Sans", "Helvetica Neue", sans-serif;
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+        "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -25,12 +25,8 @@ code {
     visibility: hidden;
 }
 
-.mapboxgl-ctrl {
+.mapboxgl-ctrl-logo {
     display: none !important;
-}
-
-.highcharts-tooltip {
-    max-width: 140px !important;
 }
 
 #ic_signupform .elcontainer {
@@ -206,4 +202,33 @@ code {
 }
 #___reactour svg {
     color: rgba(0, 0, 0, 0.5);
+}
+
+.highcharts-tooltip a {
+    white-space: normal !important;
+}
+
+.highcharts-tooltip table {
+    height: auto;
+    width: 400px;
+    z-index: 20 !important;
+}
+
+.highcharts-tooltip-container {
+    z-index: 10000 !important;
+}
+
+.tour-modal {
+    border-radius: 10px;
+}
+
+.tour-modal::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
 }

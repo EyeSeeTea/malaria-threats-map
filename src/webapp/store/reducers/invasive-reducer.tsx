@@ -2,8 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { InvasiveMapType, InvasiveState, State } from "../types";
-import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { InvasiveDataset, InvasiveMapType, InvasiveState, State } from "../types";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 
 const initialState: InvasiveState = Object.freeze({
@@ -13,13 +12,11 @@ const initialState: InvasiveState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: InvasiveMapType.VECTOR_OCCURANCE,
+        dataset: "INVASIVE_VECTOR_SPECIES",
         vectorSpecies: [],
     },
+    selectionStudies: [],
 });
-
-function updateSpecies(vectorSpecies: string[]) {
-    return updateFilter("vectorSpecies", vectorSpecies, []);
-}
 
 function updateFilter<T>(key: string, value: T, def?: T) {
     return (state: InvasiveState) => {
@@ -33,34 +30,46 @@ function updateFilter<T>(key: string, value: T, def?: T) {
     };
 }
 
+function updateDataset(dataset: InvasiveDataset) {
+    return updateFilter("dataset", dataset, "INVASIVE_VECTOR_SPECIES");
+}
+
+function updateSpecies(vectorSpecies: string[]) {
+    return updateFilter("vectorSpecies", vectorSpecies, []);
+}
+
 export default createReducer<InvasiveState>(initialState, {
-    [ActionTypeEnum.FetchInvasiveStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchInvasiveStudiesRequest]: () => (state: InvasiveState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchInvasiveStudiesSuccess]: (studies: InvasiveStudy[]) => state => ({
+    [ActionTypeEnum.FetchInvasiveStudiesSuccess]: (studies: InvasiveStudy[]) => (state: InvasiveState) => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchInvasiveStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchInvasiveStudiesError]: () => (state: InvasiveState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
     }),
+    [ActionTypeEnum.SetInvasiveDataset]: updateDataset,
     [ActionTypeEnum.SetInvasiveVectorSpecies]: updateSpecies,
-    [ActionTypeEnum.SetInvasiveFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
+    [ActionTypeEnum.SetInvasiveFilteredStudies]: (filteredStudies: InvasiveStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
 });
 
 const selectInvasiveState = (state: State) => state.invasive;
 
-export const selectInvasiveStudies = createSelector(selectInvasiveState, R.prop("studies"));
+export const selectInvasiveStudies = createSelector(selectInvasiveState, invasiveState => invasiveState.studies);
 
-export const selectInvasiveStudiesLoading = createSelector(selectInvasiveState, R.prop("loading"));
+export const selectInvasiveStudiesLoading = createSelector(selectInvasiveState, invasiveState => invasiveState.loading);
 
-export const selectInvasiveStudiesError = createSelector(selectInvasiveState, R.prop("error"));
+export const selectInvasiveStudiesError = createSelector(selectInvasiveState, invasiveState => invasiveState.error);
 
-export const selectFilteredInvasiveStudies = createSelector(selectInvasiveState, R.prop("filteredStudies"));
+export const selectFilteredInvasiveStudies = createSelector(
+    selectInvasiveState,
+    invasiveState => invasiveState.filteredStudies
+);
 
-export const selectInvasiveFilters = createSelector(selectInvasiveState, R.prop("filters"));
+export const selectInvasiveFilters = createSelector(selectInvasiveState, invasiveState => invasiveState.filters);

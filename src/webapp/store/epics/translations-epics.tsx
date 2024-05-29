@@ -1,37 +1,55 @@
-import { ActionsObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../actions";
-import * as ajax from "../../store/ajax";
-import { of } from "rxjs";
-import { catchError, mergeMap, switchMap } from "rxjs/operators";
-import { AjaxError } from "rxjs/ajax";
-import { TranslationResponse } from "../../types/Translation";
-import { MapServerConfig } from "../../constants/constants";
+import { Observable, of } from "rxjs";
+import { catchError, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { TranslationResponse, Translation } from "../../types/Translation";
+
 import {
     fetchTranslationsErrorAction,
     fetchTranslationsRequestAction,
     fetchTranslationsSuccessAction,
 } from "../actions/translations-actions";
-import { ApiParams } from "../../../data/common/types";
+import { ofType, StateObservable } from "redux-observable";
+import { State } from "../types";
+import { EpicDependencies } from "..";
+import { fromFuture } from "./utils";
+import { addNotificationAction } from "../actions/notifier-actions";
 
-export const getTreatmentStudiesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchTranslationsRequestAction>>
+export const getTranslationsEpic = (
+    action$: Observable<ActionType<typeof fetchTranslationsRequestAction>>,
+    state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
 ) =>
-    action$.ofType(ActionTypeEnum.FetchTranslationsRequest).pipe(
-        switchMap(() => {
-            const params: ApiParams = {
-                f: "json",
-                where: "1%3D1",
-                outFields: "*",
-            };
-            const query: string = Object.keys(params)
-                .map(key => `${key}=${params[key]}`)
-                .join("&");
-            return ajax.get(`/${MapServerConfig.layers.translations}/query?${query}`).pipe(
-                mergeMap((response: TranslationResponse) => {
-                    return of(fetchTranslationsSuccessAction(response));
-                }),
-                catchError((error: AjaxError) => of(fetchTranslationsErrorAction(error)))
-            );
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchTranslationsRequest),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            if (state.translations.translations.length === 0) {
+                return fromFuture(compositionRoot.translations.get()).pipe(
+                    mergeMap((translations: Translation[]) => {
+                        //TODO: remove old feature structure from translations when they are retrueved from ArgGis
+                        const oldResponse = mapToOldArgisStructure(translations);
+
+                        return of(fetchTranslationsSuccessAction(oldResponse));
+                    }),
+                    catchError((error: Error) =>
+                        of(addNotificationAction(error.message), fetchTranslationsErrorAction())
+                    )
+                );
+            } else {
+                //TODO: remove old feature structure from translations when they are retrueved from ArgGis
+                const oldResponse = mapToOldArgisStructure(state.translations.translations);
+
+                return of(fetchTranslationsSuccessAction(oldResponse));
+            }
         })
     );
+
+function mapToOldArgisStructure(translations: Translation[]) {
+    return {
+        displayFieldName: "",
+        fields: [],
+        fieldAliases: [],
+        features: translations.map(v => ({ attributes: v })),
+    } as TranslationResponse;
+}

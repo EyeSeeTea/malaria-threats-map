@@ -1,16 +1,15 @@
 import React from "react";
-import { createStyles, Fab, makeStyles, Theme } from "@material-ui/core";
-import ReportIcon from "@material-ui/icons/Description";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
+import { Theme } from "@mui/material";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 import { State } from "../../store/types";
 import { selectIsReportOpen, selectTheme } from "../../store/reducers/base-reducer";
 import { setReportOpenAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import PreventionReport from "./prevention/PreventionReport";
 import TreatmentReport from "./treatment/TreatmentReport";
-import { useTranslation } from "react-i18next";
-import { sendAnalytics } from "../../utils/analytics";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -54,12 +53,11 @@ type Props = StateProps & DispatchProps;
 
 function Report({ isReportOpen, openReport, theme }: Props) {
     const classes = useStyles({});
-    const { t } = useTranslation();
 
-    const handleClickOpen = () => {
+    /* const handleClickOpen = () => {
         sendAnalytics({ type: "event", category: "menu", action: "summary" });
         openReport(true);
-    };
+    }; */
 
     const handleClose = () => {
         openReport(false);
@@ -78,7 +76,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
 
     return (
         <React.Fragment>
-            <Fab
+            {/* <Fab
                 id="country-button"
                 size="small"
                 color={isReportOpen ? "primary" : "default"}
@@ -87,7 +85,7 @@ function Report({ isReportOpen, openReport, theme }: Props) {
                 title={t("common.icons.summary")}
             >
                 <ReportIcon />
-            </Fab>
+            </Fab> */}
             <Dialog
                 fullWidth
                 maxWidth={"xl"}

@@ -1,4 +1,4 @@
-import { createBrowserHistory as createHistory } from "history";
+import { createHashHistory as createHistory } from "history";
 import URLSearchParams from "@ungap/url-search-params";
 
 function ReduxQuerySync({ store, params, replaceState, initialTruth, history = createHistory() }: any) {
@@ -71,6 +71,7 @@ function ReduxQuerySync({ store, params, replaceState, initialTruth, history = c
             }
             lastQueryValues[param] = value;
         });
+
         const newLocationSearchString = `?${locationParams}`;
         const oldLocationSearchString = location.search || "?";
 

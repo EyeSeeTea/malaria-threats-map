@@ -9,4 +9,5 @@ export interface InvasiveStudy extends Study {
     Code: string;
     STAGE: string;
     BREEDING_HABITAT: string;
+    INVASIVE_STATUS: string;
 }

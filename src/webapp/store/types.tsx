@@ -6,6 +6,10 @@ import { PreventionStudy } from "../../domain/entities/PreventionStudy";
 import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
+import { LastUpdatedDates } from "../../domain/entities/LastUpdateDates";
+import { TotalStudiesInThemes } from "../../domain/entities/TotalStudiesInThemes";
+import { FeedbackState } from "../types/FeedbackState";
+import { SelectionData } from "./SelectionData";
 
 export interface State {
     malaria: MalariaState;
@@ -17,6 +21,7 @@ export interface State {
     countryLayer: CountryLayerState;
     district: DistrictsState;
     notifications: NotificationsState;
+    feedback: FeedbackState;
 }
 
 export interface RegionState {
@@ -24,9 +29,27 @@ export interface RegionState {
     region?: string;
     subRegion?: string;
     site?: string;
+    siteLabel?: string;
     siteIso2?: string;
     siteCoordinates?: [number, number];
 }
+
+export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION" | "DATASET";
+
+export type MapTheme = "prevention" | "diagnosis" | "treatment" | "invasive";
+
+export type PreventionDataset =
+    | "DISCRIMINATING_CONCENTRATION_BIOASSAY"
+    | "INTENSITY_CONCENTRATION_BIOASSAY"
+    | "SYNERGIST-INSECTICIDE_BIOASSAY"
+    | "MOLECULAR_ASSAY"
+    | "BIOCHEMICAL_ASSAY";
+
+export type TreatmentDataset = "THERAPEUTIC_EFFICACY_STUDY" | "MOLECULAR_MARKER_STUDY" | "AMDERO_TES" | "AMDERO_MM";
+
+export type InvasiveDataset = "INVASIVE_VECTOR_SPECIES";
+
+export type DiagnosisDataset = "PFHRP23_GENE_DELETIONS" | "HRPO";
 
 export interface MalariaState {
     theme: string;
@@ -36,24 +59,19 @@ export interface MalariaState {
     storyMode: boolean;
     storyModeStep: number;
     filters: number[];
+    maxMinYears: number[];
     region: RegionState;
-    lastUpdatedDates: {
-        prevention: Date | null;
-        diagnosis: Date | null;
-        treatment: Date | null;
-        invasive: Date | null;
-    };
-    initialDialogOpen: boolean;
-    filtersOpen: boolean;
-    filtersMode: string;
+    lastUpdatedDates: LastUpdatedDates;
+    actionGroupSelected: ActionGroup | null;
     selection: SiteSelection | null;
+    hoverSelection: SiteSelection | null;
+    selectionData: SelectionData | null;
     mobileOptionsOpen: boolean;
     zoom: number;
     setZoom: number | null;
     bounds: Array<Array<number>>;
     setBounds: Array<Array<number>>;
     tour: TourState;
-    dataDownloadOpen: boolean;
     reportOpen: boolean;
     mapTitle: string;
     uploadFileOpen: boolean;
@@ -61,6 +79,7 @@ export interface MalariaState {
     theaterMode: boolean;
     legendExpanded: boolean;
     isUploadingFile: boolean;
+    totalStudiesInThemes: TotalStudiesInThemes;
 }
 
 export interface TranslationsState {
@@ -79,6 +98,7 @@ export interface DiagnosisState {
 
 export interface DiagnosisFilters {
     mapType: DiagnosisMapType;
+    dataset: DiagnosisDataset;
     surveyTypes: string[];
     patientType: string | null;
     deletionType: string | null;
@@ -86,6 +106,7 @@ export interface DiagnosisFilters {
 
 export enum DiagnosisMapType {
     GENE_DELETIONS,
+    HRP23_STUDIES,
 }
 
 export enum PreventionMapType {
@@ -97,13 +118,16 @@ export enum PreventionMapType {
 
 export interface PreventionFilters {
     mapType: PreventionMapType;
+    dataset: PreventionDataset;
     insecticideClass: string;
     insecticideTypes: string[];
     synergistTypes: string[];
     assayTypes: string[];
     proxyType: string | null;
-    type: string | null;
+    type: string[] | null;
     species: string[];
+    onlyIncludeBioassaysWithMoreMosquitoes: number;
+    onlyByHealthMinistries: boolean;
 }
 
 export interface PreventionState {
@@ -118,13 +142,16 @@ export enum TreatmentMapType {
     TREATMENT_FAILURE,
     DELAYED_PARASITE_CLEARANCE,
     MOLECULAR_MARKERS,
+    THERAPEUTIC_EFFICACY_STUDIES,
+    MOLECULAR_MARKERS_ONGOING_STUDIES,
 }
 
 export interface TreatmentFilters {
     mapType: TreatmentMapType;
-    plasmodiumSpecies: string;
-    drug: string;
-    molecularMarker: number;
+    dataset: TreatmentDataset;
+    plasmodiumSpecies: string[];
+    drugs: string[];
+    molecularMarkers: number[];
     excludeLowerPatients: boolean;
     excludeLowerSamples: boolean;
 }
@@ -143,6 +170,7 @@ export enum InvasiveMapType {
 
 export interface InvasiveFilters {
     mapType: InvasiveMapType;
+    dataset: InvasiveDataset;
     vectorSpecies: string[];
 }
 
@@ -164,6 +192,7 @@ export interface SiteSelection {
     ISO_2_CODE: string;
     SITE_ID: string;
     coordinates: [number, number];
+    OBJECTIDs?: number[];
 }
 
 interface TourState {

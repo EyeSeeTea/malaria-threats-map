@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Paper, IconButton, Slider } from "@material-ui/core";
-import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
-import CloseIcon from "@material-ui/icons/Close";
+import makeStyles from "@mui/styles/makeStyles";
+import { Paper, IconButton, Slider } from "@mui/material";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseIcon from "@mui/icons-material/Pause";
+import CloseIcon from "@mui/icons-material/Close";
 import { setFiltersAction, setTheaterModeAction } from "../../store/actions/base-actions";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { selectTheme } from "../../store/reducers/base-reducer";
+import { selectMaxMinYears, selectTheme } from "../../store/reducers/base-reducer";
 import { sendAnalytics } from "../../utils/analytics";
 
 const useStyles = makeStyles({
@@ -35,10 +35,9 @@ const useStyles = makeStyles({
     },
 });
 
-const THIS_YEAR = new Date().getFullYear();
-
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    maxMinYears: selectMaxMinYears(state),
 });
 
 const mapDispatchToProps = {
@@ -50,22 +49,10 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const getMinYear = (theme: string) => {
-    switch (theme) {
-        case "diagnosis":
-            return 1998;
-        case "invasive":
-            return 1985;
-        default:
-            return 2010;
-    }
-};
-
-function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
+function TheaterMode({ setYears, setTheaterMode, maxMinYears }: Props) {
     const classes = useStyles({});
-    const minYear = getMinYear(theme);
 
-    const [year, setYear] = React.useState<number>(minYear);
+    const [year, setYear] = React.useState<number>(maxMinYears[0]);
     const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
     useEffect(() => {
@@ -74,18 +61,18 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
             interval = setInterval(() => {
                 setYear(year => {
                     const newYear = year + 1;
-                    if (newYear > THIS_YEAR) {
-                        setYears([minYear, minYear]);
-                        return minYear;
+                    if (newYear > maxMinYears[1]) {
+                        setYears([maxMinYears[0], maxMinYears[0]]);
+                        return maxMinYears[0];
                     } else {
-                        setYears([minYear, newYear]);
+                        setYears([maxMinYears[0], newYear]);
                         return newYear;
                     }
                 });
             }, 1000);
         }
         return () => clearInterval(interval);
-    }, [isPlaying, setYears, minYear]);
+    }, [isPlaying, setYears, maxMinYears]);
 
     const play = () => {
         sendAnalytics({ type: "event", category: "timeline", action: "play" });
@@ -99,19 +86,19 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
 
     const beginning = () => {
         sendAnalytics({ type: "event", category: "timeline", action: "restart" });
-        setYear(() => minYear);
-        setYears([minYear, minYear]);
+        setYear(() => maxMinYears[0]);
+        setYears([maxMinYears[0], maxMinYears[0]]);
     };
 
     function valuetext(value: number) {
         return `${value}`;
     }
 
-    const handleChange = (event: any, newValue: number | number[]) => {
+    const handleChange = (event: Event, newValue: number | number[]) => {
         const value = newValue as number;
         sendAnalytics({ type: "event", category: "timeline", action: "drag", label: year.toString() });
         setYear(() => value);
-        setYears([minYear, value]);
+        setYears([maxMinYears[0], value]);
     };
 
     return (
@@ -130,14 +117,15 @@ function TheaterMode({ setYears, setTheaterMode, theme }: Props) {
             )}
 
             <Slider
+                size="small"
                 className={classes.slider}
                 value={year}
                 valueLabelDisplay="on"
                 getAriaValueText={valuetext}
                 onChange={handleChange}
                 step={1}
-                min={minYear}
-                max={THIS_YEAR}
+                min={maxMinYears[0]}
+                max={maxMinYears[1]}
             />
             <IconButton
                 className={classes.iconButton}

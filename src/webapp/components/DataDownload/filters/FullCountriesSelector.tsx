@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { OptionType } from "../../BasicSelect";
-import FormLabel from "@material-ui/core/FormLabel";
+import FormLabel from "@mui/material/FormLabel";
 import T from "../../../translations/T";
 import { Divider, FilterSimpleWrapper } from "../../filters/Filters";
 import { useTranslation } from "react-i18next";

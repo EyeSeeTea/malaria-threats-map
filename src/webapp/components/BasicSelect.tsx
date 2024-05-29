@@ -1,20 +1,25 @@
 import React, { CSSProperties, HTMLAttributes } from "react";
 import clsx from "clsx";
-import Select, { OptionProps } from "react-select";
-import { createStyles, emphasize, makeStyles, Theme, useTheme } from "@material-ui/core/styles";
-import { Typography, Paper, Chip, MenuItem } from "@material-ui/core";
-import TextField, { BaseTextFieldProps } from "@material-ui/core/TextField";
-import CancelIcon from "@material-ui/icons/Cancel";
+import Select, { IndicatorProps, OptionProps } from "react-select";
+import { emphasize, Theme, useTheme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { Typography, Paper, Chip, MenuItem } from "@mui/material";
+import TextField, { BaseTextFieldProps } from "@mui/material/TextField";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { ValueContainerProps } from "react-select/src/components/containers";
 import { ControlProps } from "react-select/src/components/Control";
 import { MenuProps, NoticeProps } from "react-select/src/components/Menu";
 import { MultiValueProps } from "react-select/src/components/MultiValue";
 import { PlaceholderProps } from "react-select/src/components/Placeholder";
 import { SingleValueProps } from "react-select/src/components/SingleValue";
-import { Omit } from "@material-ui/types";
+import { DistributiveOmit } from "@mui/types";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
 import { useFirstRender } from "./hooks/use-first-render";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ClearIcon from "@mui/icons-material/Clear";
+import WindowedSelect from "react-windowed-select";
 
 export interface OptionType {
     label: string;
@@ -51,10 +56,12 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(0.5, 0.25),
             overflow: "hidden",
             textOverflow: "ellipsis",
+            background: "white",
+            borderRadius: "5px",
         },
         chipFocused: {
             backgroundColor: emphasize(
-                theme.palette.type === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
+                theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[700],
                 0.08
             ),
         },
@@ -62,13 +69,13 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(1, 2),
         },
         singleValue: {
-            fontSize: 16,
+            fontSize: 14,
         },
         placeholder: {
             position: "absolute",
             left: 2,
             bottom: 6,
-            fontSize: 16,
+            fontSize: 14,
         },
         paper: {
             position: "absolute",
@@ -94,9 +101,13 @@ function NoOptionsMessage(props: NoticeProps<OptionType, false>) {
 
 type InputComponentProps = Pick<BaseTextFieldProps, "inputRef"> & HTMLAttributes<HTMLDivElement>;
 
-function inputComponent({ inputRef, ...props }: InputComponentProps) {
-    return <div ref={inputRef} {...props} />;
-}
+const inputComponent = React.forwardRef((props: InputComponentProps, ref: any) => <div ref={ref} {...props} />);
+
+const DropdownIndicator = () => <ArrowDropDownIcon />;
+
+const ClearIndicator = (props: IndicatorProps<OptionType, false>) => (
+    <ClearIcon color="disabled" sx={{ fontSize: 15 }} onClick={props.clearValue} />
+);
 
 function Control(props: ControlProps<OptionType, false>) {
     const {
@@ -107,22 +118,20 @@ function Control(props: ControlProps<OptionType, false>) {
     } = props;
 
     return (
-        <Paper className={classes.inputPaper}>
-            <TextField
-                fullWidth
-                InputProps={{
-                    inputComponent,
-                    inputProps: {
-                        className: classes.input,
-                        ref: innerRef,
-                        children,
-                        ...innerProps,
-                    },
-                    disableUnderline: true,
-                }}
-                {...TextFieldProps}
-            />
-        </Paper>
+        <TextField
+            fullWidth
+            InputProps={{
+                inputComponent,
+                inputProps: {
+                    className: classes.input,
+                    ref: innerRef,
+                    children,
+                    ...innerProps,
+                },
+                disableUnderline: true,
+            }}
+            {...TextFieldProps}
+        />
     );
 }
 
@@ -132,8 +141,7 @@ function Option(props: OptionProps<OptionType, false>) {
     const isFirstRender = useFirstRender();
     const isFocused = isFirstRender ? false : props.isFocused;
     const plasmodiumStyles = plasmodiumOptions.includes(value) ? { fontStyle: "italic" } : {};
-
-    const optionStyles = props.getStyles("option", props);
+    const optionStyles: React.CSSProperties = props.getStyles("option", props);
 
     //it doesn't have access to the control/selected value
     return (
@@ -157,12 +165,12 @@ function Option(props: OptionProps<OptionType, false>) {
     );
 }
 
-type MuiPlaceholderProps = Omit<PlaceholderProps<OptionType, false>, "innerProps"> &
+type MuiPlaceholderProps = DistributiveOmit<PlaceholderProps<OptionType, false>, "innerProps"> &
     Partial<Pick<PlaceholderProps<OptionType, false>, "innerProps">>;
 function Placeholder(props: MuiPlaceholderProps) {
     const { selectProps, innerProps = {}, children } = props;
     return (
-        <Typography color="textSecondary" className={selectProps.classes.placeholder} {...innerProps}>
+        <Typography color="textPrimary" className={selectProps.classes.placeholder} {...innerProps}>
             {children}
         </Typography>
     );
@@ -173,7 +181,7 @@ function SingleValue(props: SingleValueProps<OptionType>) {
     const value = props.children ? t(props.children.toString()) : "";
 
     return (
-        <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
+        <Typography className={props.selectProps.classes.singleValue} {...props.innerProps} sx={{ width: "100%" }}>
             {plasmodiumOptions.includes(value) ? <i>{value}</i> : value}
         </Typography>
     );
@@ -186,6 +194,7 @@ function ValueContainer(props: ValueContainerProps<OptionType, false>) {
 function MultiValue(props: MultiValueProps<OptionType>) {
     const { t } = useTranslation();
     const value = props.children ? t(props.children.toString()) : "";
+    const optionStyles: React.CSSProperties = props.getStyles("option", props);
 
     return (
         <Chip
@@ -196,6 +205,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
             })}
             onDelete={props.removeProps.onClick}
             deleteIcon={<CancelIcon {...props.removeProps} />}
+            style={{ fontStyle: optionStyles.fontStyle || "initial" }}
         />
     );
 }
@@ -217,6 +227,8 @@ const components = {
     Placeholder,
     SingleValue,
     ValueContainer,
+    DropdownIndicator,
+    ClearIndicator,
 };
 
 export type Option = {
@@ -225,15 +237,18 @@ export type Option = {
 };
 
 export default function IntegrationReactSelect({
+    optimizePerformance = false,
     suggestions = [],
     value,
     onChange,
     className,
+    classes,
     optionsStyle,
     ...rest
 }: any) {
     const { t } = useTranslation();
-    const classes = useStyles(rest);
+    const defaultClasses = useStyles(rest);
+    const finalClasses = classes || defaultClasses;
     const theme = useTheme();
 
     const selectStyles = {
@@ -252,17 +267,32 @@ export default function IntegrationReactSelect({
     };
 
     return (
-        <div className={`${classes.root} ${className}`} role="listbox">
-            <Select
-                classes={classes}
-                styles={selectStyles}
-                components={components}
-                options={R.sortBy<Option>(R.prop("label"), suggestions)}
-                value={value}
-                onChange={onChange}
-                placeholder={t("common.options.select") + "..."}
-                {...rest}
-            />
+        <div className={`${finalClasses.root} ${className}`} role="listbox">
+            {optimizePerformance ? (
+                <WindowedSelect
+                    className="basic-select-container"
+                    classes={finalClasses}
+                    styles={selectStyles}
+                    components={components}
+                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={t("common.options.select") + "..."}
+                    {...rest}
+                />
+            ) : (
+                <Select
+                    className="basic-select-container"
+                    classes={finalClasses}
+                    styles={selectStyles}
+                    components={components}
+                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={t("common.options.select") + "..."}
+                    {...rest}
+                />
+            )}
         </div>
     );
 }

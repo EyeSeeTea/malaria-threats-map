@@ -11,11 +11,14 @@ const analyticsPaths = {
     },
     diagnosis: {
         [DiagnosisMapType.GENE_DELETIONS]: "gene",
+        [DiagnosisMapType.HRP23_STUDIES]: "ongoingHRP23",
     },
     treatment: {
         [TreatmentMapType.TREATMENT_FAILURE]: "failure",
         [TreatmentMapType.DELAYED_PARASITE_CLEARANCE]: "delayedParasite",
         [TreatmentMapType.MOLECULAR_MARKERS]: "molecularMarkers",
+        [TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES]: "ongoingTerapeuticEfficacyStudies",
+        [TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES]: "ongoingMolecularMarkers",
     },
     invasive: {
         [InvasiveMapType.VECTOR_OCCURANCE]: "vectorOcurrence",

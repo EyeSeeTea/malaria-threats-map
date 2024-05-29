@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
-import { circleLayout, studiesToGeoJson, getCountryStudies } from "../layer-utils";
+import { circleLayout, studiesToGeoJson } from "../layer-utils";
 import diagnosisSymbols from "../symbols/diagnosis";
-import setupEffects from "../effects";
+import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import { selectDiagnosisFilters, selectDiagnosisStudies } from "../../../store/reducers/diagnosis-reducer";
 import {
-    selectCountryMode,
     selectFilters,
+    selectHoverSelection,
     selectRegion,
     selectSelection,
     selectTheme,
@@ -17,17 +17,16 @@ import { resolveResistanceStatus } from "../prevention/ResistanceStatus/utils";
 import { buildDiagnosisFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import { DIAGNOSIS_STATUS } from "./GeneDeletions/utils";
-import { selectCountries } from "../../../store/reducers/country-layer-reducer";
 import {
     fetchDiagnosisStudiesRequest,
     setDiagnosisFilteredStudiesAction,
 } from "../../../store/actions/diagnosis-actions";
-import { Hidden } from "@material-ui/core";
-import ChartModal from "../../ChartModal";
-import DiagnosisSelectionChart from "./DiagnosisSelectionChart";
-import { setSelection } from "../../../store/actions/base-actions";
+import { setHoverSelection, setRegionAction, setSelection } from "../../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import SitePopover from "../common/SitePopover";
+import Hidden from "../../hidden/Hidden";
+import SiteTitle from "../../site-title/SiteTitle";
+import { getSiteSelectionOnMove, updateSelectionAndRegionAfterClick } from "../common/utils";
 
 const DIAGNOSIS = "diagnosis";
 const DIAGNOSIS_LAYER_ID = "diagnosis-layer";
@@ -47,15 +46,16 @@ const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
     diagnosisFilters: selectDiagnosisFilters(state),
     region: selectRegion(state),
-    countries: selectCountries(state),
-    countryMode: selectCountryMode(state),
     selection: selectSelection(state),
+    hoverSelection: selectHoverSelection(state),
 });
 
 const mapDispatchToProps = {
     fetchDiagnosisStudies: fetchDiagnosisStudiesRequest,
     setFilteredStudies: setDiagnosisFilteredStudiesAction,
     setSelection: setSelection,
+    setHoverSelection: setHoverSelection,
+    setRegion: setRegionAction,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -79,29 +79,25 @@ class DiagnosisLayer extends Component<Props> {
             diagnosisFilters: { mapType, surveyTypes, patientType, deletionType },
             filters,
             region,
-            countryMode,
-            countries,
         } = this.props;
-
         this.mountLayer(prevProps);
         this.renderLayer();
+
+        if (this.props.theme !== "diagnosis") return;
+
         const mapTypeChange = prevProps.diagnosisFilters.mapType !== mapType;
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const surveyTypesChange = prevProps.diagnosisFilters.surveyTypes.length !== surveyTypes.length;
         const patientTypeChange = prevProps.diagnosisFilters.patientType !== patientType;
         const deletionTypeChange = prevProps.diagnosisFilters.deletionType !== deletionType;
         const countryChange = prevProps.region !== region;
-        const countryModeChange = prevProps.countryMode !== countryMode;
-        const countriesChange = prevProps.countries.length !== countries.length;
         if (
             mapTypeChange ||
             yearChange ||
             countryChange ||
             surveyTypesChange ||
             patientTypeChange ||
-            deletionTypeChange ||
-            countryModeChange ||
-            countriesChange
+            deletionTypeChange
         ) {
             this.filterSource();
             this.applyMapTypeSymbols();
@@ -121,10 +117,7 @@ class DiagnosisLayer extends Component<Props> {
     }
 
     setupGeoJsonData = (studies: any[]) => {
-        const groupedStudies = R.groupBy(
-            R.path<string>(["SITE_ID"]),
-            studies
-        );
+        const groupedStudies = R.groupBy(R.path<string>(["SITE_ID"]), studies);
         const filteredStudies = R.values(groupedStudies).map(group =>
             studySelector(group, this.props.diagnosisFilters.mapType, this.props.diagnosisFilters.deletionType)
         );
@@ -155,20 +148,23 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies, countryMode } = this.props;
+        const { studies, selection, setSelection } = this.props;
         const source: any = this.props.map.getSource(DIAGNOSIS_SOURCE_ID);
         if (source) {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
-            const data = countryMode ? countryStudies : geoStudies;
-            source.setData(studiesToGeoJson(data));
+
+            const geoJsonData = studiesToGeoJson(geoStudies);
+
+            source.setData(geoJsonData);
+
+            updateSelectionAfterFilter(this.props.map, DIAGNOSIS_SOURCE_ID, selection, geoJsonData, setSelection);
         }
     };
 
     mountLayer(prevProps?: Props) {
-        const { studies, countryMode } = this.props;
+        const { studies, diagnosisFilters } = this.props;
         if (!prevProps || prevProps.studies.length !== studies.length) {
             if (this.props.map.getSource(DIAGNOSIS_SOURCE_ID)) {
                 this.props.map.removeLayer(DIAGNOSIS_LAYER_ID);
@@ -177,57 +173,59 @@ class DiagnosisLayer extends Component<Props> {
             const filteredStudies = this.filterStudies(studies);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
-            const countryStudies = getCountryStudies(filteredStudies, this.props.countries, DIAGNOSIS);
-
-            const data = countryMode ? countryStudies : geoStudies;
 
             const source: any = {
                 type: "geojson",
-                data: studiesToGeoJson(data),
+                data: studiesToGeoJson(geoStudies),
             };
             this.props.map.addSource(DIAGNOSIS_SOURCE_ID, source);
-            this.props.map.addLayer(layer(resolveMapTypeSymbols(countryMode)));
+            this.props.map.addLayer(layer(resolveMapTypeSymbols(diagnosisFilters)));
 
             setupEffects(this.props.map, DIAGNOSIS_SOURCE_ID, DIAGNOSIS_LAYER_ID);
-            this.setupPopover();
+
             this.renderLayer();
         }
     }
 
     onClickListener = (e: any) => {
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-        const selection = {
-            ISO_2_CODE: e.features[0].properties.ISO_2_CODE,
-            SITE_ID: e.features[0].properties.SITE_ID,
-            coordinates: coordinates,
-        };
-        setTimeout(() => {
-            this.props.setSelection(selection);
-        }, 100);
+        updateSelectionAndRegionAfterClick(
+            e,
+            this.props.map,
+            DIAGNOSIS_LAYER_ID,
+            this.props.region,
+            this.props.setSelection,
+            this.props.setRegion
+        );
     };
 
-    setupPopover = () => {
-        this.props.map.off("click", DIAGNOSIS_LAYER_ID, this.onClickListener);
-        this.props.map.on("click", DIAGNOSIS_LAYER_ID, this.onClickListener);
+    onMouseMoveListener = (e: any) => {
+        this.props.map.getCanvas().style.cursor = "pointer";
+
+        const selection = getSiteSelectionOnMove(e, this.props.map, DIAGNOSIS_LAYER_ID);
+
+        setTimeout(() => {
+            this.props.setHoverSelection(selection);
+        }, 100);
     };
 
     renderLayer = () => {
         if (this.props.map.getLayer(DIAGNOSIS_LAYER_ID)) {
             if (this.props.theme === DIAGNOSIS) {
+                this.props.map.on("mousemove", this.onMouseMoveListener);
+                this.props.map.on("click", this.onClickListener);
                 this.props.map.setLayoutProperty(DIAGNOSIS_LAYER_ID, "visibility", "visible");
             } else {
+                this.props.map.off("mousemove", this.onMouseMoveListener);
+                this.props.map.off("click", this.onClickListener);
                 this.props.map.setLayoutProperty(DIAGNOSIS_LAYER_ID, "visibility", "none");
             }
         }
     };
 
     applyMapTypeSymbols = () => {
-        const { countryMode } = this.props;
+        const { diagnosisFilters } = this.props;
         const layer = this.props.map.getLayer(DIAGNOSIS_LAYER_ID);
-        const mapTypeSymbols = resolveMapTypeSymbols(countryMode);
+        const mapTypeSymbols: { [key: string]: any } = resolveMapTypeSymbols(diagnosisFilters);
         if (layer && mapTypeSymbols) {
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-radius", mapTypeSymbols["circle-radius"]);
             this.props.map.setPaintProperty(DIAGNOSIS_LAYER_ID, "circle-color", mapTypeSymbols["circle-color"]);
@@ -240,28 +238,22 @@ class DiagnosisLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, countryMode, selection } = this.props;
-        if (selection === null) {
+        const { studies, hoverSelection } = this.props;
+        if (hoverSelection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study =>
-            countryMode ? study.ISO2 === selection.ISO_2_CODE : study.SITE_ID === selection.SITE_ID
-        );
+        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === hoverSelection.SITE_ID);
+
         if (filteredStudies.length === 0) {
             return <div />;
         }
         return (
             this.props.theme === "diagnosis" && (
                 <>
-                    <Hidden xsDown>
+                    <Hidden smDown>
                         <SitePopover map={this.props.map}>
-                            <DiagnosisSelectionChart studies={filteredStudies} />
+                            <SiteTitle study={filteredStudies[0]} />
                         </SitePopover>
-                    </Hidden>
-                    <Hidden smUp>
-                        <ChartModal selection={selection}>
-                            <DiagnosisSelectionChart studies={filteredStudies} />
-                        </ChartModal>
                     </Hidden>
                 </>
             )

@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { PreventionMapType, PreventionState, State } from "../types";
+import { PreventionDataset, PreventionMapType, PreventionState, State } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const initialState: PreventionState = Object.freeze({
@@ -12,14 +12,18 @@ const initialState: PreventionState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: PreventionMapType.RESISTANCE_STATUS,
-        insecticideClass: "PYRETHROIDS",
+        dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
+        insecticideClass: null,
         insecticideTypes: [],
         synergistTypes: [],
         assayTypes: [],
-        type: null,
         proxyType: null,
+        type: null,
         species: [],
+        onlyByHealthMinistries: false,
+        onlyIncludeBioassaysWithMoreMosquitoes: 0,
     },
+    selectionStudies: [],
 });
 
 function updateFilter<T>(key: string, value: T, def?: T) {
@@ -38,8 +42,12 @@ function updatePreventionMapType(mapType: PreventionMapType) {
     return updateFilter("mapType", mapType, PreventionMapType.RESISTANCE_STATUS);
 }
 
+function updatePreventionDataSet(dataset: PreventionDataset) {
+    return updateFilter("dataset", dataset, "DISCRIMINATING_CONCENTRATION_BIOASSAY");
+}
+
 function updateInsecticideClass(insecticideClass: string) {
-    return updateFilter("insecticideClass", insecticideClass, "PYRETHROIDS");
+    return updateFilter("insecticideClass", insecticideClass);
 }
 
 function updateInsecticideTypes(insecticideTypes: string[]) {
@@ -66,22 +74,31 @@ function updateAssayTypes(assayTypes: string[]) {
     return updateFilter("assayTypes", assayTypes, []);
 }
 
+function updateOnlyByHealthMinistries(value: boolean) {
+    return updateFilter("onlyByHealthMinistries", value, false);
+}
+
+function updateOnlyIncludeBioassaysWithMoreMosquitoes(value: number) {
+    return updateFilter("onlyIncludeBioassaysWithMoreMosquitoes", value, 0);
+}
+
 export default createReducer<PreventionState>(initialState, {
-    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state: PreventionState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchPreventionStudiesSuccess]: (studies: PreventionStudy[]) => state => ({
+    [ActionTypeEnum.FetchPreventionStudiesSuccess]: (studies: PreventionStudy[]) => (state: PreventionState) => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchPreventionStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchPreventionStudiesError]: () => (state: PreventionState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
     }),
     [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
+    [ActionTypeEnum.SetPreventionDataset]: updatePreventionDataSet,
     [ActionTypeEnum.SetInsecticideClass]: updateInsecticideClass,
     [ActionTypeEnum.SetInsecticideTypes]: updateInsecticideTypes,
     [ActionTypeEnum.SetAssayTypes]: updateAssayTypes,
@@ -91,16 +108,22 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.SetSpecies]: updateSpecies,
     [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
+    [ActionTypeEnum.SetPreventionSelectionStudies]: (studies: PreventionStudy[]) => (state: PreventionState) => ({
+        ...state,
+        selectionStudies: studies,
+    }),
+    [ActionTypeEnum.SetOnlyByHealthMinistries]: updateOnlyByHealthMinistries,
+    [ActionTypeEnum.SetOnlyIncludeBioassaysWithMoreMosquitoes]: updateOnlyIncludeBioassaysWithMoreMosquitoes,
 });
 
 const selectPreventionState = (state: State) => state.prevention;
 
-export const selectPreventionStudies = createSelector(selectPreventionState, R.prop("studies"));
+export const selectPreventionStudies = createSelector(selectPreventionState, state => state.studies);
 
-export const selectPreventionStudiesLoading = createSelector(selectPreventionState, R.prop("loading"));
+export const selectPreventionStudiesLoading = createSelector(selectPreventionState, state => state.loading);
 
-export const selectPreventionStudiesError = createSelector(selectPreventionState, R.prop("error"));
+export const selectPreventionStudiesError = createSelector(selectPreventionState, state => state.error);
 
-export const selectFilteredPreventionStudies = createSelector(selectPreventionState, R.prop("filteredStudies"));
+export const selectFilteredPreventionStudies = createSelector(selectPreventionState, state => state.filteredStudies);
 
-export const selectPreventionFilters = createSelector(selectPreventionState, R.prop("filters"));
+export const selectPreventionFilters = createSelector(selectPreventionState, state => state.filters);

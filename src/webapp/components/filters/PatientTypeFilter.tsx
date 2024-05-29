@@ -16,6 +16,7 @@ import { logEventAction } from "../../store/actions/base-actions";
 import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
 import SingleFilter from "./common/SingleFilter";
 import { useTranslation } from "react-i18next";
+import _ from "lodash";
 
 const mapStateToProps = (state: State) => ({
     patientType: selectPatientType(state),
@@ -46,7 +47,7 @@ const PatientTypeFilter: React.FC<Props> = ({ setPatientType, diagnosisFilters, 
 
     const filteredStudies: DiagnosisStudy[] = filters.reduce((studies, filter) => studies.filter(filter), studies);
 
-    const uniques = R.uniq(R.map(R.prop("PATIENT_TYPE"), filteredStudies));
+    const uniques = _.compact(R.uniq(R.map(R.prop("PATIENT_TYPE"), filteredStudies)));
 
     const suggestions: any[] = uniques.map((patientType: string) => ({
         label: patientType,
@@ -56,6 +57,7 @@ const PatientTypeFilter: React.FC<Props> = ({ setPatientType, diagnosisFilters, 
     return (
         <SingleFilter
             label={t("common.filters.patient_type")}
+            placeholder={t("common.filters.select_patient_type")}
             options={suggestions}
             onChange={setPatientType}
             value={diagnosisFilters.patientType}

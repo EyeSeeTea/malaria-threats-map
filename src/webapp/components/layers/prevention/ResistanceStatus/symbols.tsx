@@ -1,3 +1,5 @@
+import baseSymbols from "../../common/baseSymbols";
+
 export const ResistanceStatusColors: { [key: string]: string[] } = {
     Confirmed: ["#D43501", "#882201"],
     Possible: ["#FF9502", "#b56900"],
@@ -6,17 +8,75 @@ export const ResistanceStatusColors: { [key: string]: string[] } = {
 };
 
 const resistanceStatusSymbols = {
-    "circle-radius": ["case", ["boolean", ["feature-state", "hover"], false], 7, 6],
-    "circle-color": ["string", ["at", 0, ["get", "RESISTANCE_STATUS_COLOR"]]],
-    "circle-opacity": 1,
-    "circle-stroke-color": [
+    ...baseSymbols,
+    "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2, 4, 7],
+    "circle-color": [
         "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "lightgrey",
-        ["string", ["at", 1, ["get", "RESISTANCE_STATUS_COLOR"]]],
+        [
+            "any",
+            ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"],
+            ["==", ["get", "INSECTICIDE_CLASS"], "ORGANOPHOSPHATES"],
+        ],
+        [
+            "match",
+            ["get", "RESISTANCE_STATUS"],
+            "CONFIRMED_RESISTANCE",
+            ResistanceStatusColors.Confirmed[0],
+            "POSSIBLE_RESISTANCE",
+            ResistanceStatusColors.Possible[0],
+            "SUSCEPTIBLE",
+            ResistanceStatusColors.Susceptible[0],
+            "UNDETERMINED",
+            ResistanceStatusColors.Undetermined[0],
+            /* other */ "#ccc",
+        ],
+        [
+            "match",
+            ["get", "CONFIRMATION_STATUS"],
+            "Confirmed",
+            ResistanceStatusColors.Confirmed[0],
+            "Possible",
+            ResistanceStatusColors.Possible[0],
+            "Susceptible",
+            ResistanceStatusColors.Susceptible[0],
+            /* other */ "#ccc",
+        ],
     ],
-    "circle-stroke-width": ["case", ["boolean", ["feature-state", "hover"], false], 5, 1],
-    "circle-stroke-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.7, 0.7],
+    "circle-stroke-color": [
+        ...baseSymbols["circle-stroke-color"],
+        [
+            "case",
+            [
+                "any",
+                ["==", ["get", "INSECTICIDE_CLASS"], "PYRROLES"],
+                ["==", ["get", "INSECTICIDE_CLASS"], "ORGANOPHOSPHATES"],
+            ],
+            [
+                "match",
+                ["get", "RESISTANCE_STATUS"],
+                "CONFIRMED_RESISTANCE",
+                ResistanceStatusColors.Confirmed[1],
+                "POSSIBLE_RESISTANCE",
+                ResistanceStatusColors.Possible[1],
+                "SUSCEPTIBLE",
+                ResistanceStatusColors.Susceptible[1],
+                "UNDETERMINED",
+                ResistanceStatusColors.Undetermined[1],
+                /* other */ "#111",
+            ],
+            [
+                "match",
+                ["get", "CONFIRMATION_STATUS"],
+                "Confirmed",
+                ResistanceStatusColors.Confirmed[1],
+                "Possible",
+                ResistanceStatusColors.Possible[1],
+                "Susceptible",
+                ResistanceStatusColors.Susceptible[1],
+                /* other */ "#111",
+            ],
+        ],
+    ],
 };
 
 export default resistanceStatusSymbols;

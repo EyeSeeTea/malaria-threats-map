@@ -6,39 +6,40 @@ import invasiveIcon from "../assets/img/invasive.svg";
 import invasiveBaseIcon from "../assets/img/invasive-base.svg";
 import styled, { css } from "styled-components";
 import { colors } from "../constants/theme";
-import { SvgIcon } from "@material-ui/core";
+import { SvgIcon } from "@mui/material";
 
-type Props = { active?: boolean; size?: number };
+type Props = { selected?: boolean; size?: number };
 
 const baseIcon = css<Props>`
     max-width: ${props => props.size || 48}px;
     border-radius: 50%;
+    margin: 0px 5px;
 `;
 
 const TreatmentSVG = ({ ...rest }: Props) => <img alt="" {...rest} src={treatmentIcon} />;
 
 export const TreatmentIcon = styled(TreatmentSVG)`
-    background-color: ${props => (props.active ? colors.treatment.N : "lightgrey")};
+    background-color: ${props => (props.selected ? colors.treatment.N : "lightgrey")};
     ${baseIcon};
 `;
 
 const DiagnosisSVG = ({ ...rest }: Props) => <img alt="" {...rest} src={diagnosisIcon} />;
 export const DiagnosisIcon = styled(DiagnosisSVG)`
-    background-color: ${props => (props.active ? colors.diagnosis.N : "lightgrey")};
+    background-color: ${props => (props.selected ? colors.diagnosis.N : "lightgrey")};
     ${baseIcon};
 `;
 
-const PreventionSVG = ({ ...rest }: any) => <img alt="" {...rest} src={preventionIcon} />;
+const PreventionSVG = ({ ...rest }: Props) => <img alt="" {...rest} src={preventionIcon} />;
 export const PreventionIcon = styled(PreventionSVG)`
-    background-color: ${props => (props.active ? colors.prevention.N : "lightgrey")};
+    background-color: ${props => (props.selected ? colors.prevention.N : "lightgrey")};
     ${baseIcon};
 `;
 
-const InvasiveSVG = ({ active, ...rest }: Props) => (
-    <img alt="" {...rest} src={active ? invasiveIcon : invasiveBaseIcon} />
+const InvasiveSVG = ({ selected, ...rest }: Props) => (
+    <img alt="" {...rest} src={selected ? invasiveIcon : invasiveBaseIcon} />
 );
 export const InvasiveIcon = styled(InvasiveSVG)`
-    background-color: ${props => (props.active ? colors.invasive.N : "lightgrey")};
+    background-color: ${props => (props.selected ? colors.invasive.N : "lightgrey")};
     ${baseIcon};
 `;
 

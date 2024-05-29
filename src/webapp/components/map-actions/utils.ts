@@ -1,0 +1,524 @@
+import i18next from "i18next";
+import _ from "lodash";
+import { Source } from "../../store/actions/base-actions";
+import {
+    DiagnosisFilters,
+    DiagnosisMapType,
+    InvasiveFilters,
+    PreventionFilters,
+    PreventionMapType,
+    RegionState,
+    TreatmentFilters,
+    TreatmentMapType,
+} from "../../store/types";
+import {
+    diagnosisDatasetSuggestions,
+    invasiveDatasetSuggestions,
+    preventionDatasetSuggestions,
+    treatmentDatasetSuggestions,
+} from "../DataDownload/filters/DataSetSelector";
+import { diagnosisSuggestions } from "../filters/DiagnosisMapTypesSelector";
+import { invasiveSuggestions } from "../filters/InvasiveMapTypesSelector";
+import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
+import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
+import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
+import { suggestions } from "../filters/VectorSpeciesFilter";
+import { MOLECULAR_MARKERS_LABELS } from "../layers/treatment/MolecularMarkersOngoingStudies/utils";
+
+export function getValueLabelFilters(
+    theme: string,
+    preventionFilters: PreventionFilters,
+    treatmentFilters: TreatmentFilters,
+    diagnosisFilters: DiagnosisFilters,
+    invasiveFilters: InvasiveFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    switch (theme) {
+        case "prevention": {
+            return preventionValueLabelFilters(preventionFilters, maxMinYears, yearFilters);
+        }
+        case "diagnosis": {
+            return diagnosisValueLabelFilters(diagnosisFilters, maxMinYears, yearFilters);
+        }
+        case "invasive": {
+            return invasiveValueLabelFilters(invasiveFilters, maxMinYears, yearFilters);
+        }
+        case "treatment": {
+            return treatmentValueLabelFilters(treatmentFilters, maxMinYears, yearFilters);
+        }
+    }
+}
+
+export function preventionValueLabelFilters(
+    preventionFilters: PreventionFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
+    const insecticideClass = i18next.t(preventionFilters.insecticideClass);
+    const insecticideTypes = preventionFilters.insecticideTypes.map(item => i18next.t(item));
+    const type = preventionFilters.type?.map(item => i18next.t(item));
+    const species = preventionFilters.species.map(item => i18next.t(item));
+    const assayTypes = preventionFilters.assayTypes.map(item => i18next.t(item));
+    const synergistTypes = preventionFilters.synergistTypes.map(item => i18next.t(item));
+
+    switch (preventionFilters.mapType) {
+        case PreventionMapType.RESISTANCE_STATUS: {
+            return {
+                years,
+                insecticideClass,
+                insecticideTypes: insecticideTypes?.length
+                    ? _.compact(insecticideTypes).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                testType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
+                species: species?.length ? _.compact(species).join(" | ") : i18next.t("common.map_info_summary.all"),
+            };
+        }
+        case PreventionMapType.INTENSITY_STATUS: {
+            return {
+                years,
+                insecticideClass,
+                insecticideTypes: insecticideTypes?.length
+                    ? _.compact(insecticideTypes).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                testType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
+                species: species?.length ? _.compact(species).join(" | ") : i18next.t("common.map_info_summary.all"),
+            };
+        }
+        case PreventionMapType.RESISTANCE_MECHANISM: {
+            return {
+                years,
+                assayTypes: _.compact(assayTypes).join(" | "),
+                mechanismType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
+                species: species?.length ? _.compact(species).join(" | ") : i18next.t("common.map_info_summary.all"),
+            };
+        }
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
+            return {
+                years,
+                synergistTypes: _.compact(synergistTypes).join(" | "),
+                testType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
+                species: species?.length ? _.compact(species).join(" | ") : i18next.t("common.map_info_summary.all"),
+            };
+        }
+    }
+}
+
+export function diagnosisValueLabelFilters(
+    diagnosisFilters: DiagnosisFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
+
+    const deletionType = i18next.t(diagnosisFilters.deletionType);
+    const surveyTypes = diagnosisFilters.surveyTypes.map(item => i18next.t(item));
+    const patientType = i18next.t(diagnosisFilters.patientType);
+    switch (diagnosisFilters.mapType) {
+        case DiagnosisMapType.GENE_DELETIONS:
+            return {
+                years,
+                deletionType,
+                surveyTypes: surveyTypes?.length
+                    ? _.compact(surveyTypes).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                patientType,
+            };
+        case DiagnosisMapType.HRP23_STUDIES:
+            return { years };
+    }
+}
+
+export function invasiveValueLabelFilters(
+    invasiveFilters: InvasiveFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
+
+    const vectorSpecies = invasiveFilters.vectorSpecies.map(item => {
+        const vectorSpecie = suggestions().find(sug => sug.value === item);
+        return vectorSpecie.label;
+    });
+
+    return {
+        years,
+        vectorSpecies: vectorSpecies?.length
+            ? _.compact(vectorSpecies).join(" | ")
+            : i18next.t("common.map_info_summary.all"),
+    };
+}
+
+export function treatmentValueLabelFilters(
+    treatmentFilters: TreatmentFilters,
+    maxMinYears: number[],
+    yearFilters: number[]
+) {
+    const years = getYearsSummary(maxMinYears, yearFilters);
+    const excludeStudies = treatmentFilters.excludeLowerPatients
+        ? i18next.t("common.filters.exclude_lower_patients")
+        : undefined;
+
+    const plasmodiumSpecies = PLASMODIUM_SPECIES_SUGGESTIONS.filter(item =>
+        treatmentFilters.plasmodiumSpecies.includes(item.value)
+    ).map(plasmodiumSpecies => plasmodiumSpecies.label);
+
+    const drugs = treatmentFilters.drugs.map(drug => i18next.t(drug));
+
+    const molecularMarkers = MOLECULAR_MARKERS_LABELS.filter(item =>
+        treatmentFilters.molecularMarkers.includes(item.value)
+    ).map(molecularMarkers => molecularMarkers.label);
+
+    switch (treatmentFilters.mapType) {
+        case TreatmentMapType.TREATMENT_FAILURE:
+        case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
+            return {
+                years,
+                plasmodiumSpecies: plasmodiumSpecies?.length
+                    ? _.compact(plasmodiumSpecies).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                drugs: drugs?.length ? _.compact(drugs).join(" | ") : i18next.t("common.map_info_summary.all"),
+                excludeStudies,
+            };
+        }
+        case TreatmentMapType.MOLECULAR_MARKERS: {
+            return {
+                years,
+                molecularMarkers: molecularMarkers?.length
+                    ? _.compact(molecularMarkers).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+                excludeStudies,
+            };
+        }
+        case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES: {
+            return {
+                years,
+                drugs: drugs.length ? _.compact(drugs).join(" | ") : i18next.t("common.map_info_summary.all"),
+                plasmodiumSpecies: plasmodiumSpecies?.length
+                    ? _.compact(plasmodiumSpecies).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+            };
+        }
+        case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
+            return {
+                years,
+                molecularMarkers: molecularMarkers?.length
+                    ? _.compact(molecularMarkers).join(" | ")
+                    : i18next.t("common.map_info_summary.all"),
+            };
+    }
+}
+
+export function filtersToString(
+    theme: string,
+    preventionFilters: PreventionFilters,
+    treatmentFilters: TreatmentFilters,
+    diagnosisFilters: DiagnosisFilters,
+    invasiveFilters: InvasiveFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    from: Source
+) {
+    switch (theme) {
+        case "prevention": {
+            return preventionFiltersToString(preventionFilters, maxMinYears, yearFilters, from);
+        }
+        case "diagnosis": {
+            return diagnosisFiltersToString(diagnosisFilters, maxMinYears, yearFilters, from);
+        }
+        case "invasive": {
+            return invasiveFiltersToString(invasiveFilters, maxMinYears, yearFilters, from);
+        }
+        case "treatment": {
+            return treatmentFiltersToString(treatmentFilters, maxMinYears, yearFilters, from);
+        }
+    }
+}
+
+export function getMapType(
+    theme: string,
+    preventionFilters: PreventionFilters,
+    treatmentFilters: TreatmentFilters,
+    diagnosisFilters: DiagnosisFilters,
+    invasiveFilters: InvasiveFilters
+) {
+    switch (theme) {
+        case "prevention": {
+            return preventionSuggestions[preventionFilters.mapType].title;
+        }
+        case "diagnosis": {
+            return diagnosisSuggestions[diagnosisFilters.mapType].title;
+        }
+        case "invasive": {
+            return invasiveSuggestions[invasiveFilters.mapType].title;
+        }
+        case "treatment": {
+            return treatmentSuggestions[treatmentFilters.mapType].title;
+        }
+    }
+}
+
+export function getDataset(
+    theme: string,
+    preventionFilters: PreventionFilters,
+    treatmentFilters: TreatmentFilters,
+    diagnosisFilters: DiagnosisFilters,
+    invasiveFilters: InvasiveFilters
+) {
+    switch (theme) {
+        case "prevention": {
+            const dataSet = preventionDatasetSuggestions.find(
+                suggestion => suggestion.value === preventionFilters.dataset
+            );
+
+            return dataSet ? i18next.t(dataSet.title) : undefined;
+        }
+        case "diagnosis": {
+            const dataSet = diagnosisDatasetSuggestions.find(
+                suggestion => suggestion.value === diagnosisFilters.dataset
+            );
+
+            return dataSet ? i18next.t(dataSet.title) : undefined;
+        }
+        case "invasive": {
+            const dataSet = invasiveDatasetSuggestions.find(suggestion => suggestion.value === invasiveFilters.dataset);
+
+            return dataSet ? i18next.t(dataSet.title) : undefined;
+        }
+        case "treatment": {
+            const dataSet = treatmentDatasetSuggestions.find(
+                suggestion => suggestion.value === treatmentFilters.dataset
+            );
+
+            return dataSet ? i18next.t(dataSet.title) : undefined;
+        }
+    }
+}
+
+export function getLocation(region: RegionState) {
+    return region ? region.region || region.subRegion || region.siteLabel || region.country : "";
+}
+
+export function getFilters(
+    theme: string,
+    preventionFilters: PreventionFilters,
+    treatmentFilters: TreatmentFilters,
+    diagnosisFilters: DiagnosisFilters,
+    invasiveFilters: InvasiveFilters
+) {
+    switch (theme) {
+        case "prevention": {
+            return preventionFilters;
+        }
+        case "diagnosis": {
+            return diagnosisFilters;
+        }
+        case "invasive": {
+            return invasiveFilters;
+        }
+        case "treatment": {
+            return treatmentFilters;
+        }
+    }
+}
+
+const buildFilters = (
+    type:
+        | "insecticideTypes"
+        | "testType"
+        | "species"
+        | "assayTypes"
+        | "synergistTypes"
+        | "years"
+        | "insecticideClass"
+        | "vectorSpecies"
+        | "deletionType"
+        | "surveyTypes"
+        | "patientType"
+        | "excludeStudies"
+        | "plasmodiumSpecies"
+        | "drugs"
+        | "molecularMarkers",
+    filterValues: string | string[] | undefined
+) => {
+    const value = `${i18next.t(`common.map_info_summary.${type}`)}: `;
+
+    if (filterValues && Array.isArray(filterValues)) {
+        return [
+            value.concat(
+                `${
+                    filterValues && filterValues?.length > 0
+                        ? filterValues?.map(item => i18next.t(item)).join(", ")
+                        : i18next.t("common.map_info_summary.all")
+                }`
+            ),
+        ];
+    }
+
+    if (filterValues || (!filterValues && type !== "excludeStudies")) {
+        return value.concat(`${filterValues || i18next.t("common.map_info_summary.all")}`);
+    }
+};
+
+export function preventionFiltersToString(
+    preventionFilters: PreventionFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    from: Source
+) {
+    const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters));
+    const insecticideClass = buildFilters("insecticideClass", i18next.t(preventionFilters.insecticideClass));
+    const insecticideTypes = buildFilters("insecticideTypes", preventionFilters.insecticideTypes);
+    const type = buildFilters("testType", preventionFilters.type);
+    const species = buildFilters("species", preventionFilters.species);
+    const assayTypes = buildFilters("assayTypes", preventionFilters.assayTypes);
+    const synergistTypes = buildFilters("synergistTypes", preventionFilters.synergistTypes);
+
+    if (from === "map") {
+        switch (preventionFilters.mapType) {
+            case PreventionMapType.RESISTANCE_STATUS: {
+                return _.compact([insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
+            }
+            case PreventionMapType.INTENSITY_STATUS: {
+                return _.compact([insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
+            }
+            case PreventionMapType.RESISTANCE_MECHANISM: {
+                return _.compact([type, ...assayTypes, ...species, years]).join(" | ");
+            }
+            case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
+                return _.compact([type, ...synergistTypes, ...species, years]).join(" | ");
+            }
+        }
+    } else {
+        switch (preventionFilters.dataset) {
+            case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
+            case "INTENSITY_CONCENTRATION_BIOASSAY": {
+                return _.compact([insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
+            }
+            case "MOLECULAR_ASSAY":
+            case "BIOCHEMICAL_ASSAY": {
+                return _.compact([type, ...species, years]).join(" | ");
+            }
+            case "SYNERGIST-INSECTICIDE_BIOASSAY": {
+                return _.compact([...species, years]).join(" | ");
+            }
+        }
+    }
+}
+
+export function treatmentFiltersToString(
+    treatmentFilters: TreatmentFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    from: Source
+) {
+    const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters));
+    const exlude = buildFilters(
+        "excludeStudies",
+        treatmentFilters.excludeLowerPatients ? i18next.t("common.filters.exclude_lower_patients") : undefined
+    );
+
+    const plasmodiumSpecies = buildFilters(
+        "plasmodiumSpecies",
+        PLASMODIUM_SPECIES_SUGGESTIONS.filter(item => treatmentFilters.plasmodiumSpecies.includes(item.value)).map(
+            plasmodiumSpecies => plasmodiumSpecies.label
+        )
+    );
+
+    const drugs = buildFilters("drugs", treatmentFilters.drugs);
+
+    const molecularMarkers = buildFilters(
+        "molecularMarkers",
+        MOLECULAR_MARKERS_LABELS.filter(item => treatmentFilters.molecularMarkers.includes(item.value)).map(
+            molecularMarkers => molecularMarkers.label
+        )
+    );
+
+    if (from === "map") {
+        switch (treatmentFilters.mapType) {
+            case TreatmentMapType.TREATMENT_FAILURE:
+            case TreatmentMapType.DELAYED_PARASITE_CLEARANCE: {
+                return _.compact([...plasmodiumSpecies, ...drugs, exlude, years]).join(" | ");
+            }
+            case TreatmentMapType.MOLECULAR_MARKERS: {
+                return _.compact([...molecularMarkers, exlude, years]).join(" | ");
+            }
+            case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES: {
+                return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
+            }
+            case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES: {
+                return _.compact([...molecularMarkers, years]).join(" | ");
+            }
+        }
+    } else {
+        switch (treatmentFilters.dataset) {
+            case "THERAPEUTIC_EFFICACY_STUDY": {
+                return _.compact([...plasmodiumSpecies, ...drugs, exlude, years]).join(" | ");
+            }
+            case "MOLECULAR_MARKER_STUDY": {
+                return _.compact([...molecularMarkers, exlude, years]).join(" | ");
+            }
+            case "AMDERO_TES": {
+                return _.compact([...plasmodiumSpecies, ...drugs, years]).join(" | ");
+            }
+            case "AMDERO_MM": {
+                return _.compact([...molecularMarkers, years]).join(" | ");
+            }
+        }
+    }
+}
+
+export function diagnosisFiltersToString(
+    diagnosisFilters: DiagnosisFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    from: Source
+) {
+    const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters)) as string;
+
+    const deletionType = buildFilters("deletionType", i18next.t(diagnosisFilters.deletionType));
+    const surveyTypes = buildFilters("surveyTypes", diagnosisFilters.surveyTypes);
+    const patientType = buildFilters("patientType", i18next.t(diagnosisFilters.patientType));
+
+    if (from === "map") {
+        switch (diagnosisFilters.mapType) {
+            case DiagnosisMapType.GENE_DELETIONS:
+                return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+            case DiagnosisMapType.HRP23_STUDIES:
+                return years;
+        }
+    } else {
+        switch (diagnosisFilters.dataset) {
+            case "PFHRP23_GENE_DELETIONS":
+                return _.compact([deletionType, ...surveyTypes, patientType, years]).join(" | ");
+            case "HRPO":
+                return years;
+        }
+    }
+}
+
+export function invasiveFiltersToString(
+    invasiveFilters: InvasiveFilters,
+    maxMinYears: number[],
+    yearFilters: number[],
+    _from: Source
+) {
+    const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters));
+
+    const vectorSpecies = buildFilters(
+        "vectorSpecies",
+        invasiveFilters.vectorSpecies.map(item => {
+            const vectorSpecie = suggestions().find(sug => sug.value === item);
+            return vectorSpecie.label;
+        })
+    );
+
+    return _.compact([...vectorSpecies, years]).join(" | ");
+}
+
+function getYearsSummary(maxMinYears: number[], yearFilters: number[]) {
+    return maxMinYears[0] === yearFilters[0] && maxMinYears[1] === yearFilters[1]
+        ? maxMinYears.join("-")
+        : yearFilters.join("-");
+}

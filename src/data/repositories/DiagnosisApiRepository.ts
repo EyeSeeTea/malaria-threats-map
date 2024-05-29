@@ -1,21 +1,15 @@
 import { request } from "../common/request";
 import { FutureData } from "../../domain/common/FutureData";
-import { ApiParams, ApiResponse } from "../common/types";
+import { XMartApiResponse } from "../common/types";
 import { DiagnosisRepository } from "../../domain/repositories/DiagnosisRepository";
 import { DiagnosisStudy } from "../../domain/entities/DiagnosisStudy";
 
 export class DiagnosisApiRepository implements DiagnosisRepository {
-    constructor(private baseUrl: string) {}
+    constructor(private xmartBaseUrl: string) {}
 
     getStudies(): FutureData<DiagnosisStudy[]> {
-        const params: ApiParams = {
-            f: "json",
-            where: `1=1`,
-            outFields: "*",
-        };
-
-        return request<ApiResponse<DiagnosisStudy>>({ url: `${this.baseUrl}/7/query`, params }).map(response =>
-            response.features.map(feature => feature.attributes)
-        );
+        return request<XMartApiResponse<DiagnosisStudy>>({
+            url: `${this.xmartBaseUrl}/FACT_DIAGNOSIS_VIEW`,
+        }).map(response => response.value);
     }
 }

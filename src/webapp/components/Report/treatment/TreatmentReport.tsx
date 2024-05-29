@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Paper } from "@material-ui/core";
+import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow, Paper } from "@mui/material";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
 import * as R from "ramda";
@@ -8,7 +8,7 @@ import { Data, headCells } from "./columns";
 import {
     filterByCountries,
     filterByDrugs,
-    filterByManyPlasmodiumSpecies,
+    filterByPlasmodiumSpecies,
     filterByMolecularMarkerStudyDimension256,
 } from "../../layers/studies-filters";
 import { exportToCSV } from "../../DataDownload/download";
@@ -83,7 +83,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
     const filters = [
         (study: TreatmentStudy) => isNotNull(study.DRUG_NAME),
         filterByMolecularMarkerStudyDimension256(),
-        filterByManyPlasmodiumSpecies([plasmodiumSpecie]),
+        filterByPlasmodiumSpecies([plasmodiumSpecie]),
         filterByCountries(countries),
         filterByDrugs(drugs),
     ];
@@ -109,7 +109,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                     return followUpCountrySpeciesGroupStudies
                         .map(([followUpDays, followUpCountrySpeciesStudies]) => {
                             const yearSortedStudies = followUpCountrySpeciesStudies
-                                .map((study: TreatmentStudy) => parseInt(study.YEAR_START))
+                                .map((study: TreatmentStudy) => study.YEAR_START)
                                 .sort();
                             const minYear = yearSortedStudies[0];
                             const maxYear = yearSortedStudies[yearSortedStudies.length - 1];
@@ -118,12 +118,10 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                             const fallbackProp = "TREATMENT_FAILURE_KM";
 
                             const rawValues = followUpCountrySpeciesStudies.map((study: TreatmentStudy) =>
-                                isNotNull(study[defaultProp]) ? study[defaultProp] : study[fallbackProp]
+                                study[defaultProp] !== null ? study[defaultProp] : study[fallbackProp]
                             );
 
-                            const values = rawValues
-                                .map(value => parseFloat(value))
-                                .filter(value => !Number.isNaN(value));
+                            const values = rawValues.filter(value => !Number.isNaN(value));
                             const sortedValues = values.sort();
 
                             const min = values.length ? sortedValues[0] * 100 : "-";
@@ -134,7 +132,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
 
                             return {
                                 ID: `${country}_${drug}`,
-                                COUNTRY: t(`countries.${country}`),
+                                COUNTRY: t(`COUNTRY_NAME.${country}`),
                                 ISO2: country,
                                 DRUG: t(drug),
                                 COUNTRY_NUMBER: nStudies,
@@ -232,6 +230,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                         plasmodiumSpecie={plasmodiumSpecie}
                         setPlasmodiumSpecie={setPlasmodiumSpecie}
                         onClick={() => downloadData()}
+                        treatmentStudies={studies}
                     />
                     <TableContainer>
                         <Table
@@ -285,7 +284,7 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                                                             id={labelId}
                                                             scope="row"
                                                             padding="none"
-                                                            isRight={header.align === "right"}
+                                                            $isRight={header.align === "right"}
                                                             divider={header.divider}
                                                         >
                                                             {header && header.numeric && isNumber
@@ -306,8 +305,8 @@ function TreatmentReport({ studies: baseStudies }: Props) {
                         count={groups.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                 </div>
             </Paper>

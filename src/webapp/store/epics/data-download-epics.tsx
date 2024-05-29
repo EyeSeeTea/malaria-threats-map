@@ -1,18 +1,17 @@
-import { ActionsObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
-import { ActionTypeEnum } from "../actions";
 import { mergeMap, switchMap } from "rxjs/operators";
 import * as ajax from "../ajax";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { addDataDownloadRequestAction, fetchDataDownloadRequestAction } from "../actions/data-download-actions";
 import config from "../../config";
+import { ofType } from "redux-observable";
+import { ActionTypeEnum } from "../actions";
 
-export const getDataDownloadEntriesEpic = (
-    action$: ActionsObservable<ActionType<typeof fetchDataDownloadRequestAction>>
-) =>
-    action$.ofType(ActionTypeEnum.FetchDownloadsRequest).pipe(
+export const getDataDownloadEntriesEpic = (action$: Observable<ActionType<typeof fetchDataDownloadRequestAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchDownloadsRequest),
         switchMap(() => {
-            return ajax.getFull(config.backendUrl).pipe(
+            return ajax.getFull<Response>(config.backendUrl).pipe(
                 mergeMap((_response: Response) => {
                     return of();
                 })
@@ -20,10 +19,9 @@ export const getDataDownloadEntriesEpic = (
         })
     );
 
-export const createDataDownloadEntryEpic = (
-    action$: ActionsObservable<ActionType<typeof addDataDownloadRequestAction>>
-) =>
-    action$.ofType(ActionTypeEnum.AddDownloadRequest).pipe(
+export const createDataDownloadEntryEpic = (action$: Observable<ActionType<typeof addDataDownloadRequestAction>>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.AddDownloadRequest),
         switchMap(action => {
             return ajax.postFull(config.backendUrl, action.payload).pipe(
                 mergeMap((_response: any) => {

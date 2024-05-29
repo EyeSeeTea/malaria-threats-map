@@ -2,18 +2,18 @@ import { State } from "../store/types";
 import { selectLegendExpanded } from "../store/reducers/base-reducer";
 import { setLegendExpandedAction } from "../store/actions/base-actions";
 import React from "react";
-import { ClickAwayListener, IconButton } from "@material-ui/core";
-import GrowIcon from "@material-ui/icons/Info";
-import ReduceIcon from "@material-ui/icons/ExpandMore";
+import { ClickAwayListener, IconButton } from "@mui/material";
+import GrowIcon from "@mui/icons-material/Info";
+import ReduceIcon from "@mui/icons-material/ExpandMore";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@mui/material/Paper";
 
 const LegendContainerStyled = styled(Paper)<{ size?: number }>`
     padding: 8px;
     display: flex;
     flex-direction: column;
-    max-width: ${props => props.size | 200}px;
+    max-width: ${props => props.size | 313}px;
     width: 100%;
     font-size: 12px;
     box-shadow: none !important;
@@ -41,26 +41,23 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     children: React.ReactNode;
-    expandIcon?: boolean;
 };
 type Props = DispatchProps & StateProps & OwnProps;
 
-const LegendContainer = ({ children, legendExpanded, setLegendExpanded, expandIcon = true }: Props) => {
+const LegendContainer = ({ children, legendExpanded, setLegendExpanded }: Props) => {
     const small = !legendExpanded;
     return (
         <LegendContainerStyled size={small ? 200 : 600} role="group" aria-label="Legend">
-            {expandIcon && (
-                <IconContainer>
-                    <IconButton
-                        size={"small"}
-                        aria-label="upload picture"
-                        component="span"
-                        onClick={() => setLegendExpanded(!legendExpanded)}
-                    >
-                        {small ? <GrowIcon fontSize={"small"} /> : <ReduceIcon fontSize={"small"} />}
-                    </IconButton>
-                </IconContainer>
-            )}
+            <IconContainer>
+                <IconButton
+                    size={"small"}
+                    aria-label="upload picture"
+                    component="span"
+                    onClick={() => setLegendExpanded(!legendExpanded)}
+                >
+                    {small ? <GrowIcon fontSize={"small"} /> : <ReduceIcon fontSize={"small"} />}
+                </IconButton>
+            </IconContainer>
             <ClickAwayListener mouseEvent="onMouseDown" onClickAway={() => setLegendExpanded(false)}>
                 <LegendContent small>{children}</LegendContent>
             </ClickAwayListener>

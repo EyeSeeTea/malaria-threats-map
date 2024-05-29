@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import React from "react";
 import { Footer, StepProps } from "../MalariaTour";
 import { useTranslation } from "react-i18next";
@@ -12,7 +12,7 @@ export default function Step2(options: StepProps) {
                     <strong>{t("tour.steps.2.title")}</strong>
                 </Typography>
             </>
-            <Footer {...options} current={2} total={10} />
+            <Footer {...options} current={2} total={5} />
         </>
     );
 }

@@ -20,8 +20,8 @@ import {
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { logEventAction } from "../../store/actions/base-actions";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
-import SingleFilter from "./common/SingleFilter";
 import { useTranslation } from "react-i18next";
+import MultiFilter from "./common/MultiFilter";
 
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),
@@ -86,12 +86,13 @@ const TypeFilter: React.FC<Props> = ({ setType, preventionFilters, studies, year
     }));
 
     return (
-        <SingleFilter
+        <MultiFilter
             label={t("common.filters.test_type")}
+            placeholder={t("common.filters.select_test_type_placeholder")}
             options={suggestions}
             onChange={setType}
             value={preventionFilters.type}
-            analyticsFilterAction="testType"
+            analyticsMultiFilterAction="testType"
         />
     );
 };

@@ -2,8 +2,7 @@ import * as R from "ramda";
 import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
-import { DiagnosisMapType, DiagnosisState, State } from "../types";
-import { DELETION_TYPES } from "../../components/filters/DeletionTypeFilter";
+import { DiagnosisDataset, DiagnosisMapType, DiagnosisState, State } from "../types";
 import { DiagnosisStudy } from "../../../domain/entities/DiagnosisStudy";
 
 const initialState: DiagnosisState = Object.freeze({
@@ -13,10 +12,12 @@ const initialState: DiagnosisState = Object.freeze({
     filteredStudies: [],
     filters: {
         mapType: DiagnosisMapType.GENE_DELETIONS,
-        deletionType: DELETION_TYPES.HRP2_PROPORTION_DELETION.value,
+        dataset: "PFHRP23_GENE_DELETIONS",
+        deletionType: undefined,
         surveyTypes: [],
         patientType: null,
     },
+    selectionStudies: [],
 });
 
 function updateFilter<T>(key: string, value: T, def?: T) {
@@ -35,6 +36,10 @@ function updateMapType(mapType: DiagnosisMapType) {
     return updateFilter("mapType", mapType, DiagnosisMapType.GENE_DELETIONS);
 }
 
+function updateDataset(dataset: DiagnosisDataset) {
+    return updateFilter("dataset", dataset, "DIAGNOSIS");
+}
+
 function updateSurveyTypes(surveyTypes: string[]) {
     return updateFilter("surveyTypes", surveyTypes, []);
 }
@@ -44,25 +49,26 @@ function updatePatientType(patientType: string) {
 }
 
 function updateDeletionType(deletionType: string) {
-    return updateFilter("deletionType", deletionType, DELETION_TYPES.HRP2_PROPORTION_DELETION.value);
+    return updateFilter("deletionType", deletionType);
 }
 
 export default createReducer<DiagnosisState>(initialState, {
-    [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesRequest]: () => (state: DiagnosisState) => ({
         ...state,
         loading: true,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesSuccess]: (studies: DiagnosisStudy[]) => (state: DiagnosisState) => ({
         ...state,
         loading: false,
         studies,
     }),
-    [ActionTypeEnum.FetchDiagnosisStudiesError]: () => state => ({
+    [ActionTypeEnum.FetchDiagnosisStudiesError]: () => (state: DiagnosisState) => ({
         ...state,
         error: "There was a problem loading studies",
         loading: false,
     }),
     [ActionTypeEnum.SetDiagnosisMapType]: updateMapType,
+    [ActionTypeEnum.SetDiagnosisDataset]: updateDataset,
     [ActionTypeEnum.SetSurveyTypes]: updateSurveyTypes,
     [ActionTypeEnum.SetPatientType]: updatePatientType,
     [ActionTypeEnum.SetDeletionType]: updateDeletionType,
@@ -72,12 +78,18 @@ export default createReducer<DiagnosisState>(initialState, {
 
 const selectDiagnosisState = (state: State) => state.diagnosis;
 
-export const selectDiagnosisStudies = createSelector(selectDiagnosisState, R.prop("studies"));
+export const selectDiagnosisStudies = createSelector(selectDiagnosisState, diagnosisState => diagnosisState.studies);
 
-export const selectDiagnosisStudiesLoading = createSelector(selectDiagnosisState, R.prop("loading"));
+export const selectDiagnosisStudiesLoading = createSelector(
+    selectDiagnosisState,
+    diagnosisState => diagnosisState.loading
+);
 
-export const selectDiagnosisStudiesError = createSelector(selectDiagnosisState, R.prop("error"));
+export const selectDiagnosisStudiesError = createSelector(selectDiagnosisState, diagnosisState => diagnosisState.error);
 
-export const selectFilteredDiagnosisStudies = createSelector(selectDiagnosisState, R.prop("filteredStudies"));
+export const selectFilteredDiagnosisStudies = createSelector(
+    selectDiagnosisState,
+    diagnosisState => diagnosisState.filteredStudies
+);
 
-export const selectDiagnosisFilters = createSelector(selectDiagnosisState, R.prop("filters"));
+export const selectDiagnosisFilters = createSelector(selectDiagnosisState, diagnosisState => diagnosisState.filters);

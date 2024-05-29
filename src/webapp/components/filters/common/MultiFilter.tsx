@@ -1,20 +1,40 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import IntegrationReactSelect, { Option } from "../../BasicSelect";
-import { Divider, FilterWrapper } from "../Filters";
-import FormLabel from "@material-ui/core/FormLabel";
+import { FilterRowContainer } from "../Filters";
 import { sendMultiFilterAnalytics } from "../../../utils/analytics";
+import { Typography } from "@mui/material";
+import styled from "styled-components";
 
 type Props = {
-    label: string;
+    labelPosition?: "top" | "middle";
+    margin?: string;
+    label?: string;
     options: Option[];
+    placeholder?: string;
     onChange: (selection: string[]) => void;
     value: string[];
     analyticsMultiFilterAction?: string;
-    optionsStyle?: CSSProperties;
+    isClearable?: boolean;
+    disabled?: boolean;
+    optionsStyle?: React.CSSProperties;
+    className?: string;
 };
 
-function MultiFilter({ label, options, onChange, value, analyticsMultiFilterAction, optionsStyle }: Props) {
+function MultiFilter({
+    labelPosition = "middle",
+    label,
+    options,
+    onChange,
+    value,
+    analyticsMultiFilterAction,
+    placeholder,
+    isClearable = false,
+    margin,
+    optionsStyle,
+    disabled = false,
+    className = "",
+}: Props) {
     const onSelectionChange = (options: Option[] = []) => {
         onChange((options || []).map(o => o.value));
 
@@ -23,22 +43,47 @@ function MultiFilter({ label, options, onChange, value, analyticsMultiFilterActi
         }
     };
 
-    const selections = options.filter(option => value.includes(option.value));
+    const selections = options.filter(option => value && value.includes(option.value));
 
     return (
-        <FilterWrapper>
-            <FormLabel component="legend">{label}</FormLabel>
-            <Divider />
-            <IntegrationReactSelect
-                isMulti
-                isClearable
-                suggestions={options}
-                onChange={onSelectionChange}
-                value={selections}
-                optionsStyle={optionsStyle}
-            />
-        </FilterWrapper>
+        <React.Fragment>
+            {label && labelPosition === "top" && (
+                <StyledTypography variant="body2" $disabled={disabled}>
+                    {label}
+                </StyledTypography>
+            )}
+            <StyledFilterRowContainer margin={margin} className="MultiFilter-container" $disabled={disabled}>
+                {label && labelPosition === "middle" && selections && selections.length > 0 && (
+                    <Typography component="legend" variant="body2">
+                        {`${label}:`}&nbsp;
+                    </Typography>
+                )}
+                <IntegrationReactSelect
+                    isMulti
+                    isClearable={isClearable}
+                    placeholder={placeholder}
+                    suggestions={options}
+                    onChange={onSelectionChange}
+                    value={selections}
+                    optionsStyle={optionsStyle}
+                    className={className}
+                    isDisabled={disabled}
+                />
+            </StyledFilterRowContainer>
+        </React.Fragment>
     );
 }
 
 export default connect()(MultiFilter);
+
+const StyledTypography = styled(Typography)<{ $disabled?: boolean }>`
+    font-weight: bold;
+    color: ${props => props.$disabled && "#999999"};
+`;
+
+const StyledFilterRowContainer = styled(FilterRowContainer)<{ $disabled?: boolean }>`
+    color: ${props => props.$disabled && "#999999"};
+    span {
+        color: ${props => props.$disabled && "#999999"};
+    }
+`;

@@ -13,14 +13,30 @@ import { GetCountryLayerUseCase } from "./domain/usecases/GetCountryLayerUseCase
 import { SmtpJsEmailRepository } from "./data/repositories/SmtpJsEmailRepository";
 import { UploadFileUseCase } from "./domain/usecases/UploadFileUseCase";
 import getDistrictsUrl from "./webapp/utils/getDistrictsUrl";
+import { SendFeedbackUseCase } from "./domain/usecases/SendFeedbackUseCase";
+import { CountryContextApiRepository } from "./data/repositories/CountryContextApiRepository";
+import { GetCountryContextUseCase } from "./domain/usecases/GetCountryContextUseCase";
+import { CountryApiRepository } from "./data/repositories/CountryApiRepository";
+import { GetCountryUseCase } from "./domain/usecases/GetCountryUseCase";
+import { GetTranslationsUseCase } from "./domain/usecases/GetTranslationsUseCase";
+import { TranslationApiRepository } from "./data/repositories/TranslationApiRepository";
+import { GetLastUpdatedDatesUseCase } from "./domain/usecases/GetLastUpdatedDatesUseCase";
+import { LastUpdateDatesApiRepository } from "./data/repositories/LastUpdateDatesApiRepository";
+import { TotalStudiesApiRepository } from "./data/repositories/TotalStudiesApiRepository";
+import { GetTotalStudiesInThemesUseCase } from "./domain/usecases/GetTotalStudiesInThemesUseCase";
 
 export class CompositionRoot {
-    private preventionRepository = new PreventionApiRepository(config.mapServerUrl);
-    private diagnosisRepository = new DiagnosisApiRepository(config.mapServerUrl);
-    private treatmentRepository = new TreatmentApiRepository(config.mapServerUrl);
-    private invasiveRepository = new InvasiveApiRepository(config.mapServerUrl);
-    private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.backendUrl);
-    private fileRepository = new SmtpJsEmailRepository();
+    private preventionRepository = new PreventionApiRepository(config.xmartServerUrl);
+    private diagnosisRepository = new DiagnosisApiRepository(config.xmartServerUrl);
+    private treatmentRepository = new TreatmentApiRepository(config.xmartServerUrl);
+    private invasiveRepository = new InvasiveApiRepository(config.xmartServerUrl);
+    private countryLayerRepository = new CountryLayerApiRepository(config.featuresServerUrl, config.xmartServerUrl);
+    private countryRepository = new CountryApiRepository(config.xmartServerUrl);
+    private emailRepository = new SmtpJsEmailRepository(config.feedbackEmailSecureToken);
+    private countryContextRepository = new CountryContextApiRepository(config.xmartServerUrl);
+    private translationRepository = new TranslationApiRepository(config.xmartServerUrl);
+    private lastUpdateDatesRepository = new LastUpdateDatesApiRepository(config.xmartServerUrl);
+    private totalStudiesRepository = new TotalStudiesApiRepository(config.xmartServerUrl);
     private _districtsUrl: string;
 
     constructor() {
@@ -57,14 +73,50 @@ export class CompositionRoot {
         });
     }
 
+    public get countries() {
+        return getExecute({
+            get: new GetCountryUseCase(this.countryRepository),
+        });
+    }
+
     public get uploadFile() {
         return getExecute({
-            save: new UploadFileUseCase(this.fileRepository),
+            save: new UploadFileUseCase(this.emailRepository, config.feedbackEmailFrom, config.feedbackEmailTo),
         });
     }
 
     public get districtsUrl() {
         return this._districtsUrl;
+    }
+
+    public get feedback() {
+        return getExecute({
+            send: new SendFeedbackUseCase(this.emailRepository, config.feedbackEmailFrom, config.feedbackEmailTo),
+        });
+    }
+
+    public get countryContext() {
+        return getExecute({
+            get: new GetCountryContextUseCase(this.countryContextRepository),
+        });
+    }
+
+    public get translations() {
+        return getExecute({
+            get: new GetTranslationsUseCase(this.translationRepository),
+        });
+    }
+
+    public get lastUpdatedDates() {
+        return getExecute({
+            get: new GetLastUpdatedDatesUseCase(this.lastUpdateDatesRepository),
+        });
+    }
+
+    public get totalStudiesInThemes() {
+        return getExecute({
+            get: new GetTotalStudiesInThemesUseCase(this.totalStudiesRepository),
+        });
     }
 
     private async initDistrictsUrl() {

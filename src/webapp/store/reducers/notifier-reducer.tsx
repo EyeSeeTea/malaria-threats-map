@@ -1,6 +1,5 @@
 import { createReducer } from "../reducer-utils";
 import { ActionTypeEnum } from "../actions";
-import * as R from "ramda";
 import { State } from "../types";
 import { createSelector } from "reselect";
 import { NotificationsState } from "../../types/Notifications";
@@ -26,4 +25,4 @@ export default createReducer<NotificationsState>(initialState, {
 
 const selectNotificationsState = (state: State) => state.notifications;
 
-export const selectNotifications = createSelector(selectNotificationsState, R.prop("notifications"));
+export const selectNotifications = createSelector(selectNotificationsState, state => state.notifications);
