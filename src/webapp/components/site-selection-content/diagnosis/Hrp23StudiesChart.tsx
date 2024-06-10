@@ -42,7 +42,7 @@ const Hrp23StudiesChart = ({ selectionData }: Hrp23StudiesChartProps) => {
                                         <StyledTableCell $noShadow={index === Object.values(studyDetails).length - 1}>
                                             <StyledStatusWrapper>
                                                 {key === HRP23_STUDIES.STATUS ? (
-                                                    <React.Fragment>
+                                                    <>
                                                         <StatusSymbol
                                                             color={Hrp23StudiesColors[value][0]}
                                                             borderColor={Hrp23StudiesColors[value][1]}
@@ -50,9 +50,13 @@ const Hrp23StudiesChart = ({ selectionData }: Hrp23StudiesChartProps) => {
                                                         {t(
                                                             `common.diagnosis.chart.hrp23_studies.${value.toLowerCase()}`
                                                         )}
-                                                    </React.Fragment>
+                                                    </>
                                                 ) : key === HRP23_STUDIES.GENOTYPING ? (
-                                                    <i>{value}</i>
+                                                    value === "Not specified" ? (
+                                                        value
+                                                    ) : (
+                                                        <i>{value}</i>
+                                                    )
                                                 ) : (
                                                     value
                                                 )}
