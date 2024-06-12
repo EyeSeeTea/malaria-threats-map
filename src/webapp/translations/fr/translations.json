@@ -416,6 +416,16 @@
                 "title": "Contribuer aux données de détection de <i>An. stephensi</i>.",
                 "description": "Nous invitons toutes les personnes et organisations à soumettre des données sur la détection de <i>An. stephensi</i> en dehors de ses zones d'origine. Veuillez communiquer vos données en utilisant le formulaire standard de collecte de données de l'OMS, disponible à l'adresse suivante <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</5>."
             },
+            "section3": {
+                "title": "Suivi de la surveillance",
+                "description": "Le suivi des activités de surveillance aide à comprendre les lacunes actuelles en matière de recherche. La connaissance de l'endroit où les études sont en cours de planification, actuellement en cours ou récemment terminées aide à orienter les ressources pour les études futures. Si vous ou votre organisation mettez actuellement en œuvre, prévoyez de mettre en œuvre ou avez récemment terminé une activité de surveillance sur les délétions pfhrp2/3, l'efficacité thérapeutique ou les études de marqueurs moléculaires de la résistance aux médicaments antipaludiques, nous vous invitons à remplir une ou plusieurs des enquêtes courtes suivantes :",
+                "note": "Les résultats de ces enquêtes seront intégrés dans les Cartes des Menaces du Paludisme.",
+                "list": {
+                    "1": "Enquête sur la surveillance des délétions pfhrp2/3",
+                    "2": "Enquête sur les études d'efficacité thérapeutique",
+                    "3": "Enquête sur les études de marqueurs moléculaires de la résistance aux médicaments antipaludiques"
+                }
+            },
             "sectionsFooter": "Les formulaires complétés peuvent être envoyés à: <2>vectorsurveillance@who.int</2>"
         },
         "contactPage": {
