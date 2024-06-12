@@ -6,8 +6,8 @@ import { isNotNull } from "../../utils/number-utils";
 
 export function getSiteTitle(theme: string, study: Study) {
     const tooltipSiteName =
-        theme === "diagnosis" && isNotNull((study as DiagnosisStudy).TOOLTIP_SITENAME)
-            ? (study as DiagnosisStudy).TOOLTIP_SITENAME
+        theme === "diagnosis" && isNotNull((study as DiagnosisStudy).SITE_NAME)
+            ? (study as DiagnosisStudy).SITE_NAME
             : undefined;
 
     const villageName = isNotNull(study.VILLAGE_NAME) ? study.VILLAGE_NAME : undefined;

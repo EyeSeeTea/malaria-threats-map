@@ -10,7 +10,7 @@ const mappings: Option[] = [
         label: "COUNTRY_NAME",
     },
     {
-        value: "TOOLTIP_SITENAME",
+        value: "SITE_NAME",
         label: "SITE_NAME",
     },
     {
