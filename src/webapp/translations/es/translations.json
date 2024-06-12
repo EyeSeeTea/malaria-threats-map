@@ -418,7 +418,8 @@
             },
             "section3": {
                 "title": "Seguimiento de la vigilancia",
-                "description": "El seguimiento de las actividades de vigilancia ayuda a comprender las brechas actuales en la investigación. El conocimiento de dónde se están planificando, llevando a cabo o recientemente completando estudios ayuda a informar dónde dirigir los recursos para estudios futuros. Si usted o su organización están implementando actualmente, planeando implementar o han completado recientemente una actividad de vigilancia sobre las deleciones pfhrp2/3, la eficacia terapéutica o estudios de marcadores moleculares de resistencia a los medicamentos antipalúdicos, nos gustaría invitarle a completar una o más de las siguientes encuestas breves:",
+                "description": "El seguimiento de las actividades de vigilancia ayuda a entender las lagunas de investigación actuales. El conocimiento de dónde se están planificando, llevando a cabo o recientemente completando estudios, ayuda a informar sobre dónde dirigir los recursos para futuros estudios.",
+                "description2": "Si usted o su organización están implementando actualmente, planean implementar o han completado recientemente una actividad de vigilancia sobre las deleciones de pfhrp2/3, la eficacia terapéutica o los estudios de marcadores moleculares de resistencia a los medicamentos antipalúdicos, nos gustaría invitarle a completar una o más de las siguientes encuestas cortas:",
                 "note": "Los resultados de estas encuestas se integrarán en los Mapas de Amenazas de la Malaria.",
                 "list": {
                     "1": "Encuesta sobre la vigilancia de las deleciones pfhrp2/3",

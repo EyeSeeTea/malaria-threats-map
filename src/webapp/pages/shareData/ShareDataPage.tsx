@@ -39,6 +39,10 @@ const ContributeDataImage = styled.img`
     height: auto;
 `;
 
+const List = styled.ul`
+    padding-block-end: 1rem;
+`;
+
 const mapStateToProps = (state: State) => ({
     feedback: selectFeedback(state),
 });
@@ -181,15 +185,17 @@ const ShareDataPage: React.FC<Props> = () => {
                                 Tracking surveillance activities helps to understand current research gaps. Knowledge of
                                 where studies are either being planned, currently underway, or recently completed, helps
                                 to inform where to direct resources for future studies.
-                                <br />
-                                <br />
+                            </Trans>
+                            <br />
+                            <br />
+                            <Trans i18nKey="common.shareDataPage.section3.description2" t={t}>
                                 If you or your organization are currently implementing, planning to implement, or have
                                 recently completed a surveillance activity on pfhrp2/3 deletions, therapeutic efficacy,
                                 or molecular marker studies of antimalarial drug resistance, we would like to invite you
                                 to complete one or more of the following short surveys:
                             </Trans>
                         </Typography>
-                        <ul>
+                        <List>
                             <li>
                                 <a
                                     href="https://extranet.who.int/dataformv3/index.php/341317?lang=en"
@@ -226,7 +232,7 @@ const ShareDataPage: React.FC<Props> = () => {
                                     </Trans>
                                 </a>
                             </li>
-                        </ul>
+                        </List>
                         <Typography variant="body1">
                             <Trans i18nKey="common.shareDataPage.section3.note" t={t}>
                                 The results of these surveys will be integrated into the Malaria Threats Maps.
