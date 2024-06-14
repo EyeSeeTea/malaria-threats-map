@@ -416,6 +416,17 @@
                 "title": "Contribute <i>An. stephensi</i> detection data",
                 "description": "We invite data submissions from all individuals and organizations about <i>An. stephensi</i> detection outside of its native areas. Please report your data using the WHO standard data collection form, available <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</5>."
             },
+            "section3": {
+                "title": "Tracking surveillance",
+                "description": "Tracking surveillance activities helps to understand current research gaps. Knowledge of where studies are either being planned, currently underway, or recently completed, helps to inform where to direct resources for future studies.",
+                "description2": "If you or your organization are currently implementing, planning to implement, or have recently completed a surveillance activity on pfhrp2/3 deletions, therapeutic efficacy, or molecular marker studies of antimalarial drug resistance, we would like to invite you to complete one or more of the following short surveys:",
+                "note": "The results of these surveys will be integrated into the Malaria Threats Maps.",
+                "list": {
+                    "1": "Survey on surveillance of pfhrp2/3 deletions",
+                    "2": "Survey on therapeutic efficacy studies",
+                    "3": "Survey on molecular marker studies of antimalarial drug resistance"
+                }
+            },
             "sectionsFooter": "Completed forms can be sent to: <2>vectorsurveillance@who.int</2>"
         },
         "contactPage": {
