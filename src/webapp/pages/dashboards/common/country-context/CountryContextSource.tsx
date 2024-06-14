@@ -11,7 +11,7 @@ const CountryContextSource: React.FC = () => {
                 {t("common.dashboard.countryContextDashboards.source")}&nbsp;
             </Typography>
             <a
-                href="https://www.who.int/publications/i/item/9789240040496"
+                href="https://www.who.int/publications/i/item/9789240086173"
                 color="blue"
                 target={"_blank"}
                 rel="noreferrer"

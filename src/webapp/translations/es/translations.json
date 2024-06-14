@@ -125,7 +125,7 @@
             "countryContextDashboards": {
                 "title": "Contexto del País / Zona",
                 "source": "Fuente:",
-                "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2021",
+                "whoWorldMalariaReport": "Informe mundial sobre el paludismo de la OMS 2023",
                 "epidemiologicalProfile": {
                     "title": "PERFIL EPIDEMIOLÓGICO",
                     "country": "País / Zona",
@@ -146,7 +146,8 @@
                     "title": "PRINCIPALES ESPECIES DE PLASMODIUM Y RÉGIMEN DE TRATAMIENTO",
                     "country": "País / Zona",
                     "species": "Especies principales de Plasmodium (%)",
-                    "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones"
+                    "firstLineTreatments": "Tratamientos de primera línea para la malaria sin complicaciones",
+                    "percentageNotAvailable": "(% no disponible)"
                 },
                 "vectors": {
                     "title": "VECTORES",
