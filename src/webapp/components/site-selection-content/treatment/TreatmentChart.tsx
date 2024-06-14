@@ -35,7 +35,7 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
     xAxis: { categories },
     yAxis: {
         min: 0,
-        max: 60,
+        max: 80,
         tickInterval: 10,
         title: {
             text: translations.percentage,
