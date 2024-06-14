@@ -237,7 +237,7 @@ function getDiagnosisLegendLabels(filters: DiagnosisFilters): LegendLabel[] {
                 },
                 {
                     label: "diagnosis.legend.hrp23_studies.completed",
-                    color: Hrp23StudiesColors[HRP23_STUDIES_STATUS.COMPLETED_RESULTS_PENDING][0],
+                    color: Hrp23StudiesColors[HRP23_STUDIES_STATUS.COMPLETED][0],
                 },
             ];
         default:
@@ -325,9 +325,7 @@ function getTreatmentLegendLabels(filters: TreatmentFilters): LegendLabel[] {
                 },
                 {
                     label: "treatment.legend.therapeutic_efficacy_studies.completed",
-                    color: TherapeuticEfficacyStudiesColors[
-                        THERAPEUTIC_EFFICACY_STUDIES_STATUS.COMPLETED_RESULTS_PENDING
-                    ][0],
+                    color: TherapeuticEfficacyStudiesColors[THERAPEUTIC_EFFICACY_STUDIES_STATUS.COMPLETED][0],
                 },
             ];
         case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
@@ -342,9 +340,7 @@ function getTreatmentLegendLabels(filters: TreatmentFilters): LegendLabel[] {
                 },
                 {
                     label: "treatment.legend.molecular_markers_ongoing_studies.completed",
-                    color: MolecularMarkersOngoingStudiesColors[
-                        MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.COMPLETED_RESULTS_PENDING
-                    ][0],
+                    color: MolecularMarkersOngoingStudiesColors[MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS.COMPLETED][0],
                 },
             ];
         default:

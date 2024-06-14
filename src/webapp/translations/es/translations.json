@@ -623,7 +623,7 @@
                     "title": "Estado de los estudios sobre la deleción del gen <i>Pfhrp2</i>",
                     "ongoing": "En curso",
                     "planned": "Planificado",
-                    "completed": "Finalizado (resultados pendientes)",
+                    "completed": "Finalizado",
                     "help": {
                         "p1": "",
                         "p2": "",
@@ -683,7 +683,7 @@
                     "study_details_other": "Detalles del estudio {{number}}",
                     "ongoing": "En curso",
                     "planned": "Planificado",
-                    "completed_results_pending": "Finalizado (resultados pendientes)",
+                    "completed": "Finalizado",
                     "status": "Estado del estudio",
                     "proposed_timeframe": "Plazo propuesto",
                     "lead_institution": "Institución principal",
@@ -744,7 +744,7 @@
                     "title": "Estado de los estudios de eficacia terapéutica",
                     "ongoing": "En curso",
                     "planned": "Planificado",
-                    "completed": "Finalizado (resultados pendientes)",
+                    "completed": "Finalizado",
                     "help": {
                         "p1": "",
                         "p2": "",
@@ -755,7 +755,7 @@
                     "title": "Estado de los estudios de marcadores moleculares",
                     "ongoing": "En curso",
                     "planned": "Planificado",
-                    "completed": "Finalizado (resultados pendientes)",
+                    "completed": "Finalizado",
                     "help": {
                         "p1": "",
                         "p2": "",
