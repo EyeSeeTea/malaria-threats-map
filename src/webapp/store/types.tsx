@@ -32,6 +32,7 @@ export interface RegionState {
     siteLabel?: string;
     siteIso2?: string;
     siteCoordinates?: [number, number];
+    changeZoomToSite?: boolean;
 }
 
 export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION" | "DATASET";

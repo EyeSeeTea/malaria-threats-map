@@ -27,6 +27,7 @@ const initialState: MalariaState = Object.freeze({
         site: "",
         siteIso2: "",
         siteCoordinates: undefined,
+        changeZoomToSite: true,
     },
     lastUpdatedDates: {
         prevention: null,

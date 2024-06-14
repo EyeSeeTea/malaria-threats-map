@@ -75,7 +75,7 @@ class RegionLayer extends Component<Props> {
             this.zoomToCountry(region.country);
             this.highlightToCountry(region.country);
             this.showLayer();
-            region.site && this.zoomToSite(region.siteCoordinates);
+            region.site && this.zoomToSite(region.siteCoordinates, region.changeZoomToSite);
         } else if (region.subRegion) {
             this.zoomToSubRegion(region.subRegion);
             this.highlightToSubRegion(region.subRegion);
@@ -85,7 +85,7 @@ class RegionLayer extends Component<Props> {
             this.highlightToRegion(region.region);
             this.showLayer();
         } else if (region.site) {
-            this.zoomToSite(region.siteCoordinates);
+            this.zoomToSite(region.siteCoordinates, region.changeZoomToSite);
         } else {
             this.hideLayer();
         }
@@ -205,15 +205,16 @@ class RegionLayer extends Component<Props> {
         });
     };
 
-    zoomToSite = (coords: [number, number]) => {
+    zoomToSite = (coords: [number, number], changeZoomToSite: boolean) => {
+        const currentZoom = this.props.map.getZoom();
         const coordinates: [number, number] = [coords[1], coords[0]];
 
         this.props.map.flyTo({
             center: coordinates,
-            zoom: 5,
+            zoom: changeZoomToSite ? 5 : currentZoom,
             essential: true,
             maxDuration: 5000,
-            speed: 0.8,
+            speed: 0.5,
             padding: { top: 200, bottom: 0, left: 0, right: 350 },
         });
     };
