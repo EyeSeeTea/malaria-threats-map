@@ -69,7 +69,7 @@ const InvasiveChart: React.FC<Props> = ({ selectionData }) => {
                             </Typography>
                         </Row>
                     )}
-                       {studyData.larvalHabitat && (
+                    {studyData.larvalHabitat && (
                         <Row>
                             <Typography variant="body2">
                                 <b>{t("common.invasive.chart.vector_occurrance.larval_habitat")}:&nbsp;</b>
