@@ -51,6 +51,7 @@ function getData(sortedStudies: InvasiveStudy[]): InvasiveChartDataContent[] {
         samplingMethod: cleanValue(study.SAMPLING_METHOD),
         speciedIdentificationMethod: cleanValue(study.ID_METHOD),
         vectorStage: cleanValue(study.STAGE),
+        larvalHabitat: study.STAGE === "Immature" || study.STAGE === "Immature and adults" ? study.BREEDING_HABITAT : undefined
     }));
 }
 

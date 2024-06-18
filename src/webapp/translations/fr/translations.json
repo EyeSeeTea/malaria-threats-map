@@ -773,7 +773,10 @@
                     "sampling_method": "Méthode d’échantillonnage",
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
+                    "vector_stage": "Vector stage",
+                    "larval_habitat": "Habitat larvaire",
                     "not_reported": "Non reporté"
+                   
                 }
             },
             "legend": {

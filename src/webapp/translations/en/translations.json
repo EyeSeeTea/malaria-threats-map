@@ -771,6 +771,8 @@
                     "sampling_method": "Sampling method",
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
+                    "vector_stage": "Vector stage",
+                    "larval_habitat": "Larval habitat",
                     "not_reported": "Not reported"
                 }
             },
