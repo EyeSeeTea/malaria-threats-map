@@ -115,17 +115,6 @@ const ThemesSection: React.FC<Props> = ({
     const themes = React.useMemo(
         () => [
             {
-                title: t("common.themes.prevention"),
-                subtitle: t("common.homepage.theme_paper.prevention_subtitle"),
-                icon: PreventionIcon,
-                altText: "Prevention Icon",
-                color: "#5ABE86",
-                colorOpaque: "rgb(90, 190, 134, 0.9)",
-                lastUpdated: loading ? undefined : lastUpdatedDates["prevention"]?.toLocaleDateString(),
-                numStudies: loading ? undefined : totalStudiesInThemes.prevention,
-                link: "/stories?theme=prevention",
-            },
-            {
                 title: t("common.themes.invasive"),
                 subtitle: t("common.homepage.theme_paper.invasive_subtitle"),
                 icon: InvasiveIcon,
@@ -135,6 +124,17 @@ const ThemesSection: React.FC<Props> = ({
                 lastUpdated: loading ? undefined : lastUpdatedDates["invasive"]?.toLocaleDateString(),
                 numStudies: loading ? undefined : totalStudiesInThemes.invasive,
                 link: "/stories?theme=invasive",
+            },
+            {
+                title: t("common.themes.prevention"),
+                subtitle: t("common.homepage.theme_paper.prevention_subtitle"),
+                icon: PreventionIcon,
+                altText: "Prevention Icon",
+                color: "#5ABE86",
+                colorOpaque: "rgb(90, 190, 134, 0.9)",
+                lastUpdated: loading ? undefined : lastUpdatedDates["prevention"]?.toLocaleDateString(),
+                numStudies: loading ? undefined : totalStudiesInThemes.prevention,
+                link: "/stories?theme=prevention",
             },
             {
                 title: t("common.themes.treatment"),
