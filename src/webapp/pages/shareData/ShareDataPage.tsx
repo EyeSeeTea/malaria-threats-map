@@ -190,9 +190,9 @@ const ShareDataPage: React.FC<Props> = () => {
                             <br />
                             <Trans i18nKey="common.shareDataPage.section3.description2" t={t}>
                                 If you or your organization are currently implementing, planning to implement, or have
-                                recently completed a surveillance activity on pfhrp2/3 deletions, therapeutic efficacy,
-                                or molecular marker studies of antimalarial drug resistance, we would like to invite you
-                                to complete one or more of the following short surveys:
+                                recently completed a surveillance activity on <i>pfhrp2/3</i> deletions, therapeutic
+                                efficacy, or molecular marker studies of antimalarial drug resistance, we would like to
+                                invite you to complete one or more of the following short surveys:
                             </Trans>
                         </Typography>
                         <List>
@@ -204,7 +204,10 @@ const ShareDataPage: React.FC<Props> = () => {
                                 >
                                     {" "}
                                     <Trans i18nKey="common.shareDataPage.section3.list.1" t={t}>
-                                        Survey on surveillance of <strong>pfhrp2/3 deletions</strong>
+                                        Survey on surveillance of{" "}
+                                        <strong>
+                                            <i>pfhrp2/3</i> deletions
+                                        </strong>
                                     </Trans>
                                 </a>
                             </li>
