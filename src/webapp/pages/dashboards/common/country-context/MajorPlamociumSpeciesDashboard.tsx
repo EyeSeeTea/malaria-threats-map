@@ -37,7 +37,9 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                                         <tr>
                                             <td rowSpan={2}>{item.ORGANISATIONUNITNAME}</td>
                                             <td>{`P. falciparum ${
-                                                pFalciparumPercentage && item.MAL_EST_MALARIA_CASES > 0
+                                                !item.MAL_CALC_PERPF &&
+                                                item.MAL_CALC_PERPF !== 0 &&
+                                                item.MAL_EST_MALARIA_CASES > 0
                                                     ? t(
                                                           "common.dashboard.countryContextDashboards.majorPlamociumSpecies.percentageNotAvailable"
                                                       )
@@ -58,7 +60,9 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                                         </tr>
                                         <tr>
                                             <td>{`P. vivax ${
-                                                pVivaxPercentage && item.MAL_EST_MALARIA_CASES > 0
+                                                !item.MAL_CALC_PERPV &&
+                                                item.MAL_CALC_PERPV !== 0 &&
+                                                item.MAL_EST_MALARIA_CASES > 0
                                                     ? t(
                                                           "common.dashboard.countryContextDashboards.majorPlamociumSpecies.percentageNotAvailable"
                                                       )
