@@ -419,12 +419,12 @@
             "section3": {
                 "title": "Tracking surveillance",
                 "description": "Tracking surveillance activities helps to understand current research gaps. Knowledge of where studies are either being planned, currently underway, or recently completed, helps to inform where to direct resources for future studies.",
-                "description2": "If you or your organization are currently implementing, planning to implement, or have recently completed a surveillance activity on pfhrp2/3 deletions, therapeutic efficacy, or molecular marker studies of antimalarial drug resistance, we would like to invite you to complete one or more of the following short surveys:",
+                "description2": "If you or your organization are currently implementing, planning to implement, or have recently completed a surveillance activity on <i>pfhrp2/3</i> deletions, therapeutic efficacy, or molecular marker studies of antimalarial drug resistance, we would like to invite you to complete one or more of the following short surveys:",
                 "note": "The results of these surveys will be integrated into the Malaria Threats Maps.",
                 "list": {
-                    "1": "Survey on surveillance of pfhrp2/3 deletions",
-                    "2": "Survey on therapeutic efficacy studies",
-                    "3": "Survey on molecular marker studies of antimalarial drug resistance"
+                    "1": "Survey on surveillance of <strong><i>pfhrp2/3</i> deletions</strong>",
+                    "2": "Survey on <strong>therapeutic efficacy studies</strong>",
+                    "3": "Survey on <strong>molecular marker studies of antimalarial drug resistance</strong>"
                 }
             },
             "sectionsFooter": "Completed forms can be sent to: <2>vectorsurveillance@who.int</2>"
