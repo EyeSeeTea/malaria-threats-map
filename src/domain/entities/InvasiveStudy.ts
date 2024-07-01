@@ -10,4 +10,5 @@ export interface InvasiveStudy extends Study {
     STAGE: string;
     BREEDING_HABITAT: string;
     INVASIVE_STATUS: string;
+    MTM_DOWNLOAD: number;
 }

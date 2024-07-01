@@ -90,8 +90,8 @@ export const filterByDownload = () => (study: Study) => {
     return study.DOWNLOAD === 1;
 };
 
-export const filterInvasiveByDownload = () => (study: Study) => {
-    return study.DOWNLOAD !== 0;
+export const filterInvasiveByDownload = () => (study: InvasiveStudy) => {
+    return study.MTM_DOWNLOAD !== 0;
 };
 
 export const filterByIntensityStatus = (study: any) => {
