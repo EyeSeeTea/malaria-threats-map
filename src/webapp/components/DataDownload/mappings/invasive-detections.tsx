@@ -2,7 +2,7 @@ import { Option } from "../../BasicSelect";
 
 const mappings: Option[] = [
     {
-        value: "Code",
+        value: "CODE",
         label: "ID",
     },
     {
