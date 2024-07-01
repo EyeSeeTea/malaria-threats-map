@@ -102,9 +102,9 @@ export function getByMostRecentYearAndMostPriorityUsignResistanceStatus(studies:
 export function getMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {
     const priorities: Record<string, number> = {
         CONFIRMED_RESISTANCE: 1,
-        UNDETERMINED: 2,
-        POSSIBLE_RESISTANCE: 3,
-        SUSCEPTIBLE: 4,
+        POSSIBLE_RESISTANCE: 2,
+        SUSCEPTIBLE: 3,
+        UNDETERMINED: 4,
     };
 
     const studiesWithPriority = studies.map(study => {
