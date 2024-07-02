@@ -30,6 +30,7 @@ const VectorsDashboard: React.FC = () => {
                                     item.MAL_MAIN_MALARIA_VECTORS_VECTOR_3,
                                     item.MAL_MAIN_MALARIA_VECTORS_VECTOR_4,
                                     item.MAL_MAIN_MALARIA_VECTORS_VECTOR_5,
+                                    item.MAL_MAIN_MALARIA_VECTORS_VECTOR_6,
                                 ]);
 
                                 return (
