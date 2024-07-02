@@ -122,8 +122,8 @@ const ResistanceIntensityOrder: { [value: string]: number } = {
     COULD_NOT_BE_RELIABLY_ASSESSED: 0,
     SUSCEPTIBLE: 1,
     LOW_INTENSITY: 2,
-    MODERATE_INTENSITY: 3,
-    MODERATE_TO_HIGH_INTENSITY: 4,
+    MODERATE_TO_HIGH_INTENSITY: 3,
+    MODERATE_INTENSITY: 4,
     HIGH_INTENSITY: 5,
 };
 
