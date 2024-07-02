@@ -572,7 +572,7 @@
                 },
                 "pirimiphos_methly_undetermined": {
                     "help": {
-                        "p1": "Grey dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='https://iris.who.int/handle/10665/356964'>https://iris.who.int/handle/10665/356964</4>.",
+                        "p1": "Grey dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
