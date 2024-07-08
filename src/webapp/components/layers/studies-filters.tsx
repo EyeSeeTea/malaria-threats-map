@@ -498,6 +498,8 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
             return [
                 filterByLevelOfInvolvement,
                 filterByProxyType(preventionFilters.proxyType),
+                filterByInsecticideClass(preventionFilters.insecticideClass),
+                filterByInsecticideTypes(preventionFilters.insecticideTypes),
                 filterBySpecies(preventionFilters.species),
                 filterByTypeSynergist(preventionFilters.synergistTypes),
                 filterByYearRange(filters),

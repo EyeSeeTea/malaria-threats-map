@@ -11,7 +11,11 @@ import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
 import _ from "lodash";
-import { filterByIntensityStatus, filterByResistanceStatus } from "../layers/studies-filters";
+import {
+    filterByIntensityStatus,
+    filterByLevelOfInvolvement,
+    filterByResistanceStatus,
+} from "../layers/studies-filters";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
@@ -86,6 +90,8 @@ function buildFilters(preventionFilters: PreventionFilters) {
             return [filterByResistanceStatus];
         case PreventionMapType.INTENSITY_STATUS:
             return [filterByIntensityStatus];
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return [filterByLevelOfInvolvement];
         default:
             return [];
     }
