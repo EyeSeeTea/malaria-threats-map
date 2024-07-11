@@ -11,7 +11,7 @@ const numberFormatter = Intl.NumberFormat("en", { notation: "compact", maximumFr
 const EpidemiologicalProfileDashboard: React.FC = () => {
     const { t } = useTranslation();
 
-    const { data } = useCountryContextData();
+    const { data, currentDataSourceInfo } = useCountryContextData();
 
     return (
         <React.Fragment>
@@ -189,7 +189,7 @@ const EpidemiologicalProfileDashboard: React.FC = () => {
                         </tbody>
                     </Table>
                 </TableContainer>
-                <CountryContextSource />
+                <CountryContextSource sourceInfo={currentDataSourceInfo} />
             </DasboardCard>
         </React.Fragment>
     );

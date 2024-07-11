@@ -26,6 +26,8 @@ import { TotalStudiesApiRepository } from "./data/repositories/TotalStudiesApiRe
 import { GetTotalStudiesInThemesUseCase } from "./domain/usecases/GetTotalStudiesInThemesUseCase";
 import { SendDownloadUseCase } from "./domain/usecases/SendDownloadUseCase";
 import { DownloadApiRepository } from "./data/repositories/DownloadApiRepository";
+import { GetDashboardSourceInfoUseCase } from "./domain/usecases/GetDashboardSourceInfoUseCase";
+import { DashboardSourceInfoApiRepository } from "./data/repositories/DashboardSourceInfoApiRepository";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.xmartServerUrl);
@@ -40,6 +42,7 @@ export class CompositionRoot {
     private lastUpdateDatesRepository = new LastUpdateDatesApiRepository(config.xmartServerUrl);
     private totalStudiesRepository = new TotalStudiesApiRepository(config.xmartServerUrl);
     private downloadApiRepository = new DownloadApiRepository(config.backendUrl);
+    private dashboardSourceInfoRepository = new DashboardSourceInfoApiRepository(config.xmartServerUrl);
     private _districtsUrl: string;
 
     constructor() {
@@ -119,6 +122,12 @@ export class CompositionRoot {
     public get totalStudiesInThemes() {
         return getExecute({
             get: new GetTotalStudiesInThemesUseCase(this.totalStudiesRepository),
+        });
+    }
+
+    public get dashboardSourceInfo() {
+        return getExecute({
+            get: new GetDashboardSourceInfoUseCase(this.dashboardSourceInfoRepository),
         });
     }
 
