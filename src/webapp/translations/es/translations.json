@@ -527,7 +527,7 @@
                     "moderate_to_high_intensity": "Moderada a alta",
                     "moderate_intensity": "Moderada",
                     "low_intensity": "Baja",
-                    "could_not_be_reliably_assessed": "Could not be reliably assessed",
+                    "could_not_be_reliably_assessed": "No se ha podido evaluar con fiabilidad",
                     "help": {
                         "p1": "Este mapa contiene datos de <1>bioensayos de concentración de intensidad</1>. Cada punto en el mapa representa un sitio de estudio que contiene uno o más estudios. En sitios donde los estudios muestran niveles variables de intensidad de resistencia, el color de el punto está determinado por los resultados más recientes.",
                         "p2": "Para obtener información sobre cómo se define cada nivel, consulte el <1 href='/'>manual de la OMS para el control de la resistencia</1>.",
