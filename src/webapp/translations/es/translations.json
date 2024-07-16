@@ -574,7 +574,7 @@
                 },
                 "pirimiphos_methly_undetermined": {
                     "help": {
-                        "p1": "Los puntos grises representan los datos recopilados con la concentración de discriminación de pirimifos-metilo recomendada anteriormente de 0,25 %. Estos datos deben validarse con las nuevas concentraciones discriminatorias disponibles en el Manual de la OMS para monitorear la resistencia a insecticidas en mosquitos vectores y seleccionar las intervenciones apropiadas. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p1": "Los puntos grises representan los datos recopilados con la concentración de discriminación de pirimifos-metilo recomendada anteriormente de 0,25 %. Estos datos deben validarse con las nuevas concentraciones discriminatorias disponibles en el Manual de la OMS para monitorear la resistencia a insecticidas en mosquitos vectores y seleccionar las intervenciones apropiadas. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
                         "p2": "",
                         "footer": "Fuente de datos: Publicaciones e informes no publicados e información de las oficinas de país."
                     }

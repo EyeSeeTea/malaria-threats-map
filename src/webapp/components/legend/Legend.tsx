@@ -105,6 +105,8 @@ const Legend: React.FC<Props> = ({
     const { t } = useTranslation();
 
     const WhoManualLink = "https://www.who.int/publications/i/item/9789240051089";
+    const NewWhoManualLink = "https://iris.who.int/handle/10665/356964";
+    const PirimiphosKey = "common.prevention.legend.pirimiphos_methly_undetermined.help";
 
     const handleExpand = React.useCallback(() => {
         setExpanded(!expanded);
@@ -140,7 +142,6 @@ const Legend: React.FC<Props> = ({
                 </TitleContainer>
                 {!isMinimizedVersion && (expanded ? <ExpandLess /> : <ExpandMore />)}
             </StyledButton>
-
             <Divider />
             {!isMinimizedVersion && (
                 <Body>
@@ -154,7 +155,10 @@ const Legend: React.FC<Props> = ({
                                         Each dot on the map represents a study site containing one or more studies. In
                                         sites where studies show varying levels of resistance intensity, the colour of
                                         the dot is determined by the most recent results.{" "}
-                                        <a href="/">WHO manual for resistance monitoring</a>.
+                                        <a href={mapTypeHelpKey === PirimiphosKey ? NewWhoManualLink : WhoManualLink}>
+                                            WHO manual for resistance monitoring
+                                        </a>
+                                        .
                                     </Trans>
                                 </Typography>
                                 <Typography variant="caption">
