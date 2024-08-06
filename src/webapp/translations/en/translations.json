@@ -525,7 +525,7 @@
                     "moderate_to_high_intensity": "Moderate to high",
                     "moderate_intensity": "Moderate",
                     "low_intensity": "Low",
-                    "susceptible": "Susceptible",
+                    "could_not_be_reliably_assessed": "Could not be reliably assessed",
                     "help": {
                         "p1": "This map contains data from <1>intensity concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how each level is defined, please consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
@@ -744,7 +744,7 @@
                     "medium": "10% - 50%",
                     "low": "< 10%",
                     "help": {
-                        "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the dot is determined by the percentage of samples which have molecular mutations. The most recent results are presented by default.",
+                        "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the map point is determined by the percentage of samples with molecular mutations associated with resistance. The most recent results are presented by default.",
                         "p2": "",
                         "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
                     }

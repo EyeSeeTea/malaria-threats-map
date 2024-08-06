@@ -35,6 +35,7 @@ import {
     setType,
 } from "../../actions/prevention-actions";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
+const requestedVIRStartDate = 2010;
 
 export const getPreventionStudiesEpic = (
     action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
@@ -53,7 +54,7 @@ export const getPreventionStudiesEpic = (
                             state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start;
 
                         const base: unknown[] = resetDatesIsRequired
-                            ? [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])]
+                            ? [setMaxMinYearsAction([start, end]), setFiltersAction([requestedVIRStartDate, end])]
                             : [];
 
                         return of(...base, fetchPreventionStudiesSuccess(studies));
@@ -200,7 +201,7 @@ export const setPreventionThemeEpic = (
             if ($action.from === "map") {
                 const [start, end] = getMinMaxYears($state.prevention.studies);
                 const base: unknown[] = $state.prevention.studies?.length
-                    ? [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])]
+                    ? [setMaxMinYearsAction([start, end]), setFiltersAction([requestedVIRStartDate, end])]
                     : [];
 
                 return of(...base, setInsecticideClass("PYRETHROIDS"));

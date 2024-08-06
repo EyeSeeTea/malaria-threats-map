@@ -1,6 +1,7 @@
 import i18next from "i18next";
 
 import * as R from "ramda";
+import _ from "lodash";
 import { MOLECULAR_MARKERS } from "../../filters/MolecularMarkerRadioFilter";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../../filters/PlasmodiumSpeciesFilter";
 import { Option } from "../../BasicSelect";
@@ -395,11 +396,11 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 },
                 {
                     name: "MM_StudyInfo",
-                    studies: results,
+                    studies: _.orderBy(results, ["ID"]),
                 },
                 {
                     name: "MM_geneMutations",
-                    studies: genes,
+                    studies: _.orderBy(genes, ["ID"]),
                 },
                 {
                     name: "Glossary",
@@ -496,7 +497,7 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 },
                 {
                     name: "Data",
-                    studies: results,
+                    studies: _.orderBy(results, ["ID"]),
                 },
                 {
                     name: "Glossary",
