@@ -30,6 +30,7 @@ export function useDownload(
     setPreventionDataset: PayloadActionCreator<ActionTypeEnum.SetPreventionDataset, string>,
     addDownload: PayloadActionCreator<ActionTypeEnum.AddDownloadRequest, Download>,
     setActionGroupSelected: PayloadActionCreator<ActionTypeEnum.MalariaActionGroupSelected, ActionGroup>,
+    theme: string,
     t: TFunction
 ) {
     const [activeStep, setActiveStep] = React.useState(0);
@@ -65,11 +66,12 @@ export function useDownload(
     const onChangeSelectedDatabases = useCallback(
         (databases: DatabaseSelection[]) => {
             setSelectedDatabases(databases);
-            setTheme("invasive", "download");
+            setTheme(theme, "download");
             setActionGroupSelected("THEME");
         },
-        [setActionGroupSelected, setTheme]
+        [setActionGroupSelected, setTheme, theme]
     );
+
     const onChangeUserInfo = useCallback(
         (field: keyof UserInfo, value: any) => {
             setUserInfo({ ...userInfo, [field]: value });
