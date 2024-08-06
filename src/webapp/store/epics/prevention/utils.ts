@@ -143,9 +143,9 @@ function createPreventionMechanismChartData(
             return _(studies)
                 .groupBy(({ TYPE }) => TYPE)
                 .mapValues(studies => {
-                    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
-                    const minYear = parseInt(sortedStudies[sortedStudies.length - 1].YEAR_START);
-                    const maxYear = parseInt(sortedStudies[0].YEAR_START);
+                    const sortedStudies = R.sortBy(study => -study.YEAR_START, studies);
+                    const minYear = sortedStudies[sortedStudies.length - 1].YEAR_START;
+                    const maxYear = sortedStudies[0].YEAR_START;
                     const years: number[] = [];
                     for (let i = minYear; i <= maxYear; i++) {
                         years.push(i);
@@ -170,7 +170,7 @@ function createPreventionMechanismAssays(
     dataSources: CitationDataSource[]
 ): PreventionMechanismChartDataGroup[] {
     const yearsObjects = years.map(year => {
-        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === year);
+        const yearStudies = studies.filter(study => study.YEAR_START === year);
 
         const dataSourceKeys = selectDataSourcesByStudies(dataSources, yearStudies);
 
@@ -178,7 +178,7 @@ function createPreventionMechanismAssays(
     });
 
     const detected = yearsObjects.map(yearObject => {
-        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === yearObject.year);
+        const yearStudies = studies.filter(study => study.YEAR_START === yearObject.year);
         const d = yearStudies.filter(study => study.MECHANISM_STATUS === "DETECTED");
 
         return {
@@ -188,7 +188,7 @@ function createPreventionMechanismAssays(
         };
     });
     const notDetected = yearsObjects.map(yearObject => {
-        const yearStudies = studies.filter(study => parseInt(study.YEAR_START) === yearObject.year);
+        const yearStudies = studies.filter(study => study.YEAR_START === yearObject.year);
         const nD = yearStudies.filter(study => study.MECHANISM_STATUS !== "DETECTED");
 
         return {
@@ -224,7 +224,7 @@ function createPreventionMechanismAllelics(
             name: studies[0].SPECIES,
             color: "#2D9BF0",
             data: years.map(year => {
-                const study = studies.filter(study => year === parseInt(study.YEAR_START))[0];
+                const study = studies.filter(study => year === study.YEAR_START)[0];
 
                 const y =
                     study && !isNA(study.MECHANISM_FREQUENCY) && !isNR(study.MECHANISM_FREQUENCY)
@@ -298,7 +298,7 @@ function createChartDataItems(
     dataSources: CitationDataSource[],
     studies: PreventionStudy[]
 ): PreventionChartDataItem[] {
-    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+    const sortedStudies = R.sortBy(study => study.YEAR_START, studies);
     const cleanedStudies = R.groupBy((study: PreventionStudy) => {
         return getStudyName(mapType, study);
     }, sortedStudies);

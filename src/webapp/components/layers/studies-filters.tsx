@@ -79,10 +79,7 @@ export const filterInvasiveStudies = (
 export const filterByYearRange =
     (years: number[], allowEmpty = false) =>
     (study: any) => {
-        return (
-            (allowEmpty && !study.YEAR_START) ||
-            (parseInt(study.YEAR_START) >= years[0] && parseInt(study.YEAR_START) <= years[1])
-        );
+        return (allowEmpty && !study.YEAR_START) || (study.YEAR_START >= years[0] && study.YEAR_START <= years[1]);
     };
 
 export const filterByYears = (years: number[]) => (study: any) => {
@@ -91,6 +88,10 @@ export const filterByYears = (years: number[]) => (study: any) => {
 
 export const filterByDownload = () => (study: Study) => {
     return study.DOWNLOAD === 1;
+};
+
+export const filterInvasiveByDownload = () => (study: InvasiveStudy) => {
+    return study.MTM_DOWNLOAD !== 0;
 };
 
 export const filterByIntensityStatus = (study: any) => {
@@ -319,12 +320,13 @@ function buildInvasiveFiltersByDownload(invasiveFilters: InvasiveFilters, filter
     switch (invasiveFilters.mapType) {
         case InvasiveMapType.VECTOR_OCCURANCE:
             return [
+                filterInvasiveByDownload(),
                 filterByVectorSpecies(invasiveFilters.vectorSpecies),
                 filterByYearRange(filters, true),
                 filterByRegion(region),
             ];
         default:
-            return [filterByRegion(region)];
+            return [filterInvasiveByDownload(), filterByRegion(region)];
     }
 }
 

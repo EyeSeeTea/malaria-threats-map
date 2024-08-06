@@ -60,8 +60,8 @@ export function useMosquitoMortalityOverTime() {
 
 export function createChartData(studies: PreventionStudy[], selectedCountries: string[]): MosquitoOverTimeChart {
     const sortCountries = _.orderBy(selectedCountries, country => i18next.t(country), "asc");
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), studies);
-    const years = _.uniq(sortedStudies.map(study => parseInt(study.YEAR_START)).sort());
+    const sortedStudies = R.sortBy(study => -study.YEAR_START, studies);
+    const years = _.uniq(sortedStudies.map(study => study.YEAR_START).sort());
 
     const dataByCountry = sortCountries.reduce((acc, countryISO) => {
         const studiesByCountry = studies.filter(study => study.ISO2 === countryISO);

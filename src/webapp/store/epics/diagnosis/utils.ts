@@ -187,7 +187,7 @@ function createHrp23StudiesData(studies: DiagnosisStudy[]): Hrp23StudiesData {
 }
 
 function getMinMaxYears(studies: DiagnosisStudy[]): number[] {
-    const sortedStudies = R.sortBy(study => parseInt(study.YEAR_START), studies);
+    const sortedStudies = R.sortBy(study => study.YEAR_START, studies);
     const minYear = sortedStudies[0].YEAR_START;
     const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_END;
 

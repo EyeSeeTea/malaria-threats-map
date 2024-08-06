@@ -4,7 +4,7 @@ import { DiagnosisStudy } from "../../../../../domain/entities/DiagnosisStudy";
 export enum HRP23_STUDIES_STATUS {
     ONGOING = "ONGOING",
     PLANNED = "PLANNED",
-    COMPLETED_RESULTS_PENDING = "COMPLETED_RESULTS_PENDING",
+    COMPLETED = "COMPLETED",
     UNKNOWN = "UNKNOWN",
 }
 
@@ -12,7 +12,7 @@ export const getHrp23StudiesStatusFromStatusId = (statusId: number) => {
     const statusOptions: Record<string, number> = {
         [HRP23_STUDIES_STATUS.PLANNED]: 1,
         [HRP23_STUDIES_STATUS.ONGOING]: 2,
-        [HRP23_STUDIES_STATUS.COMPLETED_RESULTS_PENDING]: 3,
+        [HRP23_STUDIES_STATUS.COMPLETED]: 3,
     };
 
     if (statusOptions[HRP23_STUDIES_STATUS.PLANNED] === statusId) {
@@ -23,8 +23,8 @@ export const getHrp23StudiesStatusFromStatusId = (statusId: number) => {
         return HRP23_STUDIES_STATUS.ONGOING;
     }
 
-    if (statusOptions[HRP23_STUDIES_STATUS.COMPLETED_RESULTS_PENDING] === statusId) {
-        return HRP23_STUDIES_STATUS.COMPLETED_RESULTS_PENDING;
+    if (statusOptions[HRP23_STUDIES_STATUS.COMPLETED] === statusId) {
+        return HRP23_STUDIES_STATUS.COMPLETED;
     }
 
     return HRP23_STUDIES_STATUS.UNKNOWN;

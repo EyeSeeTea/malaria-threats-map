@@ -8,10 +8,10 @@ export const resolveMapTypeSymbols = () => {
 };
 
 const filterByMostRecentYear = (group: any[]) => {
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
+    const sortedStudies = R.sortBy(study => -study.YEAR_START, group);
     if (!sortedStudies[0].YEAR_START) return group;
     // We filter all studies conducted that year.
-    return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
+    return R.filter(study => study.YEAR_START === sortedStudies[0].YEAR_START, group);
 };
 
 export const InvasiveStatusOrder: { [value: string]: number } = {

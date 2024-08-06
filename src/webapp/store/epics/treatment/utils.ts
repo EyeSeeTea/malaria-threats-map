@@ -113,7 +113,7 @@ function sortStudies(studies: TreatmentStudy[], treatmentFilters: TreatmentFilte
         case TreatmentMapType.MOLECULAR_MARKERS:
             return _.orderBy(
                 studies,
-                study => parseInt(study.YEAR_START),
+                study => study.YEAR_START,
                 treatmentFilters.mapType === TreatmentMapType.MOLECULAR_MARKERS ? "desc" : "asc"
             );
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
@@ -198,7 +198,7 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters:
             color: key.color,
             marker: key.marker,
             data: years.map(year => {
-                const yearFilters: any = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START))[0];
+                const yearFilters: any = studies.filter(study => parseInt(year) === study.YEAR_START)[0];
                 return yearFilters
                     ? parseFloat((parseFloat(yearFilters[key.name.toUpperCase()] ?? -1) * 100).toFixed(2))
                     : -1;
@@ -234,7 +234,7 @@ function createMolecularMarkersChartData(
     const allStudies257ByPriority = R.sortBy(study => prioritiesByMutationCategory[study.MUT_CAT], allStudies257);
 
     const studies257ByGenotype = R.groupBy(R.prop("GENOTYPE"), allStudies257ByPriority);
-    const genotypes = Object.keys(studies257ByGenotype).filter(genotype => genotype !== "unspecified");
+    const genotypes = Object.keys(studies257ByGenotype);
 
     const series = genotypes.map((genotype: string) => {
         const studies257: TreatmentStudy[] = studies257ByGenotype[genotype];
@@ -442,7 +442,7 @@ function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInfor
     const years = rangeYears(2010, new Date().getFullYear()).sort();
 
     const aditionalInfoByYears = years.map(year => {
-        const studiesByYear: TreatmentStudy[] = studies.filter(study => parseInt(year) === parseInt(study.YEAR_START));
+        const studiesByYear: TreatmentStudy[] = studies.filter(study => parseInt(year) === study.YEAR_START);
 
         if (studiesByYear.length === 0) {
             return undefined;

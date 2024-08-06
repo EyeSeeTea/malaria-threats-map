@@ -46,13 +46,11 @@ function getBarChartDataByYear(
     insecticideClassOrType: string
 ): SpreadOfResistanceOverTimeBarData[] {
     return sortedYears.reduce((acc, year) => {
-        const studiesOfYear = studies.filter(study => Number(study.YEAR_START) === year);
+        const studiesOfYear = studies.filter(study => study.YEAR_START === year);
         const studiesOfYearGroupedBySite = groupBy(studiesOfYear, "SITE_ID");
         const numberOfSitesOfYear = Object.keys(studiesOfYearGroupedBySite)?.length || 0;
 
-        const resistanceStudiesOfStatusOfYear = resistanceStudiesOfStatus.filter(
-            study => Number(study.YEAR_START) === year
-        );
+        const resistanceStudiesOfStatusOfYear = resistanceStudiesOfStatus.filter(study => study.YEAR_START === year);
         const resistanceStudiesOfStatusOfYearGroupedBySite = groupBy(resistanceStudiesOfStatusOfYear, "SITE_ID");
         const numberOfSitesWithThisStatusOfYear =
             Object.keys(resistanceStudiesOfStatusOfYearGroupedBySite)?.length || 0;

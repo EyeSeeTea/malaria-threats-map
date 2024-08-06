@@ -21,6 +21,9 @@ import {
     uploadFileErrorAction,
     setSelectionData,
     setSelectionDataFilterSelection,
+    getTotalStudiesInThemesRequestAction,
+    getTotalStudiesInThemesSuccessAction,
+    getTotalStudiesInThemesFailureAction,
 } from "../actions/base-actions";
 import { State } from "../types";
 import { addNotificationAction } from "../actions/notifier-actions";
@@ -36,6 +39,7 @@ import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
 import { createTreatmentSelectionData } from "./treatment/utils";
 import { LastUpdatedDates } from "../../../domain/entities/LastUpdateDates";
+import { TotalStudiesInThemes } from "../../../domain/entities/TotalStudiesInThemes";
 
 export const setThemeEpic = (action$: Observable<ActionType<typeof setThemeAction>>, state$: StateObservable<State>) =>
     action$.pipe(
@@ -353,5 +357,26 @@ export const setSelectionDataFilterSelectionEpic = (
                 default:
                     return of();
             }
+        })
+    );
+
+export const getTotalStudiesInThemesEpic = (
+    action$: Observable<ActionType<typeof getTotalStudiesInThemesRequestAction>>,
+    _state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.GetTotalStudiesInThemesRequest),
+        switchMap(() => {
+            return fromFuture(compositionRoot.totalStudiesInThemes.get()).pipe(
+                mergeMap((totalStudiesInThemes: TotalStudiesInThemes | undefined) => {
+                    if (totalStudiesInThemes) {
+                        return of(getTotalStudiesInThemesSuccessAction(totalStudiesInThemes));
+                    }
+                }),
+                catchError((error: Error) =>
+                    of(addNotificationAction(error.message), getTotalStudiesInThemesFailureAction(error))
+                )
+            );
         })
     );

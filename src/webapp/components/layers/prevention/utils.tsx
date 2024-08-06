@@ -39,9 +39,9 @@ export function filterByCriteria1(group: PreventionStudy[]) {
         const maxYear = R.reduce(
             R.max,
             0,
-            baseStudies.map(study => parseInt(study.YEAR_START))
+            baseStudies.map(study => study.YEAR_START)
         );
-        filteredStudies = baseStudies.filter(study => maxYear === parseInt(study.YEAR_START));
+        filteredStudies = baseStudies.filter(study => maxYear === study.YEAR_START);
     }
     return filteredStudies;
 }
@@ -88,9 +88,9 @@ export function getMostRecent(studies: PreventionStudy[]): PreventionStudy | und
 }
 
 const filterByMostRecentYear = (group: PreventionStudy[]) => {
-    const sortedStudies = R.sortBy(study => -parseInt(study.YEAR_START), group);
+    const sortedStudies = R.sortBy(study => -study.YEAR_START, group);
     // We filter all studies conducted that year.
-    return R.filter(study => parseInt(study.YEAR_START) === parseInt(sortedStudies[0].YEAR_START), group);
+    return R.filter(study => study.YEAR_START === sortedStudies[0].YEAR_START, group);
 };
 
 export function getByMostRecentYearAndMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {
@@ -102,9 +102,9 @@ export function getByMostRecentYearAndMostPriorityUsignResistanceStatus(studies:
 export function getMostPriorityUsignResistanceStatus(studies: PreventionStudy[]) {
     const priorities: Record<string, number> = {
         CONFIRMED_RESISTANCE: 1,
-        UNDETERMINED: 2,
-        POSSIBLE_RESISTANCE: 3,
-        SUSCEPTIBLE: 4,
+        POSSIBLE_RESISTANCE: 2,
+        SUSCEPTIBLE: 3,
+        UNDETERMINED: 4,
     };
 
     const studiesWithPriority = studies.map(study => {
@@ -122,8 +122,8 @@ const ResistanceIntensityOrder: { [value: string]: number } = {
     COULD_NOT_BE_RELIABLY_ASSESSED: 0,
     SUSCEPTIBLE: 1,
     LOW_INTENSITY: 2,
-    MODERATE_INTENSITY: 3,
-    MODERATE_TO_HIGH_INTENSITY: 4,
+    MODERATE_TO_HIGH_INTENSITY: 3,
+    MODERATE_INTENSITY: 4,
     HIGH_INTENSITY: 5,
 };
 

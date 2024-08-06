@@ -6,9 +6,10 @@ import { PreventionStudy } from "../../domain/entities/PreventionStudy";
 import { TreatmentStudy } from "../../domain/entities/TreatmentStudy";
 import { InvasiveStudy } from "../../domain/entities/InvasiveStudy";
 import { CountryLayer, CountryProperties } from "../../domain/entities/CountryLayer";
+import { LastUpdatedDates } from "../../domain/entities/LastUpdateDates";
+import { TotalStudiesInThemes } from "../../domain/entities/TotalStudiesInThemes";
 import { FeedbackState } from "../types/FeedbackState";
 import { SelectionData } from "./SelectionData";
-import { LastUpdatedDates } from "../../domain/entities/LastUpdateDates";
 
 export interface State {
     malaria: MalariaState;
@@ -31,6 +32,7 @@ export interface RegionState {
     siteLabel?: string;
     siteIso2?: string;
     siteCoordinates?: [number, number];
+    changeZoomToSite?: boolean;
 }
 
 export type ActionGroup = "THEME" | "MAP_TYPE" | "DATA" | "LOCATION" | "DATASET";
@@ -78,6 +80,7 @@ export interface MalariaState {
     theaterMode: boolean;
     legendExpanded: boolean;
     isUploadingFile: boolean;
+    totalStudiesInThemes: TotalStudiesInThemes;
 }
 
 export interface TranslationsState {

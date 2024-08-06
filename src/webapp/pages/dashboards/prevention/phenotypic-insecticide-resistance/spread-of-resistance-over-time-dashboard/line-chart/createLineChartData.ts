@@ -112,7 +112,7 @@ function getTooltipData(params: {
         insecticideClassOrType,
     } = params;
 
-    const studiesOfYear = studiesOfInsecticideClassOrType.filter(study => Number(study.YEAR_START) === currentYear);
+    const studiesOfYear = studiesOfInsecticideClassOrType.filter(study => study.YEAR_START === currentYear);
     const studiesOfYearGroupedBySite = groupBy(studiesOfYear, "SITE_ID");
     const numberOfSitesOfYear = Object.keys(studiesOfYearGroupedBySite)?.length || 0;
     const sumOfSites = priorSumOfSites + numberOfSitesOfYear;
