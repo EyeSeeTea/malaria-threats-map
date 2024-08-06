@@ -6,8 +6,7 @@ export const IntensityStatusColors: { [key: string]: string[] } = {
     [INTENSITY_STATUS.MODERATE_TO_HIGH_INTENSITY]: ["#81252a", "#461417"],
     [INTENSITY_STATUS.MODERATE_INTENSITY]: ["#ad5c61", "#7d3f43"],
     [INTENSITY_STATUS.LOW_INTENSITY]: ["#e7a98e", "#da794f"],
-    [INTENSITY_STATUS.SUSCEPTIBLE]: ["#869c66", "#5e6e47"],
-    [INTENSITY_STATUS.UNKNOWN]: ["#d3d3d3", "#adadad"],
+    [INTENSITY_STATUS.COULD_NOT_BE_RELIABLY_ASSESSED]: ["#d3d3d3", "#adadad"],
 };
 
 const intensityStatusSymbols = {
@@ -24,7 +23,7 @@ const intensityStatusSymbols = {
         IntensityStatusColors[INTENSITY_STATUS.MODERATE_INTENSITY][0],
         INTENSITY_STATUS.LOW_INTENSITY,
         IntensityStatusColors[INTENSITY_STATUS.LOW_INTENSITY][0],
-        IntensityStatusColors[INTENSITY_STATUS.SUSCEPTIBLE][0],
+        IntensityStatusColors[INTENSITY_STATUS.COULD_NOT_BE_RELIABLY_ASSESSED][0],
     ],
     "circle-stroke-color": [
         ...baseSymbols["circle-stroke-color"],
@@ -39,7 +38,7 @@ const intensityStatusSymbols = {
             IntensityStatusColors[INTENSITY_STATUS.MODERATE_INTENSITY][1],
             INTENSITY_STATUS.LOW_INTENSITY,
             IntensityStatusColors[INTENSITY_STATUS.LOW_INTENSITY][1],
-            IntensityStatusColors[INTENSITY_STATUS.SUSCEPTIBLE][1],
+            IntensityStatusColors[INTENSITY_STATUS.COULD_NOT_BE_RELIABLY_ASSESSED][1],
         ],
     ],
 };

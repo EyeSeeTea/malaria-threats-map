@@ -527,7 +527,7 @@
                     "moderate_to_high_intensity": "Moyen Fort",
                     "moderate_intensity": "Moyen",
                     "low_intensity": "Faible",
-                    "susceptible": "Sensible",
+                    "could_not_be_reliably_assessed": "N'a pas pu être évaluée de manière fiable",
                     "help": {
                         "p1": "Cette carte contient des données provenant de <1>tests biologiques de concentration d'intensité</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. Dans les sites où les études montrent différents niveaux d'intensité de résistance, la couleur de le point est déterminé par les résultats les plus récents.",
                         "p2": "Pour plus d'informations sur la définition de chaque niveau, veuillez consulter le <1 href='/'>manuel de l'OMS pour la surveillance de la résistance</1>.",
