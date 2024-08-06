@@ -744,7 +744,7 @@
                     "medium": "10% - 50%",
                     "low": "< 10%",
                     "help": {
-                        "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the dot is determined by the percentage of samples which have molecular mutations. The most recent results are presented by default.",
+                        "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the map point is determined by the percentage of samples with molecular mutations associated with resistance. The most recent results are presented by default.",
                         "p2": "",
                         "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
                     }

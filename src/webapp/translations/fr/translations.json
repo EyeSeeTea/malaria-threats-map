@@ -746,7 +746,7 @@
                     "medium": "10% - 50%",
                     "low": "< 10%",
                     "help": {
-                        "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires. Les résultats les plus récents sont présentés par défaut.",
+                        "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point de la carte est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires associées à la résistance. Les résultats les plus récents sont présentés par défaut.",
                         "p2": "",
                         "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
                     }
