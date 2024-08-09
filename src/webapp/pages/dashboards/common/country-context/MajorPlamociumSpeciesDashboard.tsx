@@ -7,7 +7,7 @@ import CountryContextSource from "./CountryContextSource";
 
 const MajorPlamociumSpeciesDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const { data } = useCountryContextData();
+    const { data, currentDataSourceInfo } = useCountryContextData();
 
     return (
         <React.Fragment>
@@ -85,7 +85,7 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                         </tbody>
                     </Table>
                 </TableContainer>
-                <CountryContextSource />
+                <CountryContextSource sourceInfo={currentDataSourceInfo} />
             </DasboardCard>
         </React.Fragment>
     );

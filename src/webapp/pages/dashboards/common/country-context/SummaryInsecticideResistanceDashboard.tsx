@@ -4,10 +4,12 @@ import { Card } from "@mui/material";
 import styled from "styled-components";
 import CountryContextSource from "./CountryContextSource";
 import { useSummaryInsecticideResistance } from "./useSummaryInsecticideResistance";
+import { useCountryContextData } from "./context/useCountryContextData";
 
 const SummaryInsecticideResistanceDashboard: React.FC = () => {
     const { t } = useTranslation();
     const data = useSummaryInsecticideResistance();
+    const { currentDataSourceInfo } = useCountryContextData();
 
     return (
         <React.Fragment>
@@ -55,7 +57,7 @@ const SummaryInsecticideResistanceDashboard: React.FC = () => {
                         </tbody>
                     </Table>
                 </TableContainer>
-                <CountryContextSource />
+                <CountryContextSource sourceInfo={currentDataSourceInfo} />
             </DasboardCard>
         </React.Fragment>
     );
