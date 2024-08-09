@@ -429,7 +429,7 @@ function extractMarkersByMutationCategory(mutationStudies: TreatmentStudy[], cat
     );
 
     return _.orderBy(
-        k13Mutations.filter(m => m.MUT_CAT === category),
+        k13Mutations.filter(m => m.MUT_CAT.toLocaleLowerCase() === category.toLocaleLowerCase()),
         "MUT_ORDER",
         "asc"
     ).map(mutation => ({
