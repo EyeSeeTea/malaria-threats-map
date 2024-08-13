@@ -64,8 +64,16 @@ const InvasiveChart: React.FC<Props> = ({ selectionData }) => {
                     {studyData.vectorStage && (
                         <Row>
                             <Typography variant="body2">
-                                <b>{"Vector Stage"}:&nbsp;</b>
+                                <b>{t("common.invasive.chart.vector_occurrance.vector_stage")}:&nbsp;</b>
                                 {studyData.vectorStage}
+                            </Typography>
+                        </Row>
+                    )}
+                    {studyData.larvalHabitat && (
+                        <Row>
+                            <Typography variant="body2">
+                                <b>{t("common.invasive.chart.vector_occurrance.larval_habitat")}:&nbsp;</b>
+                                {studyData.larvalHabitat}
                             </Typography>
                         </Row>
                     )}

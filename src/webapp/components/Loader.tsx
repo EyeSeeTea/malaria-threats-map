@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { selectDistrictsAreLoading } from "../store/reducers/districts-reducer";
 import { selectCountryLayerIsLoading } from "../store/reducers/country-layer-reducer";
 import { Stack, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         backdrop: {
@@ -39,6 +40,7 @@ type Props = StateProps & OwnProps;
 
 function SimpleBackdrop(props: Props) {
     const classes = useStyles(props);
+    const { t } = useTranslation();
 
     const isLoading = () => {
         switch (props.theme) {
@@ -56,14 +58,12 @@ function SimpleBackdrop(props: Props) {
     };
 
     return (
-        <div>
-            <Backdrop className={classes.backdrop} open={isLoading()}>
-                <Stack direction="column" alignItems="center">
-                    <CircularProgress color="inherit" />
-                    <Typography variant="h4">Data is loading</Typography>
-                </Stack>
-            </Backdrop>
-        </div>
+        <Backdrop className={classes.backdrop} open={isLoading()}>
+            <Stack direction="column" alignItems="center">
+                <CircularProgress color="inherit" />
+                <Typography variant="h4">{t("common.loading")}</Typography>
+            </Stack>
+        </Backdrop>
     );
 }
 

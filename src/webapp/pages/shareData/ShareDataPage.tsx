@@ -9,6 +9,7 @@ import { State } from "../../store/types";
 import { selectFeedback } from "../../store/reducers/feedback-reducer";
 import { feedbackFieldChange, feedbackSubmit } from "../../store/actions/feedback-actions";
 import ShareDataChart from "../../assets/img/share-data-page/share-data-chart.png";
+import TrackingSurveillanceMap from "../../assets/img/share-data-page/tracking-surveillance-map.png";
 import ContributeDataGraphic from "../../assets/img/share-data-page/contribute-data.png";
 import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
 
@@ -30,11 +31,16 @@ const ShareDataChartImage = styled.img`
     width: 80%;
     height: auto;
     z-index: 2;
+    padding: 30px;
 `;
 
 const ContributeDataImage = styled.img`
     width: 70%;
     height: auto;
+`;
+
+const List = styled.ul`
+    padding-block-end: 1rem;
 `;
 
 const mapStateToProps = (state: State) => ({
@@ -80,7 +86,7 @@ const ShareDataPage: React.FC<Props> = () => {
                 </TitleContainer>
             </ImageBanner>
             <Container maxWidth="xl">
-                <Grid container rowSpacing={7} columnSpacing={2} sx={{ marginTop: 4, marginBottom: 4 }}>
+                <Grid container rowSpacing={3} columnSpacing={2} sx={{ marginTop: 4, marginBottom: 4 }}>
                     <Grid item md={6} xs={12} display="flex" flexDirection={"column"} justifyContent="center">
                         <Typography variant="h4" fontWeight="bold" marginBottom="25px">
                             {t("common.shareDataPage.section1.title")}
@@ -123,7 +129,7 @@ const ShareDataPage: React.FC<Props> = () => {
                             width={{ xs: "65vw", sm: "60vw", md: "40vw", lg: "500px" }}
                             height={{ xs: "65vw", sm: "60vw", md: "40vw", lg: "500px" }}
                             position="absolute"
-                        ></Box>
+                        />
                         <ShareDataChartImage src={ShareDataChart} alt="Share Data Chart" />
                     </Grid>
                     <Grid
@@ -167,6 +173,77 @@ const ShareDataPage: React.FC<Props> = () => {
                             </Trans>
                         </Typography>
                         <SectionsFooter t={t} />
+                    </Grid>
+                </Grid>
+                <Grid container rowSpacing={3} columnSpacing={2} sx={{ marginBottom: 4 }}>
+                    <Grid item md={6} xs={12} display="flex" flexDirection={"column"} justifyContent="center">
+                        <Typography variant="h4" fontWeight="bold" marginBottom="25px">
+                            {t("common.shareDataPage.section3.title")}
+                        </Typography>
+                        <Typography variant="body1" marginBottom="25px" maxWidth={"90%"}>
+                            <Trans i18nKey="common.shareDataPage.section3.description" t={t}>
+                                Tracking surveillance activities helps to understand current research gaps. Knowledge of
+                                where studies are either being planned, currently underway, or recently completed, helps
+                                to inform where to direct resources for future studies.
+                            </Trans>
+                            <br />
+                            <br />
+                            <Trans i18nKey="common.shareDataPage.section3.description2" t={t}>
+                                If you or your organization are currently implementing, planning to implement, or have
+                                recently completed a surveillance activity on <i>pfhrp2/3</i> deletions, therapeutic
+                                efficacy, or molecular marker studies of antimalarial drug resistance, we would like to
+                                invite you to complete one or more of the following short surveys:
+                            </Trans>
+                        </Typography>
+                        <List>
+                            <li>
+                                <a
+                                    href="https://extranet.who.int/dataformv3/index.php/341317?lang=en"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    {" "}
+                                    <Trans i18nKey="common.shareDataPage.section3.list.1" t={t}>
+                                        Survey on surveillance of{" "}
+                                        <strong>
+                                            <i>pfhrp2/3</i> deletions
+                                        </strong>
+                                    </Trans>
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://extranet.who.int/dataformv3/index.php/951133?lang=en"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    {" "}
+                                    <Trans i18nKey="common.shareDataPage.section3.list.2" t={t}>
+                                        Survey on <strong>therapeutic efficacy studies</strong>
+                                    </Trans>
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://extranet.who.int/dataformv3/index.php/547334?lang=en"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <Trans i18nKey="common.shareDataPage.section3.list.3" t={t}>
+                                        Survey on{" "}
+                                        <strong>molecular marker studies of antimalarial drug resistance</strong>
+                                    </Trans>
+                                </a>
+                            </li>
+                        </List>
+                        <Typography variant="body1">
+                            <Trans i18nKey="common.shareDataPage.section3.note" t={t}>
+                                The results of these surveys will be integrated into the Malaria Threats Maps.
+                            </Trans>
+                        </Typography>
+                    </Grid>
+                    <Grid item md={6} xs={12} display={"flex"} alignItems="center" justifyContent={"center"}>
+                        <ShareDataChartImage src={TrackingSurveillanceMap} alt="Tracking Surveillance Map" />
                     </Grid>
                 </Grid>
             </Container>

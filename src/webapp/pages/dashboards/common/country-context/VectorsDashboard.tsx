@@ -8,7 +8,7 @@ import _ from "lodash";
 
 const VectorsDashboard: React.FC = () => {
     const { t } = useTranslation();
-    const { data } = useCountryContextData();
+    const { data, currentDataSourceInfo } = useCountryContextData();
 
     return (
         <React.Fragment>
@@ -30,6 +30,7 @@ const VectorsDashboard: React.FC = () => {
                                     item.MAL_MAIN_MALARIA_VECTORS_VECTOR_3,
                                     item.MAL_MAIN_MALARIA_VECTORS_VECTOR_4,
                                     item.MAL_MAIN_MALARIA_VECTORS_VECTOR_5,
+                                    item.MAL_MAIN_MALARIA_VECTORS_VECTOR_6,
                                 ]);
 
                                 return (
@@ -42,7 +43,7 @@ const VectorsDashboard: React.FC = () => {
                         </tbody>
                     </Table>
                 </TableContainer>
-                <CountryContextSource />
+                <CountryContextSource sourceInfo={currentDataSourceInfo} />
             </DasboardCard>
         </React.Fragment>
     );

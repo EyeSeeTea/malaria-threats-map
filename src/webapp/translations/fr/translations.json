@@ -1,6 +1,6 @@
 {
     "common": {
-        "loading": "Chargement des données ...",
+        "loading": "Chargement...",
         "layers": "couches",
         "mekong_link": "Aller à la sous-région du Grand Mékong",
         "takeATour": "Vous ne savez pas par où commencer ? Faites un tour.",
@@ -125,7 +125,7 @@
             "countryContextDashboards": {
                 "title": "Contexte du Pays / Région",
                 "source": "La source:",
-                "whoWorldMalariaReport": "Rapport 2021 de l'OMS sur le paludisme dans le monde",
+                "whoWorldMalariaReport": "Rapport 2023 de l'OMS sur le paludisme dans le monde",
                 "epidemiologicalProfile": {
                     "title": "PROFIL ÉPIDÉMIOLOGIQUE",
                     "country": "Pays / Région",
@@ -146,7 +146,8 @@
                     "title": "PRINCIPALES ESPÈCES DE PLASMODIUM ET RÉGIME DE TRAITEMENT",
                     "country": "Pays / Région",
                     "species": "Espèces majeures de Plasmodium (%)",
-                    "firstLineTreatments": "Traitements de 1ère ligne pour le paludisme non compliqué"
+                    "firstLineTreatments": "Traitements de 1ère ligne pour le paludisme non compliqué",
+                    "percentageNotAvailable": "(% non disponible)"
                 },
                 "vectors": {
                     "title": "VECTEURS",
@@ -416,6 +417,17 @@
                 "title": "Contribuer aux données de détection de <i>An. stephensi</i>.",
                 "description": "Nous invitons toutes les personnes et organisations à soumettre des données sur la détection de <i>An. stephensi</i> en dehors de ses zones d'origine. Veuillez communiquer vos données en utilisant le formulaire standard de collecte de données de l'OMS, disponible à l'adresse suivante <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>ici</5>."
             },
+            "section3": {
+                "title": "Suivi de la surveillance",
+                "description": "Le suivi des activités de surveillance aide à comprendre les lacunes actuelles en matière de recherche. La connaissance des études en cours de planification, actuellement en cours ou récemment achevées, permet d'orienter les ressources vers les futures études.",
+                "description2": "Si vous ou votre organisation mettez actuellement en œuvre, prévoyez de mettre en œuvre ou avez récemment terminé une activité de surveillance sur les délétions de <i>pfhrp2/3</i>, l'efficacité thérapeutique ou les études de marqueurs moléculaires de résistance aux médicaments antipaludiques, nous vous invitons à compléter une ou plusieurs des enquêtes courtes suivantes:",
+                "note": "Les résultats de ces enquêtes seront intégrés dans les Cartes des Menaces du Paludisme.",
+                "list": {
+                    "1": "Enquête sur la surveillance des <strong>délétions <i>pfhrp2/3</i></strong>",
+                    "2": "Enquête sur les <strong>études d'efficacité thérapeutique</strong>",
+                    "3": "Enquête sur les <strong>études de marqueurs moléculaires de la résistance aux médicaments antipaludiques</strong>"
+                }
+            },
             "sectionsFooter": "Les formulaires complétés peuvent être envoyés à: <2>vectorsurveillance@who.int</2>"
         },
         "contactPage": {
@@ -515,7 +527,7 @@
                     "moderate_to_high_intensity": "Moyen Fort",
                     "moderate_intensity": "Moyen",
                     "low_intensity": "Faible",
-                    "susceptible": "Sensible",
+                    "could_not_be_reliably_assessed": "N'a pas pu être évaluée de manière fiable",
                     "help": {
                         "p1": "Cette carte contient des données provenant de <1>tests biologiques de concentration d'intensité</1>. Chaque point sur la carte représente un site d'étude contenant une ou plusieurs études. Dans les sites où les études montrent différents niveaux d'intensité de résistance, la couleur de le point est déterminé par les résultats les plus récents.",
                         "p2": "Pour plus d'informations sur la définition de chaque niveau, veuillez consulter le <1 href='/'>manuel de l'OMS pour la surveillance de la résistance</1>.",
@@ -562,7 +574,7 @@
                 },
                 "pirimiphos_methly_undetermined": {
                     "help": {
-                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante de pyrimiphos-méthyl précédemment recommandée de 0,25 %. Ces données doivent être validées par rapport aux nouvelles concentrations discriminantes disponibles dans le Manuel de l'OMS pour le suivi de la résistance aux insecticides chez les moustiques vecteurs et la sélection des interventions appropriées. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante de pyrimiphos-méthyl précédemment recommandée de 0,25 %. Ces données doivent être validées par rapport aux nouvelles concentrations discriminantes disponibles dans le Manuel de l'OMS pour le suivi de la résistance aux insecticides chez les moustiques vecteurs et la sélection des interventions appropriées. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
@@ -594,7 +606,7 @@
                     "subtitle": "Détails des études de délétion du gène hrp2/3",
                     "ongoing": "En cours",
                     "planned": "Prévu",
-                    "completed": "Terminé (résultats en attente)",
+                    "completed": "Terminé",
                     "status": "Statut de l'étude",
                     "proposed_timeframe": "Calendrier proposé",
                     "study_population": "Population de l'étude",
@@ -622,7 +634,7 @@
                     "title": "État des études sur la délétion du gène <i>Pfhrp2</i>",
                     "ongoing": "En cours",
                     "planned": "Prévu",
-                    "completed": "Terminé (résultats en attente)",
+                    "completed": "Terminé",
                     "help": {
                         "p1": "",
                         "p2": "",
@@ -682,7 +694,7 @@
                     "study_details_other": "Etude {{number}} détails",
                     "ongoing": "En cours",
                     "planned": "Prévu",
-                    "completed_results_pending": "Terminé (résultats en attente)",
+                    "completed": "Terminé",
                     "status": "Statut de l'étude",
                     "proposed_timeframe": "Calendrier proposé",
                     "lead_institution": "Institution chef de file",
@@ -734,7 +746,7 @@
                     "medium": "10% - 50%",
                     "low": "< 10%",
                     "help": {
-                        "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires. Les résultats les plus récents sont présentés par défaut.",
+                        "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point de la carte est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires associées à la résistance. Les résultats les plus récents sont présentés par défaut.",
                         "p2": "",
                         "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
                     }
@@ -743,7 +755,7 @@
                     "title": "Statut des études d'efficacité thérapeutique",
                     "ongoing": "En cours",
                     "planned": "Prévu",
-                    "completed": "Terminé (résultats en attente)",
+                    "completed": "Terminé",
                     "help": {
                         "p1": "",
                         "p2": "",
@@ -754,7 +766,7 @@
                     "title": "Statut des études sur les marqueurs moléculaires",
                     "ongoing": "En cours",
                     "planned": "Prévu",
-                    "completed": "Terminé (résultats en attente)",
+                    "completed": "Terminé",
                     "help": {
                         "p1": "",
                         "p2": "",
@@ -773,7 +785,9 @@
                     "sampling_method": "Méthode d’échantillonnage",
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
-                    "not_recorded": "Pas enregistré"
+                    "vector_stage": "Vector stage",
+                    "larval_habitat": "Habitat larvaire",
+                    "not_reported": "Non reporté"
                 }
             },
             "legend": {

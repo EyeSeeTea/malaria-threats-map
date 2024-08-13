@@ -90,8 +90,16 @@ export const filterByDownload = () => (study: Study) => {
     return study.DOWNLOAD === 1;
 };
 
+export const filterInvasiveByDownload = () => (study: InvasiveStudy) => {
+    return study.MTM_DOWNLOAD !== 0;
+};
+
 export const filterByIntensityStatus = (study: any) => {
     return study.ASSAY_TYPE === "INTENSITY_CONCENTRATION_BIOASSAY";
+};
+
+export const filterNotNAIntensityStatus = (study: any) => {
+    return study.RESISTANCE_INTENSITY !== "NA";
 };
 
 export const filterByResistanceStatus = (study: any) => {
@@ -316,12 +324,13 @@ function buildInvasiveFiltersByDownload(invasiveFilters: InvasiveFilters, filter
     switch (invasiveFilters.mapType) {
         case InvasiveMapType.VECTOR_OCCURANCE:
             return [
+                filterInvasiveByDownload(),
                 filterByVectorSpecies(invasiveFilters.vectorSpecies),
                 filterByYearRange(filters, true),
                 filterByRegion(region),
             ];
         default:
-            return [filterByRegion(region)];
+            return [filterInvasiveByDownload(), filterByRegion(region)];
     }
 }
 
@@ -465,6 +474,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
         case PreventionMapType.INTENSITY_STATUS:
             return [
                 filterByIntensityStatus,
+                filterNotNAIntensityStatus,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
                 filterByTypes(preventionFilters.type),
@@ -493,6 +503,8 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
             return [
                 filterByLevelOfInvolvement,
                 filterByProxyType(preventionFilters.proxyType),
+                filterByInsecticideClass(preventionFilters.insecticideClass),
+                filterByInsecticideTypes(preventionFilters.insecticideTypes),
                 filterBySpecies(preventionFilters.species),
                 filterByTypeSynergist(preventionFilters.synergistTypes),
                 filterByYearRange(filters),

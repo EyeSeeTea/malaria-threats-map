@@ -17,8 +17,11 @@ import PaperStepper from "../PaperStepper/PaperStepper";
 import CheckIcon from "@mui/icons-material/Check";
 import { useDownload } from "./useDownload";
 import { setPreventionDataset } from "../../store/actions/prevention-actions";
+import { selectTheme } from "../../store/reducers/base-reducer";
 
-const mapStateToProps = (_state: State) => ({});
+const mapStateToProps = (state: State) => ({
+    theme: selectTheme(state),
+});
 
 const mapDispatchToProps = {
     setTheme: setThemeAction,
@@ -44,7 +47,7 @@ export type Contact = {
     country: string;
 };
 
-function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, setActionGroupSelected }: Props) {
+function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, setActionGroupSelected, theme }: Props) {
     const { t } = useTranslation();
     const {
         activeStep,
@@ -60,7 +63,7 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, s
         onChangeSelectedDatabases,
         onChangeUserInfo,
         onChangeTermsInfo,
-    } = useDownload(logEvent, setTheme, setPreventionDataset, addDownload, setActionGroupSelected);
+    } = useDownload(logEvent, setTheme, setPreventionDataset, addDownload, setActionGroupSelected, theme, t);
 
     const steps = getSteps();
 
@@ -141,7 +144,7 @@ function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, s
                         variant={"contained"}
                         color={"primary"}
                         disabled={!isFormValid()}
-                        onClick={() => downloadData()}
+                        onClick={downloadData}
                         size="large"
                     >
                         {t("common.data_download.buttons.download")}

@@ -1,6 +1,6 @@
 {
     "common": {
-        "loading": "Loading data ...",
+        "loading": "Loading...",
         "layers": "Layers",
         "mekong_link": "Go to the Greater Mekong Subregion",
         "takeATour": "Unsure where to start? Take a tour.",
@@ -124,7 +124,7 @@
             "countryContextDashboards": {
                 "title": "Country / Area context",
                 "source": "Source:",
-                "whoWorldMalariaReport": "WHO. World malaria report 2021",
+                "whoWorldMalariaReport": "WHO. World malaria report 2023",
                 "epidemiologicalProfile": {
                     "title": "EPIDEMIOLOGICAL PROFILE",
                     "country": "Country / Area",
@@ -145,7 +145,8 @@
                     "title": "MAJOR PLASMODIUM SPECIES AND TREATMENT REGIMEN",
                     "country": "Country / Area",
                     "species": "Major Plasmodium species (%)",
-                    "firstLineTreatments": "1st line treatments for uncomplicated malaria"
+                    "firstLineTreatments": "1st line treatments for uncomplicated malaria",
+                    "percentageNotAvailable": "(% not available)"
                 },
                 "vectors": {
                     "title": "VECTORS",
@@ -415,6 +416,17 @@
                 "title": "Contribute <i>An. stephensi</i> detection data",
                 "description": "We invite data submissions from all individuals and organizations about <i>An. stephensi</i> detection outside of its native areas. Please report your data using the WHO standard data collection form, available <5 href='https://www.who.int/teams/global-malaria-programme/prevention/vector-control/global-database-on-insecticide-resistance-in-malaria-vectors'>here</5>."
             },
+            "section3": {
+                "title": "Tracking surveillance",
+                "description": "Tracking surveillance activities helps to understand current research gaps. Knowledge of where studies are either being planned, currently underway, or recently completed, helps to inform where to direct resources for future studies.",
+                "description2": "If you or your organization are currently implementing, planning to implement, or have recently completed a surveillance activity on <i>pfhrp2/3</i> deletions, therapeutic efficacy, or molecular marker studies of antimalarial drug resistance, we would like to invite you to complete one or more of the following short surveys:",
+                "note": "The results of these surveys will be integrated into the Malaria Threats Maps.",
+                "list": {
+                    "1": "Survey on surveillance of <strong><i>pfhrp2/3</i> deletions</strong>",
+                    "2": "Survey on <strong>therapeutic efficacy studies</strong>",
+                    "3": "Survey on <strong>molecular marker studies of antimalarial drug resistance</strong>"
+                }
+            },
             "sectionsFooter": "Completed forms can be sent to: <2>vectorsurveillance@who.int</2>"
         },
         "contactPage": {
@@ -513,7 +525,7 @@
                     "moderate_to_high_intensity": "Moderate to high",
                     "moderate_intensity": "Moderate",
                     "low_intensity": "Low",
-                    "susceptible": "Susceptible",
+                    "could_not_be_reliably_assessed": "Could not be reliably assessed",
                     "help": {
                         "p1": "This map contains data from <1>intensity concentration bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying levels of resistance intensity, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how each level is defined, please consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
@@ -553,14 +565,14 @@
                 },
                 "chlorfenapyr_undetermined": {
                     "help": {
-                        "p1": "Grey dots represent data collected with the recommended discriminating concentration of chlorfenapyr: 100 µg/bottle but that do not fully match WHO criteria for test validation, either because the temperature was not reported, because temperature fell outside of the recommended range (27 °C ± 2 °C), because no susceptible mosquito strain was tested in parallel or because results of the susceptible mosquito strain were not reported. Resistance status can only be determined if the above requirements are met in three tests conducted at the same site.",
+                        "p1": "Grey dots represent data collected with the recommended discriminating concentration of chlorfenapyr (100 µg/bottle), but that do not fully match WHO criteria for test validation, either because the temperature was not reported, because temperature fell outside of the recommended range (27 °C ± 2 °C), because no susceptible mosquito strain was tested in parallel or because results of the susceptible mosquito strain were not reported. Resistance status can only be determined if the above requirements are met in three tests conducted at the same site.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
                 },
                 "pirimiphos_methly_undetermined": {
                     "help": {
-                        "p1": "Grey dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='https://www.who.int/publications/i/item/9789240051089'>https://www.who.int/publications/i/item/9789240051089</4>.",
+                        "p1": "Grey dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
@@ -592,7 +604,7 @@
                     "subtitle": "Details of hrp2/3 gene deletion studies",
                     "ongoing": "Ongoing",
                     "planned": "Planned",
-                    "completed_results_pending": "Completed (results pending)",
+                    "completed": "Completed",
                     "status": "Study status",
                     "proposed_timeframe": "Proposed timeframe",
                     "study_population": "Study population",
@@ -620,7 +632,7 @@
                     "title": "Status of <i>Pfhrp2</i> gene deletion studies",
                     "ongoing": "Ongoing",
                     "planned": "Planned",
-                    "completed": "Completed (results pending)",
+                    "completed": "Completed",
                     "help": {
                         "p1": "",
                         "p2": "",
@@ -680,7 +692,7 @@
                     "study_details_other": "Study {{number}} details",
                     "ongoing": "Ongoing",
                     "planned": "Planned",
-                    "completed_results_pending": "Completed (results pending)",
+                    "completed": "Completed",
                     "status": "Study status",
                     "proposed_timeframe": "Proposed timeframe",
                     "lead_institution": "Lead institution",
@@ -732,7 +744,7 @@
                     "medium": "10% - 50%",
                     "low": "< 10%",
                     "help": {
-                        "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the dot is determined by the percentage of samples which have molecular mutations. The most recent results are presented by default.",
+                        "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the map point is determined by the percentage of samples with molecular mutations associated with resistance. The most recent results are presented by default.",
                         "p2": "",
                         "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
                     }
@@ -741,7 +753,7 @@
                     "title": "Status of therapeutic efficacy studies",
                     "ongoing": "Ongoing",
                     "planned": "Planned",
-                    "completed": "Completed (results pending)",
+                    "completed": "Completed",
                     "help": {
                         "p1": "",
                         "p2": "",
@@ -752,7 +764,7 @@
                     "title": "Status of molecular marker studies",
                     "ongoing": "Ongoing",
                     "planned": "Planned",
-                    "completed": "Completed (results pending)",
+                    "completed": "Completed",
                     "help": {
                         "p1": "",
                         "p2": "",
@@ -771,7 +783,9 @@
                     "sampling_method": "Sampling method",
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
-                    "not_recorded": "Not recorded"
+                    "vector_stage": "Vector stage",
+                    "larval_habitat": "Larval habitat",
+                    "not_reported": "Not reported"
                 }
             },
             "legend": {

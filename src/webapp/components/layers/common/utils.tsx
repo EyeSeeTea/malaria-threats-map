@@ -35,7 +35,7 @@ export const updateSelectionAndRegionAfterClick = (
         const region = getRegionBySiteOnClick(event, map, layer);
 
         if (region) {
-            setRegion(region);
+            setRegion({ ...region, changeZoomToSite: false });
         }
     }
 };

@@ -1,32 +1,27 @@
 import { ActionType } from "typesafe-actions";
-import { mergeMap, switchMap } from "rxjs/operators";
-import * as ajax from "../ajax";
+import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import { Observable, of } from "rxjs";
-import { addDataDownloadRequestAction, fetchDataDownloadRequestAction } from "../actions/data-download-actions";
-import config from "../../config";
-import { ofType } from "redux-observable";
+import { addDataDownloadRequestAction } from "../actions/data-download-actions";
+import { ofType, StateObservable } from "redux-observable";
 import { ActionTypeEnum } from "../actions";
+import { State } from "history";
+import { EpicDependencies } from "..";
+import { fromFuture } from "./utils";
+import { addNotificationAction } from "../actions/notifier-actions";
 
-export const getDataDownloadEntriesEpic = (action$: Observable<ActionType<typeof fetchDataDownloadRequestAction>>) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.FetchDownloadsRequest),
-        switchMap(() => {
-            return ajax.getFull<Response>(config.backendUrl).pipe(
-                mergeMap((_response: Response) => {
-                    return of();
-                })
-            );
-        })
-    );
-
-export const createDataDownloadEntryEpic = (action$: Observable<ActionType<typeof addDataDownloadRequestAction>>) =>
+export const createDataDownloadEntryEpic = (
+    action$: Observable<ActionType<typeof addDataDownloadRequestAction>>,
+    _state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
     action$.pipe(
         ofType(ActionTypeEnum.AddDownloadRequest),
         switchMap(action => {
-            return ajax.postFull(config.backendUrl, action.payload).pipe(
-                mergeMap((_response: any) => {
+            return fromFuture(compositionRoot.downloads.send(action.payload)).pipe(
+                mergeMap(() => {
                     return of();
-                })
+                }),
+                catchError((error: Error) => of(addNotificationAction(error.message)))
             );
         })
     );

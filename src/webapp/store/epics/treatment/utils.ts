@@ -234,7 +234,7 @@ function createMolecularMarkersChartData(
     const allStudies257ByPriority = R.sortBy(study => prioritiesByMutationCategory[study.MUT_CAT], allStudies257);
 
     const studies257ByGenotype = R.groupBy(R.prop("GENOTYPE"), allStudies257ByPriority);
-    const genotypes = Object.keys(studies257ByGenotype).filter(genotype => genotype !== "unspecified");
+    const genotypes = Object.keys(studies257ByGenotype);
 
     const series = genotypes.map((genotype: string) => {
         const studies257: TreatmentStudy[] = studies257ByGenotype[genotype];
@@ -429,7 +429,7 @@ function extractMarkersByMutationCategory(mutationStudies: TreatmentStudy[], cat
     );
 
     return _.orderBy(
-        k13Mutations.filter(m => m.MUT_CAT === category),
+        k13Mutations.filter(m => m.MUT_CAT.toLocaleLowerCase() === category.toLocaleLowerCase()),
         "MUT_ORDER",
         "asc"
     ).map(mutation => ({

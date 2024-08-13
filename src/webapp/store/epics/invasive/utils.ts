@@ -42,7 +42,7 @@ export function createInvasiveSelectionData(
 
 function getData(sortedStudies: InvasiveStudy[]): InvasiveChartDataContent[] {
     const cleanValue = (value: string) =>
-        isNR(value) || isNull(value) ? i18next.t("common.invasive.chart.vector_occurrance.not_recorded") : value;
+        isNR(value) || isNull(value) ? i18next.t("common.invasive.chart.vector_occurrance.not_reported") : value;
 
     return sortedStudies.map(study => ({
         code: study.Code,
@@ -51,6 +51,8 @@ function getData(sortedStudies: InvasiveStudy[]): InvasiveChartDataContent[] {
         samplingMethod: cleanValue(study.SAMPLING_METHOD),
         speciedIdentificationMethod: cleanValue(study.ID_METHOD),
         vectorStage: cleanValue(study.STAGE),
+        larvalHabitat:
+            study.STAGE === "Immature" || study.STAGE === "Immature and adults" ? study.BREEDING_HABITAT : undefined,
     }));
 }
 
