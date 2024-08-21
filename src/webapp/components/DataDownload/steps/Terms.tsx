@@ -33,7 +33,9 @@ const Terms = ({ onChange, termsInfo, selectedDatabases, onChooseOther }: OwnPro
                             <Typography variant={"body1"}>
                                 <Trans i18nKey="common.data_download.terms_step.p1" t={t}>
                                     The use of all data is subject to the{" "}
-                                    <a href={termsAndConditionsLink}>Terms and conditions</a>
+                                    <a href={termsAndConditionsLink} target="_blank" rel="noreferrer">
+                                        Terms and conditions
+                                    </a>
                                     of use for WHO compilations, aggregations, evaluations and analyses. By using the
                                     Datasets or any presentations of data derived from them, you agree to be bound by
                                     and adhere to these Terms and Conditions, as may be amended from time to time by WHO
@@ -63,7 +65,9 @@ const Terms = ({ onChange, termsInfo, selectedDatabases, onChooseOther }: OwnPro
                                 <Typography variant={"body2"}>
                                     <Trans i18nKey="common.data_download.terms_step.check" t={t}>
                                         Check here to indicated that you have read and agree to the{" "}
-                                        <a href={termsAndConditionsLink}>Terms and Conditions</a>
+                                        <a href={termsAndConditionsLink} target="_blank" rel="noreferrer">
+                                            Terms and Conditions
+                                        </a>
                                         of use for WHO data compilations, aggregations, evaluations and analyses.
                                     </Trans>
                                 </Typography>
