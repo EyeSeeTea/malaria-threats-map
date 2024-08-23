@@ -176,10 +176,6 @@ function getPreventionLegendLabels(filters: PreventionFilters): LegendLabel[] {
                     label: "prevention.legend.resistance_intensity.low_intensity",
                     color: IntensityStatusColors[INTENSITY_STATUS.LOW_INTENSITY][0],
                 },
-                {
-                    label: "prevention.legend.resistance_intensity.could_not_be_reliably_assessed",
-                    color: IntensityStatusColors[INTENSITY_STATUS.COULD_NOT_BE_RELIABLY_ASSESSED][0],
-                },
             ];
         case PreventionMapType.RESISTANCE_MECHANISM:
             return [
