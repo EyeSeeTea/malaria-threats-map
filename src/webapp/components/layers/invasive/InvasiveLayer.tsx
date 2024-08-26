@@ -23,6 +23,7 @@ import SitePopover from "../common/SitePopover";
 import Hidden from "../../hidden/Hidden";
 import SiteTitle from "../../site-title/SiteTitle";
 import { getSiteSelectionOnMove, updateSelectionAndRegionAfterClick } from "../common/utils";
+import { INVASIVE_STATUS } from "./VectorOccurance/utils";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
@@ -30,6 +31,14 @@ const INVASIVE_SOURCE_ID = "invasive-source";
 
 const circleLayout = {
     visibility: "visible",
+    "circle-sort-key": [
+        "case",
+        ["==", ["get", "INVASIVE_STATUS"], INVASIVE_STATUS.INVASIVE],
+        1,
+        ["==", ["get", "INVASIVE_STATUS"], INVASIVE_STATUS.NATIVE],
+        1,
+        -1,
+    ],
 };
 
 const layer: any = (symbols: any) => ({
