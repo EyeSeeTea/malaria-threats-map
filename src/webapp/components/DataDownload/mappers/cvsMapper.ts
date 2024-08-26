@@ -352,7 +352,7 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 },
                 {
                     name: "Data",
-                    studies: results,
+                    studies: _.orderBy(results, ["ID"]),
                 },
                 {
                     name: "Glossary",
@@ -445,7 +445,7 @@ export const mapTreatmentStudiesToCSV = (database: TreatmentDatabaseSelection) =
                 },
                 {
                     name: "Data",
-                    studies: results,
+                    studies: _.orderBy(results, ["ID"]),
                 },
                 {
                     name: "Glossary",
