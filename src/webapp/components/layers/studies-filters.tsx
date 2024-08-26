@@ -98,8 +98,13 @@ export const filterByIntensityStatus = (study: any) => {
     return study.ASSAY_TYPE === "INTENSITY_CONCENTRATION_BIOASSAY";
 };
 
-export const filterNotNAIntensityStatus = (study: any) => {
-    return study.RESISTANCE_INTENSITY !== "NA";
+export const filterValidResistanceIntensityValue = (study: any) => {
+    return (
+        study.RESISTANCE_INTENSITY === "LOW_INTENSITY" ||
+        study.RESISTANCE_INTENSITY === "MODERATE_INTENSITY" ||
+        study.RESISTANCE_INTENSITY === "MODERATE_TO_HIGH_INTENSITY" ||
+        study.RESISTANCE_INTENSITY === "HIGH_INTENSITY"
+    );
 };
 
 export const filterByResistanceStatus = (study: any) => {
@@ -474,7 +479,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
         case PreventionMapType.INTENSITY_STATUS:
             return [
                 filterByIntensityStatus,
-                filterNotNAIntensityStatus,
+                filterValidResistanceIntensityValue,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
                 filterByTypes(preventionFilters.type),
