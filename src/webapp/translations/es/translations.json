@@ -433,8 +433,8 @@
         "contactPage": {
             "title": "Contribuya al Mapa de Amenazas de la Malaria compartiendo sus <strong>comentarios</strong>",
             "section1": {
-                "title": "Comentarios y consultas generales",
-                "description": "Estamos deseando saber cómo utiliza el MTM y cómo podemos mejorar la plataforma para todos sus usuarios. Para ponerse en contacto con el equipo de MTM, envíe un correo electrónico a <1>gmp-maps@who.int</1>"
+                "title": "Comentarios generales",
+                "description": "Estamos deseando saber cómo utiliza el MTM y cómo podemos mejorar la plataforma. Para ponerse en contacto con el equipo de MTM, envíe un correo electrónico a <1>gmp-maps@who.int</1>"
             },
             "section2": {
                 "title1": "Compartir datos",
@@ -1005,7 +1005,7 @@
             },
             "personal_step": {
                 "title": "Datos de contacto",
-                "subtitle": "Al proporcionar sus datos personales, nos ayudará a comprender mejor a nuestra comunidad de usuarios.",
+                "subtitle": "Al proporcionar sus datos personales, nos ayudará a comprender mejor a nuestra comunidad de usuarios. Esta información no es necesaria para descargar datos.",
                 "first_name": "Nombre",
                 "last_name": "Apellidos",
                 "organization_type": "Tipo de organización",

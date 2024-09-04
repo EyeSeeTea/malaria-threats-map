@@ -432,8 +432,8 @@
         "contactPage": {
             "title": "Contribute to the Malaria Threats Map by sharing your <strong>feedback</strong>",
             "section1": {
-                "title": "General feedback and enquiries",
-                "description": "We are eager to hear how you use the MTM and how we can improve the platform for all its users. To contact the MTM team, email <1>gmp-maps@who.int</1>"
+                "title": "General feedback",
+                "description": "We are eager to hear how you use the MTM and how we can improve the platform. To contact the MTM team, email <1>gmp-maps@who.int</1>"
             },
             "section2": {
                 "title1": "Data submission",
@@ -572,7 +572,7 @@
                 },
                 "pirimiphos_methly_undetermined": {
                     "help": {
-                        "p1": "Grey dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
+                        "p1": "Grey dots represent data collected with the formerly recommended pirimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
@@ -1003,7 +1003,7 @@
             },
             "personal_step": {
                 "title": "Personal details",
-                "subtitle": "By providing your personal  details, you will help us to better understand our user community.",
+                "subtitle": "By providing your personal details, you will help us to better understand our user community. This information is not required to download data.",
                 "first_name": "First name",
                 "last_name": "Family name",
                 "organization_type": "Organization type",

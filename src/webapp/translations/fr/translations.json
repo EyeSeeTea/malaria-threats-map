@@ -433,8 +433,8 @@
         "contactPage": {
             "title": "Contribuez à la carte des menaces du paludisme en partageant votre <strong>feedback</strong>",
             "section1": {
-                "title": "Commentaires et questions d'ordre général",
-                "description": "Nous sommes impatients de savoir comment vous utilisez le MTM et comment nous pouvons améliorer la plateforme pour tous ses utilisateurs. Pour contacter l'équipe du MTM, écrivez à <1>gmp-maps@who.int</1>"
+                "title": "Commentaires général",
+                "description": "Nous sommes impatients de savoir comment vous utilisez le MTM et comment nous pouvons améliorer la plateforme. Pour contacter l'équipe du MTM, écrivez à <1>gmp-maps@who.int</1>"
             },
             "section2": {
                 "title1": "Soumission des données",
@@ -574,7 +574,7 @@
                 },
                 "pirimiphos_methly_undetermined": {
                     "help": {
-                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante de pyrimiphos-méthyl précédemment recommandée de 0,25 %. Ces données doivent être validées par rapport aux nouvelles concentrations discriminantes disponibles dans le Manuel de l'OMS pour le suivi de la résistance aux insecticides chez les moustiques vecteurs et la sélection des interventions appropriées. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
+                        "p1": "Les points gris représentent les données recueillies avec la concentration discriminante de pirimiphos-méthyl précédemment recommandée de 0,25 %. Ces données doivent être validées par rapport aux nouvelles concentrations discriminantes disponibles dans le Manuel de l'OMS pour le suivi de la résistance aux insecticides chez les moustiques vecteurs et la sélection des interventions appropriées. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
@@ -1005,7 +1005,7 @@
             },
             "personal_step": {
                 "title": "Coordonnées personnelles",
-                "subtitle": "En fournissant vos données personnelles, vous nous aiderez à mieux comprendre notre communauté d'utilisateurs.",
+                "subtitle": "En fournissant vos données personnelles, vous nous aiderez à mieux comprendre notre communauté d'utilisateurs. Ces informations ne sont pas nécessaires pour télécharger des données.",
                 "first_name": "Prénom",
                 "last_name": "Nom de famille",
                 "organization_type": "Type d'Organisation",
