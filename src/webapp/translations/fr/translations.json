@@ -194,10 +194,10 @@
                     "title": "RÉSUMÉ DES RÉSULTATS DE L'ÉTUDE DES MARQUEURS MOLÉCULAIRES AU FIL DU TEMPS",
                     "numStudies": "Nombre d'études",
                     "year": "Année",
-                    "artemisininChartTitle": "Pourcentage d'échantillons dans une étude validée ou candidate",
-                    "artemisininChartSubtitle": "des marqueurs moléculaires de la résistance à l'artémisinine ont été détectés:",
-                    "mutationsChartTitle": "Études où des mutations ont été détectées dans:",
-                    "multipleChartTitle": "Études où plusieurs numéros de copie ont été détectés dans:"
+                    "pfkelch13ChartTitle": "Nombre d'études, avec le pourcentage d'échantillons où des marqueurs moléculaires validés ou candidats de la résistance partielle à l'artémisinine ont été détectés",
+                    "pfcrt_K76TChartTitle": "Nombre d'études, avec le pourcentage d'échantillons où la mutation Pfcrt K76T a été détectée",
+                    "pfmdr1_amplificationsChartTitle": "Nombre d'études, avec le pourcentage d'échantillons où des amplifications Pfmdr1 ont été détectées",
+                    "pfplasmepsin_2-3_amplificationsChartTitle": "Nombre d'études, avec le pourcentage d'échantillons où des amplifications Pfplasmepsin 2-3 ont été détectées"
                 }
             },
             "phenotypicInsecticideResistanceDashboards": {
@@ -679,7 +679,12 @@
                     "show_less": "Afficher moins"
                 },
                 "molecular_markers": {
-                    "subtitle": "Prévalence des mutations de {{molecularMarker}}:",
+                    "subtitle": {
+                        "Pfkelch13": "Mutations de Pfkelch13",
+                        "Pfcrt": "Mutations de Pfcrt K76T",
+                        "Pfmdr1": "Amplifications Pfmdr1",
+                        "Pfplasmepsin 2-3 amplifications": "Amplifications Pfplasmepsin 2-3"
+                    },
                     "percentage": "Pourcentage (%)",
                     "studies": "Étude(s)",
                     "study_years": "Années d'étude(s)",
@@ -1377,8 +1382,9 @@
             "GEOGR_SCOPE_NAME": "Stratégie d'échantillonnage",
             "PROT_TYPE_NAME": "Conception d'enquête ou d'étude",
             "MM_PFK13": "Pfkelch13",
-            "MM_PFCRT": "Pfcrt",
-            "MM_PFPM23": "Pfplasmepsin 2-3",
+            "MM_PFCRT": "Pfcrt K76T",
+            "MM_PFPM23": "Pfplasmepsin 2-3 amplifications",
+            "MM_PFMDR1": "Pfmdr1 amplifications",
             "MM_PFMDR1_CN": "Pfmdr1 copy number",
             "MM_PFMDR1_MU": "Pfmdr1 mutation",
             "MM_PFDHFR": "Pfdhfr",

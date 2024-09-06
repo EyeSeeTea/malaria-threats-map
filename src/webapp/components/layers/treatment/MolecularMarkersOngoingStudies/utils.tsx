@@ -52,17 +52,17 @@ export const MOLECULAR_MARKERS_LABELS: MolecularMarkersLabel[] = [
     },
     {
         key: "MM_PFCRT",
-        label: "Pfcrt",
+        label: "Pfcrt K76T",
         value: 2,
     },
     {
         key: "MM_PFMDR1",
-        label: "Pfmdr1",
+        label: "Pfmdr1 amplifications",
         value: 3,
     },
     {
         key: "MM_PFPM23",
-        label: "Pfplasmepsin 2-3",
+        label: "Pfplasmepsin 2-3 amplifications",
         value: 4,
     },
     {

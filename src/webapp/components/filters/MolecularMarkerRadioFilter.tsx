@@ -15,11 +15,11 @@ export type pfplasmepsin = 4;
 
 export type MolecularMarker = pfkelch13 | pfcrt | pfmdr1 | pfplasmepsin;
 
-export const molecularMarkersMap = {
+export const molecularMarkersMap: Record<string, number> = {
     Pfkelch13: 1,
     Pfcrt: 2,
     Pfmdr1: 3,
-    "Pfplasmepsin 2-3": 4,
+    "Pfplasmepsin 2-3 amplifications": 4,
 };
 
 export const MOLECULAR_MARKERS: Option<MolecularMarker>[] = [
@@ -28,15 +28,15 @@ export const MOLECULAR_MARKERS: Option<MolecularMarker>[] = [
         value: 1,
     },
     {
-        label: "Pfcrt",
+        label: "Pfcrt K76T",
         value: 2,
     },
     {
-        label: "Pfmdr1",
+        label: "Pfmdr1 amplifications",
         value: 3,
     },
     {
-        label: "Pfplasmepsin 2-3",
+        label: "Pfplasmepsin 2-3 amplifications",
         value: 4,
     },
 ];

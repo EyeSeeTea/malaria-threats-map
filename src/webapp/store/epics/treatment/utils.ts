@@ -127,8 +127,12 @@ function geSubtitle(treatmentFilters: TreatmentFilters, studyObject: TreatmentSt
         (species: any) => species.value === studyObject.PLASMODIUM_SPECIES
     )?.label;
 
-    const molecularMarker = i18next.t(
-        MOLECULAR_MARKERS.find((m: any) => treatmentFilters.molecularMarkers.includes(m.value))?.label
+    const molecularMarkerValue = MOLECULAR_MARKERS.find((m: any) =>
+        treatmentFilters.molecularMarkers.includes(m.value)
+    )?.value;
+
+    const molecularMarkerKey = Object.keys(molecularMarkersMap).find(
+        k => molecularMarkersMap[k] === molecularMarkerValue
     );
 
     switch (treatmentFilters.mapType) {
@@ -136,9 +140,7 @@ function geSubtitle(treatmentFilters: TreatmentFilters, studyObject: TreatmentSt
         case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
             return `${plasmodiumSpecies}, ${i18next.t(studyObject.DRUG_NAME)}`;
         case TreatmentMapType.MOLECULAR_MARKERS:
-            return i18next.t("common.treatment.chart.molecular_markers.subtitle", {
-                molecularMarker,
-            });
+            return i18next.t(`common.treatment.chart.molecular_markers.subtitle.${molecularMarkerKey}`);
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return i18next.t("common.treatment.chart.therapeutic_efficacy_studies.subtitle");
         case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:
@@ -268,7 +270,7 @@ function createMolecularMarkersChartData(
                 : treatmentFilters.molecularMarkers.includes(molecularMarkersMap.Pfcrt)
                 ? {
                       "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
-                      Mutations: extractMarkersByMutationCategory(allStudies257, "mutations"),
+                      "Pfcrt  K76T mutation": extractMarkersByMutationCategory(allStudies257, "mutations"),
                   }
                 : {
                       "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),

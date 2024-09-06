@@ -168,7 +168,7 @@ const MolecularMarkerStudyContent = () => {
             </Typography>
             <Typography variant="body1">
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
-                    Pfcrt:
+                    Pfcrt K76T:
                 </Typography>{" "}
                 <Typography display="inline">
                     {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfcrt")}
@@ -176,11 +176,11 @@ const MolecularMarkerStudyContent = () => {
             </Typography>
             <Typography variant="body1">
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
-                    Pfmdr1
+                    Pfmdr1 amplifications
                 </Typography>
                 <Typography display="inline">{t("common.dashboard.informationModal.common.and")} </Typography>
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
-                    Pfplasmepsin 2-3:
+                    Pfplasmepsin 2-3 amplifications:
                 </Typography>{" "}
                 <Typography display="inline">
                     {t("common.dashboard.informationModal.summaryMolecularMarkerStudyOverTime.pfmdr1")}

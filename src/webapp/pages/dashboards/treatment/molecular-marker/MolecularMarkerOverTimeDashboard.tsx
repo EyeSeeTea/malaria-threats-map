@@ -111,22 +111,6 @@ function chartOptions(
             },
             widthAdjust: -200,
         },
-        subtitle: {
-            useHTML: true,
-            text:
-                showLegend &&
-                molecularMarker === 1 &&
-                `<span style="width:100px;">${i18next.t(
-                    `common.dashboard.molecularMarkerDashboards.molecularMarkerOverTime.${chartPrefix}ChartSubtitle`
-                )}</span>`,
-            align: "center",
-            style: {
-                fontWeight: "bold",
-                color: "black",
-                fontSize: "14px",
-            },
-            widthAdjust: -200,
-        },
         xAxis: {
             categories: years.map(year => year.toString()),
             title: {
@@ -172,12 +156,13 @@ function chartOptions(
 
 function getChartPrefix(molecularMarker: MolecularMarker) {
     switch (molecularMarker) {
-        case 1: {
-            return "artemisinin";
-        }
+        case 1:
+            return "pfkelch13";
         case 2:
-            return "mutations";
-        default:
-            return "multiple";
+            return "pfcrt_K76T";
+        case 3:
+            return "pfmdr1_amplifications";
+        case 4:
+            return "pfplasmepsin_2-3_amplifications";
     }
 }
