@@ -6,6 +6,7 @@ import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import * as R from "ramda";
 import { filterByAssayTypes, filterByInsecticideClass, filterByType, filterByYearRange } from "../studies-filters";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
+import { ResistanceIntensity } from "../../../../domain/entities/Study";
 
 export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters) => {
     switch (preventionFilters.mapType) {
@@ -117,7 +118,7 @@ export function getMostPriorityUsignResistanceStatus(studies: PreventionStudy[])
     return R.sortBy(study => study.priority, studiesWithPriority)[0];
 }
 
-const ResistanceIntensityOrder: { [value: string]: number } = {
+const ResistanceIntensityOrder: Record<ResistanceIntensity, number> = {
     NA: 0,
     COULD_NOT_BE_RELIABLY_ASSESSED: 0,
     LOW_INTENSITY: 1,

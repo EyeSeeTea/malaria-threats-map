@@ -32,7 +32,7 @@ export interface Study {
     PROXY_TYPE: string;
     REGION_FULL: string;
     RESISTANCE_FREQUENCY: string;
-    RESISTANCE_INTENSITY: string;
+    RESISTANCE_INTENSITY: ResistanceIntensity;
     RESISTANCE_STATUS: string;
     RESISTANCE_STATUS_NUMERIC: string;
     SPECIES: string;
@@ -48,6 +48,14 @@ export interface Study {
     YEAR_START: number;
     DOWNLOAD: number;
 }
+
+export type ResistanceIntensity =
+    | "NA"
+    | "COULD_NOT_BE_RELIABLY_ASSESSED"
+    | "LOW_INTENSITY"
+    | "MODERATE_INTENSITY"
+    | "MODERATE_TO_HIGH_INTENSITY"
+    | "HIGH_INTENSITY";
 
 export function getMinMaxYears(studies: Study[], maxAsCurrent = true, minToOverwrite?: number): [number, number] {
     if (studies.length === 0) return [minToOverwrite || 2010, new Date().getFullYear()];

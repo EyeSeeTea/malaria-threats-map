@@ -193,10 +193,10 @@
                     "title": "SUMMARY OF MOLECULAR MARKER STUDY RESULTS OVER TIME",
                     "numStudies": "Number of studies",
                     "year": "Year",
-                    "artemisininChartTitle": "Percentage of samples in one study where validated or candidate",
-                    "artemisininChartSubtitle": "molecular markers of artemisinin resistance were detected:",
-                    "mutationsChartTitle": "Percentage of samples in one study where mutations were detected:",
-                    "multipleChartTitle": "Percentage of samples in one study where multiple copy numbers were detected:"
+                    "pfkelch13ChartTitle": "Number of studies, with the percentage of samples where validated or candidate molecular markers of partial artemisinin resistance were detected",
+                    "pfcrt_K76TChartTitle": "Number of studies, with the percentage of samples where the Pfcrt K76T mutation was detected",
+                    "pfmdr1_amplificationsChartTitle": "Number of studies, with the percentage of samples where Pfmdr1 amplifications were detected",
+                    "pfplasmepsin_2-3_amplificationsChartTitle": "Number of studies, with the percentage of samples where Pfplasmepsin 2-3 amplifications were detected"
                 }
             },
             "phenotypicInsecticideResistanceDashboards": {
@@ -432,8 +432,8 @@
         "contactPage": {
             "title": "Contribute to the Malaria Threats Map by sharing your <strong>feedback</strong>",
             "section1": {
-                "title": "General feedback and enquiries",
-                "description": "We are eager to hear how you use the MTM and how we can improve the platform for all its users. To contact the MTM team, email <1>gmp-maps@who.int</1>"
+                "title": "General feedback",
+                "description": "We are eager to hear how you use the MTM and how we can improve the platform. To contact the MTM team, email <1>gmp-maps@who.int</1>"
             },
             "section2": {
                 "title1": "Data submission",
@@ -572,7 +572,7 @@
                 },
                 "pirimiphos_methly_undetermined": {
                     "help": {
-                        "p1": "Grey dots represent data collected with the formerly recommended pyrimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
+                        "p1": "Grey dots represent data collected with the formerly recommended pirimiphos-methyl discriminating concentration of 0.25%. These data should be validated against the new discriminating concentrations available in the WHO Manual for monitoring insecticide resistance in mosquito vectors and selecting appropriate interventions. <4 href='/'>https://iris.who.int/handle/10665/356964</4>.",
                         "p2": "",
                         "footer": "Data source: Publications and unpublished reports and information from country offices."
                     }
@@ -677,7 +677,12 @@
                     "show_less": "Show less"
                 },
                 "molecular_markers": {
-                    "subtitle": "Prevalence of {{molecularMarker}} mutations:",
+                    "subtitle": {
+                        "Pfkelch13": "Pfkelch13 mutation",
+                        "Pfcrt": "Pfcrt K76T mutation",
+                        "Pfmdr1": "Pfmdr1 amplifications",
+                        "Pfplasmepsin 2-3 amplifications": "Pfplasmepsin 2-3 amplifications"
+                    },
                     "percentage": "Percentage (%)",
                     "studies": "Studies",
                     "study_years": "Study year(s)",
@@ -994,16 +999,16 @@
             },
             "terms_step": {
                 "title": "Terms and Conditions",
-                "p1": "The use of all data is subject to the Terms and conditions of use for WHO compilations, aggregations, evaluations and analyses. By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
+                "p1": "The use of all data is subject to the <2 href='https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions'>Terms and conditions</2> of use for WHO compilations, aggregations, evaluations and analyses. By using the Datasets or any presentations of data derived from them, you agree to be bound by and adhere to these Terms and Conditions, as may be amended from time to time by WHO at its sole discretion. If any datasets are credited to a source other than WHO, then those materials are not covered by these Terms and Conditions, and permission should be sought from the source.",
                 "acknowledgements": "Acknowledgements",
                 "p2": "Please acknowledge the use of these datasets by including the following reference in your publications: WHO, Malaria Threats Map, year, date of access, acknowledgement of the countries having provided the underlying data (in the event that the source refers to ministries of health or national malaria control programs of specific countries).",
                 "summary_title": "Download List",
-                "check": "Check here to indicated that you have read and agree to the Terms and Conditions of use for WHO data compilations, aggregations, evaluations and analyses.",
+                "check": "Check here to indicated that you have read and agree to the <2 href='https://www.who.int/about/policies/publishing/data-policy/terms-and-conditions'>Terms and Conditions</2> of use for WHO data compilations, aggregations, evaluations and analyses.",
                 "choose_other": "Choose other databases"
             },
             "personal_step": {
                 "title": "Personal details",
-                "subtitle": "By providing your personal  details, you will help us to better understand our user community.",
+                "subtitle": "By providing your personal details, you will help us to better understand our user community. This information is not required to download data.",
                 "first_name": "First name",
                 "last_name": "Family name",
                 "organization_type": "Organization type",
@@ -1373,8 +1378,9 @@
             "GEOGR_SCOPE_NAME": "Sampling strategy",
             "PROT_TYPE_NAME": "Survey or study design",
             "MM_PFK13": "Pfkelch13",
-            "MM_PFCRT": "Pfcrt",
-            "MM_PFPM23": "Pfplasmepsin 2-3",
+            "MM_PFCRT": "Pfcrt K76T",
+            "MM_PFPM23": "Pfplasmepsin 2-3 amplifications",
+            "MM_PFMDR1": "Pfmdr1 amplifications",
             "MM_PFMDR1_CN": "Pfmdr1 copy number",
             "MM_PFMDR1_MU": "Pfmdr1 mutation",
             "MM_PFDHFR": "Pfdhfr",

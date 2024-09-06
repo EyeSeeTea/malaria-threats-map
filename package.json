@@ -1,6 +1,6 @@
 {
     "name": "malaria-threats-map",
-    "version": "2.7.3",
+    "version": "2.7.5",
     "private": true,
     "homepage": "./",
     "dependencies": {
