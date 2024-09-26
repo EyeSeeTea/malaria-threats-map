@@ -1385,7 +1385,8 @@
             "MM_PFMDR1_MU": "Pfmdr1 mutation",
             "MM_PFDHFR": "Pfdhfr",
             "MM_PFDHPS": "Pfdhps",
-            "MM_PFHRP23": "Pfhrp23"
+            "MM_PFHRP23": "Pfhrp23",
+            "COPY_NUMBERS": "Multiple copy numbers"
         }
     },
     "legend": {

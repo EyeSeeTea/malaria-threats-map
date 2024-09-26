@@ -1,3 +1,5 @@
+import i18next from "i18next";
+
 export enum MOLECULAR_MARKERS_ONGOING_STUDIES_STATUS {
     ONGOING = "ONGOING",
     PLANNED = "PLANNED",
@@ -44,6 +46,10 @@ export type MolecularMarkersLabel = {
     value: MolecularMarker;
 };
 
+const translations = {
+    MM_PFMDR1: i18next.t("download.ongoing_molecular_marker.MM_PFMDR1"),
+};
+
 export const MOLECULAR_MARKERS_LABELS: MolecularMarkersLabel[] = [
     {
         key: "MM_PFK13",
@@ -57,7 +63,7 @@ export const MOLECULAR_MARKERS_LABELS: MolecularMarkersLabel[] = [
     },
     {
         key: "MM_PFMDR1",
-        label: "Pfmdr1 amplifications",
+        label: translations.MM_PFMDR1,
         value: 3,
     },
     {
