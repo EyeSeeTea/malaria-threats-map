@@ -57,6 +57,8 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
+    minYear?: number;
+    maxYear?: number;
     showTheatherMode?: boolean;
 };
 type Props = OwnProps & DispatchProps & StateProps;
@@ -68,15 +70,22 @@ export function range(start: number, end: number, reverse?: boolean) {
     return reverse ? R.reverse(years) : years;
 }
 
-const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode = true }: Props) => {
+const YearRangeSelector = ({ maxMinYears, filters, setFilters, minYear, maxYear, showTheatherMode = true }: Props) => {
     const { t } = useTranslation();
+
+    const minimumYear = minYear ?? maxMinYears[0];
+    const maximumYear = maxYear ?? maxMinYears[1];
+    const medianYear = Math.floor((minimumYear + maximumYear) / 2);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         const [start, end] = newValue as number[];
         const [prevStart, prevEnd] = filters;
-        const label = `(${start}, ${end})`;
 
-        if (prevStart !== start || prevEnd !== end) {
+        const previousStart = minYear ?? prevStart;
+        const previousEnd = maxYear ?? prevEnd;
+        const label = `(${previousStart}, ${previousEnd})`;
+
+        if (previousStart !== start || previousEnd !== end) {
             sendAnalytics({ type: "event", category: "filter", action: "Years", label });
             setFilters(newValue as number[]);
         }
@@ -102,11 +111,11 @@ const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode 
                 aria-labelledby="range-slider"
                 getAriaValueText={valuetext}
                 step={1}
-                min={maxMinYears[0]}
-                max={maxMinYears[1]}
+                min={minimumYear}
+                max={maximumYear}
             />
             <Row>
-                {[maxMinYears[0], Math.floor((maxMinYears[0] + maxMinYears[1]) / 2), maxMinYears[1]].map(year => {
+                {[minimumYear, medianYear, maximumYear].map(year => {
                     return <span key={year}>{year}</span>;
                 })}
             </Row>
