@@ -290,7 +290,7 @@ function getColor(mapType: PreventionMapType, study: Study): string {
 }
 
 function getMorlatityAdjusted(study: Study): number {
-    return Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100);
+    return +(parseFloat(study.MORTALITY_ADJUSTED) * 100).toFixed(1);
 }
 
 function createChartDataItems(
