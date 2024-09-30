@@ -10,7 +10,7 @@ export default function VectorOccuranceFilters() {
     return (
         <>
             <VectorSpeciesFilter />
-            <YearRangeSelector minYear={1984} />
+            <YearRangeSelector />
             <Snackbar>
                 <Trans i18nKey="common.invasive.legend.vector_occurrance.link_content_1">
                     If you have detected invasive <i>Anopheles</i> vector species please report to us through the

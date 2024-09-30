@@ -11,6 +11,7 @@ const query = window.location.search.substring(1);
 
 const isTourInitiallyOpen = getFromLocalStorage("tour") !== "visited" && !query;
 
+const minimumYear = 1984;
 const initialState: MalariaState = Object.freeze({
     theme: "invasive",
     any: null,
@@ -18,8 +19,8 @@ const initialState: MalariaState = Object.freeze({
     countryMode: false,
     storyMode: false,
     storyModeStep: 0,
-    filters: [2010, new Date().getFullYear()],
-    maxMinYears: [2010, new Date().getFullYear()],
+    filters: [minimumYear, new Date().getFullYear()],
+    maxMinYears: [minimumYear, new Date().getFullYear()],
     region: {
         country: "",
         region: "",
