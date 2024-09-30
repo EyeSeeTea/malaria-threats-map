@@ -74,8 +74,7 @@ const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode 
     const handleChange = (event: Event, newValue: number | number[]) => {
         const [start, end] = newValue as number[];
         const [prevStart, prevEnd] = filters;
-
-        const label = `(${prevStart}, ${prevEnd})`;
+        const label = `(${start}, ${end})`;
 
         if (prevStart !== start || prevEnd !== end) {
             sendAnalytics({ type: "event", category: "filter", action: "Years", label });
