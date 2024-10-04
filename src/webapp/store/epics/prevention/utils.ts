@@ -251,7 +251,7 @@ function createPreventionMechanismAllelics(
 function getStudyName(mapType: PreventionMapType, study: PreventionStudy): string {
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
-            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(study.INSECTICIDE_CONC)}`;
+            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(study.INSECTICIDE_CONC)} - ${getMorlatityAdjusted(study)}`;
         case PreventionMapType.INTENSITY_STATUS:
             return `${study.YEAR_START}, ${study.INSECTICIDE_INTENSITY}x ${i18next.t(study.INSECTICIDE_TYPE)}`;
         case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
