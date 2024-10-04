@@ -13,6 +13,7 @@ import { getTherapeuticEfficacyStudiesStatusFromStatusId } from "./TherapeuticEf
 import molecularMarkersOngoingStudiesSymbols from "./MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
 import { getMolecularMarkersOngoingStudiesStatusFromStatusId } from "./MolecularMarkersOngoingStudies/utils";
 import { sortOngoingAndPlannedStudies } from "../../../store/epics/treatment/utils";
+import { molecularMarkersMap } from "../../filters/MolecularMarkerRadioFilter";
 
 export const resolveMapTypeSymbols = (treatmentFilters: TreatmentFilters) => {
     switch (treatmentFilters.mapType) {
@@ -105,9 +106,18 @@ const resolveMolecularMarker = (value: number) => {
 
 export function getMolecularMarkerStudies(studies: TreatmentStudy[]): MolecularMarkerStudy[] {
     return studies.map(study => {
+        const isPfkelch13MolecularMarker = parseInt(study.MM_TYPE) === molecularMarkersMap.Pfkelch13;
+
         const value = study.groupStudies.reduce((acc: number, item: any) => {
-            return acc + (item.GENOTYPE === "WT" ? 0 : parseFloat(item.PROPORTION));
+            const isOtherMarkerItem = item.MUT_CAT?.toLocaleLowerCase() === "other";
+            return (
+                acc +
+                (item.GENOTYPE === "WT" || (isPfkelch13MolecularMarker && isOtherMarkerItem)
+                    ? 0
+                    : parseFloat(item.PROPORTION))
+            );
         }, 0);
+
         return { ...study, VALUE: value };
     });
 }
