@@ -22,6 +22,14 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
             minWidth: 520,
             scrollPositionX: 1,
         },
+        events: {
+            render() {
+                const chart = this as Highcharts.Chart & { scrollingContainer?: HTMLElement };
+                if (chart.scrollingContainer) {
+                    chart.scrollingContainer.scrollLeft = chart.scrollingContainer.scrollWidth;
+                }
+            },
+        },
     },
     tooltip: {
         enabled: true,
