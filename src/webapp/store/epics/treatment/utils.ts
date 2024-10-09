@@ -255,6 +255,11 @@ function createMolecularMarkersChartData(
         };
     });
 
+    const translations = {
+        MM_PFCRT: i18next.t("download.ongoing_molecular_marker.MM_PFCRT"),
+        COPY_NUMBERS: i18next.t("download.ongoing_molecular_marker.COPY_NUMBERS"),
+    };
+
     return {
         kind: "treatment-molecular-markers",
         data: {
@@ -270,11 +275,14 @@ function createMolecularMarkersChartData(
                 : treatmentFilters.molecularMarkers.includes(molecularMarkersMap.Pfcrt)
                 ? {
                       "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
-                      "Pfcrt  K76T mutation": extractMarkersByMutationCategory(allStudies257, "mutations"),
+                      [translations.MM_PFCRT]: extractMarkersByMutationCategory(allStudies257, "mutations"),
                   }
                 : {
                       "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
-                      "Multiple copy numbers": extractMarkersByMutationCategory(allStudies257, "multiple copy number"),
+                      [translations.COPY_NUMBERS]: extractMarkersByMutationCategory(
+                          allStudies257,
+                          "multiple copy number"
+                      ),
                   },
         },
     };

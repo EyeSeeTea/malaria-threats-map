@@ -5,7 +5,7 @@ import IntegrationReactSelect, { OptionType } from "../BasicSelect";
 import styled from "styled-components";
 import { Divider, FilterWrapper } from "./Filters";
 import { Typography } from "@mui/material";
-import { MolecularMarker, MOLECULAR_MARKERS } from "./MolecularMarkerRadioFilter";
+import { MolecularMarker, MOLECULAR_MARKERS, molecularMarkerTranslations } from "./MolecularMarkerRadioFilter";
 
 type DrugsSelectorProps = {
     onChange: (selection: MolecularMarker) => void;
@@ -30,7 +30,7 @@ const MolecularMarkerSelector: React.FC<DrugsSelectorProps> = ({
 
     const options = MOLECULAR_MARKERS.map(marker => ({
         value: marker.value,
-        label: t(marker.label),
+        label: t(molecularMarkerTranslations[marker.label]) || t(marker.label),
     }));
 
     const onSelectionChange = (selected: ValueType<OptionType, false>) => {

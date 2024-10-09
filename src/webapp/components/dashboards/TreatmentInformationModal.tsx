@@ -176,7 +176,7 @@ const MolecularMarkerStudyContent = () => {
             </Typography>
             <Typography variant="body1">
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">
-                    Pfmdr1 amplifications
+                    {t("download.ongoing_molecular_marker.MM_PFMDR1")}
                 </Typography>
                 <Typography display="inline">{t("common.dashboard.informationModal.common.and")} </Typography>
                 <Typography fontStyle={"italic"} color="#2FB3AF" fontWeight={"bold"} display="inline">

@@ -41,6 +41,11 @@ export const MOLECULAR_MARKERS: Option<MolecularMarker>[] = [
     },
 ];
 
+export const molecularMarkerTranslations: MolecularMarkerTranslations = {
+    "Pfmdr1 amplifications": "download.ongoing_molecular_marker.MM_PFMDR1",
+    "Pfplasmepsin 2-3 amplifications": "download.ongoing_molecular_marker.MM_PFPM23",
+};
+
 const mapStateToProps = (state: State) => ({
     treatmentFilters: selectTreatmentFilters(state),
 });
@@ -67,7 +72,7 @@ function MolecularMarkerRadioButtonFilter({ treatmentFilters, setMolecularMarker
 
     const options = MOLECULAR_MARKERS.map(marker => ({
         value: marker.label,
-        label: t(marker.label),
+        label: t(molecularMarkerTranslations[marker.label]) || t(marker.label),
     }));
 
     const value = React.useMemo(() => {
@@ -85,3 +90,6 @@ function MolecularMarkerRadioButtonFilter({ treatmentFilters, setMolecularMarker
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MolecularMarkerRadioButtonFilter);
+
+type MolecularMarkerLabel = typeof MOLECULAR_MARKERS[number]["label"];
+type MolecularMarkerTranslations = Partial<Record<MolecularMarkerLabel, string>>;
