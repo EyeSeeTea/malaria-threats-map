@@ -173,8 +173,13 @@ function createPreventionMechanismAssays(
         const yearStudies = studies.filter(study => study.YEAR_START === year);
 
         const dataSourceKeys = selectDataSourcesByStudies(dataSources, yearStudies);
+        const formatName = (dataSourceKeys: string[]) => {
+            const dataSources = !_(dataSourceKeys).isEmpty() ? `(${dataSourceKeys.join(", ")})` : "";
 
-        return { year, name: `${year.toString()} (${dataSourceKeys.join(", ")}) ` };
+            return `${year.toString()} ${dataSources} `;
+        };
+
+        return { year: year, name: formatName(dataSourceKeys) };
     });
 
     const detected = yearsObjects.map(yearObject => {
