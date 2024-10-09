@@ -22,6 +22,15 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
             minWidth: 520,
             scrollPositionX: 1,
         },
+        events: {
+            // NOTICE: This solution is a workaround becuase scrollPositionX is not working as expected
+            render() {
+                const chart = this as Highcharts.Chart & { scrollingContainer?: HTMLElement };
+                if (chart.scrollingContainer) {
+                    chart.scrollingContainer.scrollLeft = chart.scrollingContainer.scrollWidth;
+                }
+            },
+        },
     },
     tooltip: {
         enabled: true,
