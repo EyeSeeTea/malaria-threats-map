@@ -42,7 +42,6 @@ const MolecularMarkerSelector: React.FC<DrugsSelectorProps> = ({
         label: t(molecularMarkerTranslations[marker.label]) || marker.label,
     }));
     const selection = translatedMolecularMarkers.find(marker => marker.value === value);
-    console.log({ selection, MOLECULAR_MARKERS, value, options });
 
     return (
         <FilterWrapper onlyYMargin={onlyYMargin}>
