@@ -119,13 +119,19 @@ function MapScreenshot({ map, theme, title, showMapSidebar = false }: MapScreens
                                 <MapInfoSummaryLegend />
                             </MapInfoSummaryContainer>
                             <StyledImage alt="Map screenshot" src={mapImage} $hasSidebar={showMapSidebar} />
-                            <LegendContainer $hasSidebar={showMapSidebar}>
-                                <Legend />
-                            </LegendContainer>
+                            {!showMapSidebar && (
+                                <LegendContainer $hasSidebar={showMapSidebar}>
+                                    <Legend />
+                                </LegendContainer>
+                            )}
                         </MapContainer>
                         {showMapSidebar ? (
                             <MapSidebarContainer>
-                                <SelectionDataContent onClose={fakeFunction} isScreenshot />
+                                <SelectionDataContent onClose={fakeFunction} isScreenshot>
+                                    <LegendContainer $hasSidebar={showMapSidebar}>
+                                        <Legend />
+                                    </LegendContainer>{" "}
+                                </SelectionDataContent>
                             </MapSidebarContainer>
                         ) : null}
                     </MapAndSidebarContainer>
@@ -201,10 +207,11 @@ const MapInfoSummaryContainer = styled.div`
 const LegendContainer = styled.div<{ $hasSidebar?: boolean }>`
     border-radius: 12px;
     background-color: #ffffff;
-    position: absolute;
+    position: ${props => (props.$hasSidebar ? "relative" : "absolute")};
+    margin: ${props => (props.$hasSidebar ? "8px" : "0")};
     z-index: 3;
-    inset-inline-end: ${props => (props.$hasSidebar ? "2%" : "30px")};
-    inset-block-end: ${props => (props.$hasSidebar ? "-690px" : "20px")};
+    inset-inline-end: ${props => (props.$hasSidebar ? "0" : "30px")};
+    inset-block-end: ${props => (props.$hasSidebar ? "0" : "20px")};
     div {
         width: fit-content;
         max-width: fit-content;

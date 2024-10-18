@@ -91,6 +91,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type OwnProps = {
     onClose: () => void;
     isScreenshot?: boolean;
+    children?: React.ReactNode;
 };
 
 type Props = StateProps & DispatchProps & OwnProps;
@@ -101,6 +102,7 @@ const SelectionDataContent = ({
     setSelectionFilterSelection,
     onClose,
     isScreenshot = false,
+    children,
 }: Props) => {
     const chartDataContent = () => {
         switch (selectionData.kind) {
@@ -115,7 +117,7 @@ const SelectionDataContent = ({
                 );
             }
             case "invasive": {
-                return <InvasiveContent selectionData={selectionData} />;
+                return <InvasiveContent selectionData={selectionData}>{children}</InvasiveContent>;
             }
             case "diagnosis": {
                 return <DiagnosisContent selectionData={selectionData} />;
@@ -133,6 +135,7 @@ const SelectionDataContent = ({
                     {selectionData && chartDataContent()}
                 </Container>
             </Hidden>
+
             {isScreenshot ? null : (
                 <StyledIconButton onClick={onClose}>
                     <CloseIcon />
@@ -143,7 +146,10 @@ const SelectionDataContent = ({
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SelectionDataContent);
 
-const InvasiveContent: React.FC<{ selectionData: InvasiveSelectionData }> = ({ selectionData }) => {
+const InvasiveContent: React.FC<{ selectionData: InvasiveSelectionData; children?: React.ReactNode }> = ({
+    selectionData,
+    children,
+}) => {
     return (
         <>
             <TopContainer>
@@ -152,6 +158,7 @@ const InvasiveContent: React.FC<{ selectionData: InvasiveSelectionData }> = ({ s
 
             <Divider sx={{ marginBottom: 2, marginTop: 2 }} />
             {selectionData.data && selectionData.data.length && <InvasiveChart selectionData={selectionData} />}
+            {children}
         </>
     );
 };
