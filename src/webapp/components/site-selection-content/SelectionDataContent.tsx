@@ -113,14 +113,16 @@ const SelectionDataContent = ({
                         preventionFilters={preventionFilters}
                         setSelectionFilterSelection={setSelectionFilterSelection}
                         isScreenshot={isScreenshot}
-                    />
+                    >
+                        {children}
+                    </CommonContent>
                 );
             }
             case "invasive": {
                 return <InvasiveContent selectionData={selectionData}>{children}</InvasiveContent>;
             }
             case "diagnosis": {
-                return <DiagnosisContent selectionData={selectionData} />;
+                return <DiagnosisContent selectionData={selectionData}>{children}</DiagnosisContent>;
             }
         }
     };
@@ -163,7 +165,10 @@ const InvasiveContent: React.FC<{ selectionData: InvasiveSelectionData; children
     );
 };
 
-const DiagnosisContent: React.FC<{ selectionData: DiagnosisSelectionData }> = ({ selectionData }) => {
+const DiagnosisContent: React.FC<{ selectionData: DiagnosisSelectionData; children?: React.ReactNode }> = ({
+    selectionData,
+    children,
+}) => {
     return (
         <>
             <TopContainer>
@@ -184,6 +189,8 @@ const DiagnosisContent: React.FC<{ selectionData: DiagnosisSelectionData }> = ({
                     {selectionData.curations.length > 0 && <CurationNew curations={selectionData.curations} />}
                 </RoundedContainer>
             )}
+
+            {children}
         </>
     );
 };
@@ -193,7 +200,8 @@ const CommonContent: React.FC<{
     preventionFilters: PreventionFilters;
     setSelectionFilterSelection: PayloadActionCreator<ActionTypeEnum.SetSelectionDataFilterSelection, Option[]>;
     isScreenshot?: boolean;
-}> = ({ selectionData, preventionFilters, setSelectionFilterSelection, isScreenshot = false }) => {
+    children?: React.ReactNode;
+}> = ({ selectionData, preventionFilters, setSelectionFilterSelection, isScreenshot = false, children }) => {
     const onFiltersChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSelectionFilterSelection(value);
@@ -258,6 +266,8 @@ const CommonContent: React.FC<{
                     <OtherInfo title={selectionData.othersTitle} info={selectionData.othersDetected} />
                 </RoundedContainer>
             )}
+
+            {children}
         </>
     );
 };
