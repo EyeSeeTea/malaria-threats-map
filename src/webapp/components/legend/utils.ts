@@ -91,8 +91,11 @@ function getTreatmentLegendTitle(filters: TreatmentFilters): string {
             return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drugs[0])}`;
         case TreatmentMapType.MOLECULAR_MARKERS: {
             const molecularMarkersLabel = MOLECULAR_MARKERS[filters.molecularMarkers[0] - 1]?.label;
+            const molecularMarkersValue = MOLECULAR_MARKERS[filters.molecularMarkers[0] - 1]?.value;
             return `${i18next.t("common.treatment.molecular_markers")}\n(${i18next.t(
-                molecularMarkerTranslations[molecularMarkersLabel] || molecularMarkersLabel
+                molecularMarkersValue === 1 || molecularMarkersValue === 2
+                    ? molecularMarkersLabel
+                    : i18next.t(molecularMarkerTranslations[molecularMarkersLabel])
             )})`;
         }
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
