@@ -340,7 +340,7 @@ function createChartDataItems(
                 color: getColor(mapType, study),
             };
         })
-        .sortBy(study => -study.y)
+        .sortBy(study => study.y)
         .value();
 
     return data;
