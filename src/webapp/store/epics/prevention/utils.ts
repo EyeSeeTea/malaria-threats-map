@@ -256,7 +256,9 @@ function createPreventionMechanismAllelics(
 function getStudyName(mapType: PreventionMapType, study: PreventionStudy): string {
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
-            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(study.INSECTICIDE_CONC)} - ${getMorlatityAdjusted(study)}`;
+            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(
+                study.INSECTICIDE_CONC
+            )} - ${getMorlatityAdjusted(study)}`;
         case PreventionMapType.INTENSITY_STATUS:
             return `${study.YEAR_START}, ${study.INSECTICIDE_INTENSITY}x ${i18next.t(study.INSECTICIDE_TYPE)}`;
         case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
@@ -326,19 +328,22 @@ function createChartDataItems(
 
     const simplifiedStudies = _.orderBy(firstStudiesOfGroups, orderFields, orderDirections);
 
-    const data = simplifiedStudies.map(study => {
-        const studiesByGroup = cleanedStudies[getStudyName(mapType, study)];
+    const data = _(simplifiedStudies)
+        .map(study => {
+            const studiesByGroup = cleanedStudies[getStudyName(mapType, study)];
 
-        const dataSourceKeys = selectDataSourcesByStudies(dataSources, studiesByGroup);
+            const dataSourceKeys = selectDataSourcesByStudies(dataSources, studiesByGroup);
 
-        return {
-            name: `${getStudyName(mapType, study)} (${dataSourceKeys.join(", ")}) `,
-            y: getMorlatityAdjusted(study),
-            number: study.NUMBER,
-            resistanceStatus: study.RESISTANCE_STATUS,
-            color: getColor(mapType, study),
-        };
-    });
+            return {
+                name: `${getStudyName(mapType, study)} (${dataSourceKeys.join(", ")}) `,
+                y: getMorlatityAdjusted(study),
+                number: study.NUMBER,
+                resistanceStatus: study.RESISTANCE_STATUS,
+                color: getColor(mapType, study),
+            };
+        })
+        .sortBy(study => study.y)
+        .value();
 
     return data;
 }
