@@ -11,6 +11,9 @@ const query = window.location.search.substring(1);
 
 const isTourInitiallyOpen = getFromLocalStorage("tour") !== "visited" && !query;
 
+const minimumYear = 2010;
+const invasiveMinimumYear = 1984;
+
 const initialState: MalariaState = Object.freeze({
     theme: "invasive",
     any: null,
@@ -18,8 +21,10 @@ const initialState: MalariaState = Object.freeze({
     countryMode: false,
     storyMode: false,
     storyModeStep: 0,
-    filters: [2010, new Date().getFullYear()],
-    maxMinYears: [2010, new Date().getFullYear()],
+    filters: [minimumYear, new Date().getFullYear()],
+    invasiveFilters: [invasiveMinimumYear, new Date().getFullYear()],
+    maxMinYears: [minimumYear, new Date().getFullYear()],
+    invasiveMaxMinYears: [invasiveMinimumYear, new Date().getFullYear()],
     region: {
         country: "",
         region: "",
@@ -79,10 +84,18 @@ export default createReducer<MalariaState>(initialState, {
             region: region ? { ...initialState.region, ...region } : {},
         };
     },
-    [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) =>
-        R.assoc("filters", filters || initialState.filters),
-    [ActionTypeEnum.MalariaSetMaxMinYears]: (maxMinYears: number[] | undefined) =>
-        R.assoc("maxMinYears", maxMinYears || initialState.maxMinYears),
+    [ActionTypeEnum.MalariaSetFilters]: (filters: number[] | undefined) => {
+        const initialStateFilters =
+            initialState.theme === "invasive" ? initialState.invasiveFilters : initialState.filters;
+
+        return R.assoc("filters", filters || initialStateFilters);
+    },
+    [ActionTypeEnum.MalariaSetMaxMinYears]: (maxMinYears: number[] | undefined) => {
+        const initialMaxMinYears =
+            initialState.theme === "invasive" ? initialState.invasiveMaxMinYears : initialState.maxMinYears;
+
+        return R.assoc("maxMinYears", maxMinYears || initialMaxMinYears);
+    },
     [ActionTypeEnum.MalariaToogleEndemicityLayer]: (visible: boolean) => R.assoc("endemicity", visible),
     [ActionTypeEnum.MalariaSetStoryMode]: (storyMode: boolean) => R.assoc("storyMode", storyMode),
     [ActionTypeEnum.MalariaSetStoryModeStep]: (storyModeStep: number) => R.assoc("storyModeStep", storyModeStep || 0),

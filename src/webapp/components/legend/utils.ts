@@ -28,7 +28,7 @@ import { TreatmentFailureColors } from "../layers/treatment/TreatmentFailure/tre
 import { TREATMENT_FAILURE_STATUS } from "../layers/treatment/TreatmentFailure/utils";
 import { LegendLabel } from "./LegendContent";
 
-import { MOLECULAR_MARKERS } from "../filters/MolecularMarkerRadioFilter";
+import { MOLECULAR_MARKERS, molecularMarkerTranslations } from "../filters/MolecularMarkerRadioFilter";
 import { TherapeuticEfficacyStudiesColors } from "../layers/treatment/TherapeuticEfficacyStudies/therapeuticEfficacyStudiesSymbols";
 import { THERAPEUTIC_EFFICACY_STUDIES_STATUS } from "../layers/treatment/TherapeuticEfficacyStudies/utils";
 import { MolecularMarkersOngoingStudiesColors } from "../layers/treatment/MolecularMarkersOngoingStudies/MolecularMarkersOngoingStudiesSymbols";
@@ -89,10 +89,15 @@ function getTreatmentLegendTitle(filters: TreatmentFilters): string {
             return `${i18next.t("common.treatment.treatment_failure")}\n${i18next.t(filters.drugs[0])}`;
         case TreatmentMapType.DELAYED_PARASITE_CLEARANCE:
             return `${i18next.t("common.treatment.delayed_parasite_clearance")}\n${i18next.t(filters.drugs[0])}`;
-        case TreatmentMapType.MOLECULAR_MARKERS:
-            return `${i18next.t("common.treatment.molecular_markers")}\n(${
-                MOLECULAR_MARKERS[filters.molecularMarkers[0] - 1]?.label
-            })`;
+        case TreatmentMapType.MOLECULAR_MARKERS: {
+            const molecularMarkersLabel = MOLECULAR_MARKERS[filters.molecularMarkers[0] - 1]?.label;
+            const molecularMarkersValue = MOLECULAR_MARKERS[filters.molecularMarkers[0] - 1]?.value;
+            return `${i18next.t("common.treatment.molecular_markers")}\n(${i18next.t(
+                molecularMarkersValue === 1 || molecularMarkersValue === 2
+                    ? molecularMarkersLabel
+                    : i18next.t(molecularMarkerTranslations[molecularMarkersLabel])
+            )})`;
+        }
         case TreatmentMapType.THERAPEUTIC_EFFICACY_STUDIES:
             return i18next.t("common.treatment.legend.therapeutic_efficacy_studies.title");
         case TreatmentMapType.MOLECULAR_MARKERS_ONGOING_STUDIES:

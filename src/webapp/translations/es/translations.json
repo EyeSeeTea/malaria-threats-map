@@ -1379,14 +1379,15 @@
             "GEOGR_SCOPE_NAME": "Estrategia de muestreo",
             "PROT_TYPE_NAME": "Diseño de encuesta o estudio",
             "MM_PFK13": "Pfkelch13",
-            "MM_PFCRT": "Pfcrt K76T",
-            "MM_PFPM23": "Pfplasmepsin 2-3 amplifications",
-            "MM_PFMDR1": "Pfmdr1 amplifications",
+            "MM_PFCRT": "Mutación Pfcrt K76T",
+            "MM_PFPM23": "Amplificaciones Pfplasmepsin 2-3",
+            "MM_PFMDR1": "Amplificaciones Pfmdr1",
             "MM_PFMDR1_CN": "Pfmdr1 copy number",
             "MM_PFMDR1_MU": "Pfmdr1 mutation",
             "MM_PFDHFR": "Pfdhfr",
             "MM_PFDHPS": "Pfdhps",
-            "MM_PFHRP23": "Pfhrp23"
+            "MM_PFHRP23": "Pfhrp23",
+            "COPY_NUMBERS": "Números de copias múltiples"
         }
     },
     "legend": {

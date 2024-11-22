@@ -66,7 +66,7 @@ const AditionalInformationContent: React.FC<Props> = ({ info }) => {
                                 <Typography variant="caption" display="block">
                                     <span>
                                         {item.text}
-                                        {`${item.conducted.label} :`}
+                                        {`${item.conducted.label}: `}
                                         {item.conducted.link ? (
                                             <a href={item.conducted.link}>{item.conducted.text}</a>
                                         ) : (

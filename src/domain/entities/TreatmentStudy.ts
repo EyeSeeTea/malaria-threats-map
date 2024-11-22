@@ -43,6 +43,7 @@ export interface TreatmentStudy extends Study {
     MM_PFDHFR?: number;
     MM_PFDHPS?: number;
     MM_PFHRP23?: number;
+    MM_TYPE?: string;
 }
 
 export interface MolecularMarkerStudy extends TreatmentStudy {

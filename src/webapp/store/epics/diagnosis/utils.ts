@@ -83,8 +83,6 @@ function getDiagnosisDataByMapType(
 }
 
 function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: CitationDataSource[]): GeneDeletionsData {
-    const years = getMinMaxYears(studies);
-
     const formatPercentage = (value: string) => `${(parseFloat(value) * 100).toFixed(1)}%`;
 
     const createHeader = (studies: DiagnosisStudy[]) => {
@@ -107,7 +105,7 @@ function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: Citatio
             const studyObject = studies[0];
 
             return {
-                header: years.length === 1 ? undefined : createHeader(studies),
+                header: createHeader(studies),
                 dataSources: `(${selectDataSourcesByStudies(dataSources, studies)})`,
                 year: +studies[0].YEAR_START,
                 items: [

@@ -60,7 +60,9 @@ export interface MalariaState {
     storyMode: boolean;
     storyModeStep: number;
     filters: number[];
+    invasiveFilters: number[];
     maxMinYears: number[];
+    invasiveMaxMinYears: number[];
     region: RegionState;
     lastUpdatedDates: LastUpdatedDates;
     actionGroupSelected: ActionGroup | null;

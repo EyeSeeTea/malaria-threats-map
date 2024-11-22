@@ -173,8 +173,13 @@ function createPreventionMechanismAssays(
         const yearStudies = studies.filter(study => study.YEAR_START === year);
 
         const dataSourceKeys = selectDataSourcesByStudies(dataSources, yearStudies);
+        const formatName = (dataSourceKeys: string[]) => {
+            const dataSources = !_(dataSourceKeys).isEmpty() ? `(${dataSourceKeys.join(", ")})` : "";
 
-        return { year, name: `${year.toString()} (${dataSourceKeys.join(", ")}) ` };
+            return `${year.toString()} ${dataSources} `;
+        };
+
+        return { year: year, name: formatName(dataSourceKeys) };
     });
 
     const detected = yearsObjects.map(yearObject => {
@@ -251,7 +256,9 @@ function createPreventionMechanismAllelics(
 function getStudyName(mapType: PreventionMapType, study: PreventionStudy): string {
     switch (mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
-            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(study.INSECTICIDE_CONC)}`;
+            return `${study.YEAR_START}, ${i18next.t(study.INSECTICIDE_TYPE)} ${i18next.t(
+                study.INSECTICIDE_CONC
+            )} - ${getMorlatityAdjusted(study)}`;
         case PreventionMapType.INTENSITY_STATUS:
             return `${study.YEAR_START}, ${study.INSECTICIDE_INTENSITY}x ${i18next.t(study.INSECTICIDE_TYPE)}`;
         case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
@@ -290,7 +297,7 @@ function getColor(mapType: PreventionMapType, study: Study): string {
 }
 
 function getMorlatityAdjusted(study: Study): number {
-    return Math.round(parseFloat(study.MORTALITY_ADJUSTED) * 100);
+    return +(parseFloat(study.MORTALITY_ADJUSTED) * 100).toFixed(1);
 }
 
 function createChartDataItems(
@@ -321,19 +328,22 @@ function createChartDataItems(
 
     const simplifiedStudies = _.orderBy(firstStudiesOfGroups, orderFields, orderDirections);
 
-    const data = simplifiedStudies.map(study => {
-        const studiesByGroup = cleanedStudies[getStudyName(mapType, study)];
+    const data = _(simplifiedStudies)
+        .map(study => {
+            const studiesByGroup = cleanedStudies[getStudyName(mapType, study)];
 
-        const dataSourceKeys = selectDataSourcesByStudies(dataSources, studiesByGroup);
+            const dataSourceKeys = selectDataSourcesByStudies(dataSources, studiesByGroup);
 
-        return {
-            name: `${getStudyName(mapType, study)} (${dataSourceKeys.join(", ")}) `,
-            y: getMorlatityAdjusted(study),
-            number: study.NUMBER,
-            resistanceStatus: study.RESISTANCE_STATUS,
-            color: getColor(mapType, study),
-        };
-    });
+            return {
+                name: `${getStudyName(mapType, study)} (${dataSourceKeys.join(", ")}) `,
+                y: getMorlatityAdjusted(study),
+                number: study.NUMBER,
+                resistanceStatus: study.RESISTANCE_STATUS,
+                color: getColor(mapType, study),
+            };
+        })
+        .sortBy(study => study.y)
+        .value();
 
     return data;
 }
