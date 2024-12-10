@@ -16,7 +16,7 @@ export const preventionBarChartOptions: (
         style: {
             ...ChartStyles,
         },
-        marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 210,
+        marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 215,
         marginRight: 60,
     },
     title: {
