@@ -11,6 +11,7 @@ import InvasiveIcon from "../../assets/img/invasive-icon.svg";
 
 import diagnosis1 from "../../assets/img/stories-page/diagnosis1.png";
 import invasive1 from "../../assets/img/stories-page/invasive1.png";
+import invasive2and3 from "../../assets/img/stories-page/invasive2_3.png";
 import prevention1 from "../../assets/img/stories-page/prevention1.png";
 import treatment1 from "../../assets/img/stories-page/treatment1.png";
 import treatment2 from "../../assets/img/stories-page/treatment2.png";
@@ -83,9 +84,11 @@ const MapComponent = ({ theme, storyModeStep }: { theme: string; storyModeStep: 
         case "invasive":
             switch (storyModeStep) {
                 case 0:
+                    imageSrc = invasive1;
+                    break;
                 case 1:
                 case 2:
-                    imageSrc = invasive1;
+                    imageSrc = invasive2and3;
                     break;
             }
             break;
