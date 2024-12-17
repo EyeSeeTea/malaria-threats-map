@@ -1160,7 +1160,8 @@
             "CITATION": "Citation de la publication où les données ont été publiées",
             "CITATION_URL": "URL de la publication où les données ont été publiées",
             "DATA_CURATOR": "Institut qui a compilé les données. Certaines des données de cette base de données ont été compilées par des institutions collaboratrices qui ont partagé leurs collections de données avec l'OMS. Cette colonne indiquera le nom de l'institution ou du groupe qui a compilé les données.",
-            "INVASIVE_STATUS": "Cette variable indique si les moustiques collectés sont considérés comme invasives ou indigènes.\nRemarque: Une espèce invasive est une espèce non indigène qui s’établit dans un nouvel écosystème et cause,\nou a le potentiel de causer, des dommages à l’environnement, à l’économie ou à la santé humaine."
+            "INVASIVE_STATUS": "Cette variable indique si les moustiques collectés sont considérés comme invasives ou indigènes.\nRemarque: Une espèce invasive est une espèce non indigène qui s’établit dans un nouvel écosystème et cause,\nou a le potentiel de causer, des dommages à l’environnement, à l’économie ou à la santé humaine.",
+            "ADMIN1": "Niveau administratif 1 où le site de capture des moustiques se trouve"
         },
         "mm": {
             "ID": "Identifiant unique de l'étude",
