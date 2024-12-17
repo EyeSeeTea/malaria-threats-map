@@ -783,6 +783,7 @@
             "vector_occurrance_selected": "Vector occurrence",
             "chart": {
                 "vector_occurrance": {
+                    "village_origin": "Village name",
                     "species": "Species",
                     "sampling_period": "Sampling period",
                     "sampling_method": "Sampling method",

@@ -29,6 +29,14 @@ const InvasiveChart: React.FC<Props> = ({ selectionData }) => {
         <React.Fragment>
             {data.map(studyData => (
                 <RoundedContainer key={studyData.code}>
+                    {studyData.villageOrigin && (
+                        <Row>
+                            <Typography variant="body2">
+                                <b>{t("common.invasive.chart.vector_occurrance.village_origin")}:&nbsp;</b>
+                                {studyData.villageOrigin}
+                            </Typography>
+                        </Row>
+                    )}
                     {studyData.species && (
                         <Row>
                             <Typography variant="body2">
