@@ -19,6 +19,7 @@ import { BIOCHEMICAL_MECHANISM_TYPES, MOLECULAR_MECHANISM_TYPES } from "../DataD
 import { Source } from "../../store/actions/base-actions";
 import { MOLECULAR_MARKERS_MAP } from "./treatment/MolecularMarkersOngoingStudies/utils";
 import { Study } from "../../../domain/entities/Study";
+import { isNA } from "../../utils/number-utils";
 
 export const DELETION_TYPES = {
     HRP2_PROPORTION_DELETION: {
@@ -109,6 +110,10 @@ export const filterValidResistanceIntensityValue = (study: any) => {
 
 export const filterByResistanceStatus = (study: any) => {
     return study.ASSAY_TYPE === "DISCRIMINATING_CONCENTRATION_BIOASSAY";
+};
+
+export const filterValidMortalityAdjustedValue = (study: any) => {
+    return study.MORTALITY_ADJUSTED !== undefined && !isNA(study.MORTALITY_ADJUSTED);
 };
 
 export const filterByResistanceMechanism = (study: any) => {
@@ -475,6 +480,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
                 filterByOnlyIncludeBioassaysWithMoreMosquitoes(
                     preventionFilters.onlyIncludeBioassaysWithMoreMosquitoes
                 ),
+                filterValidMortalityAdjustedValue,
             ];
         case PreventionMapType.INTENSITY_STATUS:
             return [
