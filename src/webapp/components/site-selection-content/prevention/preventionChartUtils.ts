@@ -16,7 +16,7 @@ export const preventionBarChartOptions: (
         style: {
             ...ChartStyles,
         },
-        marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 210,
+        marginLeft: maptype === PreventionMapType.LEVEL_OF_INVOLVEMENT ? 265 : 220,
         marginRight: 60,
     },
     title: {
@@ -33,9 +33,6 @@ export const preventionBarChartOptions: (
     xAxis: {
         type: "category",
         labels: {
-            style: {
-                whiteSpace: "nowrap",
-            },
             align: "left",
             reserveSpace: true,
         },
