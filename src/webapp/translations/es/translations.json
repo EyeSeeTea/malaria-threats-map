@@ -1160,7 +1160,8 @@
             "CITATION": "Cita de la publicación donde se publicaron los datos.",
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos.",
-            "INVASIVE_STATUS": "Esta variable indica si los mosquitos capturados se consideran invasivos o nativos.\nNota: Una especie invasora es una especie no nativas que se establecen en un nuevo ecosistema y causan, o tiene el potencial de causar, daño al medio ambiente, a la economía y a la salud humana"
+            "INVASIVE_STATUS": "Esta variable indica si los mosquitos capturados se consideran invasivos o nativos.\nNota: Una especie invasora es una especie no nativas que se establecen en un nuevo ecosistema y causan, o tiene el potencial de causar, daño al medio ambiente, a la economía y a la salud humana",
+            "ADMIN1": "Nivel administrativo 1 donde se ubica el lugar de captura de los mosquitos"
         },
         "mm": {
             "ID": "Identificador único del estudio",

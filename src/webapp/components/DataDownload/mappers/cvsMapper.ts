@@ -537,6 +537,7 @@ export const mapInvasiveStudiesToCSV = (database: InvasiveDatabaseSelection) => 
             "CITATION_URL",
             "DATA_CURATOR",
             "INVASIVE_STATUS",
+            "ADMIN1",
         ];
         return [
             {
