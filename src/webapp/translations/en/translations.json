@@ -1159,7 +1159,8 @@
             "CITATION": "Citation of the publication where the data was published",
             "CITATION_URL": "URL of the publication where the data was published",
             "DATA_CURATOR": "Institute that compiled the data. Part of the data in this databases has been compiled by WHO's partner institutions and submited to or shared with WHO.This column will indicate the name of the institution or group that compiled the data.",
-            "INVASIVE_STATUS": "This variable indicates whether the mosquitoes collected are considered invasive or native. \nNote: An invasive species  is a non-native species that establishes in a new ecosystem, and causes, or has the potential to cause, harm to the environment, economy, or human health"
+            "INVASIVE_STATUS": "This variable indicates whether the mosquitoes collected are considered invasive or native. \nNote: An invasive species  is a non-native species that establishes in a new ecosystem, and causes, or has the potential to cause, harm to the environment, economy, or human health",
+            "ADMIN1": "Administrative level 1 where the mosquitoes where collected"
         },
         "mm": {
             "ID": "Unique identifier of the study",

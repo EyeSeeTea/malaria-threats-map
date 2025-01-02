@@ -85,6 +85,10 @@ const mappings: Option[] = [
         value: "INVASIVE_STATUS",
         label: "INVASIVE_STATUS",
     },
+    {
+        value: "ADMIN1",
+        label: "ADMIN1",
+    },
 ];
 
 export default mappings;

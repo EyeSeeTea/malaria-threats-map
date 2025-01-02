@@ -13,4 +13,5 @@ export interface InvasiveStudy extends Study {
     MTM_DOWNLOAD: number;
     VILLAGE_ORIG: string;
     VILLAGE_FLAG: 0 | 1;
+    ADMIN1: string;
 }
