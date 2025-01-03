@@ -785,6 +785,7 @@
             "vector_occurrance_selected": "Espèces vectorielles invasives",
             "chart": {
                 "vector_occurrance": {
+                    "village_origin": "Village",
                     "species": "Espèces",
                     "sampling_period": "Période d’échantillonnage",
                     "sampling_method": "Méthode d’échantillonnage",
