@@ -52,7 +52,12 @@ function getData(sortedStudies: InvasiveStudy[]): InvasiveChartDataContent[] {
         speciedIdentificationMethod: cleanValue(study.ID_METHOD),
         vectorStage: cleanValue(study.STAGE),
         larvalHabitat:
-            study.STAGE === "Immature" || study.STAGE === "Immature and adults" ? study.BREEDING_HABITAT : undefined,
+            study.STAGE === "Immatures (larvae or pupae)" ||
+            study.STAGE === "Immature" ||
+            study.STAGE === "Immature and adults"
+                ? study.BREEDING_HABITAT
+                : undefined,
+        villageOrigin: cleanValue(study.VILLAGE_FLAG ? study.VILLAGE_ORIG : null),
     }));
 }
 
@@ -65,37 +70,39 @@ function getSpecies(study: InvasiveStudy): string {
 }
 
 function getSamplingPeriod(study: InvasiveStudy): string {
-    const translations = [
-        i18next.t("utils.Jan."),
-        i18next.t("utils.Feb."),
-        i18next.t("utils.Mar."),
-        i18next.t("utils.Apr."),
-        i18next.t("utils.May"),
-        i18next.t("utils.June"),
-        i18next.t("utils.July"),
-        i18next.t("utils.Aug."),
-        i18next.t("utils.Sept."),
-        i18next.t("utils.Oct."),
-        i18next.t("utils.Nov."),
-        i18next.t("utils.Dec."),
-    ];
-    const getMonthFromNumber = (month: number) => translations[month - 1];
-
-    const monthStart = getMonthFromNumber(parseInt(study.MONTH_START));
-    const monthEnd = getMonthFromNumber(parseInt(study.MONTH_END));
+    const translationMap: Record<string, string> = {
+        January: i18next.t("utils.Jan."),
+        February: i18next.t("utils.Feb."),
+        March: i18next.t("utils.Mar."),
+        April: i18next.t("utils.Apr."),
+        May: i18next.t("utils.May"),
+        June: i18next.t("utils.June"),
+        July: i18next.t("utils.July"),
+        August: i18next.t("utils.Aug."),
+        September: i18next.t("utils.Sept."),
+        October: i18next.t("utils.Oct."),
+        November: i18next.t("utils.Nov."),
+        December: i18next.t("utils.Dec."),
+    };
+    const monthStart = translationMap[study.MONTH_START];
+    const monthEnd = translationMap[study.MONTH_END];
     const yearStart = study.YEAR_START;
     const yearEnd = study.YEAR_END;
 
-    const start = monthStart ? `${monthStart}, ${yearStart}` : `${yearStart}`;
-    const end = monthEnd ? `${monthEnd}, ${yearEnd}` : `${yearEnd}`;
+    if (isNull(yearStart) && isNull(yearEnd)) {
+        return null;
+    }
+
+    const start = monthStart ? `${monthStart} ${yearStart}` : `${yearStart}`;
+    const end = monthEnd ? `${monthEnd} ${yearEnd}` : `${yearEnd}`;
 
     const unique = yearStart === yearEnd && monthStart === monthEnd;
     const partial = (() => {
-        if (!Number.isNaN(yearStart) && !Number.isNaN(yearEnd)) {
+        if (!isNull(yearStart) && !isNull(yearEnd)) {
             return `${start} to ${end}`;
-        } else if (!Number.isNaN(yearStart) && Number.isNaN(yearEnd)) {
+        } else if (!isNull(yearStart) && isNull(yearEnd)) {
             return start;
-        } else if (Number.isNaN(yearStart) && !Number.isNaN(yearEnd)) {
+        } else if (isNull(yearStart) && !isNull(yearEnd)) {
             return end;
         }
     })();

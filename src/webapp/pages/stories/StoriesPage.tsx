@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
@@ -11,6 +11,7 @@ import InvasiveIcon from "../../assets/img/invasive-icon.svg";
 
 import diagnosis1 from "../../assets/img/stories-page/diagnosis1.png";
 import invasive1 from "../../assets/img/stories-page/invasive1.png";
+import invasive2and3 from "../../assets/img/stories-page/invasive2_3.png";
 import prevention1 from "../../assets/img/stories-page/prevention1.png";
 import treatment1 from "../../assets/img/stories-page/treatment1.png";
 import treatment2 from "../../assets/img/stories-page/treatment2.png";
@@ -83,9 +84,11 @@ const MapComponent = ({ theme, storyModeStep }: { theme: string; storyModeStep: 
         case "invasive":
             switch (storyModeStep) {
                 case 0:
+                    imageSrc = invasive1;
+                    break;
                 case 1:
                 case 2:
-                    imageSrc = invasive1;
+                    imageSrc = invasive2and3;
                     break;
             }
             break;
@@ -120,12 +123,21 @@ export const StoriesPage: React.FC = () => {
     const [storyModeStep, setStoryModeStep] = useState<number>(0);
     const [searchParams] = useSearchParams();
     const theme = searchParams.get("theme") as ThemeType;
+    const containerRef = useRef<HTMLDivElement>();
 
     useSendAnalyticsPageView(`stories/${theme}`);
 
     useEffect(() => {
+        setStoryModeStep(0);
         window.scrollTo(0, 0);
     }, [theme]);
+
+    const onStepChange = (step: number) => {
+        setStoryModeStep(step);
+        if (containerRef.current) {
+            containerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    };
 
     const imageBannerColors = (theme: ThemeType) => {
         const bgColors: string[] = [];
@@ -178,17 +190,24 @@ export const StoriesPage: React.FC = () => {
                 container
                 spacing={3}
                 paddingX={"30px"}
+                ref={containerRef}
                 sx={{ width: "100%", marginLeft: "0px", paddingLeft: "0px", paddingRight: "0px" }}
             >
-                <Grid item xs={12} md={4} lg={4} xl={3} sx={{ paddingLeft: "0px !important" }} marginBottom={"100px"}>
-                    <StoryModeStepper theme={theme} storyModeStep={storyModeStep} setStoryModeStep={setStoryModeStep} />
+                <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    lg={5}
+                    xl={4.5}
+                    sx={{ paddingLeft: "0px !important" }}
+                    marginBottom={{ xs: "40px", md: "100px" }}
+                >
+                    <StoryModeStepper theme={theme} storyModeStep={storyModeStep} setStoryModeStep={onStepChange} />
                 </Grid>
                 <Grid
                     item
                     xs={12}
-                    md={8}
-                    lg={8}
-                    xl={9}
+                    md={true}
                     padding="16px"
                     marginTop={{ xs: "16px", md: "55px" }}
                     sx={{ maxWidth: "1200px !important" }}

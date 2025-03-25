@@ -11,4 +11,7 @@ export interface InvasiveStudy extends Study {
     BREEDING_HABITAT: string;
     INVASIVE_STATUS: string;
     MTM_DOWNLOAD: number;
+    VILLAGE_ORIG: string;
+    VILLAGE_FLAG: 0 | 1;
+    ADMIN1: string;
 }

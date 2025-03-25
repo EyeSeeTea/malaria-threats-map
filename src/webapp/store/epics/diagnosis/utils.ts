@@ -95,8 +95,10 @@ function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: Citatio
             surveyTypes: formatList(surveyTypes),
         });
 
+        const [yearStart, yearEnd] = getMinMaxYears(studies);
+
         return `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")}
-                           ${surveyType} (${studies[0].YEAR_START})`;
+                           ${surveyType} (${yearStart} - ${yearEnd})`;
     };
 
     const groupByYear = _(studies)

@@ -56,7 +56,11 @@ export const preventionBarChartOptions: (
                 overflow: "allow",
                 formatter: function () {
                     // @ts-ignore
-                    return `${this.y}% (${this.point.number})`;
+                    const number: number = this.point.number;
+                    if (maptype === PreventionMapType.RESISTANCE_STATUS) {
+                        return `(n=${number})`;
+                    }
+                    return `${this.y}% (${number})`;
                 } as DataLabelsFormatterCallbackFunction,
                 enabled: true,
                 style: {

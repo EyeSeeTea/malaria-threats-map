@@ -13,6 +13,7 @@ export class CountryLayerApiRepository implements CountryLayerRepository {
             f: "geojson",
             where: `1=1`,
             outFields: "OBJECTID,ADM0_SOVRN,ADM0_NAME,CENTER_LAT,CENTER_LON,ISO_2_CODE,ENDDATE",
+            maxAllowableOffset: 0.001,
         };
 
         return getBackendCountries(this.xmartBaseUrl).flatMap(backendCountries => {

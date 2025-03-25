@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -66,7 +66,7 @@ function getSteps() {
 type Props = {
     theme: "prevention" | "invasive" | "treatment" | "diagnosis";
     storyModeStep: number;
-    setStoryModeStep: React.Dispatch<React.SetStateAction<number>>;
+    setStoryModeStep: (step: number) => void;
 };
 
 type Steps = { [value: string]: string[] };
@@ -82,10 +82,6 @@ function StoryModeStepper({ theme, storyModeStep, setStoryModeStep }: Props) {
     const { t } = useTranslation();
     const classes = useStyles({});
     const steps = getSteps();
-
-    useEffect(() => {
-        setStoryModeStep(0);
-    }, [setStoryModeStep, theme]);
 
     const handleNext = () => {
         setStoryModeStep(storyModeStep + 1);
