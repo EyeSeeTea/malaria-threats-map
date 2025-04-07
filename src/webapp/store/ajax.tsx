@@ -42,12 +42,14 @@ const buildAjaxOptions = ({ method, path, customPath, body, headers }: AjaxOptio
 const makeRequestAndHandleUnauthorized = <T extends unknown>(config: AjaxOptions) =>
     ajax<T>(buildAjaxOptions(config)).pipe(map(extractResponse), catchError(handleUnauthorized));
 
+// NOTICE: get function is not used in the app
 export const get = <T extends unknown>(path: string) =>
     makeRequestAndHandleUnauthorized<T>({
         method: "GET",
         path,
     });
 
+// NOTICE: getFull function is not used in the app
 export const getFull = <T extends unknown>(path: string) =>
     makeRequestAndHandleUnauthorized<T>({
         method: "GET",

@@ -23,8 +23,10 @@ export default createReducer<DistrictsState>(initialState, {
 
 const selectDistrictsState = (state: State) => state.district;
 
+// NOTICE: this selector is not used in the app
 export const selectDistrictsLayer = createSelector(selectDistrictsState, districtState => districtState.layer);
 
+// NOTICE: this selector is not used in the app
 export const selectDistricts = createSelector(selectDistrictsState, districtState => districtState.districts);
 
 export const selectDistrictsAreLoading = createSelector(selectDistrictsState, districtState => districtState.loading);

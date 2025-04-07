@@ -10,6 +10,7 @@ import { ofType, StateObservable } from "redux-observable";
 import { EpicDependencies } from "../../store/index";
 import { State } from "../types";
 
+// NOTICE: this epic is not used in the app
 export const getDistrictsEpic = (
     action$: Observable<ActionType<typeof fetchDistrictsRequest>>,
     _state$: StateObservable<State>,
