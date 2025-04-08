@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
-import { setRegionAction } from "../../store/actions/base-actions";
+import { setRegionAction, setSelection } from "../../store/actions/base-actions";
 import { selectRegion } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { sendAnalytics } from "../../utils/analytics";
@@ -21,13 +21,21 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
     setRegion: setRegionAction,
     fetchCountryLayer: fetchCountryLayerRequest,
+    setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer, countriesTranslation }: Props) => {
+const CountrySelector = ({
+    region,
+    countries = [],
+    setRegion,
+    fetchCountryLayer,
+    countriesTranslation,
+    setSelection,
+}: Props) => {
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -56,8 +64,9 @@ const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer,
                     siteIso2: "",
                 });
             }
+            setSelection(null);
         },
-        [countries, setRegion, region]
+        [countries, setRegion, region, setSelection]
     );
 
     const translatedCountries = countries.filter(el =>

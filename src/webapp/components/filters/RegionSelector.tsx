@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
-import { setRegionAction } from "../../store/actions/base-actions";
+import { setRegionAction, setSelection } from "../../store/actions/base-actions";
 import { selectRegion } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { Translation } from "../../types/Translation";
@@ -17,19 +17,24 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
     setRegion: setRegionAction,
+    setSelection: setSelection,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const RegionSelector: React.FC<Props> = ({ region, regions = [], setRegion }) => {
+const RegionSelector: React.FC<Props> = ({ region, regions = [], setRegion, setSelection }) => {
     const { t } = useTranslation();
 
-    const onChange = (selection?: string) => {
-        if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Region", label: selection });
-        setRegion({ region: selection });
-    };
+    const onChange = useCallback(
+        (selection?: string) => {
+            if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Region", label: selection });
+            setRegion({ region: selection });
+            setSelection(null);
+        },
+        [setRegion, setSelection]
+    );
 
     const suggestions: Option[] = (regions as Translation[]).map(region => ({
         label: region.VALUE_,
