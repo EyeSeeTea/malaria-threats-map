@@ -97,6 +97,8 @@ function SiteSelector({
                     siteCoordinates: undefined,
                     siteIso2: "",
                 });
+
+                setSelection(null);
             }
         },
         [setRegion, setSelection, siteRegions, region]
