@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { setRegionAction } from "../../store/actions/base-actions";
 import { selectRegion } from "../../store/reducers/base-reducer";
@@ -36,14 +36,29 @@ const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer,
         }
     }, [fetchCountryLayer, countries]);
 
-    const onChange = (selection?: string) => {
-        if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });
-        setRegion({
-            region: countries.find(el => el.ISO_2_CODE === selection)?.REGION_FULL.replaceAll(" ", "_") || "",
-            subRegion: countries.find(el => el.ISO_2_CODE === selection)?.SUBREGION?.replaceAll(" ", "_") || "",
-            country: selection,
-        });
-    };
+    const onChange = useCallback(
+        (selection?: string) => {
+            if (selection) {
+                sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });
+
+                const selectedCountry = countries.find(el => el.ISO_2_CODE === selection);
+                setRegion({
+                    region: selection ? selectedCountry?.REGION_FULL.replaceAll(" ", "_") || "" : region.region,
+                    subRegion: selection ? selectedCountry?.SUBREGION?.replaceAll(" ", "_") || "" : region.subRegion,
+                    country: selection,
+                });
+            } else {
+                setRegion({
+                    ...region,
+                    country: undefined,
+                    site: "",
+                    siteCoordinates: undefined,
+                    siteIso2: "",
+                });
+            }
+        },
+        [countries, setRegion, region]
+    );
 
     const translatedCountries = countries.filter(el =>
         countriesTranslation.map(el => el.VALUE_).includes(el.ISO_2_CODE)

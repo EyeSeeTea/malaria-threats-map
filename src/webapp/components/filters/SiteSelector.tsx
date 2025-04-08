@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import { setRegionAction, setSelection } from "../../store/actions/base-actions";
 import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
@@ -75,20 +75,32 @@ function SiteSelector({
         });
     }, [siteRegions]);
 
-    const onChange = (selection?: string) => {
-        const site = siteRegions.find(site => site.site === selection);
-        if (site) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
-        setRegion(site);
+    const onChange = useCallback(
+        (selection?: string) => {
+            const site = siteRegions.find(site => site.site === selection);
 
-        if (site) {
-            setSelection({
-                ISO_2_CODE: site.siteIso2,
-                SITE_ID: site.site,
-                coordinates: site.siteCoordinates,
-                OBJECTIDs: [],
-            });
-        }
-    };
+            if (site) {
+                sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
+
+                setRegion(site);
+
+                setSelection({
+                    ISO_2_CODE: site.siteIso2,
+                    SITE_ID: site.site,
+                    coordinates: site.siteCoordinates,
+                    OBJECTIDs: [],
+                });
+            } else {
+                setRegion({
+                    ...region,
+                    site: "",
+                    siteCoordinates: undefined,
+                    siteIso2: "",
+                });
+            }
+        },
+        [setRegion, setSelection, siteRegions, region]
+    );
 
     return (
         <SingleFilter
