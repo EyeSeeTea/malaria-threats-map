@@ -211,7 +211,7 @@ class RegionLayer extends Component<Props> {
 
         this.props.map.flyTo({
             center: coordinates,
-            zoom: changeZoomToSite ? 5 : currentZoom,
+            zoom: changeZoomToSite && currentZoom < 6 ? 6 : currentZoom,
             essential: true,
             maxDuration: 5000,
             speed: 0.5,
