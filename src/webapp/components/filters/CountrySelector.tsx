@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { setRegionAction, setSelection } from "../../store/actions/base-actions";
-import { selectRegion } from "../../store/reducers/base-reducer";
+import { selectRegion, selectSelection } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { sendAnalytics } from "../../utils/analytics";
 import SingleFilter from "./common/SingleFilter";
@@ -11,11 +11,14 @@ import { selectCountries } from "../../store/reducers/country-layer-reducer";
 import { selectCountries as selectCountriesTranslations } from "../../store/reducers/translations-reducer";
 import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
 import { CountryProperties } from "../../../domain/entities/CountryLayer";
+import { resetSelectionInFeatures } from "../layers/effects";
+import mapboxgl from "mapbox-gl";
 
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
     countries: selectCountries(state),
     countriesTranslation: selectCountriesTranslations(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
@@ -24,9 +27,14 @@ const mapDispatchToProps = {
     setSelection: setSelection,
 };
 
+type OwnProps = {
+    map?: mapboxgl.Map;
+    layerSource?: string;
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & OwnProps;
 
 const CountrySelector = ({
     region,
@@ -35,6 +43,9 @@ const CountrySelector = ({
     fetchCountryLayer,
     countriesTranslation,
     setSelection,
+    map,
+    layerSource,
+    selection,
 }: Props) => {
     const { t } = useTranslation();
 
@@ -45,15 +56,19 @@ const CountrySelector = ({
     }, [fetchCountryLayer, countries]);
 
     const onChange = useCallback(
-        (selection?: string) => {
-            if (selection) {
-                sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });
+        (selectedCountry?: string) => {
+            if (selectedCountry) {
+                sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selectedCountry });
 
-                const selectedCountry = countries.find(el => el.ISO_2_CODE === selection);
+                const selectedCountryProperties = countries.find(el => el.ISO_2_CODE === selectedCountry);
                 setRegion({
-                    region: selection ? selectedCountry?.REGION_FULL.replaceAll(" ", "_") || "" : region.region,
-                    subRegion: selection ? selectedCountry?.SUBREGION?.replaceAll(" ", "_") || "" : region.subRegion,
-                    country: selection,
+                    region: selectedCountry
+                        ? selectedCountryProperties?.REGION_FULL.replaceAll(" ", "_") || ""
+                        : region.region,
+                    subRegion: selectedCountry
+                        ? selectedCountryProperties?.SUBREGION?.replaceAll(" ", "_") || ""
+                        : region.subRegion,
+                    country: selectedCountry,
                 });
             } else {
                 setRegion({
@@ -64,9 +79,10 @@ const CountrySelector = ({
                     siteIso2: "",
                 });
             }
-            setSelection(null);
+            if (map && layerSource && selection) resetSelectionInFeatures(map, layerSource, selection);
+            if (selection) setSelection(null);
         },
-        [countries, setRegion, region, setSelection]
+        [map, layerSource, selection, setSelection, countries, setRegion, region]
     );
 
     const translatedCountries = countries.filter(el =>

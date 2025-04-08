@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import { setRegionAction, setSelection } from "../../store/actions/base-actions";
-import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
+import { selectRegion, selectSelection, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { selectFilteredPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { selectFilteredDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
@@ -13,6 +13,8 @@ import { getRegionBySite, Study } from "../../../domain/entities/Study";
 import { useTranslation } from "react-i18next";
 import SingleFilter from "./common/SingleFilter";
 import { isNotNull } from "../../utils/number-utils";
+import { resetSelectionInFeatures } from "../layers/effects";
+import mapboxgl from "mapbox-gl";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -21,6 +23,7 @@ const mapStateToProps = (state: State) => ({
     treatmentStudies: selectFilteredTreatmentStudies(state),
     invasiveStudies: selectFilteredInvasiveStudies(state),
     region: selectRegion(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
@@ -28,9 +31,14 @@ const mapDispatchToProps = {
     setSelection: setSelection,
 };
 
+type OwnProps = {
+    map?: mapboxgl.Map;
+    layerSource?: string;
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & OwnProps;
 
 function SiteSelector({
     theme,
@@ -41,6 +49,9 @@ function SiteSelector({
     region,
     setRegion,
     setSelection,
+    map,
+    layerSource,
+    selection,
 }: Props) {
     const { t } = useTranslation();
 
@@ -76,11 +87,11 @@ function SiteSelector({
     }, [siteRegions]);
 
     const onChange = useCallback(
-        (selection?: string) => {
-            const site = siteRegions.find(site => site.site === selection);
+        (siteSelected?: string) => {
+            const site = siteRegions.find(site => site.site === siteSelected);
 
             if (site) {
-                sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
+                sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: siteSelected });
 
                 setRegion(site);
 
@@ -91,6 +102,8 @@ function SiteSelector({
                     OBJECTIDs: [],
                 });
             } else {
+                if (map && layerSource && selection) resetSelectionInFeatures(map, layerSource, selection);
+
                 setRegion({
                     ...region,
                     site: "",
@@ -98,10 +111,10 @@ function SiteSelector({
                     siteIso2: "",
                 });
 
-                setSelection(null);
+                if (selection) setSelection(null);
             }
         },
-        [setRegion, setSelection, siteRegions, region]
+        [siteRegions, setRegion, setSelection, region, map, layerSource, selection]
     );
 
     return (
