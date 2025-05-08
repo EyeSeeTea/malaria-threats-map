@@ -325,7 +325,7 @@
                 "numberOfSitesWithThisStatus": {
                     "CONFIRMED_RESISTANCE": "Number of sites with confirmed resistance",
                     "POSSIBLE_RESISTANCE": "Number of sites with possible resistance",
-                    "SUSCEPTIBLE": "Number of sites with susceptible resistance"
+                    "SUSCEPTIBLE": "Number of sites where insecticide class is susceptible"
                 },
                 "totalNumberOfSites": "Number of sites that monitored resistance",
                 "insecticideType": "Insecticide"
