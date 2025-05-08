@@ -281,7 +281,7 @@ function createMolecularMarkersChartData(
                       "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
                       [translations.COPY_NUMBERS]: extractMarkersByMutationCategory(
                           allStudies257,
-                          "multiple copy number"
+                          "multiple copy numbers"
                       ),
                   },
         },
