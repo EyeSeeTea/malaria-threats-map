@@ -28,6 +28,8 @@ import { SendDownloadUseCase } from "./domain/usecases/SendDownloadUseCase";
 import { DownloadApiRepository } from "./data/repositories/DownloadApiRepository";
 import { GetDashboardSourceInfoUseCase } from "./domain/usecases/GetDashboardSourceInfoUseCase";
 import { DashboardSourceInfoApiRepository } from "./data/repositories/DashboardSourceInfoApiRepository";
+import { GetShareDataUseCase } from "./domain/usecases/GetShareDataUseCase";
+import { ShareDataApiRepository } from "./data/repositories/ShareDataApiRepository";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.xmartServerUrl);
@@ -43,6 +45,7 @@ export class CompositionRoot {
     private totalStudiesRepository = new TotalStudiesApiRepository(config.xmartServerUrl);
     private downloadApiRepository = new DownloadApiRepository(config.backendUrl);
     private dashboardSourceInfoRepository = new DashboardSourceInfoApiRepository(config.xmartServerUrl);
+    private shareDataRepository = new ShareDataApiRepository(config.backendUrl);
     private _districtsUrl: string;
 
     constructor() {
@@ -134,6 +137,12 @@ export class CompositionRoot {
     public get downloads() {
         return getExecute({
             send: new SendDownloadUseCase(this.downloadApiRepository),
+        });
+    }
+
+    public get shareData() {
+        return getExecute({
+            get: new GetShareDataUseCase(this.shareDataRepository),
         });
     }
 
