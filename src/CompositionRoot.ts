@@ -45,7 +45,7 @@ export class CompositionRoot {
     private totalStudiesRepository = new TotalStudiesApiRepository(config.xmartServerUrl);
     private downloadApiRepository = new DownloadApiRepository(config.backendUrl);
     private dashboardSourceInfoRepository = new DashboardSourceInfoApiRepository(config.xmartServerUrl);
-    private shareDataRepository = new ShareDataApiRepository(config.backendUrl);
+    private shareDataRepository = new ShareDataApiRepository(config.xmartServerUrl);
     private _districtsUrl: string;
 
     constructor() {

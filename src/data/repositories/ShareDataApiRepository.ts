@@ -9,7 +9,7 @@ export class ShareDataApiRepository implements ShareDataRepository {
 
     get(): FutureData<ShareDataContent> {
         return request<XMartApiResponse<SurveyLinkData>>({
-            url: `${this.baseUrl}/FACT_SURVEYLINKS`,
+            url: `${this.baseUrl}/FACT_SURVEYLINKS?$top=3`,
         }).map<ShareDataContent>(response => {
             return {
                 surveyLinks: response.value.map(item => ({
