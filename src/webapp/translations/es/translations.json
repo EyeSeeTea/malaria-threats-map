@@ -610,6 +610,7 @@
                     "status": "Estado del estudio",
                     "proposed_timeframe": "Plazo propuesto",
                     "study_population": "Población de estudio",
+                    "study_design": "Diseño de estudio",
                     "genotyping": "Genotipado",
                     "study_initiated_following": "Estudio iniciado siguiendo",
                     "study_sites": "Centros de estudio seleccionados por",
