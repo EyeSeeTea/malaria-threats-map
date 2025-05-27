@@ -1,5 +1,5 @@
-import React from "react";
-import { Slider, styled as MuiStyled, Divider as MuiDivider, Typography } from "@mui/material";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Slider, styled as MuiStyled, Divider as MuiDivider, Typography, Box } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import * as R from "ramda";
@@ -71,7 +71,30 @@ export function range(start: number, end: number, reverse?: boolean) {
 const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode = true }: Props) => {
     const { t } = useTranslation();
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
+    const sliderRef = useRef<HTMLDivElement>(null);
+    const [thumbPositions, setThumbPositions] = useState<[number, number]>([0, 0]);
+    const [activeThumb, setActiveThumb] = useState<number>();
+
+    const updateThumbPositions = useCallback(() => {
+        if (!sliderRef.current) return;
+        const sliderLeft = sliderRef.current.getBoundingClientRect().left;
+        const thumbs = sliderRef.current.querySelectorAll(".MuiSlider-thumb") as NodeListOf<HTMLElement>;
+
+        if (thumbs.length !== 2) return;
+        const [thumb1, thumb2] = thumbs;
+        const position1 = thumb1.getBoundingClientRect().left + thumb1.offsetWidth / 2 - sliderLeft;
+        const position2 = thumb2.getBoundingClientRect().left + thumb2.offsetWidth / 2 - sliderLeft;
+
+        setThumbPositions([position1, position2]);
+    }, []);
+
+    useEffect(() => {
+        updateThumbPositions();
+        window.addEventListener("resize", updateThumbPositions);
+        return () => window.removeEventListener("resize", updateThumbPositions);
+    }, [filters, updateThumbPositions]);
+
+    const handleChange = (event: Event, newValue: number | number[], activeThumbIndex: number) => {
         const [start, end] = newValue as number[];
         const [prevStart, prevEnd] = filters;
         const label = `(${start}, ${end})`;
@@ -79,6 +102,7 @@ const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode 
         if (prevStart !== start || prevEnd !== end) {
             sendAnalytics({ type: "event", category: "filter", action: "Years", label });
             setFilters(newValue as number[]);
+            setActiveThumb(activeThumbIndex);
         }
     };
 
@@ -93,26 +117,85 @@ const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode 
                 {t("common.filters.years")}
             </Typography>
             <Divider />
-            <StyledSlider
-                color="primary"
-                size="small"
-                value={filters}
-                onChange={handleChange}
-                valueLabelDisplay="on"
-                aria-labelledby="range-slider"
-                getAriaValueText={valuetext}
-                step={1}
-                min={maxMinYears[0]}
-                max={maxMinYears[1]}
-            />
-            <Row>
-                {[maxMinYears[0], Math.floor((maxMinYears[0] + maxMinYears[1]) / 2), maxMinYears[1]].map(year => {
-                    return <span key={year}>{year}</span>;
+
+            <Box ref={sliderRef} sx={{ position: "relative" }}>
+                {filters.map((filter, index) => {
+                    return (
+                        <DynamicLabel
+                            key={index}
+                            value={filter}
+                            index={index}
+                            filters={filters}
+                            thumbPositions={thumbPositions}
+                            activeThumb={activeThumb}
+                            maxMinYears={maxMinYears}
+                        />
+                    );
                 })}
-            </Row>
+
+                <StyledSlider
+                    color="primary"
+                    size="small"
+                    value={filters}
+                    onChange={handleChange}
+                    valueLabelDisplay="off"
+                    aria-labelledby="range-slider"
+                    getAriaValueText={valuetext}
+                    step={1}
+                    min={maxMinYears[0]}
+                    max={maxMinYears[1]}
+                />
+                <Row>
+                    {[maxMinYears[0], Math.floor((maxMinYears[0] + maxMinYears[1]) / 2), maxMinYears[1]].map(year => {
+                        return <span key={year}>{year}</span>;
+                    })}
+                </Row>
+            </Box>
+
             <MuiDivider />
             {showTheatherMode && <TheaterMode />}
         </FilterColumContainer>
     );
 };
 export default connect(mapStateToProps, mapDispatchToProps)(YearRangeSelector);
+
+const DynamicLabel: React.FC<DynamicLabelProps> = ({
+    activeThumb,
+    filters,
+    index,
+    maxMinYears,
+    thumbPositions,
+    value,
+}) => {
+    const [minYear, maxYear] = filters;
+    const steps = maxMinYears[1] - maxMinYears[0];
+    const yearOverlapLimit = Math.round(steps / 10); // 10% of the range
+    const overlap = Math.abs(minYear - maxYear) <= yearOverlapLimit;
+    const offsetY = overlap && activeThumb === index ? -35 : -21.5;
+    const leftPosition = thumbPositions[index] - 22;
+
+    return (
+        <Box
+            sx={{
+                position: "absolute",
+                transform: `translate(50%, ${offsetY}px)`,
+                left: `${leftPosition}px`,
+                pointerEvents: "none",
+                transition: "transform 0.2s ease",
+            }}
+        >
+            <Typography fontWeight="bold" sx={{ color: "#2fb3af", fontSize: "10px" }}>
+                {value}
+            </Typography>
+        </Box>
+    );
+};
+
+type DynamicLabelProps = {
+    activeThumb?: number;
+    filters: number[];
+    index: number;
+    maxMinYears?: number[];
+    thumbPositions: [number, number];
+    value: number;
+};
