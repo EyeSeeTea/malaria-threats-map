@@ -609,6 +609,7 @@
                     "completed": "Terminé",
                     "status": "Statut de l'étude",
                     "proposed_timeframe": "Calendrier proposé",
+                    "study_design": "conception de l'étude",
                     "study_population": "Population de l'étude",
                     "genotyping": "Génotypage",
                     "study_initiated_following": "L'étude a été lancée à la suite de",
