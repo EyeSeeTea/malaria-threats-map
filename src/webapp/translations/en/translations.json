@@ -608,6 +608,7 @@
                     "status": "Study status",
                     "proposed_timeframe": "Proposed timeframe",
                     "study_population": "Study population",
+                    "study_design": "Study design",
                     "genotyping": "Genotyping",
                     "study_initiated_following": "Study initiated following",
                     "study_sites": "Study sites selected by",

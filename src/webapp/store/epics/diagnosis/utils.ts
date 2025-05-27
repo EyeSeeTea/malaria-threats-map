@@ -158,6 +158,10 @@ function createHrp23StudiesData(studies: DiagnosisStudy[]): Hrp23StudiesData {
             label: i18next.t(`common.diagnosis.chart.hrp23_studies.study_population`),
             value: study.SYMP_STAT_NAME,
         },
+        [HRP23_STUDIES.STUDY_DESIGN]: {
+            label: i18next.t(`common.diagnosis.chart.hrp23_studies.study_design`),
+            value: study.PROT_TYPE_NAME,
+        },
         [HRP23_STUDIES.GENOTYPING]: {
             label: i18next.t(`common.diagnosis.chart.hrp23_studies.genotyping`),
             value: study.HRP_GENO_NAME,
