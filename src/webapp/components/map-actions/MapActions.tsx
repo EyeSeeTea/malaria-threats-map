@@ -1,8 +1,9 @@
 import React from "react";
-
 import { Card, Divider, List } from "@mui/material";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import mapboxgl from "mapbox-gl";
+
 import ThemeMapActions from "./ThemeMapActions";
 import MapTypeMapActions from "./MapTypeMapActions";
 import LocationMapActions from "./LocationMapActions";
@@ -19,7 +20,13 @@ const StyledList = styled(List)`
     padding: 0px;
 `;
 
-const MapActions: React.FC<{ isMinimizedVersion?: boolean }> = ({ isMinimizedVersion }) => {
+type Props = {
+    map: mapboxgl.Map;
+    layerSource: string;
+    isMinimizedVersion?: boolean;
+};
+
+const MapActions: React.FC<Props> = ({ isMinimizedVersion, map, layerSource }) => {
     return (
         <RoundedCard>
             <StyledList>
@@ -31,7 +38,7 @@ const MapActions: React.FC<{ isMinimizedVersion?: boolean }> = ({ isMinimizedVer
                         <Divider />
                         <DataMapActions from={"map"} />
                         <Divider />
-                        <LocationMapActions />
+                        <LocationMapActions map={map} layerSource={layerSource} />
                     </>
                 )}
             </StyledList>

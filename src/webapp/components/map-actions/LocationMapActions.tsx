@@ -11,6 +11,7 @@ import { selectRegion } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { getLocation } from "./utils";
 import { Box } from "@mui/material";
+import mapboxgl from "mapbox-gl";
 
 const Label = styled.span`
     font-weight: bold;
@@ -24,9 +25,16 @@ const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
 });
 
+type OwnProps = {
+    map?: mapboxgl.Map;
+    layerSource?: string;
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
 
-const LocationMapActions: React.FC<StateProps> = ({ region }) => {
+type Props = StateProps & OwnProps;
+
+const LocationMapActions: React.FC<Props> = ({ region, map, layerSource }) => {
     const { t } = useTranslation();
 
     const selectedRegion = useMemo(() => {
@@ -48,9 +56,9 @@ const LocationMapActions: React.FC<StateProps> = ({ region }) => {
                 }
             >
                 <>
-                    <RegionSelector />
-                    <CountrySelector />
-                    <SiteSelector />
+                    <RegionSelector map={map} layerSource={layerSource} />
+                    <CountrySelector map={map} layerSource={layerSource} />
+                    <SiteSelector map={map} layerSource={layerSource} />
                 </>
             </ActionGroupItem>
         </Box>
