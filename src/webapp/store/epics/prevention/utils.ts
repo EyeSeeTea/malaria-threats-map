@@ -315,7 +315,7 @@ function createChartDataItems(
     );
 
     const orders: [string | ((study: PreventionStudy) => unknown), SortDirection][] = _.compact([
-        ["YEAR_START", "desc"],
+        ["YEAR_START", "asc"],
         ["INSECTICIDE_TYPE", "asc"],
         mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT ? ["SYNERGIST_TYPE", "asc"] : undefined,
         mapType === PreventionMapType.INTENSITY_STATUS
@@ -342,7 +342,6 @@ function createChartDataItems(
                 color: getColor(mapType, study),
             };
         })
-        .sortBy(study => study.y)
         .value();
 
     return data;
