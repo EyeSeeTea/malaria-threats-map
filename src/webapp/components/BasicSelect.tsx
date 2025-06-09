@@ -278,8 +278,6 @@ export default function IntegrationReactSelect({
         ...rest,
     };
 
-    console.log(rest);
-
     return (
         <div className={`${finalClasses.root} ${className}`} role="listbox">
             {optimizePerformance ? <WindowedSelect {...selectProps} /> : <Select {...selectProps} />}
