@@ -185,7 +185,31 @@ export const filterByOnlyDataByHealthMinistries = (value: boolean) => (study: Pr
 
 export const filterByOnlyIncludeBioassaysWithMoreMosquitoes =
     (numberMosquitoes: number) => (study: PreventionStudy) => {
-        return +study.NUMBER >= numberMosquitoes;
+        if (numberMosquitoes === 0) {
+            return true;
+        }
+        const emptyValues = ["NA", "NR", "-", "."];
+        const num = study.NUMBER;
+        if (emptyValues.includes(num)) {
+            return true;
+        }
+        const patterns = [
+            // handle most common case first
+            { regex: /^(\d+)$/, handler: (m: RegExpMatchArray) => parseInt(m[1]) >= numberMosquitoes },
+            // Match patterns: "10-20", "~30", "40 max", "50+"
+            { regex: /^(\d+)-(\d+)$/, handler: (m: RegExpMatchArray) => parseInt(m[2]) >= numberMosquitoes },
+            { regex: /^~(\d+)$/, handler: (m: RegExpMatchArray) => parseInt(m[1]) >= numberMosquitoes },
+            { regex: /^(\d+)\smax$/, handler: (m: RegExpMatchArray) => parseInt(m[1]) >= numberMosquitoes },
+            { regex: /^(\d+)\+$/, handler: (_: RegExpMatchArray) => true },
+        ];
+        for (const { regex, handler } of patterns) {
+            const match = num.match(regex);
+            if (match) {
+                return handler(match);
+            }
+        }
+        const parsed = parseInt(num);
+        return !isNaN(parsed) && parsed >= numberMosquitoes;
     };
 
 export const filterByTypeSynergist = (synergistTypes: string[]) => (study: any) => {
