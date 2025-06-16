@@ -212,7 +212,7 @@ function MultiValue(props: MultiValueProps<OptionType>) {
 
 function Menu(props: MenuProps<OptionType, false>) {
     return (
-        <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
+        <Paper square className={props.selectProps.classes.paper} {...props.innerProps} ref={props.innerRef}>
             {props.children}
         </Paper>
     );
@@ -266,33 +266,21 @@ export default function IntegrationReactSelect({
         }),
     };
 
+    const selectProps = {
+        className: "basic-select-container",
+        classes: finalClasses,
+        styles: selectStyles,
+        components,
+        options: R.sortBy<Option>(R.prop("label"), suggestions),
+        value,
+        onChange,
+        placeholder: t("common.options.select") + "...",
+        ...rest,
+    };
+
     return (
         <div className={`${finalClasses.root} ${className}`} role="listbox">
-            {optimizePerformance ? (
-                <WindowedSelect
-                    className="basic-select-container"
-                    classes={finalClasses}
-                    styles={selectStyles}
-                    components={components}
-                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
-                    value={value}
-                    onChange={onChange}
-                    placeholder={t("common.options.select") + "..."}
-                    {...rest}
-                />
-            ) : (
-                <Select
-                    className="basic-select-container"
-                    classes={finalClasses}
-                    styles={selectStyles}
-                    components={components}
-                    options={R.sortBy<Option>(R.prop("label"), suggestions)}
-                    value={value}
-                    onChange={onChange}
-                    placeholder={t("common.options.select") + "..."}
-                    {...rest}
-                />
-            )}
+            {optimizePerformance ? <WindowedSelect {...selectProps} /> : <Select {...selectProps} />}
         </div>
     );
 }

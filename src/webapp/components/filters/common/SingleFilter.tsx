@@ -17,6 +17,7 @@ type OwnProps = {
     isClearable?: boolean;
     isDisabled?: boolean;
     optimizePerformance?: boolean;
+    menuPosition?: "fixed" | "absolute";
 };
 
 const mapDispatchToProps = {
@@ -37,6 +38,7 @@ function SingleFilter({
     analyticsFilterAction,
     logEventAction,
     placeholder,
+    menuPosition,
     isClearable = true,
     isDisabled = false,
 }: Props) {
@@ -81,6 +83,7 @@ function SingleFilter({
                         suggestions={options}
                         onChange={onSelectionChange}
                         value={selection}
+                        menuPosition={menuPosition}
                     />
                 )}
             </FilterRowContainer>

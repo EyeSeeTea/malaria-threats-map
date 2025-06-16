@@ -104,6 +104,7 @@ const CountrySelector = ({
             options={suggestions}
             onChange={onChange}
             value={region.country}
+            menuPosition={"fixed"}
         />
     );
 };

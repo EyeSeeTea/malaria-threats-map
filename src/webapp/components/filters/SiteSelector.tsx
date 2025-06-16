@@ -125,6 +125,7 @@ function SiteSelector({
             options={suggestions}
             onChange={onChange}
             value={region.site}
+            menuPosition={"fixed"}
         />
     );
 }
