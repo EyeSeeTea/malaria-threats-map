@@ -21,8 +21,7 @@ type Props = OwnProps;
 
 const OtherInfo = ({ title, info }: Props) => {
     const { t } = useTranslation();
-
-    console.log({ info });
+    const sortedInfo = info.sort((a, b) => a.localeCompare(b));
 
     return (
         <Margin>
@@ -31,9 +30,9 @@ const OtherInfo = ({ title, info }: Props) => {
             </Typography>
             <br />
 
-            {info.length > 0 ? (
+            {sortedInfo.length > 0 ? (
                 <Ul>
-                    {info.map(item => {
+                    {sortedInfo.map(item => {
                         return (
                             <li key={item}>
                                 <Typography variant="caption" display="block">
