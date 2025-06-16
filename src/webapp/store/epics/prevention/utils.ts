@@ -5,13 +5,13 @@ import { Option } from "../../../components/BasicSelect";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { isNA, isNotNull, isNR } from "../../../utils/number-utils";
 import {
+    CitationDataSource,
     PreventionChartData,
     PreventionChartDataItem,
-    CitationDataSource,
-    SelectionData,
+    preventionChartDataTitle,
     PreventionMechanismChartData,
     PreventionMechanismChartDataGroup,
-    preventionChartDataTitle,
+    SelectionData,
 } from "../../SelectionData";
 import * as R from "ramda";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
@@ -315,12 +315,13 @@ function createChartDataItems(
     );
 
     const orders: [string | ((study: PreventionStudy) => unknown), SortDirection][] = _.compact([
-        ["YEAR_START", "desc"],
+        ["YEAR_START", "asc"],
         ["INSECTICIDE_TYPE", "asc"],
         mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT ? ["SYNERGIST_TYPE", "asc"] : undefined,
         mapType === PreventionMapType.INTENSITY_STATUS
             ? [(study: PreventionStudy) => +study.INSECTICIDE_INTENSITY, "asc"]
             : undefined,
+        [(study: PreventionStudy) => +study.MORTALITY_ADJUSTED, "asc"],
     ]);
 
     const orderFields: _.Many<_.ListIteratee<PreventionStudy>> = orders.map(order => order[0]);
@@ -342,7 +343,6 @@ function createChartDataItems(
                 color: getColor(mapType, study),
             };
         })
-        .sortBy(study => study.y)
         .value();
 
     return data;
