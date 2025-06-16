@@ -84,48 +84,44 @@ const GeneDeletionsChart: React.FC<Props> = ({ selectionData }) => {
                 </SpacedTypography>
             )}
 
-            {data
-                .sort((a, b) => a.year - b.year)
-                .map(yearData => {
-                    return (
-                        <>
-                            {yearData.header && (
-                                <HeaderContainer>
-                                    <StyledTypography variant="caption">{`${yearData.header} `}</StyledTypography>
-                                    <DataSourceTypography variant="caption">
-                                        {yearData.dataSources}
-                                    </DataSourceTypography>
-                                </HeaderContainer>
-                            )}
-                            <StyledTable aria-label="simple table" size="small">
-                                <StyledTableHead>
-                                    <TableRow>
-                                        <HeadCell align={"center"}>
-                                            {t("common.diagnosis.chart.gene_deletions.deletion_type")}
-                                        </HeadCell>
-                                        <HeadCell align={"center"}>
-                                            {t("common.diagnosis.chart.gene_deletions.no_tested")}
-                                        </HeadCell>
-                                        <HeadCell align={"center"}>
-                                            {t("common.diagnosis.chart.gene_deletions.percentage")}
-                                        </HeadCell>
-                                    </TableRow>
-                                </StyledTableHead>
-                                <TableBody>
-                                    {yearData.items.map((row, index) => {
-                                        return (
-                                            <TableRow key={index}>
-                                                <TableCell align={"center"}>{row.type}</TableCell>
-                                                <TableCell align={"center"}>{row.samples}</TableCell>
-                                                <TableCell align={"center"}>{row.percentageConfirmed}</TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                </TableBody>
-                            </StyledTable>
-                        </>
-                    );
-                })}
+            {data.map(yearData => {
+                return (
+                    <>
+                        {yearData.header && (
+                            <HeaderContainer>
+                                <StyledTypography variant="caption">{`${yearData.header} `}</StyledTypography>
+                                <DataSourceTypography variant="caption">{yearData.dataSources}</DataSourceTypography>
+                            </HeaderContainer>
+                        )}
+                        <StyledTable aria-label="simple table" size="small">
+                            <StyledTableHead>
+                                <TableRow>
+                                    <HeadCell align={"center"}>
+                                        {t("common.diagnosis.chart.gene_deletions.deletion_type")}
+                                    </HeadCell>
+                                    <HeadCell align={"center"}>
+                                        {t("common.diagnosis.chart.gene_deletions.no_tested")}
+                                    </HeadCell>
+                                    <HeadCell align={"center"}>
+                                        {t("common.diagnosis.chart.gene_deletions.percentage")}
+                                    </HeadCell>
+                                </TableRow>
+                            </StyledTableHead>
+                            <TableBody>
+                                {yearData.items.map((row, index) => {
+                                    return (
+                                        <TableRow key={index}>
+                                            <TableCell align={"center"}>{row.type}</TableCell>
+                                            <TableCell align={"center"}>{row.samples}</TableCell>
+                                            <TableCell align={"center"}>{row.percentageConfirmed}</TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </StyledTable>
+                    </>
+                );
+            })}
         </React.Fragment>
     );
 };

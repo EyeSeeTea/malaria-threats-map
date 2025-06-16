@@ -63,7 +63,7 @@ export function createDiagnosisSelectionData(
 function sortStudies(siteFilteredStudies: DiagnosisStudy[], diagnosisFilters: DiagnosisFilters) {
     switch (diagnosisFilters.mapType) {
         case DiagnosisMapType.GENE_DELETIONS:
-            return _.orderBy(siteFilteredStudies, study => +study.YEAR_START, "desc");
+            return _.orderBy(siteFilteredStudies, study => +study.YEAR_START, "asc");
         case DiagnosisMapType.HRP23_STUDIES:
             return sortHrp23Studies(siteFilteredStudies);
     }
@@ -140,7 +140,7 @@ function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: Citatio
 
     return {
         kind: "gene-deletions",
-        data: _(groupByYear).orderBy(["year"], ["desc"]).value(),
+        data: _(groupByYear).orderBy(["year"], ["asc"]).value(),
     };
 }
 
