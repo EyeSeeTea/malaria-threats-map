@@ -118,6 +118,14 @@ export function getMostPriorityUsignResistanceStatus(studies: PreventionStudy[])
     return R.sortBy(study => study.priority, studiesWithPriority)[0];
 }
 
+export function getMostPriorityUsingMortalityAdjusted(studies: PreventionStudy[]) {
+    const sortedStudies = R.sortBy(study => {
+        const value = Number(study.MORTALITY_ADJUSTED);
+        return isNaN(value) ? -Infinity : -value;
+    }, studies);
+    return sortedStudies[0];
+}
+
 const ResistanceIntensityOrder: Record<ResistanceIntensity, number> = {
     NA: 0,
     COULD_NOT_BE_RELIABLY_ASSESSED: 0,

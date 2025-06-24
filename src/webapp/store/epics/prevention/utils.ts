@@ -26,7 +26,10 @@ import {
     filterByResistanceStatus,
 } from "../../../components/layers/studies-filters";
 import { cleanMechanismTypeOptions } from "../../../components/filters/MechanismTypeFilter";
-import { getMostPriorityUsignResistanceStatus } from "../../../components/layers/prevention/utils";
+import {
+    getMostPriorityUsignResistanceStatus,
+    getMostPriorityUsingMortalityAdjusted,
+} from "../../../components/layers/prevention/utils";
 import { ResistanceStatusColors } from "../../../components/layers/prevention/ResistanceStatus/symbols";
 
 type SortDirection = boolean | "asc" | "desc";
@@ -311,7 +314,9 @@ function createChartDataItems(
     }, sortedStudies);
 
     const firstStudiesOfGroups = Object.values(cleanedStudies).map((groupStudies: PreventionStudy[]) =>
-        getMostPriorityUsignResistanceStatus(groupStudies)
+        mapType === PreventionMapType.INTENSITY_STATUS
+            ? getMostPriorityUsingMortalityAdjusted(groupStudies)
+            : getMostPriorityUsignResistanceStatus(groupStudies)
     );
 
     const orders: [string | ((study: PreventionStudy) => unknown), SortDirection][] = _.compact([
