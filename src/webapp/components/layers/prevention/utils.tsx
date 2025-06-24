@@ -162,6 +162,12 @@ const InvolvementOrder: { [value: string]: number } = {
     FULL_INVOLVEMENT: 2,
 };
 
+export function getMostPriorityUsingMechanismProxy(studies: PreventionStudy[]) {
+    const filteredSortedStudies = R.sortBy(study => -InvolvementOrder[study.MECHANISM_PROXY] || 0, studies);
+
+    return filteredSortedStudies[0];
+}
+
 export function getByMostRecentYearAndInvolvement(group: any[]) {
     const filteredStudies = filterByMostRecentYear(group);
     // We sort remaining records by RESISTANCE INTENSITY
