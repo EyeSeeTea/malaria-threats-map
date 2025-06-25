@@ -29,6 +29,7 @@ import { cleanMechanismTypeOptions } from "../../../components/filters/Mechanism
 import {
     getMostPriorityUsignResistanceStatus,
     getMostPriorityUsingMortalityAdjusted,
+    getMostPriorityUsingMechanismProxy,
 } from "../../../components/layers/prevention/utils";
 import { ResistanceStatusColors } from "../../../components/layers/prevention/ResistanceStatus/symbols";
 
@@ -316,6 +317,8 @@ function createChartDataItems(
     const firstStudiesOfGroups = Object.values(cleanedStudies).map((groupStudies: PreventionStudy[]) =>
         mapType === PreventionMapType.INTENSITY_STATUS
             ? getMostPriorityUsingMortalityAdjusted(groupStudies)
+            : mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT
+            ? getMostPriorityUsingMechanismProxy(groupStudies)
             : getMostPriorityUsignResistanceStatus(groupStudies)
     );
 

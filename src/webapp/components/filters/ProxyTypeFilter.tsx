@@ -41,7 +41,6 @@ function ProxyTypeFilter({ proxyTypes = [], preventionFilters, setProxyType, log
             label: t(`PROXY_TYPE.${mechanism.VALUE_}`),
         }));
 
-    console.log({ proxyTypes });
     return (
         <RadioGroupFilter
             label={t("common.filters.proxy_type")}
