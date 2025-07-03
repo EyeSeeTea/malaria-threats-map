@@ -37,7 +37,7 @@ export const preventionBarChartOptions: (
             align: "left",
             reserveSpace: true,
         },
-        categories: groupData(data).map(item => item?.name || ""),
+        categories: buildSpacedItems(data).map(item => item?.name || ""),
     },
     yAxis: {
         opposite: true,
@@ -87,7 +87,7 @@ export const preventionBarChartOptions: (
     },
 });
 
-function groupData(data: PreventionChartDataItem[]): PreventionChartDataItem[] {
+function buildSpacedItems(data: PreventionChartDataItem[]): PreventionChartDataItem[] {
     const grouped = _.groupBy(data, item => item.group);
 
     return _(grouped)
