@@ -349,11 +349,22 @@ function createChartDataItems(
                 number: study.NUMBER,
                 resistanceStatus: study.RESISTANCE_STATUS,
                 color: getColor(mapType, study),
+                group: getChartDataGroupKey(mapType, study),
             };
         })
         .value();
 
     return data;
+}
+
+function getChartDataGroupKey(mapType: PreventionMapType, study: PreventionStudy): string {
+    switch (mapType) {
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+        case PreventionMapType.INTENSITY_STATUS:
+            return `${study.YEAR_START}_${study.INSECTICIDE_TYPE}`;
+        default:
+            return `${study.YEAR_START}`;
+    }
 }
 
 function otherDetected(mapType: PreventionMapType, siteFilteredStudies: Study[], siteNonFilteredStudies: Study[]) {

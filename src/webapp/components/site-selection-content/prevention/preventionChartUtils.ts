@@ -3,6 +3,7 @@ import i18next from "i18next";
 import { PreventionChartDataItem } from "../../../store/SelectionData";
 import { PreventionMapType } from "../../../store/types";
 import { ChartStyles } from "../../charts/Style";
+import _ from "lodash";
 
 export const preventionBarChartOptions: (
     maptype: PreventionMapType,
@@ -36,6 +37,7 @@ export const preventionBarChartOptions: (
             align: "left",
             reserveSpace: true,
         },
+        categories: buildSpacedItems(data).map(item => item?.name || ""),
     },
     yAxis: {
         opposite: true,
@@ -84,6 +86,15 @@ export const preventionBarChartOptions: (
         enabled: false,
     },
 });
+
+function buildSpacedItems(data: PreventionChartDataItem[]): PreventionChartDataItem[] {
+    const grouped = _.groupBy(data, item => item.group);
+
+    return _(grouped)
+        .values()
+        .flatMap((group, index, array) => (index < array.length - 1 ? [...group, null] : group))
+        .value();
+}
 
 function getBarZones(maptype: PreventionMapType) {
     switch (maptype) {
