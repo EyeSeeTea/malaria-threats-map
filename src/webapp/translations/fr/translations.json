@@ -559,6 +559,7 @@
                     "full_restoration": "Restauration totale",
                     "partial_restoration": "Restauration partielle",
                     "no_restoration": "Pas de restauration",
+                    "could_not_be_reliably_assessed": "N'a pas pu être évaluée de manière fiable",
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
