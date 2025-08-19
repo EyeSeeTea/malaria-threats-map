@@ -4,11 +4,6 @@ import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { DiagnosisSelectionData, GeneDeletionsChartDataContent } from "../../../store/epics/diagnosis/types";
 import { isNotNull } from "../../../utils/number-utils";
-import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
-
-// const SpacedTypography = styled(Typography)`
-//     margin-bottom: 5px;
-// `;
 
 const StyledTableHead = styled(TableHead)`
     background: #f5f5f5;
@@ -40,6 +35,10 @@ const SpacedTypography = styled(Typography)`
     margin-bottom: 5px;
 `;
 
+const StudyContainer = styled.div`
+    margin: 8px 0px;
+`;
+
 type Props = {
     selectionData: DiagnosisSelectionData;
 };
@@ -58,41 +57,44 @@ const GeneDeletionsChart: React.FC<Props> = ({ selectionData }) => {
         }
     }, [selectionData]);
 
-    const study = React.useMemo(() => selectionData.studyObject as DiagnosisStudy, [selectionData]);
-
     return (
         <React.Fragment>
-            {isNotNull(study.SAMPLE_ORIGIN) && (
-                <SpacedTypography variant="subtitle2">{t(study.SAMPLE_ORIGIN)}</SpacedTypography>
-            )}
-            {study.PF_POS_SAMPLES && (
-                <SpacedTypography variant="subtitle2">
-                    <Trans
-                        i18nKey="common.diagnosis.chart.gene_deletions.content_3"
-                        values={{ pfPosSamples: study.PF_POS_SAMPLES }}
-                        t={t}
-                    >
-                        Number of <i>P. falciparum</i> positive samples from the study population:
-                    </Trans>
-                </SpacedTypography>
-            )}
-            {isNotNull(study.TYPE_SAMPL_ANALYZED) && (
-                <SpacedTypography variant="subtitle2">
-                    {t("common.diagnosis.chart.gene_deletions.content_4", {
-                        typeSampleAnalyzed: t(study.TYPE_SAMPL_ANALYZED),
-                    })}
-                </SpacedTypography>
-            )}
-
             {data.map(yearData => {
                 return (
-                    <>
+                    <StudyContainer key={`${yearData.header}-key`}>
+                        {isNotNull(yearData.studyObject.SAMPLE_ORIGIN) && (
+                            <SpacedTypography variant="subtitle2">
+                                {t(yearData.studyObject.SAMPLE_ORIGIN)}
+                            </SpacedTypography>
+                        )}
+
+                        {yearData.studyObject.PF_POS_SAMPLES && (
+                            <SpacedTypography variant="subtitle2">
+                                <Trans
+                                    i18nKey="common.diagnosis.chart.gene_deletions.content_3"
+                                    values={{ pfPosSamples: yearData.studyObject.PF_POS_SAMPLES }}
+                                    t={t}
+                                >
+                                    Number of <i>P. falciparum</i> positive samples from the study population:
+                                </Trans>
+                            </SpacedTypography>
+                        )}
+
+                        {isNotNull(yearData.studyObject.TYPE_SAMPL_ANALYZED) && (
+                            <SpacedTypography variant="subtitle2">
+                                {t("common.diagnosis.chart.gene_deletions.content_4", {
+                                    typeSampleAnalyzed: t(yearData.studyObject.TYPE_SAMPL_ANALYZED),
+                                })}
+                            </SpacedTypography>
+                        )}
+
                         {yearData.header && (
                             <HeaderContainer>
                                 <StyledTypography variant="caption">{`${yearData.header} `}</StyledTypography>
                                 <DataSourceTypography variant="caption">{yearData.dataSources}</DataSourceTypography>
                             </HeaderContainer>
                         )}
+
                         <StyledTable aria-label="simple table" size="small">
                             <StyledTableHead>
                                 <TableRow>
@@ -107,6 +109,7 @@ const GeneDeletionsChart: React.FC<Props> = ({ selectionData }) => {
                                     </HeadCell>
                                 </TableRow>
                             </StyledTableHead>
+
                             <TableBody>
                                 {yearData.items.map((row, index) => {
                                     return (
@@ -119,7 +122,7 @@ const GeneDeletionsChart: React.FC<Props> = ({ selectionData }) => {
                                 })}
                             </TableBody>
                         </StyledTable>
-                    </>
+                    </StudyContainer>
                 );
             })}
         </React.Fragment>

@@ -21,6 +21,7 @@ export type GeneDeletionsChartDataContent = {
     header?: string;
     dataSources: string;
     year: number;
+    studyObject: DiagnosisStudy;
     items: GeneDeletionsChartDataItem[];
 };
 
