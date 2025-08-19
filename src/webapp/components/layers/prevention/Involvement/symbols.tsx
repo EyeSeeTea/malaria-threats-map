@@ -6,7 +6,8 @@ const PROPERTY = "MECHANISM_PROXY";
 export const LevelOfInvolvementColors = {
     [LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT]: ["#8E4585", "#5b2c55"],
     [LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT]: ["#DAACD5", "#c277ba"],
-    [LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT]: ["#BEBEBE", "#838383"],
+    [LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT]: ["#838383", "#4D4D4D"],
+    [LEVEL_OF_INVOLVEMENT.COULD_NOT_BE_RELIABLY_ASSESSED]: ["#d3d3d3", "#adadad"],
 };
 
 const involvementSymbols = {
@@ -19,7 +20,9 @@ const involvementSymbols = {
         LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT][0],
         LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT,
         LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT][0],
+        LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT,
         LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][0],
+        LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.COULD_NOT_BE_RELIABLY_ASSESSED][0],
     ],
     "circle-stroke-color": [
         ...baseSymbols["circle-stroke-color"],
@@ -30,7 +33,9 @@ const involvementSymbols = {
             LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.FULL_INVOLVEMENT][1],
             LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT,
             LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.PARTIAL_INVOLVEMENT][1],
+            LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT,
             LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][1],
+            LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.COULD_NOT_BE_RELIABLY_ASSESSED][1],
         ],
     ],
 };

@@ -207,6 +207,10 @@ function getPreventionLegendLabels(filters: PreventionFilters): LegendLabel[] {
                     label: "prevention.legend.synergist_involvement.no_restoration",
                     color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.NO_INVOLVEMENT][0],
                 },
+                {
+                    label: "prevention.legend.synergist_involvement.could_not_be_reliably_assessed",
+                    color: LevelOfInvolvementColors[LEVEL_OF_INVOLVEMENT.COULD_NOT_BE_RELIABLY_ASSESSED][0],
+                },
             ];
         default:
             return [];
