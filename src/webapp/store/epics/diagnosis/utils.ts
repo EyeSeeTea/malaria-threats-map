@@ -100,9 +100,12 @@ function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: Citatio
         return `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")}
                            ${surveyType} (${yearStart} - ${yearEnd})`;
     };
-
     const groupByYear = _(studies)
-        .groupBy(({ YEAR_START }) => YEAR_START)
+        .map(study => ({
+            ...study,
+            dataSourcesKeys: selectDataSourcesByStudies(dataSources, [study]),
+        }))
+        .groupBy(({ YEAR_START, dataSourcesKeys }) => `${YEAR_START}_${dataSourcesKeys.join(",")}`)
         .mapValues(studies => {
             const studyObject = studies[0];
 
@@ -110,6 +113,7 @@ function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: Citatio
                 header: createHeader(studies),
                 dataSources: `(${selectDataSourcesByStudies(dataSources, studies)})`,
                 year: +studies[0].YEAR_START,
+                studyObject: studyObject,
                 items: [
                     {
                         type: "HRP2",
