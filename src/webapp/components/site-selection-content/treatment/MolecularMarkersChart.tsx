@@ -80,7 +80,7 @@ const options: (data: any, categories: any[], translations: any) => Highcharts.O
     chart: {
         maxPointWidth: 20,
         type: "bar",
-        height: 250,
+        height: Math.max(250, categories.length * 30),
         marginRight: 40,
         style: {
             ...ChartStyles,
