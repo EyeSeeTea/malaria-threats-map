@@ -40,12 +40,10 @@ export function createDiagnosisSelectionData(
     const sampleOrigin =
         sortedStudies[0].SAMPLE_ORIGIN_TEXT != null ? `\n\n${sortedStudies[0].SAMPLE_ORIGIN_TEXT}` : "";
 
-    const yearsText = years.length === 1 ? `(${years[0]})` : `(${years.join("-")})`;
-
     const subtitle = DiagnosisMapType.HRP23_STUDIES
         ? `${i18next.t("common.diagnosis.chart.hrp23_studies.subtitle")}`
         : `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")} ${years.length === 1 ? surveyType : ""} ${
-              years.length > 0 ? yearsText : ""
+              years.length > 0 ? `(${years.join("-")})` : ""
           } ${sampleOrigin}`;
 
     const dataSources = createCitationDataSources(theme, sortedStudies);
@@ -98,10 +96,8 @@ function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: Citatio
 
         const years = getMinMaxYears(studies);
 
-        const yearsText = years.length === 1 ? `(${years[0]})` : `(${years.join("-")})`;
-
         return `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")}
-                           ${surveyType} ${years.length > 0 ? yearsText : ""}`;
+                           ${surveyType} ${years.length > 0 ? `(${years.join("-")})` : ""}`;
     };
     const groupByYear = _(studies)
         .map(study => ({
