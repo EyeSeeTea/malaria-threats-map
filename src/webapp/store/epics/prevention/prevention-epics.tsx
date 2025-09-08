@@ -35,6 +35,7 @@ import {
     setType,
 } from "../../actions/prevention-actions";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
+import { resetDatesRequired } from "../common/utils";
 const requestedVIRStartDate = 2010;
 
 export const getPreventionStudiesEpic = (
@@ -49,15 +50,14 @@ export const getPreventionStudiesEpic = (
             if (state.prevention.studies.length === 0 && !state.prevention.error) {
                 return fromFuture(compositionRoot.prevention.getStudies()).pipe(
                     mergeMap((studies: PreventionStudy[]) => {
-                        const [start, end] = getMinMaxYears(studies);
-                        const resetDatesIsRequired =
-                            state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start;
-
-                        const base: unknown[] = resetDatesIsRequired
-                            ? [setMaxMinYearsAction([start, end]), setFiltersAction([requestedVIRStartDate, end])]
-                            : [];
-
-                        return of(...base, fetchPreventionStudiesSuccess(studies));
+                        return of(
+                            ...resetDatesRequired({
+                                minMaxYears: () => getMinMaxYears(studies),
+                                theme: "prevention",
+                                state,
+                            }),
+                            fetchPreventionStudiesSuccess(studies)
+                        );
                     }),
                     catchError((error: Error) =>
                         of(addNotificationAction(error.message), fetchPreventionStudiesError())

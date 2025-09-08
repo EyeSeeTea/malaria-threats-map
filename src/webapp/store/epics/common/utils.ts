@@ -2,6 +2,8 @@ import _ from "lodash";
 import { Study } from "../../../../domain/entities/Study";
 import { isNotNull, isNull } from "../../../utils/number-utils";
 import { CitationDataSource, CurationSources } from "../../SelectionData";
+import { MapTheme, State } from "../../types";
+import { setFiltersAction, setMaxMinYearsAction } from "../../actions/base-actions";
 
 const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.trim());
 
@@ -98,4 +100,14 @@ export function createCurations(dataSources: CitationDataSource[], studies: Stud
     });
 
     return curations;
+}
+
+export function resetDatesRequired(props: { minMaxYears: () => [number, number]; theme: MapTheme; state: State }) {
+    const { minMaxYears, theme, state } = props;
+
+    if (state.malaria.theme !== theme) return [];
+
+    const [start, end] = minMaxYears();
+    const resetDatesIsRequired = state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start;
+    return resetDatesIsRequired ? [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])] : [];
 }
