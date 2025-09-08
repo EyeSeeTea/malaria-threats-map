@@ -102,12 +102,19 @@ export function createCurations(dataSources: CitationDataSource[], studies: Stud
     return curations;
 }
 
-export function resetDatesRequired(props: { minMaxYears: () => [number, number]; theme: MapTheme; state: State }) {
-    const { minMaxYears, theme, state } = props;
+export function resetDatesRequired(props: {
+    minMaxYears: () => [number, number];
+    theme: MapTheme;
+    state: State;
+    filterStart?: number;
+}) {
+    const { minMaxYears, theme, state, filterStart } = props;
 
     if (state.malaria.theme !== theme) return [];
 
     const [start, end] = minMaxYears();
     const resetDatesIsRequired = state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start;
-    return resetDatesIsRequired ? [setMaxMinYearsAction([start, end]), setFiltersAction([start, end])] : [];
+    return resetDatesIsRequired
+        ? [setMaxMinYearsAction([start, end]), setFiltersAction([filterStart ?? start, end])]
+        : [];
 }

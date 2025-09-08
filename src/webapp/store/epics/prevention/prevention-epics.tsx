@@ -55,6 +55,7 @@ export const getPreventionStudiesEpic = (
                                 minMaxYears: () => getMinMaxYears(studies),
                                 theme: "prevention",
                                 state,
+                                filterStart: requestedVIRStartDate,
                             }),
                             fetchPreventionStudiesSuccess(studies)
                         );
