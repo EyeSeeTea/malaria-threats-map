@@ -199,5 +199,5 @@ function getMinMaxYears(studies: DiagnosisStudy[]): number[] {
     const minYear = Math.min(...studies.map(s => +s.YEAR_START));
     const maxYear = Math.max(...studies.map(s => +s.YEAR_END));
 
-    return _.uniq([minYear, maxYear]);
+    return maxYear ? _.uniq([minYear, maxYear]) : [minYear];
 }
