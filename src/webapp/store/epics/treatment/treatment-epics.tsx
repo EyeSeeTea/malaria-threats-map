@@ -32,6 +32,7 @@ import { createTreatmentSelectionData } from "./utils";
 import { molecularMarkersMap } from "../../../components/filters/MolecularMarkerRadioFilter";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { MOLECULAR_MARKERS_MAP } from "../../../components/layers/treatment/MolecularMarkersOngoingStudies/utils";
+import { resetDatesRequired } from "../common/utils";
 
 function groupStudies(studies: TreatmentStudy[]) {
     const filteredMainStudies = studies.filter(
@@ -61,12 +62,13 @@ export const getTreatmentStudiesEpic = (
             if (state.treatment.studies.length === 0 && !state.treatment.error) {
                 return fromFuture(compositionRoot.treatment.getStudies()).pipe(
                     mergeMap((studies: TreatmentStudy[]) => {
-                        const [start, end] = getMinMaxYears(studies, true);
-
                         return of(
-                            fetchTreatmentStudiesSuccess(groupStudies(studies)),
-                            setMaxMinYearsAction([start, end]),
-                            setFiltersAction([start, end])
+                            ...resetDatesRequired({
+                                minMaxYears: () => getMinMaxYears(studies),
+                                theme: "treatment",
+                                state,
+                            }),
+                            fetchTreatmentStudiesSuccess(groupStudies(studies))
                         );
                     }),
                     catchError((error: Error) => of(addNotificationAction(error.message), fetchTreatmentStudiesError()))

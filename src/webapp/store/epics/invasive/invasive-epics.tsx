@@ -25,6 +25,7 @@ import { EpicDependencies } from "../../index";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { createInvasiveSelectionData } from "./utils";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
+import { resetDatesRequired } from "../common/utils";
 
 export const getInvasiveStudiesEpic = (
     action$: Observable<ActionType<typeof fetchInvasiveStudiesRequest>>,
@@ -38,12 +39,13 @@ export const getInvasiveStudiesEpic = (
             if (state.invasive.studies.length === 0 && !state.invasive.error) {
                 return fromFuture(compositionRoot.invasive.getStudies()).pipe(
                     mergeMap((studies: InvasiveStudy[]) => {
-                        const [start, end] = getMinMaxYears(studies);
-
                         return of(
-                            fetchInvasiveStudiesSuccess(studies),
-                            setMaxMinYearsAction([start, end]),
-                            setFiltersAction([start, end])
+                            ...resetDatesRequired({
+                                minMaxYears: () => getMinMaxYears(studies),
+                                theme: "invasive",
+                                state,
+                            }),
+                            fetchInvasiveStudiesSuccess(studies)
                         );
                     }),
                     catchError((error: Error) => of(addNotificationAction(error.message), fetchInvasiveStudiesError()))
@@ -78,9 +80,10 @@ export const setInvasiveThemeEpic = (
             if ($action.payload !== "invasive") {
                 return of();
             }
-            const [start, end] = getMinMaxYears($state.invasive.studies);
 
-            return of(setMaxMinYearsAction([start, end]), setFiltersAction([start, end]));
+            const studies = $state.invasive.studies;
+            const minMax = studies.length ? getMinMaxYears(studies, false) : undefined;
+            return of(setMaxMinYearsAction(minMax), setFiltersAction(minMax));
         })
     );
 

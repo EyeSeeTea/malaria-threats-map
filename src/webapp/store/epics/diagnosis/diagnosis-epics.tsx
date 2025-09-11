@@ -29,6 +29,7 @@ import { ActionTypeEnum } from "../../actions";
 import { createDiagnosisSelectionData } from "./utils";
 import { DELETION_TYPES } from "../../../components/filters/DeletionTypeFilter";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
+import { resetDatesRequired } from "../common/utils";
 
 export const getDiagnosisStudiesEpic = (
     action$: Observable<ActionType<typeof fetchDiagnosisStudiesRequest>>,
@@ -42,12 +43,13 @@ export const getDiagnosisStudiesEpic = (
             if (state.diagnosis.studies.length === 0 && !state.diagnosis.error) {
                 return fromFuture(compositionRoot.diagnosis.getStudies()).pipe(
                     mergeMap((studies: DiagnosisStudy[]) => {
-                        const [start, end] = getMinMaxYears(studies, false);
-
                         return of(
-                            fetchDiagnosisStudiesSuccess(studies),
-                            setMaxMinYearsAction([start, end]),
-                            setFiltersAction([start, end])
+                            ...resetDatesRequired({
+                                minMaxYears: () => getMinMaxYears(studies, false),
+                                theme: "diagnosis",
+                                state,
+                            }),
+                            fetchDiagnosisStudiesSuccess(studies)
                         );
                     }),
                     catchError((error: Error) => of(addNotificationAction(error.message), fetchDiagnosisStudiesError()))
