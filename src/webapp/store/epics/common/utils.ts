@@ -10,12 +10,15 @@ const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.t
 const extractDataSourcesWithUrl = (study: Study) => {
     return {
         url: study.CITATION_URL,
-        text: `${
-            valueOrUndefined(study.CITATION_LONG) ||
-            valueOrUndefined(study.CITATION) ||
-            valueOrUndefined(study.INSTITUTION) ||
-            valueOrUndefined(study.CITATION_URL)
-        } ${study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ""}`,
+        text: [
+            `${
+                valueOrUndefined(study.CITATION_LONG) ||
+                valueOrUndefined(study.CITATION) ||
+                valueOrUndefined(study.INSTITUTION) ||
+                valueOrUndefined(study.CITATION_URL)
+            }`,
+            ...(study.INSTITUTION_CITY ? [study.INSTITUTION_CITY] : []),
+        ].join(", "),
     };
 };
 
