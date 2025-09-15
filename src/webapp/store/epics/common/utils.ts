@@ -59,6 +59,11 @@ export function selectDataSourcesByStudies(dataSources: CitationDataSource[], st
     return _.uniq(
         studies
             .reduce((acc, study) => {
+                const dataSourceByURLAndText = dataSources.find(ds => {
+                    const text = study.INSTITUTE || study.INSTITUTION || study.CITATION_URL;
+                    return text && ds.url === study.CITATION_URL && ds.text === text;
+                });
+
                 const dataSourceByURL = dataSources.find(ds => ds.url != null && ds.url === study.CITATION_URL);
 
                 const dataSourceByCitation = dataSources.find(ds => ds.text === study.CITATION);
@@ -70,6 +75,7 @@ export function selectDataSourcesByStudies(dataSources: CitationDataSource[], st
                 const dataSourceByCitationInstitution = dataSources.find(ds => ds.text === study.INSTITUTION);
 
                 const dataSource =
+                    dataSourceByURLAndText ||
                     dataSourceByURL ||
                     dataSourceByCitation ||
                     dataSourceByCitationLong ||
