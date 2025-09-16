@@ -10,12 +10,15 @@ const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.t
 const extractDataSourcesWithUrl = (study: Study) => {
     return {
         url: study.CITATION_URL,
-        text: `${
-            valueOrUndefined(study.CITATION_LONG) ||
-            valueOrUndefined(study.CITATION) ||
-            valueOrUndefined(study.INSTITUTION) ||
-            valueOrUndefined(study.CITATION_URL)
-        } ${study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ""}`,
+        text: [
+            `${
+                valueOrUndefined(study.CITATION_LONG) ||
+                valueOrUndefined(study.CITATION) ||
+                valueOrUndefined(study.INSTITUTION) ||
+                valueOrUndefined(study.CITATION_URL)
+            }`,
+            ...(study.INSTITUTION_CITY ? [study.INSTITUTION_CITY] : []),
+        ].join(", "),
     };
 };
 
@@ -56,6 +59,11 @@ export function selectDataSourcesByStudies(dataSources: CitationDataSource[], st
     return _.uniq(
         studies
             .reduce((acc, study) => {
+                const dataSourceByURLAndText = dataSources.find(ds => {
+                    const text = study.INSTITUTE || study.INSTITUTION || study.CITATION_URL;
+                    return text && ds.url === study.CITATION_URL && ds.text === text;
+                });
+
                 const dataSourceByURL = dataSources.find(ds => ds.url != null && ds.url === study.CITATION_URL);
 
                 const dataSourceByCitation = dataSources.find(ds => ds.text === study.CITATION);
@@ -67,6 +75,7 @@ export function selectDataSourcesByStudies(dataSources: CitationDataSource[], st
                 const dataSourceByCitationInstitution = dataSources.find(ds => ds.text === study.INSTITUTION);
 
                 const dataSource =
+                    dataSourceByURLAndText ||
                     dataSourceByURL ||
                     dataSourceByCitation ||
                     dataSourceByCitationLong ||
