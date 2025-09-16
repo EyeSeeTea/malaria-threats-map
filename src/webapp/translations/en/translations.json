@@ -325,7 +325,7 @@
                 "numberOfSitesWithThisStatus": {
                     "CONFIRMED_RESISTANCE": "Number of sites with confirmed resistance",
                     "POSSIBLE_RESISTANCE": "Number of sites with possible resistance",
-                    "SUSCEPTIBLE": "Number of sites with susceptible resistance"
+                    "SUSCEPTIBLE": "Number of sites where insecticide class is susceptible"
                 },
                 "totalNumberOfSites": "Number of sites that monitored resistance",
                 "insecticideType": "Insecticide"
@@ -557,6 +557,7 @@
                     "full_restoration": "Full restoration",
                     "partial_restoration": "Partial restoration",
                     "no_restoration": "No restoration",
+                    "could_not_be_reliably_assessed": "Could not be reliably assessed",
                     "help": {
                         "p1": "This map presents data from <1>synergist-insecticide bioassays</1>. Each dot on the map represents a study site containing one or more studies. In sites where studies show varying results, the colour of the dot is determined by the most recent results.",
                         "p2": "For information on how synergist involvement is graded consult the <1 href='/'>WHO manual for resistance monitoring</1>.",
@@ -608,6 +609,7 @@
                     "status": "Study status",
                     "proposed_timeframe": "Proposed timeframe",
                     "study_population": "Study population",
+                    "study_design": "Study design",
                     "genotyping": "Genotyping",
                     "study_initiated_following": "Study initiated following",
                     "study_sites": "Study sites selected by",

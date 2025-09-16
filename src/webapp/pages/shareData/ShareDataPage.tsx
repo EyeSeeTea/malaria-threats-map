@@ -12,6 +12,7 @@ import ShareDataChart from "../../assets/img/share-data-page/share-data-chart.pn
 import TrackingSurveillanceMap from "../../assets/img/share-data-page/tracking-surveillance-map.png";
 import ContributeDataGraphic from "../../assets/img/share-data-page/contribute-data.png";
 import { useSendAnalyticsPageView } from "../../hooks/useSendAnalyticsPageView";
+import { useShareData } from "./useShareData";
 
 const ImageBanner = styled.div`
     display: flex;
@@ -73,6 +74,8 @@ type Props = StateProps & DispatchProps;
 
 const ShareDataPage: React.FC<Props> = () => {
     const { t } = useTranslation();
+
+    const { shareData } = useShareData();
 
     return (
         <Layout>
@@ -196,45 +199,33 @@ const ShareDataPage: React.FC<Props> = () => {
                             </Trans>
                         </Typography>
                         <List>
-                            <li>
-                                <a
-                                    href="https://extranet.who.int/dataformv3/index.php/341317?lang=en"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    {" "}
-                                    <Trans i18nKey="common.shareDataPage.section3.list.1" t={t}>
-                                        Survey on surveillance of{" "}
-                                        <strong>
-                                            <i>pfhrp2/3</i> deletions
-                                        </strong>
-                                    </Trans>
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="https://extranet.who.int/dataformv3/index.php/951133?lang=en"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    {" "}
-                                    <Trans i18nKey="common.shareDataPage.section3.list.2" t={t}>
-                                        Survey on <strong>therapeutic efficacy studies</strong>
-                                    </Trans>
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="https://extranet.who.int/dataformv3/index.php/547334?lang=en"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    <Trans i18nKey="common.shareDataPage.section3.list.3" t={t}>
-                                        Survey on{" "}
-                                        <strong>molecular marker studies of antimalarial drug resistance</strong>
-                                    </Trans>
-                                </a>
-                            </li>
+                            {shareData.surveyLinks.map(survey => {
+                                return (
+                                    <li key={survey.id}>
+                                        <a href={survey.link} target="_blank" rel="noreferrer">
+                                            {survey.name === "ONGO_HRP" ? (
+                                                <Trans i18nKey="common.shareDataPage.section3.list.1" t={t}>
+                                                    Survey on surveillance of{" "}
+                                                    <strong>
+                                                        <i>pfhrp2/3</i> deletions
+                                                    </strong>
+                                                </Trans>
+                                            ) : survey.name === "ONGO_TES" ? (
+                                                <Trans i18nKey="common.shareDataPage.section3.list.2" t={t}>
+                                                    Survey on <strong>therapeutic efficacy studies</strong>
+                                                </Trans>
+                                            ) : (
+                                                <Trans i18nKey="common.shareDataPage.section3.list.3" t={t}>
+                                                    Survey on{" "}
+                                                    <strong>
+                                                        molecular marker studies of antimalarial drug resistance
+                                                    </strong>
+                                                </Trans>
+                                            )}
+                                        </a>
+                                    </li>
+                                );
+                            })}
                         </List>
                         <Typography variant="body1">
                             <Trans i18nKey="common.shareDataPage.section3.note" t={t}>

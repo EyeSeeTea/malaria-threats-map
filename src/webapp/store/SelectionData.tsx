@@ -150,6 +150,7 @@ export type PreventionChartDataItem = {
     number: string;
     resistanceStatus: string;
     color: string;
+    group: string;
 };
 
 export type PreventionMechanismChartDataItem = {

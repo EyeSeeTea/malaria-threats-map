@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
-import { setRegionAction } from "../../store/actions/base-actions";
-import { selectRegion } from "../../store/reducers/base-reducer";
+import { setRegionAction, setSelection } from "../../store/actions/base-actions";
+import { selectRegion, selectSelection } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { sendAnalytics } from "../../utils/analytics";
 import SingleFilter from "./common/SingleFilter";
@@ -11,23 +11,42 @@ import { selectCountries } from "../../store/reducers/country-layer-reducer";
 import { selectCountries as selectCountriesTranslations } from "../../store/reducers/translations-reducer";
 import { fetchCountryLayerRequest } from "../../store/actions/country-layer-actions";
 import { CountryProperties } from "../../../domain/entities/CountryLayer";
+import { resetSelectionInFeatures } from "../layers/effects";
+import mapboxgl from "mapbox-gl";
 
 const mapStateToProps = (state: State) => ({
     region: selectRegion(state),
     countries: selectCountries(state),
     countriesTranslation: selectCountriesTranslations(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
     setRegion: setRegionAction,
     fetchCountryLayer: fetchCountryLayerRequest,
+    setSelection: setSelection,
+};
+
+type OwnProps = {
+    map?: mapboxgl.Map;
+    layerSource?: string;
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & OwnProps;
 
-const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer, countriesTranslation }: Props) => {
+const CountrySelector = ({
+    region,
+    countries = [],
+    setRegion,
+    fetchCountryLayer,
+    countriesTranslation,
+    setSelection,
+    map,
+    layerSource,
+    selection,
+}: Props) => {
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -36,14 +55,35 @@ const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer,
         }
     }, [fetchCountryLayer, countries]);
 
-    const onChange = (selection?: string) => {
-        if (selection) sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selection });
-        setRegion({
-            region: countries.find(el => el.ISO_2_CODE === selection)?.REGION_FULL.replaceAll(" ", "_") || "",
-            subRegion: countries.find(el => el.ISO_2_CODE === selection)?.SUBREGION?.replaceAll(" ", "_") || "",
-            country: selection,
-        });
-    };
+    const onChange = useCallback(
+        (selectedCountry?: string) => {
+            if (selectedCountry) {
+                sendAnalytics({ type: "event", category: "geoFilter", action: "Country", label: selectedCountry });
+
+                const selectedCountryProperties = countries.find(el => el.ISO_2_CODE === selectedCountry);
+                setRegion({
+                    region: selectedCountry
+                        ? selectedCountryProperties?.REGION_FULL.replaceAll(" ", "_") || ""
+                        : region.region,
+                    subRegion: selectedCountry
+                        ? selectedCountryProperties?.SUBREGION?.replaceAll(" ", "_") || ""
+                        : region.subRegion,
+                    country: selectedCountry,
+                });
+            } else {
+                setRegion({
+                    ...region,
+                    country: undefined,
+                    site: "",
+                    siteCoordinates: undefined,
+                    siteIso2: "",
+                });
+            }
+            if (map && layerSource && selection) resetSelectionInFeatures(map, layerSource, selection);
+            if (selection) setSelection(null);
+        },
+        [map, layerSource, selection, setSelection, countries, setRegion, region]
+    );
 
     const translatedCountries = countries.filter(el =>
         countriesTranslation.map(el => el.VALUE_).includes(el.ISO_2_CODE)
@@ -64,6 +104,7 @@ const CountrySelector = ({ region, countries = [], setRegion, fetchCountryLayer,
             options={suggestions}
             onChange={onChange}
             value={region.country}
+            menuPosition={"fixed"}
         />
     );
 };

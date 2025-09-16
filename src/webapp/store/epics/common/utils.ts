@@ -2,18 +2,23 @@ import _ from "lodash";
 import { Study } from "../../../../domain/entities/Study";
 import { isNotNull, isNull } from "../../../utils/number-utils";
 import { CitationDataSource, CurationSources } from "../../SelectionData";
+import { MapTheme, State } from "../../types";
+import { setFiltersAction, setMaxMinYearsAction } from "../../actions/base-actions";
 
 const valueOrUndefined = (value: string) => (isNull(value) ? undefined : value.trim());
 
 const extractDataSourcesWithUrl = (study: Study) => {
     return {
         url: study.CITATION_URL,
-        text: `${
-            valueOrUndefined(study.CITATION_LONG) ||
-            valueOrUndefined(study.CITATION) ||
-            valueOrUndefined(study.INSTITUTION) ||
-            valueOrUndefined(study.CITATION_URL)
-        } ${study.INSTITUTION_CITY ? `, ${study.INSTITUTION_CITY}` : ""}`,
+        text: [
+            `${
+                valueOrUndefined(study.CITATION_LONG) ||
+                valueOrUndefined(study.CITATION) ||
+                valueOrUndefined(study.INSTITUTION) ||
+                valueOrUndefined(study.CITATION_URL)
+            }`,
+            ...(study.INSTITUTION_CITY ? [study.INSTITUTION_CITY] : []),
+        ].join(", "),
     };
 };
 
@@ -54,6 +59,11 @@ export function selectDataSourcesByStudies(dataSources: CitationDataSource[], st
     return _.uniq(
         studies
             .reduce((acc, study) => {
+                const dataSourceByURLAndText = dataSources.find(ds => {
+                    const text = study.INSTITUTE || study.INSTITUTION || study.CITATION_URL;
+                    return text && ds.url === study.CITATION_URL && ds.text === text;
+                });
+
                 const dataSourceByURL = dataSources.find(ds => ds.url != null && ds.url === study.CITATION_URL);
 
                 const dataSourceByCitation = dataSources.find(ds => ds.text === study.CITATION);
@@ -65,6 +75,7 @@ export function selectDataSourcesByStudies(dataSources: CitationDataSource[], st
                 const dataSourceByCitationInstitution = dataSources.find(ds => ds.text === study.INSTITUTION);
 
                 const dataSource =
+                    dataSourceByURLAndText ||
                     dataSourceByURL ||
                     dataSourceByCitation ||
                     dataSourceByCitationLong ||
@@ -98,4 +109,21 @@ export function createCurations(dataSources: CitationDataSource[], studies: Stud
     });
 
     return curations;
+}
+
+export function resetDatesRequired(props: {
+    minMaxYears: () => [number, number];
+    theme: MapTheme;
+    state: State;
+    filterStart?: number;
+}) {
+    const { minMaxYears, theme, state, filterStart } = props;
+
+    if (state.malaria.theme !== theme) return [];
+
+    const [start, end] = minMaxYears();
+    const resetDatesIsRequired = state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start;
+    return resetDatesIsRequired
+        ? [setMaxMinYearsAction([start, end]), setFiltersAction([filterStart ?? start, end])]
+        : [];
 }

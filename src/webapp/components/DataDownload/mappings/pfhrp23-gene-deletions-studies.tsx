@@ -58,6 +58,10 @@ const mappings: Option[] = [
         label: "PROMPT_NAME",
     },
     {
+        value: "PROT_TYPE_NAME",
+        label: "PROT_TYPE_NAME",
+    },
+    {
         value: "GEOGR_SCOPE_NAME",
         label: "GEOGR_SCOPE_NAME",
     },

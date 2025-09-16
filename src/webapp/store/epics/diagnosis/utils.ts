@@ -1,6 +1,5 @@
 import i18next from "i18next";
 import _ from "lodash";
-import * as R from "ramda";
 import { DiagnosisStudy } from "../../../../domain/entities/DiagnosisStudy";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { formatList } from "../../../utils/string-utils";
@@ -43,9 +42,9 @@ export function createDiagnosisSelectionData(
 
     const subtitle = DiagnosisMapType.HRP23_STUDIES
         ? `${i18next.t("common.diagnosis.chart.hrp23_studies.subtitle")}`
-        : `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")} ${
-              years.length === 1 ? surveyType : ""
-          } (${years.join("-")}) ${sampleOrigin}`;
+        : `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")} ${years.length === 1 ? surveyType : ""} ${
+              years.length > 0 ? `(${years.join("-")})` : ""
+          } ${sampleOrigin}`;
 
     const dataSources = createCitationDataSources(theme, sortedStudies);
 
@@ -95,14 +94,17 @@ function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: Citatio
             surveyTypes: formatList(surveyTypes),
         });
 
-        const [yearStart, yearEnd] = getMinMaxYears(studies);
+        const years = getMinMaxYears(studies);
 
         return `${i18next.t("common.diagnosis.chart.gene_deletions.subtitle_1")}
-                           ${surveyType} (${yearStart} - ${yearEnd})`;
+                           ${surveyType} ${years.length > 0 ? `(${years.join("-")})` : ""}`;
     };
-
     const groupByYear = _(studies)
-        .groupBy(({ YEAR_START }) => YEAR_START)
+        .map(study => ({
+            ...study,
+            dataSourcesKeys: selectDataSourcesByStudies(dataSources, [study]),
+        }))
+        .groupBy(({ YEAR_START, dataSourcesKeys }) => `${YEAR_START}_${dataSourcesKeys.join(",")}`)
         .mapValues(studies => {
             const studyObject = studies[0];
 
@@ -110,6 +112,7 @@ function createGeneDeletionsData(studies: DiagnosisStudy[], dataSources: Citatio
                 header: createHeader(studies),
                 dataSources: `(${selectDataSourcesByStudies(dataSources, studies)})`,
                 year: +studies[0].YEAR_START,
+                studyObject: studyObject,
                 items: [
                     {
                         type: "HRP2",
@@ -158,6 +161,10 @@ function createHrp23StudiesData(studies: DiagnosisStudy[]): Hrp23StudiesData {
             label: i18next.t(`common.diagnosis.chart.hrp23_studies.study_population`),
             value: study.SYMP_STAT_NAME,
         },
+        [HRP23_STUDIES.STUDY_DESIGN]: {
+            label: i18next.t(`common.diagnosis.chart.hrp23_studies.study_design`),
+            value: study.PROT_TYPE_NAME,
+        },
         [HRP23_STUDIES.GENOTYPING]: {
             label: i18next.t(`common.diagnosis.chart.hrp23_studies.genotyping`),
             value: study.HRP_GENO_NAME,
@@ -187,9 +194,10 @@ function createHrp23StudiesData(studies: DiagnosisStudy[]): Hrp23StudiesData {
 }
 
 function getMinMaxYears(studies: DiagnosisStudy[]): number[] {
-    const sortedStudies = R.sortBy(study => study.YEAR_START, studies);
-    const minYear = sortedStudies[0].YEAR_START;
-    const maxYear = sortedStudies[sortedStudies.length - 1].YEAR_END;
+    if (studies.length === 0) return [];
 
-    return _.uniq([+minYear, +maxYear]);
+    const minYear = Math.min(...studies.map(s => +s.YEAR_START));
+    const maxYear = Math.max(...studies.map(s => +s.YEAR_END));
+
+    return maxYear ? _.uniq([minYear, maxYear]) : [minYear];
 }

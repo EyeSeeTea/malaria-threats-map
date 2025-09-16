@@ -118,6 +118,14 @@ export function getMostPriorityUsignResistanceStatus(studies: PreventionStudy[])
     return R.sortBy(study => study.priority, studiesWithPriority)[0];
 }
 
+export function getMostPriorityUsingMortalityAdjusted(studies: PreventionStudy[]) {
+    const sortedStudies = R.sortBy(study => {
+        const value = Number(study.MORTALITY_ADJUSTED);
+        return isNaN(value) ? -Infinity : -value;
+    }, studies);
+    return sortedStudies[0];
+}
+
 const ResistanceIntensityOrder: Record<ResistanceIntensity, number> = {
     NA: 0,
     COULD_NOT_BE_RELIABLY_ASSESSED: 0,
@@ -161,6 +169,12 @@ const InvolvementOrder: { [value: string]: number } = {
     PARTIAL_INVOLVEMENT: 1,
     FULL_INVOLVEMENT: 2,
 };
+
+export function getMostPriorityUsingMechanismProxy(studies: PreventionStudy[]) {
+    const filteredSortedStudies = R.sortBy(study => -InvolvementOrder[study.MECHANISM_PROXY] || 0, studies);
+
+    return filteredSortedStudies[0];
+}
 
 export function getByMostRecentYearAndInvolvement(group: any[]) {
     const filteredStudies = filterByMostRecentYear(group);

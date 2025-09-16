@@ -118,7 +118,7 @@ const BottomMiddleContainer = styled(BaseContainer)`
 const BottomRightContainer = styled(BaseContainer)`
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: 10px 40px 10px 10px;
     bottom: 0;
     right: 0;
 `;
@@ -366,7 +366,11 @@ class Map extends React.Component<Props, StateTypes> {
                 <Fade in={showOptions}>
                     <PushoverContainer menuOpen={this.state.menuOpen}>
                         <FloatingActionContainer>
-                            <MapActions isMinimizedVersion={this.state.viewMapOnly} />
+                            <MapActions
+                                isMinimizedVersion={this.state.viewMapOnly}
+                                map={this.map}
+                                layerSource={getLayerSource(this.props.theme)}
+                            />
                         </FloatingActionContainer>
                     </PushoverContainer>
                 </Fade>

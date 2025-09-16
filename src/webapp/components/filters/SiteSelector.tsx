@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import { setRegionAction, setSelection } from "../../store/actions/base-actions";
-import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
+import { selectRegion, selectSelection, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { selectFilteredPreventionStudies } from "../../store/reducers/prevention-reducer";
 import { selectFilteredDiagnosisStudies } from "../../store/reducers/diagnosis-reducer";
@@ -13,6 +13,8 @@ import { getRegionBySite, Study } from "../../../domain/entities/Study";
 import { useTranslation } from "react-i18next";
 import SingleFilter from "./common/SingleFilter";
 import { isNotNull } from "../../utils/number-utils";
+import { resetSelectionInFeatures } from "../layers/effects";
+import mapboxgl from "mapbox-gl";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
@@ -21,6 +23,7 @@ const mapStateToProps = (state: State) => ({
     treatmentStudies: selectFilteredTreatmentStudies(state),
     invasiveStudies: selectFilteredInvasiveStudies(state),
     region: selectRegion(state),
+    selection: selectSelection(state),
 });
 
 const mapDispatchToProps = {
@@ -28,9 +31,14 @@ const mapDispatchToProps = {
     setSelection: setSelection,
 };
 
+type OwnProps = {
+    map?: mapboxgl.Map;
+    layerSource?: string;
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps & OwnProps;
 
 function SiteSelector({
     theme,
@@ -41,6 +49,9 @@ function SiteSelector({
     region,
     setRegion,
     setSelection,
+    map,
+    layerSource,
+    selection,
 }: Props) {
     const { t } = useTranslation();
 
@@ -75,20 +86,36 @@ function SiteSelector({
         });
     }, [siteRegions]);
 
-    const onChange = (selection?: string) => {
-        const site = siteRegions.find(site => site.site === selection);
-        if (site) sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: selection });
-        setRegion(site);
+    const onChange = useCallback(
+        (siteSelected?: string) => {
+            const site = siteRegions.find(site => site.site === siteSelected);
 
-        if (site) {
-            setSelection({
-                ISO_2_CODE: site.siteIso2,
-                SITE_ID: site.site,
-                coordinates: site.siteCoordinates,
-                OBJECTIDs: [],
-            });
-        }
-    };
+            if (site) {
+                sendAnalytics({ type: "event", category: "geoFilter", action: "Site", label: siteSelected });
+
+                setRegion(site);
+
+                setSelection({
+                    ISO_2_CODE: site.siteIso2,
+                    SITE_ID: site.site,
+                    coordinates: site.siteCoordinates,
+                    OBJECTIDs: [],
+                });
+            } else {
+                if (map && layerSource && selection) resetSelectionInFeatures(map, layerSource, selection);
+
+                setRegion({
+                    ...region,
+                    site: "",
+                    siteCoordinates: undefined,
+                    siteIso2: "",
+                });
+
+                if (selection) setSelection(null);
+            }
+        },
+        [siteRegions, setRegion, setSelection, region, map, layerSource, selection]
+    );
 
     return (
         <SingleFilter
@@ -98,6 +125,7 @@ function SiteSelector({
             options={suggestions}
             onChange={onChange}
             value={region.site}
+            menuPosition={"fixed"}
         />
     );
 }

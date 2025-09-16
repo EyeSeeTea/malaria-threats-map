@@ -21,6 +21,7 @@ export type GeneDeletionsChartDataContent = {
     header?: string;
     dataSources: string;
     year: number;
+    studyObject: DiagnosisStudy;
     items: GeneDeletionsChartDataItem[];
 };
 
@@ -33,6 +34,7 @@ export enum HRP23_STUDIES {
     STATUS = "status",
     PROPOSED_TIMEFRAME = "proposedTimeframe",
     STUDY_POPULATION = "studyPopulation",
+    STUDY_DESIGN = "studyDesign",
     GENOTYPING = "genotyping",
     STUDY_INITIATED_FOLLOWING = "studyInitiatedFollowing",
     STUDY_SITES = "studySites",

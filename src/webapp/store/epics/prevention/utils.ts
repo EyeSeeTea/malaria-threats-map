@@ -5,13 +5,13 @@ import { Option } from "../../../components/BasicSelect";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { isNA, isNotNull, isNR } from "../../../utils/number-utils";
 import {
+    CitationDataSource,
     PreventionChartData,
     PreventionChartDataItem,
-    CitationDataSource,
-    SelectionData,
+    preventionChartDataTitle,
     PreventionMechanismChartData,
     PreventionMechanismChartDataGroup,
-    preventionChartDataTitle,
+    SelectionData,
 } from "../../SelectionData";
 import * as R from "ramda";
 import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
@@ -26,7 +26,11 @@ import {
     filterByResistanceStatus,
 } from "../../../components/layers/studies-filters";
 import { cleanMechanismTypeOptions } from "../../../components/filters/MechanismTypeFilter";
-import { getMostPriorityUsignResistanceStatus } from "../../../components/layers/prevention/utils";
+import {
+    getMostPriorityUsignResistanceStatus,
+    getMostPriorityUsingMortalityAdjusted,
+    getMostPriorityUsingMechanismProxy,
+} from "../../../components/layers/prevention/utils";
 import { ResistanceStatusColors } from "../../../components/layers/prevention/ResistanceStatus/symbols";
 
 type SortDirection = boolean | "asc" | "desc";
@@ -311,16 +315,21 @@ function createChartDataItems(
     }, sortedStudies);
 
     const firstStudiesOfGroups = Object.values(cleanedStudies).map((groupStudies: PreventionStudy[]) =>
-        getMostPriorityUsignResistanceStatus(groupStudies)
+        mapType === PreventionMapType.INTENSITY_STATUS
+            ? getMostPriorityUsingMortalityAdjusted(groupStudies)
+            : mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT
+            ? getMostPriorityUsingMechanismProxy(groupStudies)
+            : getMostPriorityUsignResistanceStatus(groupStudies)
     );
 
     const orders: [string | ((study: PreventionStudy) => unknown), SortDirection][] = _.compact([
-        ["YEAR_START", "desc"],
+        ["YEAR_START", "asc"],
         ["INSECTICIDE_TYPE", "asc"],
         mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT ? ["SYNERGIST_TYPE", "asc"] : undefined,
         mapType === PreventionMapType.INTENSITY_STATUS
             ? [(study: PreventionStudy) => +study.INSECTICIDE_INTENSITY, "asc"]
             : undefined,
+        [(study: PreventionStudy) => +study.MORTALITY_ADJUSTED, "asc"],
     ]);
 
     const orderFields: _.Many<_.ListIteratee<PreventionStudy>> = orders.map(order => order[0]);
@@ -340,12 +349,22 @@ function createChartDataItems(
                 number: study.NUMBER,
                 resistanceStatus: study.RESISTANCE_STATUS,
                 color: getColor(mapType, study),
+                group: getChartDataGroupKey(mapType, study),
             };
         })
-        .sortBy(study => study.y)
         .value();
 
     return data;
+}
+
+function getChartDataGroupKey(mapType: PreventionMapType, study: PreventionStudy): string {
+    switch (mapType) {
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+        case PreventionMapType.INTENSITY_STATUS:
+            return `${study.YEAR_START}_${study.INSECTICIDE_TYPE}`;
+        default:
+            return `${study.YEAR_START}`;
+    }
 }
 
 function otherDetected(mapType: PreventionMapType, siteFilteredStudies: Study[], siteNonFilteredStudies: Study[]) {

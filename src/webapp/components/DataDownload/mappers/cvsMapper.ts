@@ -287,6 +287,7 @@ export const mapDiagnosisStudiesToCSV = (database: DiagnosisDatabaseSelection) =
                 "SYMP_STAT_NAME",
                 "HRP_GENO_NAME",
                 "PROMPT_NAME",
+                "PROT_TYPE_NAME",
                 "GEOGR_SCOPE_NAME",
                 "INSTITUTION",
                 "INSTITUTION_CITY",
