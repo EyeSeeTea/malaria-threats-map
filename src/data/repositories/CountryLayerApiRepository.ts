@@ -18,7 +18,7 @@ export class CountryLayerApiRepository implements CountryLayerRepository {
 
         return getBackendCountries(this.xmartBaseUrl).flatMap(backendCountries => {
             return request<CountryLayer>({
-                url: `${this.baseUrl}/Detailed_Boundary_ADM0/FeatureServer/0/query`,
+                url: `${this.baseUrl}/GISC/WHO_ADMIN_BOUNDARIES/MapServer/0/query`,
                 params,
             }).map(countryLayer => {
                 const newCountryLayer = {
