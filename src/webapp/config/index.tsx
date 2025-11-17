@@ -31,7 +31,7 @@ const WHO_MALARIA_THREATS_MAP_STAGING =
 // NOTICE: this URL is not used in the app
 const WHO_MALARIA_THREATS_MAP = "https://extranet.who.int/gis/rest/services/MALARIA/WHO_MALARIA_THREATS_MAP/MapServer";
 
-const FEATURES_SERVER = "https://services.arcgis.com/5T5nSi527N4F7luB/arcgis/rest/services";
+const FEATURES_SERVER = "https://extranet.who.int/map/rest/services";
 
 const XMART_URL_STAGING = "https://xmart-api-public-uat.who.int/MAL_THREATS";
 const XMART_URL_PROD = "https://xmart-api-public.who.int/MAL_THREATS";
