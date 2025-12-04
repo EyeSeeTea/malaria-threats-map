@@ -172,6 +172,7 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters:
             color: "#940D12",
             marker: {
                 symbol: "circle",
+                radius: 5,
             },
         },
         {
@@ -187,6 +188,7 @@ function createTreatmentFailureChartData(studies: TreatmentStudy[], yearFilters:
                   color: "#FB6A4A",
                   marker: {
                       symbol: "square",
+                      radius: 3.5,
                   },
               }
             : undefined,
