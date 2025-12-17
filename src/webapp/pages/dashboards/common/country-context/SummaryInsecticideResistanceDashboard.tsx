@@ -48,7 +48,7 @@ const SummaryInsecticideResistanceDashboard: React.FC = () => {
                                 return (
                                     <tr key={item.country}>
                                         <td>{t(`countries.${item.country}`, { defaultValue: t(item.country) })}</td>
-                                        <td>{item.vectorSpecies}</td>
+                                        <TableDataCell>{item.vectorSpecies}</TableDataCell>
                                         <td>{item.insectidiceClasses}</td>
                                         <td>{item.resistanceMechanisms}</td>
                                     </tr>
@@ -104,4 +104,8 @@ const Table = styled.table`
     tr:nth-child(even) {
         border-bottom: 2px solid #0000001a;
     }
+`;
+
+const TableDataCell = styled.td`
+    font-style: italic;
 `;
