@@ -70,13 +70,15 @@ const MajorPlamociumSpeciesDashboard: React.FC = () => {
                                             }`}</td>
                                             <td>
                                                 {item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX &&
-                                                    item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX.split(";").map(drug => {
-                                                        return (
-                                                            <Typography key={drug} variant="body2">{`${t(
-                                                                `DRUG_${drug}`
-                                                            )} (${drug})`}</Typography>
-                                                        );
-                                                    })}
+                                                    item.MAL_PROFILE_MEDICINE_FOR_TRT_OF_PVIVAX.split("; ").map(
+                                                        drug => {
+                                                            return (
+                                                                <Typography key={drug} variant="body2">{`${t(
+                                                                    `DRUG_${drug}`
+                                                                )} (${drug})`}</Typography>
+                                                            );
+                                                        }
+                                                    )}
                                             </td>
                                         </tr>
                                     </React.Fragment>
