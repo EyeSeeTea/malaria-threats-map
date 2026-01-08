@@ -36,7 +36,7 @@ const VectorsDashboard: React.FC = () => {
                                 return (
                                     <tr key={item.ORGANISATIONUNITCODE}>
                                         <td>{item.ORGANISATIONUNITNAME}</td>
-                                        <td>{species.join(", ")}</td>
+                                        <TableDataCell>{species.join(", ")}</TableDataCell>
                                     </tr>
                                 );
                             })}
@@ -92,4 +92,8 @@ const Table = styled.table`
     tr:nth-child(even) {
         border-bottom: 2px solid #0000001a;
     }
+`;
+
+const TableDataCell = styled.td`
+    font-style: italic;
 `;
