@@ -51,6 +51,7 @@ function getData(sortedStudies: InvasiveStudy[]): InvasiveChartDataContent[] {
         samplingMethod: cleanValue(study.SAMPLING_METHOD),
         speciedIdentificationMethod: cleanValue(study.ID_METHOD),
         vectorStage: cleanValue(study.STAGE),
+        sumOfTests: cleanValue(study.TOT_STUDIES),
         larvalHabitat:
             study.STAGE === "Immatures (larvae or pupae)" ||
             study.STAGE === "Immature" ||
