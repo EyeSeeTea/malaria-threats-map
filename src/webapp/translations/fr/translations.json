@@ -755,6 +755,7 @@
                     "help": {
                         "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point de la carte est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires associées à la résistance. Les résultats les plus récents sont présentés par défaut.",
                         "p2": "",
+                        "p3": "Pour obtenir un aperçu structuré des altérations génétiques associées à la résistance aux médicaments antipaludiques, veuillez vous reporter au <1>« Compendium des marqueurs moléculaires de la résistance aux médicaments antipaludiques »</1>.",
                         "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
                     }
                 },

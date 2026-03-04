@@ -107,6 +107,8 @@ const Legend: React.FC<Props> = ({
     const WhoManualLink = "https://www.who.int/publications/i/item/9789240051089";
     const NewWhoManualLink = "https://iris.who.int/handle/10665/356964";
     const PirimiphosKey = "common.prevention.legend.pirimiphos_methly_undetermined.help";
+    const WhoMolecularMarkersLink =
+        "https://www.who.int/tools/compendium-of-molecular-markers-for-antimalarial-drug-resistance";
 
     const handleExpand = React.useCallback(() => {
         setExpanded(!expanded);
@@ -166,6 +168,16 @@ const Legend: React.FC<Props> = ({
                                         For information on how each level is defined, please consult the&nbsp;
                                         <a href={WhoManualLink} target="_blank" rel="noreferrer">
                                             WHO manual for resistance monitoring
+                                        </a>
+                                        .
+                                    </Trans>
+                                </Typography>
+                                <Typography variant="caption">
+                                    <Trans i18nKey={`${mapTypeHelpKey}.p3`} t={t}>
+                                        For a structured overview of the genetic alterations associated with
+                                        antimalarial drug resistance, please refer to the&nbsp;
+                                        <a href={WhoMolecularMarkersLink} target="_blank" rel="noreferrer">
+                                            “Compendium of molecular markers for antimalarial drug resistance”
                                         </a>
                                         .
                                     </Trans>
