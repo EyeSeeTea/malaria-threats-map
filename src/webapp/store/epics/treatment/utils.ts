@@ -260,6 +260,10 @@ function createMolecularMarkersChartData(
     const translations = {
         MM_PFCRT: i18next.t("download.ongoing_molecular_marker.MM_PFCRT"),
         COPY_NUMBERS: i18next.t("download.ongoing_molecular_marker.COPY_NUMBERS"),
+        WILD_TYPE: i18next.t("common.treatment.chart.molecular_markers.wild_type"),
+        VALIDATED_MARKERS: i18next.t("common.treatment.chart.molecular_markers.validated_markers"),
+        CANDIDATE_MARKERS: i18next.t("common.treatment.chart.molecular_markers.candidate_markers"),
+        OTHER_MARKERS: i18next.t("common.treatment.chart.molecular_markers.other_markers"),
     };
 
     return {
@@ -269,18 +273,18 @@ function createMolecularMarkersChartData(
             series,
             markers: treatmentFilters.molecularMarkers.includes(molecularMarkersMap.Pfkelch13)
                 ? {
-                      "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
-                      "Validated markers": extractMarkersByMutationCategory(allStudies257, "validated"),
-                      "Candidate markers": extractMarkersByMutationCategory(allStudies257, "associated"),
-                      "Other markers": extractMarkersByMutationCategory(allStudies257, "other"),
+                      [translations.WILD_TYPE]: extractMarkersByMutationCategory(allStudies257, "wild type"),
+                      [translations.VALIDATED_MARKERS]: extractMarkersByMutationCategory(allStudies257, "validated"),
+                      [translations.CANDIDATE_MARKERS]: extractMarkersByMutationCategory(allStudies257, "associated"),
+                      [translations.OTHER_MARKERS]: extractMarkersByMutationCategory(allStudies257, "other"),
                   }
                 : treatmentFilters.molecularMarkers.includes(molecularMarkersMap.Pfcrt)
                 ? {
-                      "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
+                      [translations.WILD_TYPE]: extractMarkersByMutationCategory(allStudies257, "wild type"),
                       [translations.MM_PFCRT]: extractMarkersByMutationCategory(allStudies257, "mutations"),
                   }
                 : {
-                      "Wild type": extractMarkersByMutationCategory(allStudies257, "wild type"),
+                      [translations.WILD_TYPE]: extractMarkersByMutationCategory(allStudies257, "wild type"),
                       [translations.COPY_NUMBERS]: extractMarkersByMutationCategory(
                           allStudies257,
                           "multiple copy numbers"
