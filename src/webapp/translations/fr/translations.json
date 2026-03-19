@@ -1435,6 +1435,9 @@
             },
             "5": {
                 "title": "Cliquez sur un point de la carte pour voir les détails de l'étude"
+            },
+            "6": {
+                "title": "Consultez les détails de l'étude dans le panneau latéral"
             }
         }
     },

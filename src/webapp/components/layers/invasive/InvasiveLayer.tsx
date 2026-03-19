@@ -27,7 +27,7 @@ import { INVASIVE_STATUS } from "./VectorOccurance/utils";
 
 const INVASIVE = "invasive";
 const INVASIVE_LAYER_ID = "invasive-layer";
-const INVASIVE_SOURCE_ID = "invasive-source";
+export const INVASIVE_SOURCE_ID = "invasive-source";
 
 const circleLayout = {
     visibility: "visible",

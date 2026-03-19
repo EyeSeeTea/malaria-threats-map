@@ -256,12 +256,18 @@ class Map extends React.Component<Props, StateTypes> {
                 padding: 100,
             });
         }
+
         if (
             this.props.selection !== null &&
             this.props.selectionData !== null &&
             this.props.selectionData !== prevProps.selectionData
         ) {
-            resetSelectionInFeatures(this.map, getLayerSource(this.props.theme), prevProps.selection);
+            const currentSelectionSiteId = this.props.selection?.SITE_ID;
+            const previousSelectionSiteId = prevProps.selection?.SITE_ID;
+            const selectionChanged = currentSelectionSiteId !== previousSelectionSiteId;
+            if (selectionChanged) {
+                resetSelectionInFeatures(this.map, getLayerSource(this.props.theme), prevProps.selection);
+            }
 
             this.setState({ sidebarOpen: true });
         }
@@ -356,7 +362,7 @@ class Map extends React.Component<Props, StateTypes> {
                         <PushoverContainer menuOpen={this.state.menuOpen}>
                             <SearchContainer>
                                 <Hidden smDown>
-                                    <MalariaTour />
+                                    <MalariaTour map={this.map} />
                                 </Hidden>
                                 <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
                             </SearchContainer>

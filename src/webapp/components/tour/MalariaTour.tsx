@@ -23,9 +23,11 @@ import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
 import Step4 from "./steps/Step4";
 import Step5 from "./steps/Step5";
+import Step6 from "./steps/Step6";
 import { dispatchCustomEvent } from "../../utils/dom-utils";
 import { setInsecticideClass, setInsecticideTypes, setSpecies } from "../../store/actions/prevention-actions";
 import { setToLocalStorage } from "../../utils/browserCache";
+import { INVASIVE_SOURCE_ID } from "../layers/invasive/InvasiveLayer";
 
 const StyledTour = styled(Tour)`
     padding: 10;
@@ -101,7 +103,7 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type OwnProps = { classes?: { [key: string]: string } };
+type OwnProps = { classes?: { [key: string]: string }; map: mapboxgl.Map };
 type Props = DispatchProps & StateProps & OwnProps;
 
 class MalariaTour extends PureComponent<Props> {
@@ -115,9 +117,9 @@ class MalariaTour extends PureComponent<Props> {
         [187.9357241872363, 78.02618763542307],
     ];
 
-    readonly zambiaBounds = [
-        [16.340674519230163, -19.66523734467671],
-        [43.28779140779719, -5.760008504858064],
+    readonly kenyaBounds = [
+        [33.8935689697, -4.67677],
+        [41.8550830926, 15.0],
     ];
 
     componentDidMount(): void {
@@ -162,10 +164,11 @@ class MalariaTour extends PureComponent<Props> {
     };
 
     onClose = () => {
-        this.setState({ open: false });
+        this.setState({ visible: false });
         this.setInsecticideClass("PYRETHROIDS");
         this.setInsecticideTypes([]);
         this.setSelection(null);
+        this.props.map.setFeatureState({ source: INVASIVE_SOURCE_ID, id: 1093 }, { click: false });
         this.setRegion(null);
         this.setBounds(this.initialBounds);
         this.setActionGroupSelected(null);
@@ -174,7 +177,7 @@ class MalariaTour extends PureComponent<Props> {
     };
 
     render() {
-        const { tour } = this.props;
+        const { tour, map } = this.props;
         // https://github.com/elrumordelaluz/reactour/issues/185
         setTimeout(() => {
             const elements = document.querySelectorAll("div[data-focus-lock-disabled] button");
@@ -183,7 +186,7 @@ class MalariaTour extends PureComponent<Props> {
         }, 100);
 
         const baseProps = {
-            setTourOpen: this.onClose,
+            setTourOpen: (_tourOpen: boolean) => this.onClose(),
         };
 
         const steps: ReactourStep[] = [
@@ -254,22 +257,36 @@ class MalariaTour extends PureComponent<Props> {
             {
                 selector: ".mapboxgl-canvas",
                 content: ({ goTo }) => {
-                    this.setBounds(this.zambiaBounds);
-                    this.setRegion("ZM");
+                    this.setBounds(this.kenyaBounds);
+                    this.setRegion("KE");
                     setTimeout(() => goTo(9), 300);
                 },
             },
             {
                 selector: ".mapboxgl-canvas",
                 action: () => {
-                    this.setSelection({
-                        SITE_ID: "IRZM41",
-                        coordinates: [-14.2333, 28.6],
-                        ISO_2_CODE: "ZM",
-                    });
+                    this.setSelection(null);
+                    map.setFeatureState({ source: INVASIVE_SOURCE_ID, id: 1093 }, { click: false });
                 },
                 content: options => {
                     return <Step5 {...options} {...baseProps} step={9} back={6} />;
+                },
+                position: "center",
+                observe: ".mapboxgl-canvas",
+            },
+            {
+                selector: ".mapboxgl-canvas",
+                action: () => {
+                    this.setSelection({
+                        SITE_ID: "IRKE212",
+                        coordinates: [38.00445556640625, 2.2351506349126424],
+                        OBJECTIDs: [1093],
+                        ISO_2_CODE: "KE",
+                    });
+                    map.setFeatureState({ source: INVASIVE_SOURCE_ID, id: 1093 }, { click: true });
+                },
+                content: options => {
+                    return <Step6 {...options} {...baseProps} step={10} back={9} />;
                 },
                 position: "center",
                 observe: ".mapboxgl-canvas",
