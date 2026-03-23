@@ -54,8 +54,9 @@ import SelectionDataContent from "./site-selection-content/SelectionDataContent"
 import { getLayerSource } from "./layers/common/utils";
 import { resetSelectionInFeatures } from "./layers/effects";
 import MapScreenshot from "./MapScreenshot";
+import config from "../config";
 
-mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
+mapboxgl.accessToken = config.mapboxToken;
 
 // Fix bug in production build
 // https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-750489778
