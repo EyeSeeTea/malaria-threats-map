@@ -1433,6 +1433,9 @@
             },
             "5": {
                 "title": "Haga clic en un punto del mapa para ver los detalles del estudio"
+            },
+            "6": {
+                "title": "Consulta los detalles del estudio en el panel lateral"
             }
         }
     },

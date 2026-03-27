@@ -22,6 +22,7 @@ type ConfigProps = {
     feedbackEmailTo: string;
     feedbackEmailFrom: string;
     feedbackEmailSecureToken: string;
+    mapboxToken: string;
 };
 
 // NOTICE: this URL is not used in the app
@@ -43,6 +44,12 @@ const BACKEND_URL_PROD = "https://apps.who.int/malaria-api";
 
 const ANALYTICS_STAGING_ID = "G-4BFXR08NKP";
 const ANALYTICS_ID = "G-L4JVKD6B9R";
+
+const REACT_APP_MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
+
+if (!REACT_APP_MAPBOX_TOKEN) {
+    throw Error("REACT_APP_MAPBOX_TOKEN is not configured");
+}
 
 if (!FEEDBACK_EMAIL_FROM) {
     throw Error("REACT_APP_FEEDBACK_EMAIL_FROM is not configured");
@@ -98,6 +105,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
         xmartServerUrl: XMART_URL_STAGING,
+        mapboxToken: REACT_APP_MAPBOX_TOKEN,
     },
     dev: {
         ...base,
@@ -110,6 +118,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
         xmartServerUrl: XMART_URL_STAGING,
+        mapboxToken: REACT_APP_MAPBOX_TOKEN,
     },
     staging: {
         ...base,
@@ -122,6 +131,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
         xmartServerUrl: XMART_URL_STAGING,
+        mapboxToken: REACT_APP_MAPBOX_TOKEN,
     },
     prod: {
         ...base,
@@ -135,6 +145,7 @@ const configurations: { [key: string]: ConfigProps } = {
         feedbackEmailTo: FEEDBACK_EMAIL_TO,
         feedbackEmailSecureToken: FEEDBACK_EMAIL_SECURE_TOKEN,
         xmartServerUrl: XMART_URL_PROD,
+        mapboxToken: REACT_APP_MAPBOX_TOKEN,
     },
 };
 

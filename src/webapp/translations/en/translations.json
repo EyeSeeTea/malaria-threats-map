@@ -1432,6 +1432,9 @@
             },
             "5": {
                 "title": "Click on a map point to see study details"
+            },
+            "6": {
+                "title": "Check study details in the side panel"
             }
         }
     },
