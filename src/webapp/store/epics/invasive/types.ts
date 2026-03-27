@@ -15,7 +15,7 @@ export type InvasiveChartDataContent = {
     samplingMethod: string;
     speciedIdentificationMethod: string;
     vectorStage: string;
-    sumOfTests: string;
+    sumOfTests: string | undefined;
     larvalHabitat: string;
     villageOrigin: string;
 };
