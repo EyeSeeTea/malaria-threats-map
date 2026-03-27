@@ -691,7 +691,12 @@
                     "number_of_samples": "Number of samples",
                     "mutation_detected": "Samples with mutations detected",
                     "wt_tudy": "Samples with wildtype",
-                    "mc_study": "Samples with multiple copy numbers"
+                    "mc_study": "Samples with multiple copy numbers",
+                    "wild_type": "Wild type",
+                    "validated_markers": "Validated markers",
+                    "candidate_markers": "Candidate markers",
+                    "potential_markers": "Potential markers",
+                    "other_markers": "Other markers"
                 },
                 "ongoing_and_planned_treatment_studies": {
                     "overview": "Overview",

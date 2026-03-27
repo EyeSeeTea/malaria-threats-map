@@ -693,7 +693,12 @@
                     "number_of_samples": "Nombre d'échantillons",
                     "mutation_detected": "Échantillons avec mutations détectées",
                     "wt_tudy": "Échantillons de type sauvage",
-                    "mc_study": "Échantillons avec plusieurs numéros de copie"
+                    "mc_study": "Échantillons avec plusieurs numéros de copie",
+                    "wild_type": "Type sauvage",
+                    "validated_markers": "Marqueurs validés",
+                    "candidate_markers": "Marqueurs candidats",
+                    "potential_markers": "Marqueurs potentiels",
+                    "other_markers": "Autres marqueurs"
                 },
                 "ongoing_and_planned_treatment_studies": {
                     "overview": "Vue d'ensemble",
