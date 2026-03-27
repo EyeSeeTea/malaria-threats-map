@@ -755,6 +755,7 @@
                     "help": {
                         "p1": "Este mapa presenta datos de <1>estudios de marcadores moleculares</1>. El color del punto del mapa viene determinado por el porcentaje de muestras con mutaciones moleculares asociadas a la resistencia. Los resultados más recientes se presentan de forma predeterminada.",
                         "p2": "",
+                        "p3": "Para obtener una visión general estructurada de las alteraciones genéticas asociadas a la resistencia a los fármacos antipalúdicos, consulte el <1>«Compendio de marcadores moleculares para la resistencia a los fármacos antipalúdicos»</1>.",
                         "footer": "Fuente de datos: Base de datos mundial de la OMS sobre eficacia y resistencia a los medicamentos antipalúdicos."
                     }
                 },

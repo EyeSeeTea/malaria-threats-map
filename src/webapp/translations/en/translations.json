@@ -753,6 +753,7 @@
                     "help": {
                         "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the map point is determined by the percentage of samples with molecular mutations associated with resistance. The most recent results are presented by default.",
                         "p2": "",
+                        "p3": "For a structured overview of the genetic alterations associated with antimalarial drug resistance, please refer to the <1>“Compendium of molecular markers for antimalarial drug resistance”</1>.",
                         "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
                     }
                 },
