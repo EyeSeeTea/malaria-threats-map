@@ -170,10 +170,14 @@ const InvolvementOrder: { [value: string]: number } = {
     FULL_INVOLVEMENT: 2,
 };
 
-export function getMostPriorityUsingMechanismProxy(studies: PreventionStudy[]) {
-    const filteredSortedStudies = R.sortBy(study => -InvolvementOrder[study.MECHANISM_PROXY] || 0, studies);
+export function getMostPriorityStudiesUsingMechanismProxy(studies: PreventionStudy[]): PreventionStudy[] {
+    const filteredSortedStudies = R.sortBy(study => -(InvolvementOrder[study.MECHANISM_PROXY] ?? 0), studies);
 
-    return filteredSortedStudies[0];
+    const first = filteredSortedStudies[0];
+    if (!first) return [];
+
+    const topProxy = first.MECHANISM_PROXY;
+    return filteredSortedStudies.filter(s => s.MECHANISM_PROXY === topProxy);
 }
 
 export function getByMostRecentYearAndInvolvement(group: any[]) {
