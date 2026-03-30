@@ -29,7 +29,7 @@ import { cleanMechanismTypeOptions } from "../../../components/filters/Mechanism
 import {
     getMostPriorityUsignResistanceStatus,
     getMostPriorityUsingMortalityAdjusted,
-    getMostPriorityUsingMechanismProxy,
+    getMostPriorityStudiesUsingMechanismProxy,
 } from "../../../components/layers/prevention/utils";
 import { ResistanceStatusColors } from "../../../components/layers/prevention/ResistanceStatus/symbols";
 
@@ -118,6 +118,7 @@ function createPreventionChartData(
               }
             : undefined;*/
 
+    // here
     const bySpeciesAndInsecticideType = _(studiesFiltered)
         .sortBy(({ SPECIES }) => SPECIES)
         .groupBy(({ SPECIES }) => SPECIES)
@@ -304,6 +305,50 @@ function getMorlatityAdjusted(study: Study): number {
     return +(parseFloat(study.MORTALITY_ADJUSTED) * 100).toFixed(1);
 }
 
+function buildFirstStudiesOfGroupsLevelInvolvement(
+    cleanedStudies: Record<string, PreventionStudy[]>
+): PreventionStudy[] {
+    const topMechanismStudies: PreventionStudy[] = Object.values(cleanedStudies).flatMap(
+        getMostPriorityStudiesUsingMechanismProxy
+    );
+
+    const studiesByChartKey: Record<string, PreventionStudy[]> = _.groupBy(topMechanismStudies, study =>
+        getChartDataGroupKey(PreventionMapType.LEVEL_OF_INVOLVEMENT, study)
+    );
+
+    const isNoSynergist = (s: PreventionStudy) => s.SYNERGIST_TYPE === "NO";
+    const isSynergist = (s: PreventionStudy) => s.SYNERGIST_TYPE !== "NO";
+
+    // When multiple studies exist we pick one ordering by OBJECTID
+    const pickOne = (arr: PreventionStudy[] = []): PreventionStudy | undefined =>
+        _(arr)
+            .orderBy([s => +s.OBJECTID], ["asc"])
+            .first();
+
+    const pickPairedForChartGroup = (studiesOfChartKey: PreventionStudy[]): PreventionStudy[] => {
+        const noSynergist = studiesOfChartKey.filter(isNoSynergist);
+        const synergist = studiesOfChartKey.filter(isSynergist);
+
+        const byPairNoSynergist = _.groupBy(noSynergist, s => s.STUDY_PAIRING_CODE);
+        const byPairSynergist = _.groupBy(synergist, s => s.STUDY_PAIRING_CODE);
+
+        const noSynergistPairs = Object.keys(byPairNoSynergist).sort();
+        const synergistPairs = Object.keys(byPairSynergist).sort();
+
+        const chosenPair =
+            synergistPairs.find(p => noSynergistPairs.includes(p)) ?? synergistPairs[0] ?? noSynergistPairs[0];
+
+        if (!chosenPair) return [];
+
+        const chosenNoSynergist = pickOne(byPairNoSynergist[chosenPair] ?? []) ?? pickOne(noSynergist);
+        const chosenSynergist = pickOne(byPairSynergist[chosenPair] ?? []) ?? pickOne(synergist);
+
+        return _.compact([chosenNoSynergist, chosenSynergist]);
+    };
+
+    return Object.values(studiesByChartKey).flatMap(pickPairedForChartGroup);
+}
+
 function createChartDataItems(
     mapType: PreventionMapType,
     dataSources: CitationDataSource[],
@@ -314,13 +359,14 @@ function createChartDataItems(
         return getStudyName(mapType, study);
     }, sortedStudies);
 
-    const firstStudiesOfGroups = Object.values(cleanedStudies).map((groupStudies: PreventionStudy[]) =>
-        mapType === PreventionMapType.INTENSITY_STATUS
-            ? getMostPriorityUsingMortalityAdjusted(groupStudies)
-            : mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT
-            ? getMostPriorityUsingMechanismProxy(groupStudies)
-            : getMostPriorityUsignResistanceStatus(groupStudies)
-    );
+    const firstStudiesOfGroups =
+        mapType === PreventionMapType.LEVEL_OF_INVOLVEMENT
+            ? buildFirstStudiesOfGroupsLevelInvolvement(cleanedStudies)
+            : Object.values(cleanedStudies).map((groupStudies: PreventionStudy[]) =>
+                  mapType === PreventionMapType.INTENSITY_STATUS
+                      ? getMostPriorityUsingMortalityAdjusted(groupStudies)
+                      : getMostPriorityUsignResistanceStatus(groupStudies)
+              );
 
     const orders: [string | ((study: PreventionStudy) => unknown), SortDirection][] = _.compact([
         ["YEAR_START", "asc"],

@@ -44,6 +44,8 @@ function getData(sortedStudies: InvasiveStudy[]): InvasiveChartDataContent[] {
     const cleanValue = (value: string) =>
         isNR(value) || isNull(value) ? i18next.t("common.invasive.chart.vector_occurrance.not_reported") : value;
 
+    const hasTotalStudiesValue = (value: number) => value !== undefined && !isNull(value);
+
     return sortedStudies.map(study => ({
         code: study.Code,
         species: getSpecies(study),
@@ -51,6 +53,7 @@ function getData(sortedStudies: InvasiveStudy[]): InvasiveChartDataContent[] {
         samplingMethod: cleanValue(study.SAMPLING_METHOD),
         speciedIdentificationMethod: cleanValue(study.ID_METHOD),
         vectorStage: cleanValue(study.STAGE),
+        sumOfTests: hasTotalStudiesValue(study.TOT_STUDIES) ? study.TOT_STUDIES.toString() : undefined,
         larvalHabitat:
             study.STAGE === "Immatures (larvae or pupae)" ||
             study.STAGE === "Immature" ||

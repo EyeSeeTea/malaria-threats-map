@@ -691,7 +691,12 @@
                     "number_of_samples": "Number of samples",
                     "mutation_detected": "Samples with mutations detected",
                     "wt_tudy": "Samples with wildtype",
-                    "mc_study": "Samples with multiple copy numbers"
+                    "mc_study": "Samples with multiple copy numbers",
+                    "wild_type": "Wild type",
+                    "validated_markers": "Validated markers",
+                    "candidate_markers": "Candidate markers",
+                    "potential_markers": "Potential markers",
+                    "other_markers": "Other markers"
                 },
                 "ongoing_and_planned_treatment_studies": {
                     "overview": "Overview",
@@ -753,6 +758,7 @@
                     "help": {
                         "p1": "This map presents data from <1>molecular marker studies</1>. The colour of the map point is determined by the percentage of samples with molecular mutations associated with resistance. The most recent results are presented by default.",
                         "p2": "",
+                        "p3": "For a structured overview of the genetic alterations associated with antimalarial drug resistance, please refer to the <1>“Compendium of molecular markers for antimalarial drug resistance”</1>.",
                         "footer": "Data source: WHO Global database on antimalarial drug efficacy and resistance."
                     }
                 },
@@ -792,6 +798,7 @@
                     "study_identification_method": "Species identification method",
                     "data_collection": "Acknowledgement for data curation",
                     "vector_stage": "Vector stage",
+                    "sum_of_test": "Sum of tests conducted in adjacent sites",
                     "larval_habitat": "Larval habitat",
                     "not_reported": "Not reported"
                 }
@@ -1162,7 +1169,8 @@
             "CITATION_URL": "URL of the publication where the data was published",
             "DATA_CURATOR": "Institute that compiled the data. Part of the data in this databases has been compiled by WHO's partner institutions and submited to or shared with WHO.This column will indicate the name of the institution or group that compiled the data.",
             "INVASIVE_STATUS": "This variable indicates whether the mosquitoes collected are considered invasive or native. \nNote: An invasive species  is a non-native species that establishes in a new ecosystem, and causes, or has the potential to cause, harm to the environment, economy, or human health",
-            "ADMIN1": "Administrative level 1 where the mosquitoes where collected"
+            "ADMIN1": "Administrative level 1 where the mosquitoes where collected",
+            "TOT_STUDIES": "Sum of tests conducted in adjacent sites"
         },
         "mm": {
             "ID": "Unique identifier of the study",
@@ -1431,6 +1439,9 @@
             },
             "5": {
                 "title": "Click on a map point to see study details"
+            },
+            "6": {
+                "title": "Check study details in the side panel"
             }
         }
     },

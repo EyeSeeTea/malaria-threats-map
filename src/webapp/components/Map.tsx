@@ -54,8 +54,9 @@ import SelectionDataContent from "./site-selection-content/SelectionDataContent"
 import { getLayerSource } from "./layers/common/utils";
 import { resetSelectionInFeatures } from "./layers/effects";
 import MapScreenshot from "./MapScreenshot";
+import config from "../config";
 
-mapboxgl.accessToken = "pk.eyJ1IjoibW11a2ltIiwiYSI6ImNqNnduNHB2bDE3MHAycXRiOHR3aG0wMTYifQ.ConO2Bqm3yxPukZk6L9cjA";
+mapboxgl.accessToken = config.mapboxToken;
 
 // Fix bug in production build
 // https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-750489778
@@ -256,12 +257,18 @@ class Map extends React.Component<Props, StateTypes> {
                 padding: 100,
             });
         }
+
         if (
             this.props.selection !== null &&
             this.props.selectionData !== null &&
             this.props.selectionData !== prevProps.selectionData
         ) {
-            resetSelectionInFeatures(this.map, getLayerSource(this.props.theme), prevProps.selection);
+            const currentSelectionSiteId = this.props.selection?.SITE_ID;
+            const previousSelectionSiteId = prevProps.selection?.SITE_ID;
+            const selectionChanged = currentSelectionSiteId !== previousSelectionSiteId;
+            if (selectionChanged) {
+                resetSelectionInFeatures(this.map, getLayerSource(this.props.theme), prevProps.selection);
+            }
 
             this.setState({ sidebarOpen: true });
         }
@@ -356,7 +363,7 @@ class Map extends React.Component<Props, StateTypes> {
                         <PushoverContainer menuOpen={this.state.menuOpen}>
                             <SearchContainer>
                                 <Hidden smDown>
-                                    <MalariaTour />
+                                    <MalariaTour map={this.map} />
                                 </Hidden>
                                 <Hidden smDown>{["prevention", "treatment"].includes(theme) && <Report />}</Hidden>
                             </SearchContainer>

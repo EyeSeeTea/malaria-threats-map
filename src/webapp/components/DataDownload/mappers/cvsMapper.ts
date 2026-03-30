@@ -539,6 +539,7 @@ export const mapInvasiveStudiesToCSV = (database: InvasiveDatabaseSelection) => 
             "DATA_CURATOR",
             "INVASIVE_STATUS",
             "ADMIN1",
+            "TOT_STUDIES",
         ];
         return [
             {
@@ -628,6 +629,13 @@ const resolveValue = (field: Option, study: any) => {
             return i18next.t(`${study[field.value] === "NA" ? "common.COUNTRY_NA" : study[field.value]}`);
         }
     }
+
+    if (field.value === "TOT_STUDIES") {
+        return !!study[field.value] || study[field.value] === 0
+            ? study[field.value]
+            : i18next.t(`common.dashboard.not-available`);
+    }
+
     if (!isNaN(study[field.value])) {
         return study[field.value];
     } else {

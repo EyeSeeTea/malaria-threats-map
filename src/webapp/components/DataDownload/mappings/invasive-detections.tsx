@@ -89,6 +89,10 @@ const mappings: Option[] = [
         value: "ADMIN1",
         label: "ADMIN1",
     },
+    {
+        value: "TOT_STUDIES",
+        label: "TOT_STUDIES",
+    },
 ];
 
 export default mappings;

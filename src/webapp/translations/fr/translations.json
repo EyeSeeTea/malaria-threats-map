@@ -693,7 +693,12 @@
                     "number_of_samples": "Nombre d'échantillons",
                     "mutation_detected": "Échantillons avec mutations détectées",
                     "wt_tudy": "Échantillons de type sauvage",
-                    "mc_study": "Échantillons avec plusieurs numéros de copie"
+                    "mc_study": "Échantillons avec plusieurs numéros de copie",
+                    "wild_type": "Type sauvage",
+                    "validated_markers": "Marqueurs validés",
+                    "candidate_markers": "Marqueurs candidats",
+                    "potential_markers": "Marqueurs potentiels",
+                    "other_markers": "Autres marqueurs"
                 },
                 "ongoing_and_planned_treatment_studies": {
                     "overview": "Vue d'ensemble",
@@ -755,6 +760,7 @@
                     "help": {
                         "p1": "Cette carte présente les données d'<1>études de marqueurs moléculaires</1>. La couleur du point de la carte est déterminée par le pourcentage d'échantillons présentant des mutations moléculaires associées à la résistance. Les résultats les plus récents sont présentés par défaut.",
                         "p2": "",
+                        "p3": "Pour obtenir un aperçu structuré des altérations génétiques associées à la résistance aux médicaments antipaludiques, veuillez vous reporter au <1>« Compendium des marqueurs moléculaires de la résistance aux médicaments antipaludiques »</1>.",
                         "footer": "Source des données : base de données mondiale de l'OMS sur l'efficacité et la résistance des médicaments antipaludiques."
                     }
                 },
@@ -794,6 +800,7 @@
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
                     "vector_stage": "Vector stage",
+                    "sum_of_test": "Somme des tests effectués sur des sites adjacents",
                     "larval_habitat": "Habitat larvaire",
                     "not_reported": "Non reporté"
                 }
@@ -1164,7 +1171,8 @@
             "CITATION_URL": "URL de la publication où les données ont été publiées",
             "DATA_CURATOR": "Institut qui a compilé les données. Certaines des données de cette base de données ont été compilées par des institutions collaboratrices qui ont partagé leurs collections de données avec l'OMS. Cette colonne indiquera le nom de l'institution ou du groupe qui a compilé les données.",
             "INVASIVE_STATUS": "Cette variable indique si les moustiques collectés sont considérés comme invasives ou indigènes.\nRemarque: Une espèce invasive est une espèce non indigène qui s’établit dans un nouvel écosystème et cause,\nou a le potentiel de causer, des dommages à l’environnement, à l’économie ou à la santé humaine.",
-            "ADMIN1": "Niveau administratif 1 où le site de capture des moustiques se trouve"
+            "ADMIN1": "Niveau administratif 1 où le site de capture des moustiques se trouve",
+            "TOT_STUDIES": "Somme des tests effectués sur des sites adjacents"
         },
         "mm": {
             "ID": "Identifiant unique de l'étude",
@@ -1435,6 +1443,9 @@
             },
             "5": {
                 "title": "Cliquez sur un point de la carte pour voir les détails de l'étude"
+            },
+            "6": {
+                "title": "Consultez les détails de l'étude dans le panneau latéral"
             }
         }
     },
