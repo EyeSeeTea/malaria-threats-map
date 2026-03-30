@@ -800,6 +800,7 @@
                     "study_identification_method": "Método de identificación de especies",
                     "data_collection": "Agrademicimientos por la recopilación de datos",
                     "vector_stage": "Vector stage",
+                    "sum_of_test": "Suma de las pruebas realizadas en sitios adyacentes",
                     "larval_habitat": "Hábitat de las larvas",
                     "not_reported": "No reportado"
                 }
@@ -1170,7 +1171,8 @@
             "CITATION_URL": "URL de la publicación donde se publicaron los datos",
             "DATA_CURATOR": "Instituto que compiló los datos. Parte de los datos en esta base de datos ha sido compilada por instituciones colaboradoras que compartieron sus colecciones de datos con la OMS. Esta columna indicará el nombre de la institución o grupo que compiló los datos.",
             "INVASIVE_STATUS": "Esta variable indica si los mosquitos capturados se consideran invasivos o nativos.\nNota: Una especie invasora es una especie no nativas que se establecen en un nuevo ecosistema y causan, o tiene el potencial de causar, daño al medio ambiente, a la economía y a la salud humana",
-            "ADMIN1": "Nivel administrativo 1 donde se ubica el lugar de captura de los mosquitos"
+            "ADMIN1": "Nivel administrativo 1 donde se ubica el lugar de captura de los mosquitos",
+            "TOT_STUDIES": "Suma de las pruebas realizadas en sitios adyacentes"
         },
         "mm": {
             "ID": "Identificador único del estudio",

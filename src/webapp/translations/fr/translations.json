@@ -800,6 +800,7 @@
                     "study_identification_method": "Méthode d’identification des espèces",
                     "data_collection": "Remerciements pour la collecte de données",
                     "vector_stage": "Vector stage",
+                    "sum_of_test": "Somme des tests effectués sur des sites adjacents",
                     "larval_habitat": "Habitat larvaire",
                     "not_reported": "Non reporté"
                 }
@@ -1170,7 +1171,8 @@
             "CITATION_URL": "URL de la publication où les données ont été publiées",
             "DATA_CURATOR": "Institut qui a compilé les données. Certaines des données de cette base de données ont été compilées par des institutions collaboratrices qui ont partagé leurs collections de données avec l'OMS. Cette colonne indiquera le nom de l'institution ou du groupe qui a compilé les données.",
             "INVASIVE_STATUS": "Cette variable indique si les moustiques collectés sont considérés comme invasives ou indigènes.\nRemarque: Une espèce invasive est une espèce non indigène qui s’établit dans un nouvel écosystème et cause,\nou a le potentiel de causer, des dommages à l’environnement, à l’économie ou à la santé humaine.",
-            "ADMIN1": "Niveau administratif 1 où le site de capture des moustiques se trouve"
+            "ADMIN1": "Niveau administratif 1 où le site de capture des moustiques se trouve",
+            "TOT_STUDIES": "Somme des tests effectués sur des sites adjacents"
         },
         "mm": {
             "ID": "Identifiant unique de l'étude",
