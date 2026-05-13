@@ -5,7 +5,12 @@ import { ActionTypeEnum } from "../../actions";
 import { forkJoin, Observable, of } from "rxjs";
 import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 
-import { buildPreventionStudiesEpic, createPreventionSelectionData, REQUESTED_VIR_START_DATE } from "./utils";
+import {
+    buildPreventionStudiesEpic,
+    createPreventionSelectionData,
+    getStudiesByMapType,
+    REQUESTED_VIR_START_DATE,
+} from "./utils";
 import { PreventionMapType, State } from "../../types";
 import { EpicDependencies } from "../..";
 import { fromFuture } from "../utils";
@@ -209,12 +214,15 @@ export const setPreventionFilteredStudiesEpic = (
         ofType(ActionTypeEnum.SetPreventionFilteredStudies),
         withLatestFrom(state$),
         switchMap(([, state]) => {
+            const mapType = state.prevention.filters.mapType;
+            const nonFilteredStudies = getStudiesByMapType(state, mapType);
+
             const selectionData = createPreventionSelectionData(
                 state.malaria.theme,
                 state.prevention.filters.mapType,
                 state.malaria.selection,
                 state.prevention.filteredStudies,
-                state.prevention.studies
+                nonFilteredStudies
             );
 
             return of(setSelectionData(null), setSelectionData(selectionData));
@@ -230,7 +238,10 @@ export const setYearsFiltersEpic = (
         withLatestFrom(state$),
         switchMap(([$action, $state]) => {
             if ($action.payload === undefined && $state.malaria.theme === "prevention") {
-                const [start, end] = getMinMaxYears($state.prevention.studies);
+                const mapType = $state.prevention.filters.mapType;
+                const mapTypeStudies = getStudiesByMapType($state, mapType);
+
+                const [start, end] = getMinMaxYears(mapTypeStudies);
 
                 return of(setMaxMinYearsAction([start, end]), setFiltersAction([start, end]));
             } else {
@@ -252,8 +263,11 @@ export const setPreventionThemeEpic = (
             }
 
             if ($action.from === "map") {
-                const [start, end] = getMinMaxYears($state.prevention.studies);
-                const base: unknown[] = $state.prevention.studies?.length
+                const mapType = $state.prevention.filters.mapType;
+                const mapTypeStudies = getStudiesByMapType($state, mapType);
+
+                const [start, end] = getMinMaxYears(mapTypeStudies);
+                const base: unknown[] = mapTypeStudies?.length
                     ? [setMaxMinYearsAction([start, end]), setFiltersAction([REQUESTED_VIR_START_DATE, end])]
                     : [];
 

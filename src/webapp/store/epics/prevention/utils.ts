@@ -28,12 +28,6 @@ import _ from "lodash";
 import { ResistanceMechanismColors } from "../../../components/layers/prevention/ResistanceMechanisms/symbols";
 import { RESISTANCE_MECHANISM } from "../../../components/layers/prevention/ResistanceMechanisms/utils";
 import { PreventionMapType, SiteSelection, State } from "../../types";
-import {
-    filterByIntensityStatus,
-    filterByLevelOfInvolvement,
-    filterByResistanceMechanism,
-    filterByResistanceStatus,
-} from "../../../components/layers/studies-filters";
 import { cleanMechanismTypeOptions } from "../../../components/filters/MechanismTypeFilter";
 import {
     getMostPriorityUsignResistanceStatus,
@@ -80,9 +74,7 @@ export function createPreventionSelectionData(
 
     if (siteFilteredStudies.length === 0) return null;
 
-    const siteNonFilteredStudies = nonFilteredStudies
-        .filter(study => study.SITE_ID === selection.SITE_ID)
-        .filter(buildMapTypeFilter(mapType));
+    const siteNonFilteredStudies = nonFilteredStudies.filter(study => study.SITE_ID === selection.SITE_ID);
 
     const sortedStudies = _.orderBy(siteFilteredStudies, study => +study.YEAR_START, "desc");
 
@@ -488,19 +480,6 @@ function getOtherTitle(mapType: PreventionMapType) {
     }
 }
 
-function buildMapTypeFilter(mapType: PreventionMapType) {
-    switch (mapType) {
-        case PreventionMapType.RESISTANCE_STATUS:
-            return filterByResistanceStatus;
-        case PreventionMapType.INTENSITY_STATUS:
-            return filterByIntensityStatus;
-        case PreventionMapType.RESISTANCE_MECHANISM:
-            return filterByResistanceMechanism;
-        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-            return filterByLevelOfInvolvement;
-    }
-}
-
 type Action =
     | ActionType<typeof fetchResistanceStatusTypeStudiesSuccess>
     | ActionType<typeof fetchResistanceStatusTypeStudiesError>
@@ -611,3 +590,13 @@ export const buildPreventionStudiesEpic =
                 );
             })
         );
+
+export const getStudiesByMapType = (state: State, mapType: PreventionMapType): PreventionStudy[] => {
+    const studiesByMapType: Record<PreventionMapType, PreventionStudy[]> = {
+        [PreventionMapType.RESISTANCE_STATUS]: state.prevention.resistanceStatusStudies,
+        [PreventionMapType.INTENSITY_STATUS]: state.prevention.resistanceIntensityStudies,
+        [PreventionMapType.RESISTANCE_MECHANISM]: state.prevention.resistanceMechanismStudies,
+        [PreventionMapType.LEVEL_OF_INVOLVEMENT]: state.prevention.synergistEffectStudies,
+    };
+    return studiesByMapType[mapType] || [];
+};

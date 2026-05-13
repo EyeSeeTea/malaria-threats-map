@@ -134,7 +134,6 @@ export interface PreventionFilters {
 }
 
 export interface PreventionState {
-    studies: PreventionStudy[];
     errorStudies: string | null;
     loadingStudies: boolean;
 
