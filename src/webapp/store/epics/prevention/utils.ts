@@ -1,6 +1,10 @@
 import i18next from "i18next";
+import { ActionType } from "typesafe-actions";
+import { EMPTY, merge, Observable, of } from "rxjs";
+import { catchError, filter, map, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { ofType, StateObservable } from "redux-observable";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { Study } from "../../../../domain/entities/Study";
+import { getMinMaxYears, Study } from "../../../../domain/entities/Study";
 import { Option } from "../../../components/BasicSelect";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { isNA, isNotNull, isNR } from "../../../utils/number-utils";
@@ -14,11 +18,16 @@ import {
     SelectionData,
 } from "../../SelectionData";
 import * as R from "ramda";
-import { createCitationDataSources, createCurations, selectDataSourcesByStudies } from "../common/utils";
+import {
+    createCitationDataSources,
+    createCurations,
+    resetDatesRequired,
+    selectDataSourcesByStudies,
+} from "../common/utils";
 import _ from "lodash";
 import { ResistanceMechanismColors } from "../../../components/layers/prevention/ResistanceMechanisms/symbols";
 import { RESISTANCE_MECHANISM } from "../../../components/layers/prevention/ResistanceMechanisms/utils";
-import { PreventionMapType, SiteSelection } from "../../types";
+import { PreventionMapType, SiteSelection, State } from "../../types";
 import {
     filterByIntensityStatus,
     filterByLevelOfInvolvement,
@@ -32,6 +41,28 @@ import {
     getMostPriorityStudiesUsingMechanismProxy,
 } from "../../../components/layers/prevention/utils";
 import { ResistanceStatusColors } from "../../../components/layers/prevention/ResistanceStatus/symbols";
+import {
+    fetchResistanceIntensityTypeStudiesError,
+    fetchResistanceIntensityTypeStudiesRequest,
+    fetchResistanceIntensityTypeStudiesSuccess,
+    fetchResistanceMechanismTypeStudiesError,
+    fetchResistanceMechanismTypeStudiesRequest,
+    fetchResistanceMechanismTypeStudiesSuccess,
+    fetchResistanceStatusTypeStudiesError,
+    fetchResistanceStatusTypeStudiesRequest,
+    fetchResistanceStatusTypeStudiesSuccess,
+    fetchSynergistEffectTypeStudiesError,
+    fetchSynergistEffectTypeStudiesRequest,
+    fetchSynergistEffectTypeStudiesSuccess,
+} from "../../actions/prevention-actions";
+import { FutureData } from "../../../../domain/common/FutureData";
+import { CompositionRoot } from "../../../../CompositionRoot";
+import { fromFuture } from "../utils";
+import { addNotificationAction } from "../../actions/notifier-actions";
+import { EpicDependencies } from "../..";
+import { setFiltersAction, setMaxMinYearsAction } from "../../actions/base-actions";
+
+export const REQUESTED_VIR_START_DATE = 2010;
 
 type SortDirection = boolean | "asc" | "desc";
 
@@ -469,3 +500,114 @@ function buildMapTypeFilter(mapType: PreventionMapType) {
             return filterByLevelOfInvolvement;
     }
 }
+
+type Action =
+    | ActionType<typeof fetchResistanceStatusTypeStudiesSuccess>
+    | ActionType<typeof fetchResistanceStatusTypeStudiesError>
+    | ActionType<typeof fetchResistanceIntensityTypeStudiesSuccess>
+    | ActionType<typeof fetchResistanceIntensityTypeStudiesError>
+    | ActionType<typeof fetchResistanceMechanismTypeStudiesSuccess>
+    | ActionType<typeof fetchResistanceMechanismTypeStudiesError>
+    | ActionType<typeof fetchSynergistEffectTypeStudiesSuccess>
+    | ActionType<typeof fetchSynergistEffectTypeStudiesError>
+    | ActionType<typeof addNotificationAction>
+    | ActionType<typeof setFiltersAction>
+    | ActionType<typeof setMaxMinYearsAction>;
+
+type RequestPreventionStudyTypeAction =
+    | ActionType<typeof fetchResistanceStatusTypeStudiesRequest>
+    | ActionType<typeof fetchResistanceIntensityTypeStudiesRequest>
+    | ActionType<typeof fetchResistanceMechanismTypeStudiesRequest>
+    | ActionType<typeof fetchSynergistEffectTypeStudiesRequest>;
+
+type StudyConfig = {
+    studies: PreventionStudy[];
+    error: string | null;
+    fetchStudies: () => FutureData<PreventionStudy[]>;
+    onSuccess: (studies: PreventionStudy[]) => Action;
+    onError: () => Action;
+};
+
+const getStudyConfigs = (api: CompositionRoot["prevention"], state: State): Record<PreventionMapType, StudyConfig> => ({
+    [PreventionMapType.RESISTANCE_STATUS]: {
+        studies: state.prevention.resistanceStatusStudies,
+        error: state.prevention.errorResistanceStatus,
+        fetchStudies: () => api.getResistanceStatusTypeStudies(),
+        onSuccess: fetchResistanceStatusTypeStudiesSuccess,
+        onError: fetchResistanceStatusTypeStudiesError,
+    },
+    [PreventionMapType.INTENSITY_STATUS]: {
+        studies: state.prevention.resistanceIntensityStudies,
+        error: state.prevention.errorResistanceIntensity,
+        fetchStudies: () => api.getResistanceIntensityTypeStudies(),
+        onSuccess: fetchResistanceIntensityTypeStudiesSuccess,
+        onError: fetchResistanceIntensityTypeStudiesError,
+    },
+    [PreventionMapType.RESISTANCE_MECHANISM]: {
+        studies: state.prevention.resistanceMechanismStudies,
+        error: state.prevention.errorResistanceMechanism,
+        fetchStudies: () => api.getResistanceMechanismTypeStudies(),
+        onSuccess: fetchResistanceMechanismTypeStudiesSuccess,
+        onError: fetchResistanceMechanismTypeStudiesError,
+    },
+    [PreventionMapType.LEVEL_OF_INVOLVEMENT]: {
+        studies: state.prevention.synergistEffectStudies,
+        error: state.prevention.errorSynergistEffect,
+        fetchStudies: () => api.getSynergistEffectTypeStudies(),
+        onSuccess: fetchSynergistEffectTypeStudiesSuccess,
+        onError: fetchSynergistEffectTypeStudiesError,
+    },
+});
+
+const buildPrimaryStream$ = (config: StudyConfig, state: State): Observable<Action> =>
+    fromFuture(config.fetchStudies()).pipe(
+        mergeMap(studies =>
+            of(
+                ...resetDatesRequired({
+                    minMaxYears: () => getMinMaxYears(studies),
+                    theme: "prevention",
+                    state,
+                    filterStart: REQUESTED_VIR_START_DATE,
+                }),
+                config.onSuccess(studies)
+            )
+        ),
+        catchError((error: Error) => of(addNotificationAction(error.message), config.onError()))
+    );
+
+const buildSecondaryStream$ = (config: StudyConfig): Observable<Action> =>
+    config.studies.length === 0 && !config.error
+        ? fromFuture(config.fetchStudies()).pipe(
+              map(studies => config.onSuccess(studies)),
+              catchError((error: Error) => of(addNotificationAction(error.message), config.onError()))
+          )
+        : EMPTY;
+
+export const buildPreventionStudiesEpic =
+    (
+        actionType: RequestPreventionStudyTypeAction["type"],
+        primaryMapType: PreventionMapType,
+        secondaryMapTypes: PreventionMapType[]
+    ) =>
+    (
+        action$: Observable<RequestPreventionStudyTypeAction>,
+        state$: StateObservable<State>,
+        { compositionRoot }: EpicDependencies
+    ) =>
+        action$.pipe(
+            ofType(actionType),
+            withLatestFrom(state$),
+            filter(([, state]) => {
+                const config = getStudyConfigs(compositionRoot.prevention, state)[primaryMapType];
+                return config.studies.length === 0 && !config.error;
+            }),
+            switchMap(([, state]) => {
+                const api = compositionRoot.prevention;
+                const configs = getStudyConfigs(api, state);
+
+                return merge(
+                    buildPrimaryStream$(configs[primaryMapType], state),
+                    ...secondaryMapTypes.map(mapType => buildSecondaryStream$(configs[mapType]))
+                );
+            })
+        );

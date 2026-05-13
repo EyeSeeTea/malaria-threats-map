@@ -2,10 +2,10 @@ import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
-import { EMPTY, forkJoin, merge, Observable, of } from "rxjs";
-import { catchError, filter, map, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
+import { forkJoin, Observable, of } from "rxjs";
+import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 
-import { createPreventionSelectionData } from "./utils";
+import { buildPreventionStudiesEpic, createPreventionSelectionData, REQUESTED_VIR_START_DATE } from "./utils";
 import { PreventionMapType, State } from "../../types";
 import { EpicDependencies } from "../..";
 import { fromFuture } from "../utils";
@@ -23,17 +23,9 @@ import {
 import {
     fetchPreventionStudiesError,
     fetchPreventionStudiesRequest,
-    fetchResistanceIntensityTypeStudiesError,
-    fetchResistanceIntensityTypeStudiesRequest,
     fetchResistanceIntensityTypeStudiesSuccess,
-    fetchResistanceMechanismTypeStudiesError,
-    fetchResistanceMechanismTypeStudiesRequest,
     fetchResistanceMechanismTypeStudiesSuccess,
-    fetchResistanceStatusTypeStudiesError,
-    fetchResistanceStatusTypeStudiesRequest,
     fetchResistanceStatusTypeStudiesSuccess,
-    fetchSynergistEffectTypeStudiesError,
-    fetchSynergistEffectTypeStudiesRequest,
     fetchSynergistEffectTypeStudiesSuccess,
     setAssayTypes,
     setInsecticideClass,
@@ -46,63 +38,6 @@ import {
 } from "../../actions/prevention-actions";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
-import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { FutureData } from "../../../../domain/common/FutureData";
-import { CompositionRoot } from "../../../../CompositionRoot";
-
-const REQUESTED_VIR_START_DATE = 2010;
-
-type Action =
-    | ActionType<typeof fetchResistanceStatusTypeStudiesSuccess>
-    | ActionType<typeof fetchResistanceStatusTypeStudiesError>
-    | ActionType<typeof fetchResistanceIntensityTypeStudiesSuccess>
-    | ActionType<typeof fetchResistanceIntensityTypeStudiesError>
-    | ActionType<typeof fetchResistanceMechanismTypeStudiesSuccess>
-    | ActionType<typeof fetchResistanceMechanismTypeStudiesError>
-    | ActionType<typeof fetchSynergistEffectTypeStudiesSuccess>
-    | ActionType<typeof fetchSynergistEffectTypeStudiesError>
-    | ActionType<typeof addNotificationAction>
-    | ActionType<typeof setFiltersAction>
-    | ActionType<typeof setMaxMinYearsAction>;
-
-type StudyConfig = {
-    studies: PreventionStudy[];
-    error: string | null;
-    fetchStudies: () => FutureData<PreventionStudy[]>;
-    onSuccess: (studies: PreventionStudy[]) => Action;
-    onError: () => Action;
-};
-
-const getStudyConfigs = (api: CompositionRoot["prevention"], state: State): Record<PreventionMapType, StudyConfig> => ({
-    [PreventionMapType.RESISTANCE_STATUS]: {
-        studies: state.prevention.resistanceStatusStudies,
-        error: state.prevention.errorResistanceStatus,
-        fetchStudies: () => api.getResistanceStatusTypeStudies(),
-        onSuccess: fetchResistanceStatusTypeStudiesSuccess,
-        onError: fetchResistanceStatusTypeStudiesError,
-    },
-    [PreventionMapType.INTENSITY_STATUS]: {
-        studies: state.prevention.resistanceIntensityStudies,
-        error: state.prevention.errorResistanceIntensity,
-        fetchStudies: () => api.getResistanceIntensityTypeStudies(),
-        onSuccess: fetchResistanceIntensityTypeStudiesSuccess,
-        onError: fetchResistanceIntensityTypeStudiesError,
-    },
-    [PreventionMapType.RESISTANCE_MECHANISM]: {
-        studies: state.prevention.resistanceMechanismStudies,
-        error: state.prevention.errorResistanceMechanism,
-        fetchStudies: () => api.getResistanceMechanismTypeStudies(),
-        onSuccess: fetchResistanceMechanismTypeStudiesSuccess,
-        onError: fetchResistanceMechanismTypeStudiesError,
-    },
-    [PreventionMapType.LEVEL_OF_INVOLVEMENT]: {
-        studies: state.prevention.synergistEffectStudies,
-        error: state.prevention.errorSynergistEffect,
-        fetchStudies: () => api.getSynergistEffectTypeStudies(),
-        onSuccess: fetchSynergistEffectTypeStudiesSuccess,
-        onError: fetchSynergistEffectTypeStudiesError,
-    },
-});
 
 export const fetchAllPreventionStudiesEpic = (
     action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
@@ -142,167 +77,33 @@ export const fetchAllPreventionStudiesEpic = (
         })
     );
 
-const buildPrimaryStream$ = (config: StudyConfig, state: State): Observable<Action> =>
-    fromFuture(config.fetchStudies()).pipe(
-        mergeMap(studies =>
-            of(
-                ...resetDatesRequired({
-                    minMaxYears: () => getMinMaxYears(studies),
-                    theme: "prevention",
-                    state,
-                    filterStart: REQUESTED_VIR_START_DATE,
-                }),
-                config.onSuccess(studies)
-            )
-        ),
-        catchError((error: Error) => of(addNotificationAction(error.message), config.onError()))
-    );
+export const getResistanceStatusTypeStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest,
+    PreventionMapType.RESISTANCE_STATUS,
+    [PreventionMapType.INTENSITY_STATUS, PreventionMapType.RESISTANCE_MECHANISM, PreventionMapType.LEVEL_OF_INVOLVEMENT]
+);
 
-const buildSecondaryStream$ = (config: StudyConfig): Observable<Action> =>
-    config.studies.length === 0 && !config.error
-        ? fromFuture(config.fetchStudies()).pipe(
-              map(studies => config.onSuccess(studies)),
-              catchError((error: Error) => of(addNotificationAction(error.message), config.onError()))
-          )
-        : EMPTY;
+export const getResistanceIntensityTypeStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest,
+    PreventionMapType.INTENSITY_STATUS,
+    [
+        PreventionMapType.RESISTANCE_STATUS,
+        PreventionMapType.RESISTANCE_MECHANISM,
+        PreventionMapType.LEVEL_OF_INVOLVEMENT,
+    ]
+);
 
-export const getResistanceStatusTypeStudiesEpic = (
-    action$: Observable<ActionType<typeof fetchResistanceStatusTypeStudiesRequest>>,
-    state$: StateObservable<State>,
-    { compositionRoot }: EpicDependencies
-) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest),
-        withLatestFrom(state$),
-        filter(
-            ([, state]) =>
-                state.prevention.resistanceStatusStudies.length === 0 && !state.prevention.errorResistanceStatus
-        ),
-        switchMap(([, state]) => {
-            const api = compositionRoot.prevention;
+export const getResistanceMechanismTypeStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest,
+    PreventionMapType.RESISTANCE_MECHANISM,
+    [PreventionMapType.RESISTANCE_STATUS, PreventionMapType.INTENSITY_STATUS, PreventionMapType.LEVEL_OF_INVOLVEMENT]
+);
 
-            const loadStatus$ = buildPrimaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.RESISTANCE_STATUS],
-                state
-            );
-
-            const loadIntensity$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.INTENSITY_STATUS]
-            );
-
-            const loadMechanism$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.RESISTANCE_MECHANISM]
-            );
-
-            const loadSynergist$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.LEVEL_OF_INVOLVEMENT]
-            );
-
-            return merge(loadStatus$, loadIntensity$, loadMechanism$, loadSynergist$);
-        })
-    );
-
-export const getResistanceIntensityTypeStudiesEpic = (
-    action$: Observable<ActionType<typeof fetchResistanceIntensityTypeStudiesRequest>>,
-    state$: StateObservable<State>,
-    { compositionRoot }: EpicDependencies
-) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest),
-        withLatestFrom(state$),
-        filter(
-            ([, state]) =>
-                state.prevention.resistanceIntensityStudies.length === 0 && !state.prevention.errorResistanceIntensity
-        ),
-        switchMap(([, state]) => {
-            const api = compositionRoot.prevention;
-
-            const loadIntensity$ = buildPrimaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.INTENSITY_STATUS],
-                state
-            );
-
-            const loadStatus$ = buildSecondaryStream$(getStudyConfigs(api, state)[PreventionMapType.RESISTANCE_STATUS]);
-
-            const loadMechanism$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.RESISTANCE_MECHANISM]
-            );
-
-            const loadSynergist$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.LEVEL_OF_INVOLVEMENT]
-            );
-
-            return merge(loadIntensity$, loadStatus$, loadMechanism$, loadSynergist$);
-        })
-    );
-
-export const getResistanceMechanismTypeStudiesEpic = (
-    action$: Observable<ActionType<typeof fetchResistanceMechanismTypeStudiesRequest>>,
-    state$: StateObservable<State>,
-    { compositionRoot }: EpicDependencies
-) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest),
-        withLatestFrom(state$),
-        filter(
-            ([, state]) =>
-                state.prevention.resistanceMechanismStudies.length === 0 && !state.prevention.errorResistanceMechanism
-        ),
-        switchMap(([, state]) => {
-            const api = compositionRoot.prevention;
-
-            const loadMechanism$ = buildPrimaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.RESISTANCE_MECHANISM],
-                state
-            );
-
-            const loadStatus$ = buildSecondaryStream$(getStudyConfigs(api, state)[PreventionMapType.RESISTANCE_STATUS]);
-
-            const loadIntensity$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.INTENSITY_STATUS]
-            );
-
-            const loadSynergist$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.LEVEL_OF_INVOLVEMENT]
-            );
-
-            return merge(loadMechanism$, loadStatus$, loadIntensity$, loadSynergist$);
-        })
-    );
-
-export const getSynergistEffectTypeStudiesEpic = (
-    action$: Observable<ActionType<typeof fetchSynergistEffectTypeStudiesRequest>>,
-    state$: StateObservable<State>,
-    { compositionRoot }: EpicDependencies
-) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest),
-        withLatestFrom(state$),
-        filter(
-            ([, state]) =>
-                state.prevention.synergistEffectStudies.length === 0 && !state.prevention.errorSynergistEffect
-        ),
-        switchMap(([, state]) => {
-            const api = compositionRoot.prevention;
-
-            const loadSynergist$ = buildPrimaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.LEVEL_OF_INVOLVEMENT],
-                state
-            );
-
-            const loadStatus$ = buildSecondaryStream$(getStudyConfigs(api, state)[PreventionMapType.RESISTANCE_STATUS]);
-
-            const loadIntensity$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.INTENSITY_STATUS]
-            );
-
-            const loadMechanism$ = buildSecondaryStream$(
-                getStudyConfigs(api, state)[PreventionMapType.RESISTANCE_MECHANISM]
-            );
-
-            return merge(loadSynergist$, loadStatus$, loadIntensity$, loadMechanism$);
-        })
-    );
+export const getSynergistEffectTypeStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest,
+    PreventionMapType.LEVEL_OF_INVOLVEMENT,
+    [PreventionMapType.RESISTANCE_STATUS, PreventionMapType.INTENSITY_STATUS, PreventionMapType.RESISTANCE_MECHANISM]
+);
 
 export const setPreventionMapTypeEpic = (
     action$: Observable<ActionType<typeof setPreventionMapType>>,
