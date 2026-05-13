@@ -2,14 +2,13 @@ import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
-import { Observable, of } from "rxjs";
-import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
+import { EMPTY, forkJoin, merge, Observable, of } from "rxjs";
+import { catchError, filter, map, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
 
 import { createPreventionSelectionData } from "./utils";
 import { PreventionMapType, State } from "../../types";
 import { EpicDependencies } from "../..";
 import { fromFuture } from "../utils";
-import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { getAnalyticsPageView } from "../../analytics";
 import { addNotificationAction } from "../../actions/notifier-actions";
 import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
@@ -24,7 +23,18 @@ import {
 import {
     fetchPreventionStudiesError,
     fetchPreventionStudiesRequest,
-    fetchPreventionStudiesSuccess,
+    fetchResistanceIntensityTypeStudiesError,
+    fetchResistanceIntensityTypeStudiesRequest,
+    fetchResistanceIntensityTypeStudiesSuccess,
+    fetchResistanceMechanismTypeStudiesError,
+    fetchResistanceMechanismTypeStudiesRequest,
+    fetchResistanceMechanismTypeStudiesSuccess,
+    fetchResistanceStatusTypeStudiesError,
+    fetchResistanceStatusTypeStudiesRequest,
+    fetchResistanceStatusTypeStudiesSuccess,
+    fetchSynergistEffectTypeStudiesError,
+    fetchSynergistEffectTypeStudiesRequest,
+    fetchSynergistEffectTypeStudiesSuccess,
     setAssayTypes,
     setInsecticideClass,
     setInsecticideTypes,
@@ -38,7 +48,7 @@ import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
 const requestedVIRStartDate = 2010;
 
-export const getPreventionStudiesEpic = (
+export const fetchAllPreventionStudiesEpic = (
     action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
     state$: StateObservable<State>,
     { compositionRoot }: EpicDependencies
@@ -47,26 +57,296 @@ export const getPreventionStudiesEpic = (
         ofType(ActionTypeEnum.FetchPreventionStudiesRequest),
         withLatestFrom(state$),
         switchMap(([, state]) => {
-            if (state.prevention.studies.length === 0 && !state.prevention.error) {
-                return fromFuture(compositionRoot.prevention.getStudies()).pipe(
-                    mergeMap((studies: PreventionStudy[]) => {
-                        return of(
-                            ...resetDatesRequired({
-                                minMaxYears: () => getMinMaxYears(studies),
-                                theme: "prevention",
-                                state,
-                                filterStart: requestedVIRStartDate,
-                            }),
-                            fetchPreventionStudiesSuccess(studies)
-                        );
-                    }),
-                    catchError((error: Error) =>
-                        of(addNotificationAction(error.message), fetchPreventionStudiesError())
+            const api = compositionRoot.prevention;
+
+            return forkJoin({
+                status: fromFuture(api.getResistanceStatusTypeStudies()),
+                intensity: fromFuture(api.getResistanceIntensityTypeStudies()),
+                mechanism: fromFuture(api.getResistanceMechanismTypeStudies()),
+                synergist: fromFuture(api.getSynergistEffectTypeStudies()),
+            }).pipe(
+                mergeMap(({ status, intensity, mechanism, synergist }) => {
+                    const allStudies = [...status, ...intensity, ...mechanism, ...synergist];
+
+                    return of(
+                        ...resetDatesRequired({
+                            minMaxYears: () => getMinMaxYears(allStudies),
+                            theme: "prevention",
+                            state,
+                            filterStart: requestedVIRStartDate,
+                        }),
+                        fetchResistanceStatusTypeStudiesSuccess(status),
+                        fetchResistanceIntensityTypeStudiesSuccess(intensity),
+                        fetchResistanceMechanismTypeStudiesSuccess(mechanism),
+                        fetchSynergistEffectTypeStudiesSuccess(synergist)
+                    );
+                }),
+                catchError((error: Error) => of(addNotificationAction(error.message), fetchPreventionStudiesError()))
+            );
+        })
+    );
+
+export const getResistanceStatusTypeStudiesEpic = (
+    action$: Observable<ActionType<typeof fetchResistanceStatusTypeStudiesRequest>>,
+    state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest),
+        withLatestFrom(state$),
+        filter(
+            ([, state]) =>
+                state.prevention.resistanceStatusStudies.length === 0 && !state.prevention.errorResistanceStatus
+        ),
+        switchMap(([, state]) => {
+            const api = compositionRoot.prevention;
+
+            const loadStatus$ = fromFuture(api.getResistanceStatusTypeStudies()).pipe(
+                mergeMap(studies =>
+                    of(
+                        ...resetDatesRequired({
+                            minMaxYears: () => getMinMaxYears(studies),
+                            theme: "prevention",
+                            state,
+                            filterStart: requestedVIRStartDate,
+                        }),
+                        fetchResistanceStatusTypeStudiesSuccess(studies)
                     )
-                );
-            } else {
-                return of(fetchPreventionStudiesSuccess(state.prevention.studies));
-            }
+                ),
+                catchError((error: Error) =>
+                    of(addNotificationAction(error.message), fetchResistanceStatusTypeStudiesError())
+                )
+            );
+
+            const loadIntensity$ =
+                state.prevention.resistanceIntensityStudies.length === 0 && !state.prevention.errorResistanceIntensity
+                    ? fromFuture(api.getResistanceIntensityTypeStudies()).pipe(
+                          map(studies => fetchResistanceIntensityTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceIntensityTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            const loadMechanism$ =
+                state.prevention.resistanceMechanismStudies.length === 0 && !state.prevention.errorResistanceMechanism
+                    ? fromFuture(api.getResistanceMechanismTypeStudies()).pipe(
+                          map(studies => fetchResistanceMechanismTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceMechanismTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            const loadSynergist$ =
+                state.prevention.synergistEffectStudies.length === 0 && !state.prevention.errorSynergistEffect
+                    ? fromFuture(api.getSynergistEffectTypeStudies()).pipe(
+                          map(studies => fetchSynergistEffectTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchSynergistEffectTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            return merge(loadStatus$, loadIntensity$, loadMechanism$, loadSynergist$);
+        })
+    );
+
+export const getResistanceIntensityTypeStudiesEpic = (
+    action$: Observable<ActionType<typeof fetchResistanceIntensityTypeStudiesRequest>>,
+    state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest),
+        withLatestFrom(state$),
+        filter(
+            ([, state]) =>
+                state.prevention.resistanceIntensityStudies.length === 0 && !state.prevention.errorResistanceIntensity
+        ),
+        switchMap(([, state]) => {
+            const api = compositionRoot.prevention;
+
+            const loadIntensity$ = fromFuture(api.getResistanceIntensityTypeStudies()).pipe(
+                mergeMap(studies =>
+                    of(
+                        ...resetDatesRequired({
+                            minMaxYears: () => getMinMaxYears(studies),
+                            theme: "prevention",
+                            state,
+                            filterStart: requestedVIRStartDate,
+                        }),
+                        fetchResistanceIntensityTypeStudiesSuccess(studies)
+                    )
+                ),
+                catchError((error: Error) =>
+                    of(addNotificationAction(error.message), fetchResistanceIntensityTypeStudiesError())
+                )
+            );
+
+            const loadStatus$ =
+                state.prevention.resistanceStatusStudies.length === 0 && !state.prevention.errorResistanceStatus
+                    ? fromFuture(api.getResistanceStatusTypeStudies()).pipe(
+                          map(studies => fetchResistanceStatusTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceStatusTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            const loadMechanism$ =
+                state.prevention.resistanceMechanismStudies.length === 0 && !state.prevention.errorResistanceMechanism
+                    ? fromFuture(api.getResistanceMechanismTypeStudies()).pipe(
+                          map(studies => fetchResistanceMechanismTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceMechanismTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            const loadSynergist$ =
+                state.prevention.synergistEffectStudies.length === 0 && !state.prevention.errorSynergistEffect
+                    ? fromFuture(api.getSynergistEffectTypeStudies()).pipe(
+                          map(studies => fetchSynergistEffectTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchSynergistEffectTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            return merge(loadIntensity$, loadStatus$, loadMechanism$, loadSynergist$);
+        })
+    );
+
+export const getResistanceMechanismTypeStudiesEpic = (
+    action$: Observable<ActionType<typeof fetchResistanceMechanismTypeStudiesRequest>>,
+    state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest),
+        withLatestFrom(state$),
+        filter(
+            ([, state]) =>
+                state.prevention.resistanceMechanismStudies.length === 0 && !state.prevention.errorResistanceMechanism
+        ),
+        switchMap(([, state]) => {
+            const api = compositionRoot.prevention;
+
+            const loadMechanism$ = fromFuture(api.getResistanceMechanismTypeStudies()).pipe(
+                mergeMap(studies =>
+                    of(
+                        ...resetDatesRequired({
+                            minMaxYears: () => getMinMaxYears(studies),
+                            theme: "prevention",
+                            state,
+                            filterStart: requestedVIRStartDate,
+                        }),
+                        fetchResistanceMechanismTypeStudiesSuccess(studies)
+                    )
+                ),
+                catchError((error: Error) =>
+                    of(addNotificationAction(error.message), fetchResistanceMechanismTypeStudiesError())
+                )
+            );
+
+            const loadStatus$ =
+                state.prevention.resistanceStatusStudies.length === 0 && !state.prevention.errorResistanceStatus
+                    ? fromFuture(api.getResistanceStatusTypeStudies()).pipe(
+                          map(studies => fetchResistanceStatusTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceStatusTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            const loadIntensity$ =
+                state.prevention.resistanceIntensityStudies.length === 0 && !state.prevention.errorResistanceIntensity
+                    ? fromFuture(api.getResistanceIntensityTypeStudies()).pipe(
+                          map(studies => fetchResistanceIntensityTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceIntensityTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            const loadSynergist$ =
+                state.prevention.synergistEffectStudies.length === 0 && !state.prevention.errorSynergistEffect
+                    ? fromFuture(api.getSynergistEffectTypeStudies()).pipe(
+                          map(studies => fetchSynergistEffectTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchSynergistEffectTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            return merge(loadMechanism$, loadStatus$, loadIntensity$, loadSynergist$);
+        })
+    );
+
+export const getSynergistEffectTypeStudiesEpic = (
+    action$: Observable<ActionType<typeof fetchSynergistEffectTypeStudiesRequest>>,
+    state$: StateObservable<State>,
+    { compositionRoot }: EpicDependencies
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest),
+        withLatestFrom(state$),
+        filter(
+            ([, state]) =>
+                state.prevention.synergistEffectStudies.length === 0 && !state.prevention.errorSynergistEffect
+        ),
+        switchMap(([, state]) => {
+            const api = compositionRoot.prevention;
+
+            const loadSynergist$ = fromFuture(api.getSynergistEffectTypeStudies()).pipe(
+                mergeMap(studies =>
+                    of(
+                        ...resetDatesRequired({
+                            minMaxYears: () => getMinMaxYears(studies),
+                            theme: "prevention",
+                            state,
+                            filterStart: requestedVIRStartDate,
+                        }),
+                        fetchSynergistEffectTypeStudiesSuccess(studies)
+                    )
+                ),
+                catchError((error: Error) =>
+                    of(addNotificationAction(error.message), fetchSynergistEffectTypeStudiesError())
+                )
+            );
+
+            const loadStatus$ =
+                state.prevention.resistanceStatusStudies.length === 0 && !state.prevention.errorResistanceStatus
+                    ? fromFuture(api.getResistanceStatusTypeStudies()).pipe(
+                          map(studies => fetchResistanceStatusTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceStatusTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            const loadIntensity$ =
+                state.prevention.resistanceIntensityStudies.length === 0 && !state.prevention.errorResistanceIntensity
+                    ? fromFuture(api.getResistanceIntensityTypeStudies()).pipe(
+                          map(studies => fetchResistanceIntensityTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceIntensityTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            const loadMechanism$ =
+                state.prevention.resistanceMechanismStudies.length === 0 && !state.prevention.errorResistanceMechanism
+                    ? fromFuture(api.getResistanceMechanismTypeStudies()).pipe(
+                          map(studies => fetchResistanceMechanismTypeStudiesSuccess(studies)),
+                          catchError((error: Error) =>
+                              of(addNotificationAction(error.message), fetchResistanceMechanismTypeStudiesError())
+                          )
+                      )
+                    : EMPTY;
+
+            return merge(loadSynergist$, loadStatus$, loadIntensity$, loadMechanism$);
         })
     );
 
@@ -77,21 +357,38 @@ export const setPreventionMapTypeEpic = (
     action$.pipe(
         ofType(ActionTypeEnum.SetPreventionMapType),
         withLatestFrom(state$),
-        switchMap(([action, _state]) => {
+        switchMap(([action, state]) => {
             const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
-
             const logPageView = logPageViewAction(pageView);
 
+            const studiesByMapType = {
+                [PreventionMapType.RESISTANCE_STATUS]: state.prevention.resistanceStatusStudies,
+                [PreventionMapType.INTENSITY_STATUS]: state.prevention.resistanceIntensityStudies,
+                [PreventionMapType.RESISTANCE_MECHANISM]: state.prevention.resistanceMechanismStudies,
+                [PreventionMapType.LEVEL_OF_INVOLVEMENT]: state.prevention.synergistEffectStudies,
+            };
+
+            const studies = studiesByMapType[action.payload] ?? [];
+            const dateResets =
+                studies.length > 0
+                    ? resetDatesRequired({
+                          minMaxYears: () => getMinMaxYears(studies),
+                          theme: "prevention",
+                          state,
+                          filterStart: requestedVIRStartDate,
+                      })
+                    : [];
+
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(..._.compact([setType(["MONO_OXYGENASES"]), logPageView]));
+                return of(..._.compact([...dateResets, setType(["MONO_OXYGENASES"]), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-                return of(..._.compact([setType(undefined), logPageView]));
+                return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-                return of(..._.compact([setType(undefined), logPageView]));
+                return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-                return of(..._.compact([setProxyType("MONO_OXYGENASES"), logPageView]));
+                return of(..._.compact([...dateResets, setProxyType("MONO_OXYGENASES"), logPageView]));
             } else {
-                return of(..._.compact([setType(undefined), logPageView]));
+                return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             }
         })
     );

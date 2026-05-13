@@ -36,6 +36,22 @@ export enum ActionTypeEnum {
     FetchPreventionStudiesSuccess = "prevention/FETCH_PREVENTION_STUDIES_SUCCESS",
     FetchPreventionStudiesError = "prevention/FETCH_PREVENTION_STUDIES_ERROR",
 
+    FetchResistanceStatusTypeStudiesRequest = "prevention/FETCH_RESISTANCE_STATUS_TYPE_STUDIES_REQUEST",
+    FetchResistanceStatusTypeStudiesSuccess = "prevention/FETCH_RESISTANCE_STATUS_TYPE_STUDIES_SUCCESS",
+    FetchResistanceStatusTypeStudiesError = "prevention/FETCH_RESISTANCE_STATUS_TYPE_STUDIES_ERROR",
+
+    FetchResistanceIntensityTypeStudiesRequest = "prevention/FETCH_RESISTANCE_INTENSITY_TYPE_STUDIES_REQUEST",
+    FetchResistanceIntensityTypeStudiesSuccess = "prevention/FETCH_RESISTANCE_INTENSITY_TYPE_STUDIES_SUCCESS",
+    FetchResistanceIntensityTypeStudiesError = "prevention/FETCH_RESISTANCE_INTENSITY_TYPE_STUDIES_ERROR",
+
+    FetchResistanceMechanismTypeStudiesRequest = "prevention/FETCH_RESISTANCE_MECHANISM_TYPE_STUDIES_REQUEST",
+    FetchResistanceMechanismTypeStudiesSuccess = "prevention/FETCH_RESISTANCE_MECHANISM_TYPE_STUDIES_SUCCESS",
+    FetchResistanceMechanismTypeStudiesError = "prevention/FETCH_RESISTANCE_MECHANISM_TYPE_STUDIES_ERROR",
+
+    FetchSynergistEffectTypeStudiesRequest = "prevention/FETCH_SYNERGIST_EFFECT_TYPE_STUDIES_REQUEST",
+    FetchSynergistEffectTypeStudiesSuccess = "prevention/FETCH_SYNERGIST_EFFECT_TYPE_STUDIES_SUCCESS",
+    FetchSynergistEffectTypeStudiesError = "prevention/FETCH_SYNERGIST_EFFECT_TYPE_STUDIES_ERROR",
+
     SetPreventionMapType = "prevention/SET_PREVENTION_MAP_TYPE",
     SetPreventionDataset = "prevention/SET_PREVENTION_DATASET",
     SetInsecticideClass = "prevention/SET_INSECTICIDE_CLASS",

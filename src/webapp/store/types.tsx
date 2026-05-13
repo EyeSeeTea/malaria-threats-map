@@ -135,10 +135,28 @@ export interface PreventionFilters {
 
 export interface PreventionState {
     studies: PreventionStudy[];
-    error: string | null;
-    loading: boolean;
+    errorStudies: string | null;
+    loadingStudies: boolean;
+
+    resistanceStatusStudies: PreventionStudy[];
+    errorResistanceStatus: string | null;
+    loadingResistanceStatus: boolean;
+
+    resistanceIntensityStudies: PreventionStudy[];
+    errorResistanceIntensity: string | null;
+    loadingResistanceIntensity: boolean;
+
+    resistanceMechanismStudies: PreventionStudy[];
+    errorResistanceMechanism: string | null;
+    loadingResistanceMechanism: boolean;
+
+    synergistEffectStudies: PreventionStudy[];
+    errorSynergistEffect: string | null;
+    loadingSynergistEffect: boolean;
+
     filteredStudies: PreventionStudy[];
     filters: PreventionFilters;
+    selectionStudies: PreventionStudy[];
 }
 
 export enum TreatmentMapType {
