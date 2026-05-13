@@ -20,7 +20,6 @@ const initialFilters: PreventionFilters = {
 };
 
 const initialState: PreventionState = Object.freeze({
-    errorStudies: null,
     loadingStudies: false,
 
     resistanceStatusStudies: [],
