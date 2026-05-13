@@ -80,14 +80,7 @@ export const setPreventionMapTypeEpic = (
             const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
             const logPageView = logPageViewAction(pageView);
 
-            const studiesByMapType = {
-                [PreventionMapType.RESISTANCE_STATUS]: state.prevention.resistanceStatusStudies,
-                [PreventionMapType.INTENSITY_STATUS]: state.prevention.resistanceIntensityStudies,
-                [PreventionMapType.RESISTANCE_MECHANISM]: state.prevention.resistanceMechanismStudies,
-                [PreventionMapType.LEVEL_OF_INVOLVEMENT]: state.prevention.synergistEffectStudies,
-            };
-
-            const studies = studiesByMapType[action.payload] ?? [];
+            const studies = getStudiesByMapType(state, action.payload);
             const dateResets =
                 studies.length > 0
                     ? resetDatesRequired({

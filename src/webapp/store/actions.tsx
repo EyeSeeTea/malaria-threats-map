@@ -33,7 +33,6 @@ export enum ActionTypeEnum {
     GetLastUpdatedFailure = "malaria/GET_LAST_UPDATED_FAILURE",
 
     FetchPreventionStudiesRequest = "prevention/FETCH_PREVENTION_STUDIES_REQUEST",
-    FetchPreventionStudiesError = "prevention/FETCH_PREVENTION_STUDIES_ERROR",
 
     FetchResistanceStatusTypeStudiesRequest = "prevention/FETCH_RESISTANCE_STATUS_TYPE_STUDIES_REQUEST",
     FetchResistanceStatusTypeStudiesSuccess = "prevention/FETCH_RESISTANCE_STATUS_TYPE_STUDIES_SUCCESS",

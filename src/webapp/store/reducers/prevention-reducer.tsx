@@ -20,7 +20,6 @@ const initialFilters: PreventionFilters = {
 };
 
 const initialState: PreventionState = Object.freeze({
-    studies: [],
     errorStudies: null,
     loadingStudies: false,
 
@@ -106,12 +105,6 @@ export default createReducer<PreventionState>(initialState, {
         ...state,
         loadingStudies: true,
     }),
-    [ActionTypeEnum.FetchPreventionStudiesError]: () => (state: PreventionState) => ({
-        ...state,
-        errorStudies: "There was a problem loading studies",
-        loadingStudies: false,
-    }),
-
     [ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest]: () => (state: PreventionState) => ({
         ...state,
         loadingResistanceStatus: true,

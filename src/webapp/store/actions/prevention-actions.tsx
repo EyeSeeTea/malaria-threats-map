@@ -4,7 +4,6 @@ import { PreventionMapType } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 export const fetchPreventionStudiesRequest = createAction(ActionTypeEnum.FetchPreventionStudiesRequest)();
-export const fetchPreventionStudiesError = createAction(ActionTypeEnum.FetchPreventionStudiesError)();
 
 export const fetchResistanceStatusTypeStudiesRequest = createAction(
     ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest
