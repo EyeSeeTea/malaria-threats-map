@@ -36,6 +36,7 @@ import {
 } from "../../../components/layers/prevention/utils";
 import { ResistanceStatusColors } from "../../../components/layers/prevention/ResistanceStatus/symbols";
 import {
+    fetchPreventionStudiesRequest,
     fetchResistanceIntensityTypeStudiesError,
     fetchResistanceIntensityTypeStudiesRequest,
     fetchResistanceIntensityTypeStudiesSuccess,
@@ -494,6 +495,7 @@ type Action =
     | ActionType<typeof setMaxMinYearsAction>;
 
 type RequestPreventionStudyTypeAction =
+    | ActionType<typeof fetchPreventionStudiesRequest>
     | ActionType<typeof fetchResistanceStatusTypeStudiesRequest>
     | ActionType<typeof fetchResistanceIntensityTypeStudiesRequest>
     | ActionType<typeof fetchResistanceMechanismTypeStudiesRequest>

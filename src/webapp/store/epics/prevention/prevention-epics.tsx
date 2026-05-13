@@ -2,8 +2,8 @@ import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
-import { forkJoin, Observable, of } from "rxjs";
-import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
+import { Observable, of } from "rxjs";
+import { skip, switchMap, withLatestFrom } from "rxjs/operators";
 
 import {
     buildPreventionStudiesEpic,
@@ -12,10 +12,7 @@ import {
     REQUESTED_VIR_START_DATE,
 } from "./utils";
 import { PreventionMapType, State } from "../../types";
-import { EpicDependencies } from "../..";
-import { fromFuture } from "../utils";
 import { getAnalyticsPageView } from "../../analytics";
-import { addNotificationAction } from "../../actions/notifier-actions";
 import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
 import {
     logEventAction,
@@ -26,12 +23,6 @@ import {
     setThemeAction,
 } from "../../actions/base-actions";
 import {
-    fetchPreventionStudiesError,
-    fetchPreventionStudiesRequest,
-    fetchResistanceIntensityTypeStudiesSuccess,
-    fetchResistanceMechanismTypeStudiesSuccess,
-    fetchResistanceStatusTypeStudiesSuccess,
-    fetchSynergistEffectTypeStudiesSuccess,
     setAssayTypes,
     setInsecticideClass,
     setInsecticideTypes,
@@ -44,43 +35,11 @@ import {
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
 
-export const fetchAllPreventionStudiesEpic = (
-    action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
-    state$: StateObservable<State>,
-    { compositionRoot }: EpicDependencies
-) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.FetchPreventionStudiesRequest),
-        withLatestFrom(state$),
-        switchMap(([, state]) => {
-            const api = compositionRoot.prevention;
-
-            return forkJoin({
-                status: fromFuture(api.getResistanceStatusTypeStudies()),
-                intensity: fromFuture(api.getResistanceIntensityTypeStudies()),
-                mechanism: fromFuture(api.getResistanceMechanismTypeStudies()),
-                synergist: fromFuture(api.getSynergistEffectTypeStudies()),
-            }).pipe(
-                mergeMap(({ status, intensity, mechanism, synergist }) => {
-                    const allStudies = [...status, ...intensity, ...mechanism, ...synergist];
-
-                    return of(
-                        ...resetDatesRequired({
-                            minMaxYears: () => getMinMaxYears(allStudies),
-                            theme: "prevention",
-                            state,
-                            filterStart: REQUESTED_VIR_START_DATE,
-                        }),
-                        fetchResistanceStatusTypeStudiesSuccess(status),
-                        fetchResistanceIntensityTypeStudiesSuccess(intensity),
-                        fetchResistanceMechanismTypeStudiesSuccess(mechanism),
-                        fetchSynergistEffectTypeStudiesSuccess(synergist)
-                    );
-                }),
-                catchError((error: Error) => of(addNotificationAction(error.message), fetchPreventionStudiesError()))
-            );
-        })
-    );
+export const fetchAllPreventionStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchPreventionStudiesRequest,
+    PreventionMapType.RESISTANCE_STATUS,
+    [PreventionMapType.INTENSITY_STATUS, PreventionMapType.RESISTANCE_MECHANISM, PreventionMapType.LEVEL_OF_INVOLVEMENT]
+);
 
 export const getResistanceStatusTypeStudiesEpic = buildPreventionStudiesEpic(
     ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest,

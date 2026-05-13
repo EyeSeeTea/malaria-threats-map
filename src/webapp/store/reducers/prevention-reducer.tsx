@@ -238,6 +238,8 @@ export const selectSynergistEffectStudies = createSelector(
     state => state.synergistEffectStudies
 );
 
+export const selectLoadingStudies = createSelector(selectPreventionState, state => state.loadingStudies);
+
 export const selectResistanceStatusStudiesLoading = createSelector(
     selectPreventionState,
     state => state.loadingResistanceStatus
