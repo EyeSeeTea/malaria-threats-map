@@ -23,10 +23,6 @@ import {
     selectTheme,
     selectTour,
 } from "../store/reducers/base-reducer";
-import { selectPreventionStudies } from "../store/reducers/prevention-reducer";
-import { selectDiagnosisStudies } from "../store/reducers/diagnosis-reducer";
-import { selectTreatmentStudies } from "../store/reducers/treatment-reducer";
-import { selectInvasiveStudies } from "../store/reducers/invasive-reducer";
 import { addNotificationAction } from "../store/actions/notifier-actions";
 import {
     setThemeAction,
@@ -148,10 +144,6 @@ const mapStateToProps = (state: State) => ({
     setBounds: selectSetBounds(state),
     region: selectRegion(state),
     theaterMode: selectTheaterMode(state),
-    preventionStudies: selectPreventionStudies(state),
-    diagnosisStudies: selectDiagnosisStudies(state),
-    treatmentStudies: selectTreatmentStudies(state),
-    invasiveStudies: selectInvasiveStudies(state),
     tour: selectTour(state),
     selection: selectSelection(state),
     selectionData: selectSelectionData(state),

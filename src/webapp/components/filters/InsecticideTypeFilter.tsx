@@ -6,7 +6,7 @@ import { setInsecticideTypes } from "../../store/actions/prevention-actions";
 import {
     selectFilteredPreventionStudies,
     selectPreventionFilters,
-    selectPreventionStudies,
+    selectPreventionStudiesByMapTypeSelected,
 } from "../../store/reducers/prevention-reducer";
 import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ import { extractInsecticideTypeOptions } from "../../../domain/entities/Preventi
 const mapStateToProps = (state: State) => ({
     insecticideTypes: selectInsecticideTypes(state),
     preventionFilters: selectPreventionFilters(state),
-    studies: selectPreventionStudies(state),
+    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
     filteredStudies: selectFilteredPreventionStudies(state),
 });
 
@@ -28,12 +28,16 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const InsecticideTypeFilter: React.FC<Props> = ({ preventionFilters, studies, setInsecticideTypes }) => {
+const InsecticideTypeFilter: React.FC<Props> = ({
+    preventionFilters,
+    preventionStudiesOfMapType,
+    setInsecticideTypes,
+}) => {
     const { t } = useTranslation();
 
     const filters = [filterByInsecticideClass(preventionFilters.insecticideClass)];
 
-    const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), studies);
+    const filteredStudies = filters.reduce((studies, filter) => studies.filter(filter), preventionStudiesOfMapType);
 
     const suggestions = extractInsecticideTypeOptions(filteredStudies);
 
