@@ -30,6 +30,10 @@ import { GetDashboardSourceInfoUseCase } from "./domain/usecases/GetDashboardSou
 import { DashboardSourceInfoApiRepository } from "./data/repositories/DashboardSourceInfoApiRepository";
 import { GetShareDataUseCase } from "./domain/usecases/GetShareDataUseCase";
 import { ShareDataApiRepository } from "./data/repositories/ShareDataApiRepository";
+import { GetSynergistEffectTypeStudiesUseCase } from "./domain/usecases/GetSynergistEffectTypeStudiesUseCase";
+import { GetResistanceStatusTypeStudiesUseCase } from "./domain/usecases/GetResistanceStatusTypeStudiesUseCase";
+import { GetResistanceMechanismTypeStudiesUseCase } from "./domain/usecases/GetResistanceMechanismTypeStudiesUseCase";
+import { GetResistanceIntensityTypeStudiesUseCase } from "./domain/usecases/GetResistanceIntensityTypeStudiesUseCase";
 
 export class CompositionRoot {
     private preventionRepository = new PreventionApiRepository(config.xmartServerUrl);
@@ -55,6 +59,10 @@ export class CompositionRoot {
     public get prevention() {
         return getExecute({
             getStudies: new GetPreventionStudiesUseCase(this.preventionRepository),
+            getResistanceIntensityTypeStudies: new GetResistanceIntensityTypeStudiesUseCase(this.preventionRepository),
+            getResistanceMechanismTypeStudies: new GetResistanceMechanismTypeStudiesUseCase(this.preventionRepository),
+            getResistanceStatusTypeStudies: new GetResistanceStatusTypeStudiesUseCase(this.preventionRepository),
+            getSynergistEffectTypeStudies: new GetSynergistEffectTypeStudiesUseCase(this.preventionRepository),
         });
     }
 
