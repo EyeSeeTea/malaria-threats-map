@@ -100,13 +100,18 @@ function updateOnlyIncludeBioassaysWithMoreMosquitoes(value: number) {
 }
 
 export default createReducer<PreventionState>(initialState, {
-    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state: PreventionState): PreventionState => ({
         ...state,
         loadingStudies: true,
+        errorResistanceStatus: null,
+        errorResistanceIntensity: null,
+        errorResistanceMechanism: null,
+        errorSynergistEffect: null,
     }),
-    [ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
         ...state,
         loadingResistanceStatus: true,
+        errorResistanceStatus: null,
     }),
     [ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
@@ -121,9 +126,10 @@ export default createReducer<PreventionState>(initialState, {
         loadingResistanceStatus: false,
     }),
 
-    [ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
         ...state,
         loadingResistanceIntensity: true,
+        errorResistanceIntensity: null,
     }),
     [ActionTypeEnum.FetchResistanceIntensityTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
@@ -138,9 +144,10 @@ export default createReducer<PreventionState>(initialState, {
         loadingResistanceIntensity: false,
     }),
 
-    [ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
         ...state,
         loadingResistanceMechanism: true,
+        errorResistanceMechanism: null,
     }),
     [ActionTypeEnum.FetchResistanceMechanismTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
@@ -155,9 +162,10 @@ export default createReducer<PreventionState>(initialState, {
         loadingResistanceMechanism: false,
     }),
 
-    [ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
         ...state,
         loadingSynergistEffect: true,
+        errorSynergistEffect: null,
     }),
     [ActionTypeEnum.FetchSynergistEffectTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({

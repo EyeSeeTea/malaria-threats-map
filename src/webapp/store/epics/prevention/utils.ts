@@ -503,7 +503,7 @@ type RequestPreventionStudyTypeAction =
 
 type StudyConfig = {
     studies: PreventionStudy[];
-    error: string | null;
+    loading: boolean;
     fetchStudies: () => FutureData<PreventionStudy[]>;
     onSuccess: (studies: PreventionStudy[]) => Action;
     onError: () => Action;
@@ -512,28 +512,28 @@ type StudyConfig = {
 const getStudyConfigs = (api: CompositionRoot["prevention"], state: State): Record<PreventionMapType, StudyConfig> => ({
     [PreventionMapType.RESISTANCE_STATUS]: {
         studies: state.prevention.resistanceStatusStudies,
-        error: state.prevention.errorResistanceStatus,
+        loading: state.prevention.loadingResistanceStatus,
         fetchStudies: () => api.getResistanceStatusTypeStudies(),
         onSuccess: fetchResistanceStatusTypeStudiesSuccess,
         onError: fetchResistanceStatusTypeStudiesError,
     },
     [PreventionMapType.INTENSITY_STATUS]: {
         studies: state.prevention.resistanceIntensityStudies,
-        error: state.prevention.errorResistanceIntensity,
+        loading: state.prevention.loadingResistanceIntensity,
         fetchStudies: () => api.getResistanceIntensityTypeStudies(),
         onSuccess: fetchResistanceIntensityTypeStudiesSuccess,
         onError: fetchResistanceIntensityTypeStudiesError,
     },
     [PreventionMapType.RESISTANCE_MECHANISM]: {
         studies: state.prevention.resistanceMechanismStudies,
-        error: state.prevention.errorResistanceMechanism,
+        loading: state.prevention.loadingResistanceMechanism,
         fetchStudies: () => api.getResistanceMechanismTypeStudies(),
         onSuccess: fetchResistanceMechanismTypeStudiesSuccess,
         onError: fetchResistanceMechanismTypeStudiesError,
     },
     [PreventionMapType.LEVEL_OF_INVOLVEMENT]: {
         studies: state.prevention.synergistEffectStudies,
-        error: state.prevention.errorSynergistEffect,
+        loading: state.prevention.loadingSynergistEffect,
         fetchStudies: () => api.getSynergistEffectTypeStudies(),
         onSuccess: fetchSynergistEffectTypeStudiesSuccess,
         onError: fetchSynergistEffectTypeStudiesError,
@@ -557,7 +557,7 @@ const buildPrimaryStream$ = (config: StudyConfig, state: State): Observable<Acti
     );
 
 const buildSecondaryStream$ = (config: StudyConfig): Observable<Action> =>
-    config.studies.length === 0 && !config.error
+    config.studies.length === 0 && !config.loading
         ? fromFuture(config.fetchStudies()).pipe(
               map(studies => config.onSuccess(studies)),
               catchError((error: Error) => of(addNotificationAction(error.message), config.onError()))
@@ -580,7 +580,7 @@ export const buildPreventionStudiesEpic =
             withLatestFrom(state$),
             filter(([, state]) => {
                 const config = getStudyConfigs(compositionRoot.prevention, state)[primaryMapType];
-                return config.studies.length === 0 && !config.error;
+                return config.studies.length === 0;
             }),
             switchMap(([, state]) => {
                 const api = compositionRoot.prevention;
