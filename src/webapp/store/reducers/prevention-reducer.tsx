@@ -53,8 +53,22 @@ function updateFilter<T>(key: string, value: T, def?: T) {
     };
 }
 
-function updatePreventionMapType(mapType: PreventionMapType) {
-    return updateFilter("mapType", mapType, PreventionMapType.RESISTANCE_STATUS);
+const errorKeyByMapType: Readonly<Record<PreventionMapType, keyof PreventionState>> = {
+    [PreventionMapType.RESISTANCE_STATUS]: "errorResistanceStatus",
+    [PreventionMapType.INTENSITY_STATUS]: "errorResistanceIntensity",
+    [PreventionMapType.RESISTANCE_MECHANISM]: "errorResistanceMechanism",
+    [PreventionMapType.LEVEL_OF_INVOLVEMENT]: "errorSynergistEffect",
+};
+
+function updatePreventionMapTypeAndResetFetchError(mapType: PreventionMapType) {
+    return (state: PreventionState): PreventionState => {
+        const resolvedMapType = mapType ?? PreventionMapType.RESISTANCE_STATUS;
+        return {
+            ...state,
+            [errorKeyByMapType[resolvedMapType]]: null,
+            filters: { ...state.filters, mapType: resolvedMapType },
+        };
+    };
 }
 
 function updatePreventionDataSet(dataset: PreventionDataset) {
@@ -98,82 +112,100 @@ function updateOnlyIncludeBioassaysWithMoreMosquitoes(value: number) {
 }
 
 export default createReducer<PreventionState>(initialState, {
-    [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        errorResistanceStatus: null,
-        errorResistanceIntensity: null,
-        errorResistanceMechanism: null,
-        errorSynergistEffect: null,
-    }),
-    [ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        loadingResistanceStatus: true,
-        errorResistanceStatus: null,
-    }),
+    [ActionTypeEnum.FetchPreventionStudiesRequest]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            errorResistanceStatus: null,
+            errorResistanceIntensity: null,
+            errorResistanceMechanism: null,
+            errorSynergistEffect: null,
+        }),
+    [ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            loadingResistanceStatus: true,
+            errorResistanceStatus: null,
+        }),
     [ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
             ...state,
             loadingResistanceStatus: false,
             resistanceStatusStudies: studies,
         }),
-    [ActionTypeEnum.FetchResistanceStatusTypeStudiesError]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        loadingResistanceStatus: false,
-        errorResistanceStatus: "There was a problem loading resistance status type studies",
-    }),
+    [ActionTypeEnum.FetchResistanceStatusTypeStudiesError]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            loadingResistanceStatus: false,
+            errorResistanceStatus: "There was a problem loading resistance status type studies",
+        }),
 
-    [ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        loadingResistanceIntensity: true,
-        errorResistanceIntensity: null,
-    }),
+    [ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            loadingResistanceIntensity: true,
+            errorResistanceIntensity: null,
+        }),
     [ActionTypeEnum.FetchResistanceIntensityTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
             ...state,
             loadingResistanceIntensity: false,
             resistanceIntensityStudies: studies,
         }),
-    [ActionTypeEnum.FetchResistanceIntensityTypeStudiesError]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        loadingResistanceIntensity: false,
-        errorResistanceIntensity: "There was a problem loading resistance intensity type studies",
-    }),
+    [ActionTypeEnum.FetchResistanceIntensityTypeStudiesError]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            loadingResistanceIntensity: false,
+            errorResistanceIntensity: "There was a problem loading resistance intensity type studies",
+        }),
 
-    [ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        loadingResistanceMechanism: true,
-        errorResistanceMechanism: null,
-    }),
+    [ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            loadingResistanceMechanism: true,
+            errorResistanceMechanism: null,
+        }),
     [ActionTypeEnum.FetchResistanceMechanismTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
             ...state,
             loadingResistanceMechanism: false,
             resistanceMechanismStudies: studies,
         }),
-    [ActionTypeEnum.FetchResistanceMechanismTypeStudiesError]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        loadingResistanceMechanism: false,
-        errorResistanceMechanism: "There was a problem loading resistance mechanism type studies",
-    }),
+    [ActionTypeEnum.FetchResistanceMechanismTypeStudiesError]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            loadingResistanceMechanism: false,
+            errorResistanceMechanism: "There was a problem loading resistance mechanism type studies",
+        }),
 
-    [ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        loadingSynergistEffect: true,
-        errorSynergistEffect: null,
-    }),
+    [ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            loadingSynergistEffect: true,
+            errorSynergistEffect: null,
+        }),
     [ActionTypeEnum.FetchSynergistEffectTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
             ...state,
             loadingSynergistEffect: false,
             synergistEffectStudies: studies,
         }),
-    [ActionTypeEnum.FetchSynergistEffectTypeStudiesError]: () => (state: PreventionState): PreventionState => ({
-        ...state,
-        loadingSynergistEffect: false,
-        errorSynergistEffect: "There was a problem loading synergist effect type studies",
-    }),
+    [ActionTypeEnum.FetchSynergistEffectTypeStudiesError]:
+        () =>
+        (state: PreventionState): PreventionState => ({
+            ...state,
+            loadingSynergistEffect: false,
+            errorSynergistEffect: "There was a problem loading synergist effect type studies",
+        }),
 
-    [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
+    [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapTypeAndResetFetchError,
     [ActionTypeEnum.SetPreventionDataset]: updatePreventionDataSet,
     [ActionTypeEnum.SetInsecticideClass]: updateInsecticideClass,
     [ActionTypeEnum.SetInsecticideTypes]: updateInsecticideTypes,

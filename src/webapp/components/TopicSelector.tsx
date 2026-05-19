@@ -2,11 +2,12 @@ import React, { useMemo } from "react";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import styled from "styled-components";
 import { Box, Grid, GridSize, IconButton } from "@mui/material";
-import { State } from "../store/types";
+import { PreventionMapType, State } from "../store/types";
 import { connect } from "react-redux";
 import { setActionGroupSelected, setThemeAction, Source } from "../store/actions/base-actions";
 import { selectTheme } from "../store/reducers/base-reducer";
 import {
+    selectPreventionFilters,
     selectResistanceIntensityStudiesError,
     selectResistanceMechanismStudiesError,
     selectResistanceStatusStudiesError,
@@ -62,6 +63,7 @@ interface ownProps {
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    preventionFilters: selectPreventionFilters(state),
     errorResistanceStatusStudies: selectResistanceStatusStudiesError(state),
     errorResistanceIntensityStudies: selectResistanceIntensityStudiesError(state),
     errorResistanceMechanismStudies: selectResistanceMechanismStudiesError(state),
@@ -85,6 +87,7 @@ const ThemeSelector: React.FC<Props> = ({
     themeItemGridSize,
     theme,
     setTheme,
+    preventionFilters,
     errorResistanceStatusStudies,
     errorResistanceIntensityStudies,
     errorResistanceMechanismStudies,
@@ -136,19 +139,22 @@ const ThemeSelector: React.FC<Props> = ({
         }
     }, [setTheme, setActionGroupSelected, from]);
 
-    const hasPreventionError = useMemo(
-        () =>
-            !!errorResistanceStatusStudies ||
-            !!errorResistanceIntensityStudies ||
-            !!errorResistanceMechanismStudies ||
-            !!errorSynergistEffectStudies,
-        [
-            errorResistanceStatusStudies,
-            errorResistanceIntensityStudies,
-            errorResistanceMechanismStudies,
-            errorSynergistEffectStudies,
-        ]
-    );
+    const hasPreventionError = useMemo(() => {
+        const preventionMapType = preventionFilters.mapType;
+        const errorByMapType: Record<PreventionMapType, string | null> = {
+            [PreventionMapType.RESISTANCE_STATUS]: errorResistanceStatusStudies,
+            [PreventionMapType.INTENSITY_STATUS]: errorResistanceIntensityStudies,
+            [PreventionMapType.RESISTANCE_MECHANISM]: errorResistanceMechanismStudies,
+            [PreventionMapType.LEVEL_OF_INVOLVEMENT]: errorSynergistEffectStudies,
+        };
+        return !!errorByMapType[preventionMapType];
+    }, [
+        preventionFilters.mapType,
+        errorResistanceStatusStudies,
+        errorResistanceIntensityStudies,
+        errorResistanceMechanismStudies,
+        errorSynergistEffectStudies,
+    ]);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
