@@ -246,7 +246,7 @@ function createMolecularMarkersChartData(
 
         return {
             maxPointWidth: 20,
-            name: genotype,
+            name: getGenotypeName(genotype, treatmentFilters.molecularMarkers),
             color: MutationColors[genotype] ? MutationColors[genotype].color : "000",
             data: studies255.map(study255 => {
                 const study257 = studies257.find(study => study255.Code === study.K13_CODE);
@@ -262,6 +262,7 @@ function createMolecularMarkersChartData(
         MM_PFCRT: i18next.t("download.ongoing_molecular_marker.MM_PFCRT"),
         COPY_NUMBERS: i18next.t("download.ongoing_molecular_marker.COPY_NUMBERS"),
         WILD_TYPE: i18next.t("common.treatment.chart.molecular_markers.wild_type"),
+        WILD_TYPE_PFK13: i18next.t("common.treatment.chart.molecular_markers.wild_type_pfk13"),
         VALIDATED_MARKERS: i18next.t("common.treatment.chart.molecular_markers.validated_markers"),
         CANDIDATE_MARKERS: i18next.t("common.treatment.chart.molecular_markers.candidate_markers"),
         POTENTIAL_MARKERS: i18next.t("common.treatment.chart.molecular_markers.potential_markers"),
@@ -275,7 +276,11 @@ function createMolecularMarkersChartData(
             series,
             markers: treatmentFilters.molecularMarkers.includes(molecularMarkersMap.Pfkelch13)
                 ? {
-                      [translations.WILD_TYPE]: extractMarkersByMutationCategory(allStudies257, "wild type"),
+                      [translations.WILD_TYPE_PFK13]: extractMarkersByMutationCategory(
+                          allStudies257,
+                          "wild type",
+                          treatmentFilters.molecularMarkers
+                      ),
                       [translations.VALIDATED_MARKERS]: extractMarkersByMutationCategory(allStudies257, "validated"),
                       [translations.CANDIDATE_MARKERS]: extractMarkersByMutationCategory(allStudies257, "candidate"),
                       [translations.POTENTIAL_MARKERS]: extractMarkersByMutationCategory(allStudies257, "potential"),
@@ -441,7 +446,11 @@ function getMolecularMarkersIncluded(study: TreatmentStudy): MolecularMarkersLab
     return molecularMarkersIncluded;
 }
 
-function extractMarkersByMutationCategory(mutationStudies: TreatmentStudy[], category: String) {
+function extractMarkersByMutationCategory(
+    mutationStudies: TreatmentStudy[],
+    category: String,
+    molecularMarkersFilters?: number[]
+) {
     const k13Mutations = _.uniqBy(
         mutationStudies.map(s => ({ GENOTYPE: s.GENOTYPE, MUT_CAT: s.MUT_CAT, MUT_ORDER: +s.MUT_ORDER })),
         "GENOTYPE"
@@ -452,9 +461,13 @@ function extractMarkersByMutationCategory(mutationStudies: TreatmentStudy[], cat
         "MUT_ORDER",
         "asc"
     ).map(mutation => ({
-        name: mutation.GENOTYPE,
+        name: getGenotypeName(mutation.GENOTYPE, molecularMarkersFilters ?? []),
         color: MutationColors[mutation.GENOTYPE] ? MutationColors[mutation.GENOTYPE].color : "#000",
     }));
+}
+
+function getGenotypeName(genotype: string, molecularMarkersFilters: number[]) {
+    return molecularMarkersFilters.includes(molecularMarkersMap.Pfkelch13) && genotype === "WT" ? "NR" : genotype;
 }
 
 function createTreatmentAditionalInfo(studies: TreatmentStudy[]): AditionalInformation[] {

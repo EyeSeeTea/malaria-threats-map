@@ -693,6 +693,7 @@
                     "wt_tudy": "Samples with wildtype",
                     "mc_study": "Samples with multiple copy numbers",
                     "wild_type": "Wild type",
+                    "wild_type_pfk13": "None reported",
                     "validated_markers": "Validated markers",
                     "candidate_markers": "Candidate markers",
                     "potential_markers": "Potential markers",
