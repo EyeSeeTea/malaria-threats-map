@@ -20,8 +20,6 @@ const initialFilters: PreventionFilters = {
 };
 
 const initialState: PreventionState = Object.freeze({
-    loadingStudies: false,
-
     resistanceStatusStudies: [],
     errorResistanceStatus: null,
     loadingResistanceStatus: false,
@@ -102,7 +100,6 @@ function updateOnlyIncludeBioassaysWithMoreMosquitoes(value: number) {
 export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.FetchPreventionStudiesRequest]: () => (state: PreventionState): PreventionState => ({
         ...state,
-        loadingStudies: true,
         errorResistanceStatus: null,
         errorResistanceIntensity: null,
         errorResistanceMechanism: null,
@@ -116,14 +113,13 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
             ...state,
-            loadingStudies: false,
             loadingResistanceStatus: false,
             resistanceStatusStudies: studies,
         }),
-    [ActionTypeEnum.FetchResistanceStatusTypeStudiesError]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchResistanceStatusTypeStudiesError]: () => (state: PreventionState): PreventionState => ({
         ...state,
-        errorResistanceStatus: "There was a problem loading resistance status type studies",
         loadingResistanceStatus: false,
+        errorResistanceStatus: "There was a problem loading resistance status type studies",
     }),
 
     [ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
@@ -134,14 +130,13 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.FetchResistanceIntensityTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
             ...state,
-            loadingStudies: false,
             loadingResistanceIntensity: false,
             resistanceIntensityStudies: studies,
         }),
-    [ActionTypeEnum.FetchResistanceIntensityTypeStudiesError]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchResistanceIntensityTypeStudiesError]: () => (state: PreventionState): PreventionState => ({
         ...state,
-        errorResistanceIntensity: "There was a problem loading resistance intensity type studies",
         loadingResistanceIntensity: false,
+        errorResistanceIntensity: "There was a problem loading resistance intensity type studies",
     }),
 
     [ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
@@ -152,14 +147,13 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.FetchResistanceMechanismTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
             ...state,
-            loadingStudies: false,
             loadingResistanceMechanism: false,
             resistanceMechanismStudies: studies,
         }),
-    [ActionTypeEnum.FetchResistanceMechanismTypeStudiesError]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchResistanceMechanismTypeStudiesError]: () => (state: PreventionState): PreventionState => ({
         ...state,
-        errorResistanceMechanism: "There was a problem loading resistance mechanism type studies",
         loadingResistanceMechanism: false,
+        errorResistanceMechanism: "There was a problem loading resistance mechanism type studies",
     }),
 
     [ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest]: () => (state: PreventionState): PreventionState => ({
@@ -170,14 +164,13 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.FetchSynergistEffectTypeStudiesSuccess]:
         (studies: PreventionStudy[]) => (state: PreventionState) => ({
             ...state,
-            loadingStudies: false,
             loadingSynergistEffect: false,
             synergistEffectStudies: studies,
         }),
-    [ActionTypeEnum.FetchSynergistEffectTypeStudiesError]: () => (state: PreventionState) => ({
+    [ActionTypeEnum.FetchSynergistEffectTypeStudiesError]: () => (state: PreventionState): PreventionState => ({
         ...state,
-        errorSynergistEffect: "There was a problem loading synergist effect type studies",
         loadingSynergistEffect: false,
+        errorSynergistEffect: "There was a problem loading synergist effect type studies",
     }),
 
     [ActionTypeEnum.SetPreventionMapType]: updatePreventionMapType,
@@ -237,8 +230,6 @@ export const selectSynergistEffectStudies = createSelector(
     selectPreventionState,
     state => state.synergistEffectStudies
 );
-
-export const selectLoadingStudies = createSelector(selectPreventionState, state => state.loadingStudies);
 
 export const selectResistanceStatusStudiesLoading = createSelector(
     selectPreventionState,

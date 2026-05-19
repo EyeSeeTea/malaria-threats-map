@@ -9,7 +9,6 @@ import { resolveResistanceStatus } from "./ResistanceStatus/utils";
 import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
 import {
-    selectLoadingStudies,
     selectPreventionFilters,
     selectPreventionStudiesByMapTypeSelected,
     selectResistanceIntensityStudies,
@@ -64,7 +63,6 @@ const layer: any = (symbols: any) => ({
 });
 
 const mapStateToProps = (state: State) => ({
-    loadingAllStudies: selectLoadingStudies(state),
     studiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
     resistanceStatusStudies: selectResistanceStatusStudies(state),
     resistanceIntensityStudies: selectResistanceIntensityStudies(state),
@@ -174,7 +172,6 @@ class PreventionLayer extends Component<Props> {
     loadStudiesIfRequired() {
         const {
             theme,
-            loadingAllStudies,
             preventionFilters,
             resistanceStatusStudies,
             resistanceIntensityStudies,
@@ -190,7 +187,7 @@ class PreventionLayer extends Component<Props> {
             errorSynergistEffectStudies,
         } = this.props;
 
-        if (theme === PREVENTION && !loadingAllStudies) {
+        if (theme === PREVENTION) {
             const fetchByMapType: Record<
                 PreventionMapType,
                 { loading: boolean; studies: PreventionStudy[]; fetch: () => void; error: string | null }
