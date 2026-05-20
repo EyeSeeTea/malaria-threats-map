@@ -116,6 +116,7 @@ export default createReducer<PreventionState>(initialState, {
         () =>
         (state: PreventionState): PreventionState => ({
             ...state,
+            loadingResistanceStatus: true,
             errorResistanceStatus: null,
             errorResistanceIntensity: null,
             errorResistanceMechanism: null,
