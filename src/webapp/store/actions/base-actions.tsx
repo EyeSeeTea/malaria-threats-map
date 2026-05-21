@@ -104,3 +104,5 @@ export const getTotalStudiesInThemesSuccessAction = createAction(
 export const getTotalStudiesInThemesFailureAction = createAction(ActionTypeEnum.GetTotalStudiesInThemesFailure)<
     Error | string
 >();
+
+export const changeLanguageAction = createAction(ActionTypeEnum.MalariaChangeLanguage)<string>();

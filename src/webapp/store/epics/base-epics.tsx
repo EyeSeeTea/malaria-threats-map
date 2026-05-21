@@ -3,6 +3,7 @@ import { ActionType } from "typesafe-actions";
 import { Observable, of } from "rxjs";
 import { catchError, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import {
+    changeLanguageAction,
     getLastUpdatedFailureAction,
     getLastUpdatedRequestAction,
     getLastUpdatedSuccessAction,
@@ -38,6 +39,7 @@ import { createPreventionSelectionData, getStudiesByMapType } from "./prevention
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
 import { createTreatmentSelectionData } from "./treatment/utils";
+import { SelectionData } from "../SelectionData";
 import { LastUpdatedDates } from "../../../domain/entities/LastUpdateDates";
 import { TotalStudiesInThemes } from "../../../domain/entities/TotalStudiesInThemes";
 
@@ -277,6 +279,44 @@ export const setSelectionToLogEpic = (
         })
     );
 
+function buildSelectionDataFromState(state: State): SelectionData | null {
+    switch (state.malaria.theme) {
+        case "prevention": {
+            const mapType = state.prevention.filters.mapType;
+            return createPreventionSelectionData(
+                state.malaria.theme,
+                mapType,
+                state.malaria.selection,
+                state.prevention.filteredStudies,
+                getStudiesByMapType(state, mapType)
+            );
+        }
+        case "diagnosis":
+            return createDiagnosisSelectionData(
+                state.malaria.theme,
+                state.malaria.selection,
+                state.diagnosis.filters,
+                state.diagnosis.filteredStudies
+            );
+        case "treatment":
+            return createTreatmentSelectionData(
+                state.malaria.theme,
+                state.treatment.filters,
+                state.malaria.filters,
+                state.malaria.selection,
+                state.treatment.filteredStudies
+            );
+        case "invasive":
+            return createInvasiveSelectionData(
+                state.malaria.theme,
+                state.malaria.selection,
+                state.invasive.filteredStudies
+            );
+        default:
+            return null;
+    }
+}
+
 export const setSelectionEpic = (
     action$: Observable<ActionType<typeof setSelection>>,
     state$: StateObservable<State>
@@ -285,54 +325,9 @@ export const setSelectionEpic = (
         ofType(ActionTypeEnum.SetSelection),
         withLatestFrom(state$),
         switchMap(([, state]) => {
-            switch (state.malaria.theme) {
-                case "prevention": {
-                    const mapType = state.prevention.filters.mapType;
-                    const nonFilteredStudies = getStudiesByMapType(state, mapType);
-
-                    const selectionData = createPreventionSelectionData(
-                        state.malaria.theme,
-                        state.prevention.filters.mapType,
-                        state.malaria.selection,
-                        state.prevention.filteredStudies,
-                        nonFilteredStudies
-                    );
-
-                    return of(setSelectionData(null), setSelectionData(selectionData));
-                }
-                case "diagnosis": {
-                    const selectionData = createDiagnosisSelectionData(
-                        state.malaria.theme,
-                        state.malaria.selection,
-                        state.diagnosis.filters,
-                        state.diagnosis.filteredStudies
-                    );
-
-                    return of(setSelectionData(null), setSelectionData(selectionData));
-                }
-                case "treatment": {
-                    const selectionData = createTreatmentSelectionData(
-                        state.malaria.theme,
-                        state.treatment.filters,
-                        state.malaria.filters,
-                        state.malaria.selection,
-                        state.treatment.filteredStudies
-                    );
-
-                    return of(setSelectionData(null), setSelectionData(selectionData));
-                }
-                case "invasive": {
-                    const selectionData = createInvasiveSelectionData(
-                        state.malaria.theme,
-                        state.malaria.selection,
-                        state.invasive.filteredStudies
-                    );
-
-                    return of(setSelectionData(null), setSelectionData(selectionData));
-                }
-                default:
-                    return of();
-            }
+            const selectionData = buildSelectionDataFromState(state);
+            if (!selectionData) return of(setSelectionData(null));
+            return of(setSelectionData(null), setSelectionData(selectionData));
         })
     );
 
@@ -363,6 +358,22 @@ export const setSelectionDataFilterSelectionEpic = (
                 default:
                     return of();
             }
+        })
+    );
+
+export const changeLanguageEpic = (
+    action$: Observable<ActionType<typeof changeLanguageAction>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.MalariaChangeLanguage),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            if (!state.malaria.selection) return of();
+            const selectionData = buildSelectionDataFromState(state);
+            if (!selectionData) return of();
+
+            return of(setSelectionData(null), setSelectionData(selectionData));
         })
     );
 
