@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { DiagnosisIcon, InvasiveIcon, PreventionIcon, TreatmentIcon } from "./Icons";
 import styled from "styled-components";
 import { Box, Grid, GridSize, IconButton } from "@mui/material";
@@ -6,7 +6,12 @@ import { State } from "../store/types";
 import { connect } from "react-redux";
 import { setActionGroupSelected, setThemeAction, Source } from "../store/actions/base-actions";
 import { selectTheme } from "../store/reducers/base-reducer";
-import { selectPreventionStudiesError } from "../store/reducers/prevention-reducer";
+import {
+    selectResistanceIntensityStudiesError,
+    selectResistanceMechanismStudiesError,
+    selectResistanceStatusStudiesError,
+    selectSynergistEffectStudiesError,
+} from "../store/reducers/prevention-reducer";
 import { selectDiagnosisStudiesError } from "../store/reducers/diagnosis-reducer";
 import { selectTreatmentStudiesError } from "../store/reducers/treatment-reducer";
 import { selectInvasiveStudiesError } from "../store/reducers/invasive-reducer";
@@ -50,13 +55,6 @@ const Title = styled.span`
     align-items: center;
 `;
 
-// const LearnMoreButton = styled(Button)`
-//     color: #487299;
-//     font-size: 13px;
-//     text-decoration: underline;
-//     padding: 2px 8px;
-// `;
-
 interface ownProps {
     themeItemGridSize?: GridSize;
     from: Source;
@@ -64,7 +62,10 @@ interface ownProps {
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    preventionError: selectPreventionStudiesError(state),
+    errorResistanceStatusStudies: selectResistanceStatusStudiesError(state),
+    errorResistanceIntensityStudies: selectResistanceIntensityStudiesError(state),
+    errorResistanceMechanismStudies: selectResistanceMechanismStudiesError(state),
+    errorSynergistEffectStudies: selectSynergistEffectStudiesError(state),
     diagnosisError: selectDiagnosisStudiesError(state),
     treatmentError: selectTreatmentStudiesError(state),
     invasiveError: selectInvasiveStudiesError(state),
@@ -84,7 +85,10 @@ const ThemeSelector: React.FC<Props> = ({
     themeItemGridSize,
     theme,
     setTheme,
-    preventionError,
+    errorResistanceStatusStudies,
+    errorResistanceIntensityStudies,
+    errorResistanceMechanismStudies,
+    errorSynergistEffectStudies,
     diagnosisError,
     treatmentError,
     invasiveError,
@@ -132,6 +136,20 @@ const ThemeSelector: React.FC<Props> = ({
         }
     }, [setTheme, setActionGroupSelected, from]);
 
+    const hasPreventionError = useMemo(() => {
+        return (
+            !!errorResistanceStatusStudies &&
+            !!errorResistanceIntensityStudies &&
+            !!errorResistanceMechanismStudies &&
+            !!errorSynergistEffectStudies
+        );
+    }, [
+        errorResistanceStatusStudies,
+        errorResistanceIntensityStudies,
+        errorResistanceMechanismStudies,
+        errorSynergistEffectStudies,
+    ]);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <GridContainer container spacing={2}>
@@ -150,14 +168,14 @@ const ThemeSelector: React.FC<Props> = ({
                     </ThemeButton>
                 </Grid>
                 <Grid item xs={themeItemGridSize || 6}>
-                    <ThemeButton disabled={!!preventionError}>
+                    <ThemeButton disabled={hasPreventionError}>
                         <IconButton
                             disableRipple
-                            disabled={!!preventionError}
+                            disabled={hasPreventionError}
                             title={t("common.themes.prevention")}
                             onClick={handlePreventionClick}
                         >
-                            <PreventionIcon selected={theme === "prevention" && !preventionError} />
+                            <PreventionIcon selected={theme === "prevention" && !hasPreventionError} />
                         </IconButton>
                         <Title>{t("common.themes.prevention")}</Title>
                         {/* <LearnMoreButton variant="text">{t("common.themes.learnMore")}</LearnMoreButton> */}

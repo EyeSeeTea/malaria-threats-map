@@ -493,7 +493,6 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
     switch (preventionFilters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return [
-                filterByResistanceStatus,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
                 filterByTypes(preventionFilters.type),
@@ -508,7 +507,6 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
             ];
         case PreventionMapType.INTENSITY_STATUS:
             return [
-                filterByIntensityStatus,
                 filterValidResistanceIntensityValue,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
@@ -523,7 +521,6 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
             ];
         case PreventionMapType.RESISTANCE_MECHANISM: {
             const base = [
-                filterByResistanceMechanism,
                 filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByAssayTypes(preventionFilters.assayTypes),
@@ -536,7 +533,6 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
         }
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
-                filterByLevelOfInvolvement,
                 filterByProxyType(preventionFilters.proxyType),
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),

@@ -1,25 +1,19 @@
 import React from "react";
-import { PreventionFilters, PreventionMapType, State } from "../../store/types";
+import { State } from "../../store/types";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import {
     selectFilteredPreventionStudies,
     selectPreventionFilters,
-    selectPreventionStudies,
+    selectPreventionStudiesByMapTypeSelected,
 } from "../../store/reducers/prevention-reducer";
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
 import _ from "lodash";
-import {
-    filterByIntensityStatus,
-    filterByLevelOfInvolvement,
-    filterByResistanceStatus,
-} from "../layers/studies-filters";
-import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 const mapStateToProps = (state: State) => ({
-    preventionStudies: selectPreventionStudies(state),
+    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
     preventionFilters: selectPreventionFilters(state),
     filteredStudies: selectFilteredPreventionStudies(state),
 });
@@ -56,15 +50,13 @@ export function getInsecticideClassOptions(insecticideClasses: string[]) {
     );
 }
 
-function InsecticideClassFilter({ preventionStudies = [], preventionFilters, setInsecticideClass }: Props) {
+function InsecticideClassFilter({ preventionStudiesOfMapType = [], preventionFilters, setInsecticideClass }: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         setInsecticideClass((event.target as HTMLInputElement).value);
     };
 
-    const studies = filterStudiesByMapType(preventionFilters, preventionStudies);
-
-    const insecticideClasses = _.uniq(studies.map(study => study.INSECTICIDE_CLASS));
+    const insecticideClasses = _.uniq(preventionStudiesOfMapType.map(study => study.INSECTICIDE_CLASS));
 
     const options = getInsecticideClassOptions(insecticideClasses);
 
@@ -76,25 +68,6 @@ function InsecticideClassFilter({ preventionStudies = [], preventionFilters, set
             value={preventionFilters.insecticideClass}
         />
     );
-}
-
-function filterStudiesByMapType(preventionFilters: PreventionFilters, studies: PreventionStudy[]) {
-    const filters = buildFilters(preventionFilters);
-
-    return filters.reduce((studies, filter) => studies.filter(filter), studies);
-}
-
-function buildFilters(preventionFilters: PreventionFilters) {
-    switch (preventionFilters.mapType) {
-        case PreventionMapType.RESISTANCE_STATUS:
-            return [filterByResistanceStatus];
-        case PreventionMapType.INTENSITY_STATUS:
-            return [filterByIntensityStatus];
-        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
-            return [filterByLevelOfInvolvement];
-        default:
-            return [];
-    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InsecticideClassFilter);

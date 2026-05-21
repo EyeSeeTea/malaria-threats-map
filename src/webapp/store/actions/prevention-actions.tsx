@@ -5,11 +5,43 @@ import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
 export const fetchPreventionStudiesRequest = createAction(ActionTypeEnum.FetchPreventionStudiesRequest)();
 
-export const fetchPreventionStudiesSuccess = createAction(ActionTypeEnum.FetchPreventionStudiesSuccess)<
-    PreventionStudy[]
->();
+export const fetchResistanceStatusTypeStudiesRequest = createAction(
+    ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest
+)();
+export const fetchResistanceStatusTypeStudiesSuccess = createAction(
+    ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess
+)<PreventionStudy[]>();
+export const fetchResistanceStatusTypeStudiesError = createAction(
+    ActionTypeEnum.FetchResistanceStatusTypeStudiesError
+)();
 
-export const fetchPreventionStudiesError = createAction(ActionTypeEnum.FetchPreventionStudiesError)();
+export const fetchResistanceIntensityTypeStudiesRequest = createAction(
+    ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest
+)();
+export const fetchResistanceIntensityTypeStudiesSuccess = createAction(
+    ActionTypeEnum.FetchResistanceIntensityTypeStudiesSuccess
+)<PreventionStudy[]>();
+export const fetchResistanceIntensityTypeStudiesError = createAction(
+    ActionTypeEnum.FetchResistanceIntensityTypeStudiesError
+)();
+
+export const fetchResistanceMechanismTypeStudiesRequest = createAction(
+    ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest
+)();
+export const fetchResistanceMechanismTypeStudiesSuccess = createAction(
+    ActionTypeEnum.FetchResistanceMechanismTypeStudiesSuccess
+)<PreventionStudy[]>();
+export const fetchResistanceMechanismTypeStudiesError = createAction(
+    ActionTypeEnum.FetchResistanceMechanismTypeStudiesError
+)();
+
+export const fetchSynergistEffectTypeStudiesRequest = createAction(
+    ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest
+)();
+export const fetchSynergistEffectTypeStudiesSuccess = createAction(
+    ActionTypeEnum.FetchSynergistEffectTypeStudiesSuccess
+)<PreventionStudy[]>();
+export const fetchSynergistEffectTypeStudiesError = createAction(ActionTypeEnum.FetchSynergistEffectTypeStudiesError)();
 
 export const setPreventionMapType = createAction(ActionTypeEnum.SetPreventionMapType)<PreventionMapType | null>();
 

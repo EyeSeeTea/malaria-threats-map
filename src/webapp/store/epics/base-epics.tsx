@@ -34,7 +34,7 @@ import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
 import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
 import { ActionTypeEnum } from "../actions";
-import { createPreventionSelectionData } from "./prevention/utils";
+import { createPreventionSelectionData, getStudiesByMapType } from "./prevention/utils";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
 import { createTreatmentSelectionData } from "./treatment/utils";
@@ -287,12 +287,15 @@ export const setSelectionEpic = (
         switchMap(([, state]) => {
             switch (state.malaria.theme) {
                 case "prevention": {
+                    const mapType = state.prevention.filters.mapType;
+                    const nonFilteredStudies = getStudiesByMapType(state, mapType);
+
                     const selectionData = createPreventionSelectionData(
                         state.malaria.theme,
                         state.prevention.filters.mapType,
                         state.malaria.selection,
                         state.prevention.filteredStudies,
-                        state.prevention.studies
+                        nonFilteredStudies
                     );
 
                     return of(setSelectionData(null), setSelectionData(selectionData));
@@ -343,12 +346,15 @@ export const setSelectionDataFilterSelectionEpic = (
         switchMap(([action, state]) => {
             switch (state.malaria.theme) {
                 case "prevention": {
+                    const mapType = state.prevention.filters.mapType;
+                    const nonFilteredStudies = getStudiesByMapType(state, mapType);
+
                     const selectionData = createPreventionSelectionData(
                         state.malaria.theme,
                         state.prevention.filters.mapType,
                         state.malaria.selection,
                         state.prevention.filteredStudies,
-                        state.prevention.studies,
+                        nonFilteredStudies,
                         action.payload
                     );
 

@@ -4,13 +4,12 @@ import { connect } from "react-redux";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { selectProxyTypes } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters, selectPreventionStudies } from "../../store/reducers/prevention-reducer";
+import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { setProxyType } from "../../store/actions/prevention-actions";
 import { logEventAction } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 
 const mapStateToProps = (state: State) => ({
-    studies: selectPreventionStudies(state),
     proxyTypes: selectProxyTypes(state),
     preventionFilters: selectPreventionFilters(state),
 });

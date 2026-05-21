@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { State } from "../../../store/types";
+import { PreventionMapType, State } from "../../../store/types";
 import { studiesToGeoJson } from "../layer-utils";
 import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import * as R from "ramda";
@@ -8,7 +8,22 @@ import resistanceStatusSymbols from "./ResistanceStatus/symbols";
 import { resolveResistanceStatus } from "./ResistanceStatus/utils";
 import { buildPreventionFilters } from "../studies-filters";
 import { resolveMapTypeSymbols, studySelector } from "./utils";
-import { selectPreventionFilters, selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
+import {
+    selectPreventionFilters,
+    selectPreventionStudiesByMapTypeSelected,
+    selectResistanceIntensityStudies,
+    selectResistanceIntensityStudiesError,
+    selectResistanceIntensityStudiesLoading,
+    selectResistanceMechanismStudies,
+    selectResistanceMechanismStudiesError,
+    selectResistanceMechanismStudiesLoading,
+    selectResistanceStatusStudies,
+    selectResistanceStatusStudiesError,
+    selectResistanceStatusStudiesLoading,
+    selectSynergistEffectStudies,
+    selectSynergistEffectStudiesError,
+    selectSynergistEffectStudiesLoading,
+} from "../../../store/reducers/prevention-reducer";
 import {
     selectFilters,
     selectHoverSelection,
@@ -17,7 +32,13 @@ import {
     selectTheme,
 } from "../../../store/reducers/base-reducer";
 import mapboxgl, { MapMouseEvent } from "mapbox-gl";
-import { fetchPreventionStudiesRequest, setPreventionFilteredStudies } from "../../../store/actions/prevention-actions";
+import {
+    fetchResistanceIntensityTypeStudiesRequest,
+    fetchResistanceMechanismTypeStudiesRequest,
+    fetchResistanceStatusTypeStudiesRequest,
+    fetchSynergistEffectTypeStudiesRequest,
+    setPreventionFilteredStudies,
+} from "../../../store/actions/prevention-actions";
 import { setHoverSelection, setRegionAction, setSelection } from "../../../store/actions/base-actions";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import SitePopover from "../common/SitePopover";
@@ -42,7 +63,19 @@ const layer: any = (symbols: any) => ({
 });
 
 const mapStateToProps = (state: State) => ({
-    studies: selectPreventionStudies(state),
+    studiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+    resistanceStatusStudies: selectResistanceStatusStudies(state),
+    resistanceIntensityStudies: selectResistanceIntensityStudies(state),
+    resistanceMechanismStudies: selectResistanceMechanismStudies(state),
+    synergistEffectStudies: selectSynergistEffectStudies(state),
+    resistanceStatusStudiesLoading: selectResistanceStatusStudiesLoading(state),
+    resistanceIntensityStudiesLoading: selectResistanceIntensityStudiesLoading(state),
+    synergistEffectStudiesLoading: selectSynergistEffectStudiesLoading(state),
+    resistanceMechanismStudiesLoading: selectResistanceMechanismStudiesLoading(state),
+    errorResistanceStatusStudies: selectResistanceStatusStudiesError(state),
+    errorResistanceIntensityStudies: selectResistanceIntensityStudiesError(state),
+    errorResistanceMechanismStudies: selectResistanceMechanismStudiesError(state),
+    errorSynergistEffectStudies: selectSynergistEffectStudiesError(state),
     theme: selectTheme(state),
     filters: selectFilters(state),
     preventionFilters: selectPreventionFilters(state),
@@ -52,7 +85,10 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-    fetchPreventionStudies: fetchPreventionStudiesRequest,
+    fetchResistanceStatusTypeStudies: fetchResistanceStatusTypeStudiesRequest,
+    fetchResistanceIntensityTypeStudies: fetchResistanceIntensityTypeStudiesRequest,
+    fetchResistanceMechanismTypeStudies: fetchResistanceMechanismTypeStudiesRequest,
+    fetchSynergistEffectTypeStudies: fetchSynergistEffectTypeStudiesRequest,
     setFilteredStudies: setPreventionFilteredStudies,
     setSelection: setSelection,
     setHoverSelection: setHoverSelection,
@@ -132,11 +168,61 @@ class PreventionLayer extends Component<Props> {
             this.applyMapTypeSymbols();
         }
     }
+
     loadStudiesIfRequired() {
-        const { theme } = this.props;
+        const {
+            theme,
+            preventionFilters,
+            resistanceStatusStudies,
+            resistanceIntensityStudies,
+            resistanceMechanismStudies,
+            synergistEffectStudies,
+            resistanceStatusStudiesLoading,
+            resistanceIntensityStudiesLoading,
+            resistanceMechanismStudiesLoading,
+            synergistEffectStudiesLoading,
+            errorResistanceStatusStudies,
+            errorResistanceIntensityStudies,
+            errorResistanceMechanismStudies,
+            errorSynergistEffectStudies,
+        } = this.props;
 
         if (theme === PREVENTION) {
-            this.props.fetchPreventionStudies();
+            const fetchByMapType: Record<
+                PreventionMapType,
+                { loading: boolean; studies: PreventionStudy[]; fetch: () => void; error: string | null }
+            > = {
+                [PreventionMapType.RESISTANCE_STATUS]: {
+                    loading: resistanceStatusStudiesLoading,
+                    studies: resistanceStatusStudies,
+                    fetch: this.props.fetchResistanceStatusTypeStudies,
+                    error: errorResistanceStatusStudies,
+                },
+                [PreventionMapType.INTENSITY_STATUS]: {
+                    loading: resistanceIntensityStudiesLoading,
+                    studies: resistanceIntensityStudies,
+                    fetch: this.props.fetchResistanceIntensityTypeStudies,
+                    error: errorResistanceIntensityStudies,
+                },
+                [PreventionMapType.RESISTANCE_MECHANISM]: {
+                    loading: resistanceMechanismStudiesLoading,
+                    studies: resistanceMechanismStudies,
+                    fetch: this.props.fetchResistanceMechanismTypeStudies,
+                    error: errorResistanceMechanismStudies,
+                },
+                [PreventionMapType.LEVEL_OF_INVOLVEMENT]: {
+                    loading: synergistEffectStudiesLoading,
+                    studies: synergistEffectStudies,
+                    fetch: this.props.fetchSynergistEffectTypeStudies,
+                    error: errorSynergistEffectStudies,
+                },
+            };
+
+            const current = fetchByMapType[preventionFilters.mapType];
+            const shouldFetch = current && !current.loading && current.studies.length === 0 && !current.error;
+            if (shouldFetch) {
+                current.fetch();
+            }
         }
     }
 
@@ -173,10 +259,10 @@ class PreventionLayer extends Component<Props> {
     };
 
     filterSource = () => {
-        const { studies, selection, setSelection } = this.props;
+        const { selection, setSelection, studiesOfMapType } = this.props;
         const source: any = this.props.map.getSource(PREVENTION_SOURCE_ID);
         if (source) {
-            const filteredStudies = this.filterStudies(studies);
+            const filteredStudies = this.filterStudies(studiesOfMapType);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
 
@@ -189,14 +275,15 @@ class PreventionLayer extends Component<Props> {
     };
 
     mountLayer(prevProps?: Props) {
-        const { studies, preventionFilters } = this.props;
-        if (!prevProps || (prevProps.studies.length !== studies.length && studies.length)) {
+        const { preventionFilters, studiesOfMapType } = this.props;
+
+        if (!prevProps || (prevProps.studiesOfMapType.length !== studiesOfMapType.length && studiesOfMapType.length)) {
             if (this.props.map.getSource(PREVENTION_SOURCE_ID)) {
                 this.props.map.removeLayer(PREVENTION_LAYER_ID);
                 this.props.map.removeSource(PREVENTION_SOURCE_ID);
             }
 
-            const filteredStudies = this.filterStudies(studies);
+            const filteredStudies = this.filterStudies(studiesOfMapType);
             this.props.setFilteredStudies(filteredStudies);
             const geoStudies = this.setupGeoJsonData(filteredStudies);
 
@@ -267,12 +354,14 @@ class PreventionLayer extends Component<Props> {
     };
 
     render() {
-        const { studies, hoverSelection } = this.props;
+        const { hoverSelection, studiesOfMapType } = this.props;
 
         if (hoverSelection === null) {
             return <div />;
         }
-        const filteredStudies = this.filterStudies(studies).filter(study => study.SITE_ID === hoverSelection.SITE_ID);
+        const filteredStudies = this.filterStudies(studiesOfMapType).filter(
+            study => study.SITE_ID === hoverSelection.SITE_ID
+        );
 
         if (filteredStudies.length === 0) {
             return <div />;

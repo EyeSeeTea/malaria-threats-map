@@ -3,6 +3,7 @@ import { request } from "../common/request";
 import { FutureData } from "../../domain/common/FutureData";
 import { PreventionStudy } from "../../domain/entities/PreventionStudy";
 import { PreventionRepository } from "../../domain/repositories/PreventionRepository";
+import { XMartApiResponse } from "../common/types";
 
 export class PreventionApiRepository implements PreventionRepository {
     constructor(private xmartBaseUrl: string) {}
@@ -12,8 +13,32 @@ export class PreventionApiRepository implements PreventionRepository {
             url: `${this.xmartBaseUrl}/FACT_PREVENTION_VIEW?$format=csv`,
         }).map(response => {
             const jsonData = this.mapCsvToJsonData(response);
-            return this.buildPreventionStudies(jsonData);
+            return this.buildPreventionStudiesFromJson(jsonData);
         });
+    }
+
+    getResistanceStatusTypeStudies(): FutureData<PreventionStudy[]> {
+        return request<XMartApiResponse<XMartPreventionStudy>>({
+            url: `${this.xmartBaseUrl}/FACT_VIR_DIS_VIEW`,
+        }).map(response => this.buildPreventionStudies(response.value));
+    }
+
+    getResistanceIntensityTypeStudies(): FutureData<PreventionStudy[]> {
+        return request<XMartApiResponse<XMartPreventionStudy>>({
+            url: `${this.xmartBaseUrl}/FACT_VIR_INT_VIEW`,
+        }).map(response => this.buildPreventionStudies(response.value));
+    }
+
+    getResistanceMechanismTypeStudies(): FutureData<PreventionStudy[]> {
+        return request<XMartApiResponse<XMartPreventionStudy>>({
+            url: `${this.xmartBaseUrl}/FACT_VIR_RESISTANCE_MECHANISM_VIEW`,
+        }).map(response => this.buildPreventionStudies(response.value));
+    }
+
+    getSynergistEffectTypeStudies(): FutureData<PreventionStudy[]> {
+        return request<XMartApiResponse<XMartPreventionStudy>>({
+            url: `${this.xmartBaseUrl}/FACT_VIR_SYN_VIEW`,
+        }).map(response => this.buildPreventionStudies(response.value));
     }
 
     private mapCsvToJsonData(csvResponse: string): string[][] {
@@ -22,7 +47,7 @@ export class PreventionApiRepository implements PreventionRepository {
         return XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true });
     }
 
-    private buildPreventionStudies(jsonData: string[][]): PreventionStudy[] {
+    private buildPreventionStudiesFromJson(jsonData: string[][]): PreventionStudy[] {
         const headers = jsonData[0];
         const dataWithoutHeader = jsonData.slice(1);
 
@@ -51,4 +76,14 @@ export class PreventionApiRepository implements PreventionRepository {
             }, {} as PreventionStudy);
         });
     }
+
+    private buildPreventionStudies(xMartPreventionStudy: XMartPreventionStudy[]): PreventionStudy[] {
+        return xMartPreventionStudy.map(study => ({
+            ...study,
+            MORTALITY_ADJUSTED:
+                study.MORTALITY_ADJUSTED !== undefined ? (+study.MORTALITY_ADJUSTED / 100).toString() : null,
+        }));
+    }
 }
+
+type XMartPreventionStudy = Omit<PreventionStudy, "MORTALITY_ADJUSTED"> & { MORTALITY_ADJUSTED: string | number };

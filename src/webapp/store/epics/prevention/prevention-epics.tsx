@@ -3,15 +3,16 @@ import { ActionType } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
-import { catchError, mergeMap, skip, switchMap, withLatestFrom } from "rxjs/operators";
+import { skip, switchMap, withLatestFrom } from "rxjs/operators";
 
-import { createPreventionSelectionData } from "./utils";
+import {
+    buildPreventionStudiesEpic,
+    createPreventionSelectionData,
+    getStudiesByMapType,
+    REQUESTED_VIR_START_DATE,
+} from "./utils";
 import { PreventionMapType, State } from "../../types";
-import { EpicDependencies } from "../..";
-import { fromFuture } from "../utils";
-import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { getAnalyticsPageView } from "../../analytics";
-import { addNotificationAction } from "../../actions/notifier-actions";
 import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
 import {
     logEventAction,
@@ -22,9 +23,6 @@ import {
     setThemeAction,
 } from "../../actions/base-actions";
 import {
-    fetchPreventionStudiesError,
-    fetchPreventionStudiesRequest,
-    fetchPreventionStudiesSuccess,
     setAssayTypes,
     setInsecticideClass,
     setInsecticideTypes,
@@ -36,39 +34,40 @@ import {
 } from "../../actions/prevention-actions";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
-const requestedVIRStartDate = 2010;
 
-export const getPreventionStudiesEpic = (
-    action$: Observable<ActionType<typeof fetchPreventionStudiesRequest>>,
-    state$: StateObservable<State>,
-    { compositionRoot }: EpicDependencies
-) =>
-    action$.pipe(
-        ofType(ActionTypeEnum.FetchPreventionStudiesRequest),
-        withLatestFrom(state$),
-        switchMap(([, state]) => {
-            if (state.prevention.studies.length === 0 && !state.prevention.error) {
-                return fromFuture(compositionRoot.prevention.getStudies()).pipe(
-                    mergeMap((studies: PreventionStudy[]) => {
-                        return of(
-                            ...resetDatesRequired({
-                                minMaxYears: () => getMinMaxYears(studies),
-                                theme: "prevention",
-                                state,
-                                filterStart: requestedVIRStartDate,
-                            }),
-                            fetchPreventionStudiesSuccess(studies)
-                        );
-                    }),
-                    catchError((error: Error) =>
-                        of(addNotificationAction(error.message), fetchPreventionStudiesError())
-                    )
-                );
-            } else {
-                return of(fetchPreventionStudiesSuccess(state.prevention.studies));
-            }
-        })
-    );
+export const fetchAllPreventionStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchPreventionStudiesRequest,
+    PreventionMapType.RESISTANCE_STATUS,
+    [PreventionMapType.INTENSITY_STATUS, PreventionMapType.RESISTANCE_MECHANISM, PreventionMapType.LEVEL_OF_INVOLVEMENT]
+);
+
+export const getResistanceStatusTypeStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchResistanceStatusTypeStudiesRequest,
+    PreventionMapType.RESISTANCE_STATUS,
+    [PreventionMapType.INTENSITY_STATUS, PreventionMapType.RESISTANCE_MECHANISM, PreventionMapType.LEVEL_OF_INVOLVEMENT]
+);
+
+export const getResistanceIntensityTypeStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchResistanceIntensityTypeStudiesRequest,
+    PreventionMapType.INTENSITY_STATUS,
+    [
+        PreventionMapType.RESISTANCE_STATUS,
+        PreventionMapType.RESISTANCE_MECHANISM,
+        PreventionMapType.LEVEL_OF_INVOLVEMENT,
+    ]
+);
+
+export const getResistanceMechanismTypeStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchResistanceMechanismTypeStudiesRequest,
+    PreventionMapType.RESISTANCE_MECHANISM,
+    [PreventionMapType.RESISTANCE_STATUS, PreventionMapType.INTENSITY_STATUS, PreventionMapType.LEVEL_OF_INVOLVEMENT]
+);
+
+export const getSynergistEffectTypeStudiesEpic = buildPreventionStudiesEpic(
+    ActionTypeEnum.FetchSynergistEffectTypeStudiesRequest,
+    PreventionMapType.LEVEL_OF_INVOLVEMENT,
+    [PreventionMapType.RESISTANCE_STATUS, PreventionMapType.INTENSITY_STATUS, PreventionMapType.RESISTANCE_MECHANISM]
+);
 
 export const setPreventionMapTypeEpic = (
     action$: Observable<ActionType<typeof setPreventionMapType>>,
@@ -77,21 +76,31 @@ export const setPreventionMapTypeEpic = (
     action$.pipe(
         ofType(ActionTypeEnum.SetPreventionMapType),
         withLatestFrom(state$),
-        switchMap(([action, _state]) => {
+        switchMap(([action, state]) => {
             const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
-
             const logPageView = logPageViewAction(pageView);
 
+            const studies = getStudiesByMapType(state, action.payload);
+            const dateResets =
+                studies.length > 0
+                    ? resetDatesRequired({
+                          minMaxYears: () => getMinMaxYears(studies),
+                          theme: "prevention",
+                          state,
+                          filterStart: REQUESTED_VIR_START_DATE,
+                      })
+                    : [];
+
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(..._.compact([setType(["MONO_OXYGENASES"]), logPageView]));
+                return of(..._.compact([...dateResets, setType(["MONO_OXYGENASES"]), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-                return of(..._.compact([setType(undefined), logPageView]));
+                return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-                return of(..._.compact([setType(undefined), logPageView]));
+                return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-                return of(..._.compact([setProxyType("MONO_OXYGENASES"), logPageView]));
+                return of(..._.compact([...dateResets, setProxyType("MONO_OXYGENASES"), logPageView]));
             } else {
-                return of(..._.compact([setType(undefined), logPageView]));
+                return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             }
         })
     );
@@ -157,12 +166,15 @@ export const setPreventionFilteredStudiesEpic = (
         ofType(ActionTypeEnum.SetPreventionFilteredStudies),
         withLatestFrom(state$),
         switchMap(([, state]) => {
+            const mapType = state.prevention.filters.mapType;
+            const nonFilteredStudies = getStudiesByMapType(state, mapType);
+
             const selectionData = createPreventionSelectionData(
                 state.malaria.theme,
                 state.prevention.filters.mapType,
                 state.malaria.selection,
                 state.prevention.filteredStudies,
-                state.prevention.studies
+                nonFilteredStudies
             );
 
             return of(setSelectionData(null), setSelectionData(selectionData));
@@ -178,7 +190,10 @@ export const setYearsFiltersEpic = (
         withLatestFrom(state$),
         switchMap(([$action, $state]) => {
             if ($action.payload === undefined && $state.malaria.theme === "prevention") {
-                const [start, end] = getMinMaxYears($state.prevention.studies);
+                const mapType = $state.prevention.filters.mapType;
+                const mapTypeStudies = getStudiesByMapType($state, mapType);
+
+                const [start, end] = getMinMaxYears(mapTypeStudies);
 
                 return of(setMaxMinYearsAction([start, end]), setFiltersAction([start, end]));
             } else {
@@ -200,9 +215,12 @@ export const setPreventionThemeEpic = (
             }
 
             if ($action.from === "map") {
-                const [start, end] = getMinMaxYears($state.prevention.studies);
-                const base: unknown[] = $state.prevention.studies?.length
-                    ? [setMaxMinYearsAction([start, end]), setFiltersAction([requestedVIRStartDate, end])]
+                const mapType = $state.prevention.filters.mapType;
+                const mapTypeStudies = getStudiesByMapType($state, mapType);
+
+                const [start, end] = getMinMaxYears(mapTypeStudies);
+                const base: unknown[] = mapTypeStudies?.length
+                    ? [setMaxMinYearsAction([start, end]), setFiltersAction([REQUESTED_VIR_START_DATE, end])]
                     : [];
 
                 return of(...base, setInsecticideClass("PYRETHROIDS"));
