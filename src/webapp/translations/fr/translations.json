@@ -695,6 +695,7 @@
                     "wt_tudy": "Échantillons de type sauvage",
                     "mc_study": "Échantillons avec plusieurs numéros de copie",
                     "wild_type": "Type sauvage",
+                    "wild_type_pfk13": "Aucun signalé",
                     "validated_markers": "Marqueurs validés",
                     "candidate_markers": "Marqueurs candidats",
                     "potential_markers": "Marqueurs potentiels",
