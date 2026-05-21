@@ -226,9 +226,10 @@ function createMolecularMarkersChartData(
     });
 
     const prioritiesByMutationCategory: Record<string, number> = {
-        "wild type": 4,
-        validated: 3,
-        associated: 2,
+        "wild type": 5,
+        validated: 4,
+        candidate: 3,
+        potential: 2,
         other: 1,
         Mutations: 1,
         "multiple copy number": 1,
@@ -263,6 +264,7 @@ function createMolecularMarkersChartData(
         WILD_TYPE: i18next.t("common.treatment.chart.molecular_markers.wild_type"),
         VALIDATED_MARKERS: i18next.t("common.treatment.chart.molecular_markers.validated_markers"),
         CANDIDATE_MARKERS: i18next.t("common.treatment.chart.molecular_markers.candidate_markers"),
+        POTENTIAL_MARKERS: i18next.t("common.treatment.chart.molecular_markers.potential_markers"),
         OTHER_MARKERS: i18next.t("common.treatment.chart.molecular_markers.other_markers"),
     };
 
@@ -275,7 +277,8 @@ function createMolecularMarkersChartData(
                 ? {
                       [translations.WILD_TYPE]: extractMarkersByMutationCategory(allStudies257, "wild type"),
                       [translations.VALIDATED_MARKERS]: extractMarkersByMutationCategory(allStudies257, "validated"),
-                      [translations.CANDIDATE_MARKERS]: extractMarkersByMutationCategory(allStudies257, "associated"),
+                      [translations.CANDIDATE_MARKERS]: extractMarkersByMutationCategory(allStudies257, "candidate"),
+                      [translations.POTENTIAL_MARKERS]: extractMarkersByMutationCategory(allStudies257, "potential"),
                       [translations.OTHER_MARKERS]: extractMarkersByMutationCategory(allStudies257, "other"),
                   }
                 : treatmentFilters.molecularMarkers.includes(molecularMarkersMap.Pfcrt)
