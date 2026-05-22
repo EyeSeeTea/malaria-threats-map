@@ -13,13 +13,19 @@ import { selectRegion, selectTheme } from "../../store/reducers/base-reducer";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
 import { getFromLocalStorage } from "../../utils/browserCache";
+import { changeLanguageAction } from "../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
     region: selectRegion(state),
 });
 
+const mapDispatchToProps = {
+    dispatchChangeLanguage: changeLanguageAction,
+};
+
 type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
 
 interface SecondaryHeaderProps {
     onDrawerOpenChange?: (open: boolean) => void;
@@ -27,7 +33,7 @@ interface SecondaryHeaderProps {
     showTakeTour?: boolean;
 }
 
-type Props = StateProps & SecondaryHeaderProps;
+type Props = StateProps & DispatchProps & SecondaryHeaderProps;
 
 const SecondaryHeader: React.FC<Props> = ({
     onDrawerOpenChange,
@@ -35,6 +41,7 @@ const SecondaryHeader: React.FC<Props> = ({
     showTakeTour = true,
     theme: mapTheme,
     region,
+    dispatchChangeLanguage,
 }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [changeLanguageOpen, setChangeLanguageOpen] = React.useState(false);
@@ -64,6 +71,7 @@ const SecondaryHeader: React.FC<Props> = ({
         changeLanguage(value);
         setLanguage(value);
         setChangeLanguageOpen(false);
+        dispatchChangeLanguage(value);
     };
 
     const handleLanguageOpen = () => {
@@ -116,7 +124,7 @@ const SecondaryHeader: React.FC<Props> = ({
     );
 };
 
-export default connect(mapStateToProps)(SecondaryHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(SecondaryHeader);
 
 const StyledToolbar = styled(Toolbar)`
     &.MuiToolbar-root {

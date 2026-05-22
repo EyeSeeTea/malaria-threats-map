@@ -129,4 +129,6 @@ export enum ActionTypeEnum {
     GetTotalStudiesInThemesRequest = "malaria/GET_TOTAL_STUDIES_IN_THEME_REQUEST",
     GetTotalStudiesInThemesSuccess = "malaria/GET_TOTAL_STUDIES_IN_THEME_SUCCESS",
     GetTotalStudiesInThemesFailure = "malaria/GET_TOTAL_STUDIES_IN_THEME_FAILURE",
+
+    MalariaChangeLanguage = "malaria/CHANGE_LANGUAGE",
 }

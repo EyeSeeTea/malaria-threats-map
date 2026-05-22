@@ -6,7 +6,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Slide, { SlideProps } from "@mui/material/Slide";
 import { State } from "../store/types";
 import { selectAreMobileOptionsOpen } from "../store/reducers/base-reducer";
-import { setMobileOptionsOpen } from "../store/actions/base-actions";
+import { changeLanguageAction, setMobileOptionsOpen } from "../store/actions/base-actions";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { LanguageSelectorDialog, LANGUAGES } from "./LanguageSelectorDialog";
@@ -38,12 +38,13 @@ const mapStateToProps = (state: State) => ({
 });
 const mapDispatchToProps = {
     setMobileOptionsOpen: setMobileOptionsOpen,
+    dispatchChangeLanguage: changeLanguageAction,
 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
+function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen, dispatchChangeLanguage }: Props) {
     const classes = useStyles({});
     const [isLanguageOpen, setIsLanguageOpen] = React.useState(false);
     const [selectedValue, setSelectedValue] = React.useState(LANGUAGES[0].value);
@@ -60,6 +61,7 @@ function MobileOptions({ areMobileOptionsOpen, setMobileOptionsOpen }: Props) {
         changeLanguage(value);
         setIsLanguageOpen(false);
         setSelectedValue(value);
+        dispatchChangeLanguage(value);
     };
     const { t } = useTranslation();
     return (
