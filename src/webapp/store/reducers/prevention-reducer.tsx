@@ -227,26 +227,6 @@ export default createReducer<PreventionState>(initialState, {
 
 const selectPreventionState = (state: State) => state.prevention;
 
-export const selectPreventionStudies = createSelector(selectPreventionState, state => {
-    return [
-        ...state.resistanceStatusStudies,
-        ...state.resistanceIntensityStudies,
-        ...state.resistanceMechanismStudies,
-        ...state.synergistEffectStudies,
-    ];
-});
-
-export const selectPreventionStudiesByMapTypeSelected = createSelector(selectPreventionState, state => {
-    const studiesByMapType: Record<PreventionMapType, PreventionStudy[]> = {
-        [PreventionMapType.RESISTANCE_STATUS]: state.resistanceStatusStudies,
-        [PreventionMapType.INTENSITY_STATUS]: state.resistanceIntensityStudies,
-        [PreventionMapType.RESISTANCE_MECHANISM]: state.resistanceMechanismStudies,
-        [PreventionMapType.LEVEL_OF_INVOLVEMENT]: state.synergistEffectStudies,
-    };
-
-    return studiesByMapType[state.filters.mapType] ?? [];
-});
-
 export const selectResistanceStatusStudies = createSelector(
     selectPreventionState,
     state => state.resistanceStatusStudies
@@ -263,6 +243,30 @@ export const selectSynergistEffectStudies = createSelector(
     selectPreventionState,
     state => state.synergistEffectStudies
 );
+
+export const selectPreventionStudies = createSelector(
+    selectResistanceStatusStudies,
+    selectResistanceIntensityStudies,
+    selectResistanceMechanismStudies,
+    selectSynergistEffectStudies,
+    (resistanceStatusStudies, resistanceIntensityStudies, resistanceMechanismStudies, synergistEffectStudies) => [
+        ...resistanceStatusStudies,
+        ...resistanceIntensityStudies,
+        ...resistanceMechanismStudies,
+        ...synergistEffectStudies,
+    ]
+);
+
+export const selectPreventionStudiesByMapTypeSelected = createSelector(selectPreventionState, state => {
+    const studiesByMapType: Record<PreventionMapType, PreventionStudy[]> = {
+        [PreventionMapType.RESISTANCE_STATUS]: state.resistanceStatusStudies,
+        [PreventionMapType.INTENSITY_STATUS]: state.resistanceIntensityStudies,
+        [PreventionMapType.RESISTANCE_MECHANISM]: state.resistanceMechanismStudies,
+        [PreventionMapType.LEVEL_OF_INVOLVEMENT]: state.synergistEffectStudies,
+    };
+
+    return studiesByMapType[state.filters.mapType] ?? [];
+});
 
 export const selectResistanceStatusStudiesLoading = createSelector(
     selectPreventionState,
