@@ -4,7 +4,6 @@ import resistanceMechanismSymbols from "./ResistanceMechanisms/symbols";
 import levelOfInvolvementSymbols from "./Involvement/symbols";
 import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import * as R from "ramda";
-import { filterByAssayTypes, filterByInsecticideClass, filterByType, filterByYearRange } from "../studies-filters";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { ResistanceIntensity } from "../../../../domain/entities/Study";
 
@@ -22,71 +21,6 @@ export const resolveMapTypeSymbols = (preventionFilters: PreventionFilters) => {
             return;
     }
 };
-
-export type PboCriteria = {
-    criteria1?: boolean;
-    criteria2?: boolean;
-    criteria3?: boolean;
-};
-
-export function filterByCriteria1(group: PreventionStudy[]) {
-    const currentYear = new Date().getFullYear();
-    const baseStudies = [
-        filterByAssayTypes(["DISCRIMINATING_CONCENTRATION_BIOASSAY"]),
-        filterByInsecticideClass("PYRETHROIDS"),
-    ].reduce((studies, filter) => studies.filter(filter), group);
-    let filteredStudies = baseStudies.filter(filterByYearRange([currentYear - 3, currentYear - 0]));
-    if (filteredStudies.length === 0) {
-        const maxYear = R.reduce(
-            R.max,
-            0,
-            baseStudies.map(study => study.YEAR_START)
-        );
-        filteredStudies = baseStudies.filter(study => maxYear === study.YEAR_START);
-    }
-    return filteredStudies;
-}
-
-export function getMostRecentByCriteria1(studies: PreventionStudy[]): PreventionStudy | undefined {
-    const studiesByCriteria1 = studies.filter(study => +study.MORTALITY_ADJUSTED < 0.9);
-
-    const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studiesByCriteria1));
-
-    return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
-}
-
-export function getMostRecentByCriteria2(studies: PreventionStudy[]): PreventionStudy | undefined {
-    const studiesByCriteria2 = studies.filter(
-        study => +study.MORTALITY_ADJUSTED >= 0.1 && +study.MORTALITY_ADJUSTED <= 0.8
-    );
-
-    const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studiesByCriteria2));
-
-    return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
-}
-
-export function filterByCriteria3(group: PreventionStudy[]) {
-    const filteredStudies = [
-        filterByAssayTypes(["SYNERGIST-INSECTICIDE_BIOASSAY", "BIOCHEMICAL_ASSAY", "MOLECULAR_ASSAY"]),
-        filterByType("MONO_OXYGENASES"),
-    ].reduce((studies, filter) => studies.filter(filter), group);
-
-    return filteredStudies;
-}
-
-export function getMostRecentByCriteria3(studies: PreventionStudy[]): PreventionStudy | undefined {
-    const studiesByCriteria1 = studies.filter(study => study.MECHANISM_STATUS === "DETECTED");
-
-    const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studiesByCriteria1));
-
-    return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
-}
-
-export function getMostRecent(studies: PreventionStudy[]): PreventionStudy | undefined {
-    const sortedStudiesByYear = R.reverse(R.sortBy(R.prop("YEAR_START"), studies));
-
-    return sortedStudiesByYear.length > 0 ? sortedStudiesByYear[0] : undefined;
-}
 
 const filterByMostRecentYear = (group: PreventionStudy[]) => {
     const sortedStudies = R.sortBy(study => -study.YEAR_START, group);
