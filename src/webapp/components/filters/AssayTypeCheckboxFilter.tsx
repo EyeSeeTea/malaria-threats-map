@@ -1,7 +1,7 @@
 import React from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import styled from "styled-components";
-import { State } from "../../store/types";
+import { PreventionFilters, State } from "../../store/types";
 import { selectAssayTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
 import { connect } from "react-redux";
@@ -46,6 +46,17 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
+export function getAssayTypeOptions(preventionFilters: PreventionFilters, assayTypes: Translation[]) {
+    const type = preventionFilters?.type?.length === 1 ? preventionFilters.type[0] : undefined;
+
+    const types =
+        ASSAY_TYPE_FILTER[type]
+            ?.map(value => (assayTypes as Translation[]).find(type => type.VALUE_ === value))
+            .filter(Boolean) || [];
+
+    return types;
+}
+
 function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes }: Props) {
     const handleChange = (type: string) => () => {
         let newValues: string[];
@@ -62,12 +73,7 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
         );
     };
 
-    const type = preventionFilters?.type?.length === 1 ? preventionFilters.type[0] : undefined;
-
-    const types =
-        ASSAY_TYPE_FILTER[type]
-            ?.map(value => (assayTypes as Translation[]).find(type => type.VALUE_ === value))
-            .filter(Boolean) || [];
+    const types = getAssayTypeOptions(preventionFilters, assayTypes);
 
     const { t } = useTranslation();
 
