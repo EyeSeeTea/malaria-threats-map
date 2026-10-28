@@ -1,0 +1,105 @@
+import { InvasiveStudy } from "../InvasiveStudy";
+import { PreventionStudy } from "../PreventionStudy";
+import { Study } from "../Study";
+
+const defaultStudy: Readonly<Study> = {
+    OBJECTID: 1,
+    VILLAGE_NAME: "Bobo-Dioulasso",
+    SITE_ID: "SITE_BF_001",
+    SITE_NAME: "Bobo-Dioulasso",
+    ISO2: "BF",
+    CITATION_LONG: "Example citation, long form",
+    INSTITUTE_CURATION: "Example curation institute",
+    CURATION: "Example curation",
+    CITATION_URL: "https://example.org/citation",
+    CITATION: "Example citation",
+    Latitude: 11.18,
+    Longitude: -4.3,
+    INSTITUTION: "Example institution",
+    INSTITUTION_CITY: "Ouagadougou",
+    INSTITUTION_TYPE: "Research",
+    ASSAY_TYPE: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
+    COUNTRY_NAME: "Burkina Faso",
+    INSECTICIDE_CLASS: "PYRETHROIDS",
+    INSECTICIDE_TYPE: "DELTAMETHRIN",
+    INSTITUTE: "Example institute",
+    MECHANISM_FREQUENCY: "NA",
+    MECHANISM_PROXY: "NA",
+    MECHANISM_STATUS: "NA",
+    MONTH_END: "9",
+    MONTH_START: "7",
+    MORTALITY_ADJUSTED: "0.85",
+    NUMBER: "100",
+    PROXY_TYPE: "NA",
+    REGION_FULL: "AFRICA",
+    RESISTANCE_FREQUENCY: "NA",
+    RESISTANCE_INTENSITY: "NA",
+    RESISTANCE_STATUS: "POSSIBLE_RESISTANCE",
+    RESISTANCE_STATUS_NUMERIC: "2",
+    SPECIES: "An. gambiae s.l.",
+    STAGE_ORIGIN: "F0_ADULTS",
+    SUBREGION: "WEST_AFRICA",
+    SYNERGIST_CONC: "NA",
+    SYNERGIST_TYPE: "NA",
+    TIME: "60",
+    TYPE: "WHO_TEST_KIT_ADULTS",
+    TYPE_SYNERGIST: "NA",
+    VERSION: 1,
+    YEAR_END: 2020,
+    YEAR_START: 2020,
+    DOWNLOAD: 1,
+};
+
+const defaultPreventionStudy: Readonly<PreventionStudy> = {
+    ...defaultStudy,
+    STUDY_PAIRING_CODE: "NA",
+    ADMIN1: "Hauts-Bassins",
+    ADMIN1_GUID: "admin1-guid",
+    ADMIN2: "Houet",
+    ADMIN2_GUID: "admin2-guid",
+    Code: "PREV_001",
+    INSECTICIDE_CONC: "0.05%",
+    INSECTICIDE_INTENSITY: 1,
+};
+
+const defaultInvasiveStudy: Readonly<InvasiveStudy> = {
+    ...defaultStudy,
+    ASSAY_TYPE: "NA",
+    INSECTICIDE_CLASS: "NA",
+    INSECTICIDE_TYPE: "NA",
+    MORTALITY_ADJUSTED: "NA",
+    RESISTANCE_STATUS: "NA",
+    RESISTANCE_STATUS_NUMERIC: "NA",
+    SPECIES: "An. stephensi",
+    TYPE: "NA",
+    VILLAGE_NAME: "Djibouti",
+    SITE_ID: "SITE_DJ_001",
+    SITE_NAME: "Djibouti",
+    ISO2: "DJ",
+    COUNTRY_NAME: "Djibouti",
+    SUBREGION: "EAST_AFRICA",
+    Latitude: 11.59,
+    Longitude: 43.15,
+    INSTITUTE_CURATION: "Example curation institute",
+    SAMPLING_METHOD: "LARVAL_SAMPLING",
+    TOT_STUDIES: 1,
+    ID_METHOD: "MORPHOLOGY",
+    VECTOR_SPECIES: "An. stephensi type form",
+    VECTOR_SPECIES_COMPLEX: "An. stephensi",
+    Code: "INV_001",
+    STAGE: "LARVAE",
+    BREEDING_HABITAT: "WATER_TANK",
+    INVASIVE_STATUS: "Invasive",
+    MTM_DOWNLOAD: 1,
+    VILLAGE_ORIG: "Djibouti",
+    VILLAGE_FLAG: 0,
+    ADMIN1: "Djibouti",
+};
+
+export function createPreventionStudy(overrides: Partial<PreventionStudy> = {}): PreventionStudy {
+    return { ...defaultPreventionStudy, ...overrides };
+}
+
+export function createInvasiveStudy(overrides: Partial<InvasiveStudy> = {}): InvasiveStudy {
+    return { ...defaultInvasiveStudy, ...overrides };
+}
