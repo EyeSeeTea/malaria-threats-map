@@ -1,10 +1,15 @@
 import { createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
 import { createTranslation } from "../../../types/__fixtures__/translationFixtures";
 import { getAssayTypeOptions } from "../AssayTypeCheckboxFilter";
-
-const MOLECULAR = "MOLECULAR_ASSAY";
-const BIOCHEMICAL = "BIOCHEMICAL_ASSAY";
-const SYNERGIST = "SYNERGIST-INSECTICIDE_BIOASSAY";
+import {
+    ACE1R,
+    BIOCHEMICAL,
+    ESTERASES,
+    GSTS,
+    MOLECULAR,
+    MONO_OXYGENASES,
+    SYNERGIST,
+} from "../../../../domain/entities/__fixtures__/studyValues";
 
 // In the opposite order of ASSAY_TYPES, to show that the output follows ASSAY_TYPES.
 const assayTypeTranslations = [SYNERGIST, BIOCHEMICAL, MOLECULAR].map(value =>
@@ -17,14 +22,14 @@ function offeredAssayTypes(type: string[] | null, translations = assayTypeTransl
 
 describe("getAssayTypeOptions", () => {
     it("returns the translations themselves, not new options", () => {
-        expect(getAssayTypeOptions(createPreventionFilters({ type: ["ACE1R"] }), assayTypeTranslations)).toEqual([
+        expect(getAssayTypeOptions(createPreventionFilters({ type: [ACE1R] }), assayTypeTranslations)).toEqual([
             assayTypeTranslations[2],
             assayTypeTranslations[1],
         ]);
     });
 
     describe("for each mechanism", () => {
-        it.each(["MONO_OXYGENASES", "ESTERASES", "GSTS"])("%s offers the three assay types", mechanism => {
+        it.each([MONO_OXYGENASES, ESTERASES, GSTS])("%s offers the three assay types", mechanism => {
             expect(offeredAssayTypes([mechanism])).toEqual([MOLECULAR, BIOCHEMICAL, SYNERGIST]);
         });
 
@@ -36,7 +41,7 @@ describe("getAssayTypeOptions", () => {
         );
 
         it("ACE1R offers the molecular and biochemical assays", () => {
-            expect(offeredAssayTypes(["ACE1R"])).toEqual([MOLECULAR, BIOCHEMICAL]);
+            expect(offeredAssayTypes([ACE1R])).toEqual([MOLECULAR, BIOCHEMICAL]);
         });
     });
 
@@ -46,7 +51,7 @@ describe("getAssayTypeOptions", () => {
     });
 
     it("offers nothing when more than one mechanism is selected", () => {
-        expect(offeredAssayTypes(["MONO_OXYGENASES", "ACE1R"])).toEqual([]);
+        expect(offeredAssayTypes([MONO_OXYGENASES, ACE1R])).toEqual([]);
     });
 
     it("offers nothing for an unknown mechanism", () => {
@@ -56,6 +61,6 @@ describe("getAssayTypeOptions", () => {
     it("drops an assay type missing from the translations", () => {
         const withoutBiochemical = assayTypeTranslations.filter(translation => translation.VALUE_ !== BIOCHEMICAL);
 
-        expect(offeredAssayTypes(["MONO_OXYGENASES"], withoutBiochemical)).toEqual([MOLECULAR, SYNERGIST]);
+        expect(offeredAssayTypes([MONO_OXYGENASES], withoutBiochemical)).toEqual([MOLECULAR, SYNERGIST]);
     });
 });

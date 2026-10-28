@@ -3,6 +3,13 @@ import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
 import { InvasiveMapType } from "../../../../store/types";
 import { InvasiveStatusOrder, studySelector } from "../utils";
 
+const RECENT = "recent";
+const NOT_FOUND_STUDY = "notFound";
+const UNKNOWN_STUDY = "unknown";
+const WITHOUT_YEAR = "withoutYear";
+const WITH_YEAR = "withYear";
+const FIRST = "first";
+
 const INVASIVE = "Invasive";
 const NATIVE = "Native";
 const UNKNOWN = "UNKNOWN";
@@ -23,10 +30,10 @@ describe("invasive site colour", () => {
         it("picks the most recent year before the status", () => {
             const group = [
                 study("older", { YEAR_START: 2019, INVASIVE_STATUS: INVASIVE }),
-                study("recent", { YEAR_START: 2020, INVASIVE_STATUS: NATIVE }),
+                study(RECENT, { YEAR_START: 2020, INVASIVE_STATUS: NATIVE }),
             ];
 
-            expect(selectedCode(group)).toBe("recent");
+            expect(selectedCode(group)).toBe(RECENT);
         });
 
         it("orders invasive, native, unknown", () => {
@@ -37,29 +44,29 @@ describe("invasive site colour", () => {
         });
 
         it("ties not found, which is not in the order, with unknown, so the first one wins (finding)", () => {
-            const notFound = study("notFound", { INVASIVE_STATUS: NOT_FOUND });
-            const unknown = study("unknown", { INVASIVE_STATUS: UNKNOWN });
+            const notFound = study(NOT_FOUND_STUDY, { INVASIVE_STATUS: NOT_FOUND });
+            const unknown = study(UNKNOWN_STUDY, { INVASIVE_STATUS: UNKNOWN });
 
-            expect(selectedCode([notFound, unknown])).toBe("notFound");
-            expect(selectedCode([unknown, notFound])).toBe("unknown");
+            expect(selectedCode([notFound, unknown])).toBe(NOT_FOUND_STUDY);
+            expect(selectedCode([unknown, notFound])).toBe(UNKNOWN_STUDY);
         });
 
         it("uses the whole group when the first study has no YEAR_START", () => {
             const group = [
-                study("withoutYear", { YEAR_START: undefined, INVASIVE_STATUS: NATIVE }),
-                study("withYear", { YEAR_START: 2015, INVASIVE_STATUS: INVASIVE }),
+                study(WITHOUT_YEAR, { YEAR_START: undefined, INVASIVE_STATUS: NATIVE }),
+                study(WITH_YEAR, { YEAR_START: 2015, INVASIVE_STATUS: INVASIVE }),
             ];
 
-            expect(selectedCode(group)).toBe("withYear");
+            expect(selectedCode(group)).toBe(WITH_YEAR);
         });
 
         it("ignores a study without YEAR_START when the first study has a year", () => {
             const group = [
-                study("withYear", { YEAR_START: 2015, INVASIVE_STATUS: NATIVE }),
-                study("withoutYear", { YEAR_START: undefined, INVASIVE_STATUS: INVASIVE }),
+                study(WITH_YEAR, { YEAR_START: 2015, INVASIVE_STATUS: NATIVE }),
+                study(WITHOUT_YEAR, { YEAR_START: undefined, INVASIVE_STATUS: INVASIVE }),
             ];
 
-            expect(selectedCode(group)).toBe("withYear");
+            expect(selectedCode(group)).toBe(WITH_YEAR);
         });
 
         it("throws for an empty group (finding)", () => {
@@ -68,8 +75,8 @@ describe("invasive site colour", () => {
     });
 
     it("returns the first study of the group for an unknown map type", () => {
-        const group = [study("first", { INVASIVE_STATUS: UNKNOWN }), study("second", { INVASIVE_STATUS: INVASIVE })];
+        const group = [study(FIRST, { INVASIVE_STATUS: UNKNOWN }), study("second", { INVASIVE_STATUS: INVASIVE })];
 
-        expect(selectedCode(group, 1)).toBe("first");
+        expect(selectedCode(group, 1)).toBe(FIRST);
     });
 });

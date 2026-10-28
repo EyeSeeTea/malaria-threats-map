@@ -3,18 +3,32 @@ import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
 import { PreventionFilters, PreventionMapType, RegionState } from "../../../store/types";
 import { getTypeFilterOptions } from "../TypeFilter";
+import {
+    BIOCHEMICAL,
+    CDC_BOTTLE,
+    DELTAMETHRIN,
+    ESTERASES,
+    FUNESTUS,
+    GAMBIAE,
+    MOLECULAR,
+    MONO_OXYGENASES,
+    ORGANOPHOSPHATES,
+    OTHER_COUNTRY,
+    PERMETHRIN,
+    PYRETHROIDS,
+    RESEARCH_INSTITUTION,
+    WHO_TEST_KIT,
+} from "../../../../domain/entities/__fixtures__/studyValues";
+
+const OUTSIDE_YEARS = "outsideYears";
+const OTHER_COUNTRY_STUDY = "otherCountry";
+const OTHER_SPECIES = "otherSpecies";
+const NOT_MOH = "notMoH";
+const FEW_MOSQUITOES = "fewMosquitoes";
+const PROXY_ONLY_TYPE = "proxyOnlyType";
 
 const YEARS = [2018, 2022];
 const REGION: RegionState = { country: "BF" };
-
-const GAMBIAE = "An. gambiae s.l.";
-const FUNESTUS = "An. funestus s.l.";
-const PYRETHROIDS = "PYRETHROIDS";
-const DELTAMETHRIN = "DELTAMETHRIN";
-const WHO_TEST_KIT = "WHO_TEST_KIT_ADULTS";
-const CDC_BOTTLE = "CDC_BOTTLE_ADULTS";
-const MONO_OXYGENASES = "MONO_OXYGENASES";
-const MOLECULAR = "MOLECULAR_ASSAY";
 
 function typeOptions(studies: PreventionStudy[], filters: PreventionFilters): ReadonlyArray<string> {
     return getTypeFilterOptions(filters, studies, YEARS, REGION).map(option => option.value);
@@ -61,10 +75,10 @@ describe("getTypeFilterOptions", () => {
             it("is narrowed by insecticide class, insecticide type, years and region", () => {
                 const studies = [
                     typeStudy(WHO_TEST_KIT),
-                    typeStudy("otherClass", { INSECTICIDE_CLASS: "ORGANOPHOSPHATES" }),
-                    typeStudy("otherInsecticide", { INSECTICIDE_TYPE: "PERMETHRIN" }),
-                    typeStudy("outsideYears", { YEAR_START: 2015 }),
-                    typeStudy("otherCountry", { ISO2: "IN", COUNTRY_NAME: "India" }),
+                    typeStudy("otherClass", { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
+                    typeStudy("otherInsecticide", { INSECTICIDE_TYPE: PERMETHRIN }),
+                    typeStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                    typeStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
                 expect(typeOptions(studies, filters)).toEqual([WHO_TEST_KIT]);
@@ -79,12 +93,12 @@ describe("getTypeFilterOptions", () => {
 
             it("is not narrowed by species, Ministry of Health or mosquitoes, unlike the map chain", () => {
                 const studies = [
-                    typeStudy("otherSpecies", { SPECIES: FUNESTUS }),
-                    typeStudy("notMoH", { INSTITUTION_TYPE: "Research" }),
-                    typeStudy("fewMosquitoes", { NUMBER: "20" }),
+                    typeStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
+                    typeStudy(NOT_MOH, { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
+                    typeStudy(FEW_MOSQUITOES, { NUMBER: "20" }),
                 ];
 
-                expect(typeOptions(studies, filters)).toEqual(["otherSpecies", "notMoH", "fewMosquitoes"]);
+                expect(typeOptions(studies, filters)).toEqual([OTHER_SPECIES, NOT_MOH, FEW_MOSQUITOES]);
             });
         }
     );
@@ -100,18 +114,18 @@ describe("getTypeFilterOptions", () => {
         it("is narrowed by assay type, years and region", () => {
             const studies = [
                 typeStudy(MONO_OXYGENASES),
-                typeStudy("otherAssayType", { ASSAY_TYPE: "BIOCHEMICAL_ASSAY" }),
-                typeStudy("outsideYears", { YEAR_START: 2015 }),
-                typeStudy("otherCountry", { ISO2: "IN", COUNTRY_NAME: "India" }),
+                typeStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
+                typeStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                typeStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
             expect(typeOptions(studies, filters)).toEqual([MONO_OXYGENASES]);
         });
 
         it("is not narrowed by the type filter itself or by species", () => {
-            const studies = [typeStudy("ESTERASES"), typeStudy("otherSpecies", { SPECIES: FUNESTUS })];
+            const studies = [typeStudy(ESTERASES), typeStudy(OTHER_SPECIES, { SPECIES: FUNESTUS })];
 
-            expect(typeOptions(studies, filters)).toEqual(["ESTERASES", "otherSpecies"]);
+            expect(typeOptions(studies, filters)).toEqual([ESTERASES, OTHER_SPECIES]);
         });
     });
 
@@ -133,21 +147,21 @@ describe("getTypeFilterOptions", () => {
 
         it("is narrowed by years and region", () => {
             const studies = [
-                typeStudy("outsideYears", { YEAR_START: 2015 }),
-                typeStudy("otherCountry", { ISO2: "IN", COUNTRY_NAME: "India" }),
+                typeStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                typeStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
             expect(typeOptions(studies, filters)).toEqual([]);
         });
 
         it("is not narrowed by proxy type, insecticide class and type, or species, unlike the map chain", () => {
-            const filtersOfferingBoth = { ...filters, synergistTypes: [WHO_TEST_KIT, "otherProxyType"] };
+            const filtersOfferingBoth = { ...filters, synergistTypes: [WHO_TEST_KIT, PROXY_ONLY_TYPE] };
             const studies = [
-                typeStudy("otherProxyType", { PROXY_TYPE: "ESTERASES" }),
-                typeStudy(WHO_TEST_KIT, { INSECTICIDE_CLASS: "ORGANOPHOSPHATES", SPECIES: FUNESTUS }),
+                typeStudy(PROXY_ONLY_TYPE, { PROXY_TYPE: ESTERASES }),
+                typeStudy(WHO_TEST_KIT, { INSECTICIDE_CLASS: ORGANOPHOSPHATES, SPECIES: FUNESTUS }),
             ];
 
-            expect(typeOptions(studies, filtersOfferingBoth)).toEqual(["otherProxyType", WHO_TEST_KIT]);
+            expect(typeOptions(studies, filtersOfferingBoth)).toEqual([PROXY_ONLY_TYPE, WHO_TEST_KIT]);
         });
     });
 });

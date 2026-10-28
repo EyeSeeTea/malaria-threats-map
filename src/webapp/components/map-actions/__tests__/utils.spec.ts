@@ -1,6 +1,12 @@
 import i18next from "i18next";
 import { createInvasiveFilters, createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
-import { DiagnosisFilters, PreventionDataset, PreventionMapType, TreatmentFilters } from "../../../store/types";
+import {
+    DiagnosisFilters,
+    PreventionDataset,
+    PreventionFilters,
+    PreventionMapType,
+    TreatmentFilters,
+} from "../../../store/types";
 import {
     getValueLabelFilters,
     invasiveFiltersToString,
@@ -8,6 +14,34 @@ import {
     preventionFiltersToString,
     preventionValueLabelFilters,
 } from "../utils";
+import {
+    BIOCHEMICAL,
+    CDC_BOTTLE,
+    DELTAMETHRIN,
+    DISCRIMINATING,
+    FUNESTUS,
+    GAMBIAE,
+    MOLECULAR,
+    MONO_OXYGENASES,
+    PERMETHRIN,
+    PYRETHROIDS,
+    SYNERGIST,
+    WHO_TEST_KIT,
+} from "../../../../domain/entities/__fixtures__/studyValues";
+
+const TEST_TYPE_FILTER = "testType";
+const SPECIES_FILTER = "species";
+const YEARS_FILTER = "years";
+const INSECTICIDE_CLASS_FILTER = "insecticideClass";
+const INSECTICIDE_TYPES_FILTER = "insecticideTypes";
+const ASSAY_TYPES_FILTER = "assayTypes";
+const SYNERGIST_TYPES_FILTER = "synergistTypes";
+const VECTOR_SPECIES_FILTER = "vectorSpecies";
+const SEPARATOR = " | ";
+const MAP = "map";
+const DOWNLOAD = "download";
+const SOME_KEY = "some.key";
+const UNLISTED_SPECIES = "AN_GAMBIAE";
 
 // i18next runs without resources in the tests (src/setupTests.ts), so every label is its key.
 const ALL = "common.map_info_summary.all";
@@ -19,16 +53,6 @@ const NARROWED_YEARS = [2015, 2020];
 const FULL_RANGE = "2010-2024";
 const NARROWED_RANGE = "2015-2020";
 
-const PYRETHROIDS = "PYRETHROIDS";
-const DELTAMETHRIN = "DELTAMETHRIN";
-const PERMETHRIN = "PERMETHRIN";
-const WHO_TEST_KIT = "WHO_TEST_KIT_ADULTS";
-const CDC_BOTTLE = "CDC_BOTTLE_ADULTS";
-const GAMBIAE = "An. gambiae s.l.";
-const FUNESTUS = "An. funestus s.l.";
-const MONO_OXYGENASES = "MONO_OXYGENASES";
-const MOLECULAR = "MOLECULAR_ASSAY";
-const BIOCHEMICAL = "BIOCHEMICAL_ASSAY";
 const TYPE_FORM = "AN_STEPHENSI_TYPE_FORM";
 const MYSORENSIS = "AN_STEPHENSI_MYSORENSIS";
 
@@ -47,7 +71,7 @@ const everyFilter = (mapType: PreventionMapType) =>
 
 describe("map-actions utils", () => {
     it("runs with i18next returning the key, which every assertion below relies on", () => {
-        expect(i18next.t("some.key")).toBe("some.key");
+        expect(i18next.t(SOME_KEY)).toBe(SOME_KEY);
     });
 
     describe("preventionValueLabelFilters", () => {
@@ -156,7 +180,7 @@ describe("map-actions utils", () => {
         });
 
         it("throws for a species that is not in the hardcoded list (finding)", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: ["AN_GAMBIAE"] });
+            const filters = createInvasiveFilters({ vectorSpecies: [UNLISTED_SPECIES] });
 
             expect(() => invasiveValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toThrow(TypeError);
         });
@@ -165,20 +189,20 @@ describe("map-actions utils", () => {
     describe("preventionFiltersToString", () => {
         const bioassayAll = (years: string) =>
             [
-                entry("insecticideClass", PYRETHROIDS),
-                entry("insecticideTypes", ALL),
-                entry("testType", ALL),
-                entry("species", ALL),
-                entry("years", years),
-            ].join(" | ");
+                entry(INSECTICIDE_CLASS_FILTER, PYRETHROIDS),
+                entry(INSECTICIDE_TYPES_FILTER, ALL),
+                entry(TEST_TYPE_FILTER, ALL),
+                entry(SPECIES_FILTER, ALL),
+                entry(YEARS_FILTER, years),
+            ].join(SEPARATOR);
 
         const bioassayEvery = [
-            entry("insecticideClass", PYRETHROIDS),
-            entry("insecticideTypes", `${DELTAMETHRIN}, ${PERMETHRIN}`),
-            entry("testType", `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
-            entry("species", `${GAMBIAE}, ${FUNESTUS}`),
-            entry("years", FULL_RANGE),
-        ].join(" | ");
+            entry(INSECTICIDE_CLASS_FILTER, PYRETHROIDS),
+            entry(INSECTICIDE_TYPES_FILTER, `${DELTAMETHRIN}, ${PERMETHRIN}`),
+            entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+            entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
+            entry(YEARS_FILTER, FULL_RANGE),
+        ].join(SEPARATOR);
 
         describe("from the map", () => {
             describe.each([PreventionMapType.RESISTANCE_STATUS, PreventionMapType.INTENSITY_STATUS])(
@@ -186,19 +210,19 @@ describe("map-actions utils", () => {
                 mapType => {
                     it("says all for every unset filter, with the full year range", () => {
                         expect(
-                            preventionFiltersToString(noFilters(mapType), MAX_MIN_YEARS, MAX_MIN_YEARS, "map")
+                            preventionFiltersToString(noFilters(mapType), MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)
                         ).toEqual(bioassayAll(FULL_RANGE));
                     });
 
                     it("shows the narrowed year range", () => {
                         expect(
-                            preventionFiltersToString(noFilters(mapType), MAX_MIN_YEARS, NARROWED_YEARS, "map")
+                            preventionFiltersToString(noFilters(mapType), MAX_MIN_YEARS, NARROWED_YEARS, MAP)
                         ).toEqual(bioassayAll(NARROWED_RANGE));
                     });
 
                     it("joins the values of one filter with a comma", () => {
                         expect(
-                            preventionFiltersToString(everyFilter(mapType), MAX_MIN_YEARS, MAX_MIN_YEARS, "map")
+                            preventionFiltersToString(everyFilter(mapType), MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)
                         ).toEqual(bioassayEvery);
                     });
                 }
@@ -207,67 +231,65 @@ describe("map-actions utils", () => {
             it("Resistance mechanisms shows mechanism, assay types, species and years", () => {
                 const filters = everyFilter(PreventionMapType.RESISTANCE_MECHANISM);
 
-                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, "map")).toEqual(
+                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
                     [
-                        entry("testType", `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
-                        entry("assayTypes", `${MOLECULAR}, ${BIOCHEMICAL}`),
-                        entry("species", `${GAMBIAE}, ${FUNESTUS}`),
-                        entry("years", FULL_RANGE),
-                    ].join(" | ")
+                        entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+                        entry(ASSAY_TYPES_FILTER, `${MOLECULAR}, ${BIOCHEMICAL}`),
+                        entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
+                        entry(YEARS_FILTER, FULL_RANGE),
+                    ].join(SEPARATOR)
                 );
             });
 
             it("Level of involvement shows test type, synergist types, species and years", () => {
                 const filters = noFilters(PreventionMapType.LEVEL_OF_INVOLVEMENT);
 
-                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, "map")).toEqual(
+                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
                     [
-                        entry("testType", ALL),
-                        entry("synergistTypes", ALL),
-                        entry("species", ALL),
-                        entry("years", FULL_RANGE),
-                    ].join(" | ")
+                        entry(TEST_TYPE_FILTER, ALL),
+                        entry(SYNERGIST_TYPES_FILTER, ALL),
+                        entry(SPECIES_FILTER, ALL),
+                        entry(YEARS_FILTER, FULL_RANGE),
+                    ].join(SEPARATOR)
                 );
             });
         });
 
         describe("from the download", () => {
-            const mechanismDatasets: ReadonlyArray<PreventionDataset> = ["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"];
+            const mechanismDatasets: ReadonlyArray<PreventionDataset> = [MOLECULAR, BIOCHEMICAL];
 
-            const datasetFilters = (dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY" | "MOLECULAR_ASSAY") =>
-                createPreventionFilters({ ...everyFilter(PreventionMapType.RESISTANCE_STATUS), dataset });
+            const downloadFilters = (dataset: PreventionDataset): PreventionFilters => ({
+                ...everyFilter(PreventionMapType.RESISTANCE_STATUS),
+                dataset,
+            });
 
             it("a bioassay dataset shows the same filters as its map", () => {
-                const filters = datasetFilters("DISCRIMINATING_CONCENTRATION_BIOASSAY");
+                const filters = downloadFilters(DISCRIMINATING);
 
-                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, "download")).toEqual(
+                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, DOWNLOAD)).toEqual(
                     bioassayEvery
                 );
             });
 
             it.each(mechanismDatasets)("%s shows test type, species and years", dataset => {
-                const filters = createPreventionFilters({
-                    ...everyFilter(PreventionMapType.RESISTANCE_STATUS),
-                    dataset,
-                });
+                const filters = downloadFilters(dataset);
 
-                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, "download")).toEqual(
+                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, DOWNLOAD)).toEqual(
                     [
-                        entry("testType", `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
-                        entry("species", `${GAMBIAE}, ${FUNESTUS}`),
-                        entry("years", FULL_RANGE),
-                    ].join(" | ")
+                        entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+                        entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
+                        entry(YEARS_FILTER, FULL_RANGE),
+                    ].join(SEPARATOR)
                 );
             });
 
             it("the synergist dataset shows species and years only", () => {
-                const filters = createPreventionFilters({
-                    ...everyFilter(PreventionMapType.RESISTANCE_STATUS),
-                    dataset: "SYNERGIST-INSECTICIDE_BIOASSAY",
-                });
+                const filters = downloadFilters(SYNERGIST);
 
-                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, NARROWED_YEARS, "download")).toEqual(
-                    [entry("species", `${GAMBIAE}, ${FUNESTUS}`), entry("years", NARROWED_RANGE)].join(" | ")
+                expect(preventionFiltersToString(filters, MAX_MIN_YEARS, NARROWED_YEARS, DOWNLOAD)).toEqual(
+                    [entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`), entry(YEARS_FILTER, NARROWED_RANGE)].join(
+                        SEPARATOR
+                    )
                 );
             });
         });
@@ -275,26 +297,26 @@ describe("map-actions utils", () => {
 
     describe("invasiveFiltersToString", () => {
         it("says all when no species is selected", () => {
-            expect(invasiveFiltersToString(createInvasiveFilters(), MAX_MIN_YEARS, MAX_MIN_YEARS, "map")).toEqual(
-                [entry("vectorSpecies", ALL), entry("years", FULL_RANGE)].join(" | ")
+            expect(invasiveFiltersToString(createInvasiveFilters(), MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
+                [entry(VECTOR_SPECIES_FILTER, ALL), entry(YEARS_FILTER, FULL_RANGE)].join(SEPARATOR)
             );
         });
 
         it("shows the labels of the selected species, joined with a comma, and the narrowed years", () => {
             const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM, MYSORENSIS] });
 
-            expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, NARROWED_YEARS, "download")).toEqual(
+            expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, NARROWED_YEARS, DOWNLOAD)).toEqual(
                 [
-                    entry("vectorSpecies", `${speciesLabel(TYPE_FORM)}, ${speciesLabel(MYSORENSIS)}`),
-                    entry("years", NARROWED_RANGE),
-                ].join(" | ")
+                    entry(VECTOR_SPECIES_FILTER, `${speciesLabel(TYPE_FORM)}, ${speciesLabel(MYSORENSIS)}`),
+                    entry(YEARS_FILTER, NARROWED_RANGE),
+                ].join(SEPARATOR)
             );
         });
 
         it("throws for a species that is not in the hardcoded list (finding)", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: ["AN_GAMBIAE"] });
+            const filters = createInvasiveFilters({ vectorSpecies: [UNLISTED_SPECIES] });
 
-            expect(() => invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, "map")).toThrow(TypeError);
+            expect(() => invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toThrow(TypeError);
         });
     });
 

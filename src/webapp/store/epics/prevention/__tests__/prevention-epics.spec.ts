@@ -2,10 +2,14 @@ import { firstValueFrom, of } from "rxjs";
 import { toArray } from "rxjs/operators";
 import { setAssayTypes, setType } from "../../../actions/prevention-actions";
 import { setPreventionTypeEpic } from "../prevention-epics";
-
-const MOLECULAR = "MOLECULAR_ASSAY";
-const BIOCHEMICAL = "BIOCHEMICAL_ASSAY";
-const SYNERGIST = "SYNERGIST-INSECTICIDE_BIOASSAY";
+import {
+    ACE1R,
+    BIOCHEMICAL,
+    KDR_L1014S,
+    MOLECULAR,
+    MONO_OXYGENASES,
+    SYNERGIST,
+} from "../../../../../domain/entities/__fixtures__/studyValues";
 
 function actionsAfterSetType(types: string[] | undefined) {
     return firstValueFrom(setPreventionTypeEpic(of(setType(types))).pipe(toArray()));
@@ -20,7 +24,7 @@ describe("setPreventionTypeEpic", () => {
     );
 
     it("selects the molecular and biochemical assays for ACE1R", async () => {
-        expect(await actionsAfterSetType(["ACE1R"])).toEqual([setAssayTypes([MOLECULAR, BIOCHEMICAL])]);
+        expect(await actionsAfterSetType([ACE1R])).toEqual([setAssayTypes([MOLECULAR, BIOCHEMICAL])]);
     });
 
     it.each(["MONO_OXYGENASES", "ESTERASES", "GSTS", "UNKNOWN_MECHANISM"])(
@@ -40,8 +44,8 @@ describe("setPreventionTypeEpic", () => {
     });
 
     it("looks only at the first selected mechanism (finding)", async () => {
-        expect(await actionsAfterSetType(["KDR_L1014S", "MONO_OXYGENASES"])).toEqual([setAssayTypes([MOLECULAR])]);
-        expect(await actionsAfterSetType(["MONO_OXYGENASES", "KDR_L1014S"])).toEqual([
+        expect(await actionsAfterSetType([KDR_L1014S, MONO_OXYGENASES])).toEqual([setAssayTypes([MOLECULAR])]);
+        expect(await actionsAfterSetType([MONO_OXYGENASES, KDR_L1014S])).toEqual([
             setAssayTypes([MOLECULAR, BIOCHEMICAL, SYNERGIST]),
         ]);
     });

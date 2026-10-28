@@ -3,19 +3,32 @@ import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
 import { PreventionFilters, PreventionMapType, RegionState } from "../../../store/types";
 import { getSpeciesFilterOptions } from "../SpeciesFilter";
+import {
+    ARABIENSIS,
+    BIOCHEMICAL,
+    CDC_BOTTLE,
+    DELTAMETHRIN,
+    ESTERASES,
+    FUNESTUS,
+    GAMBIAE,
+    MOLECULAR,
+    MONO_OXYGENASES,
+    NOT_AVAILABLE,
+    ORGANOPHOSPHATES,
+    OTHER_COUNTRY,
+    PERMETHRIN,
+    PYRETHROIDS,
+    RESEARCH_INSTITUTION,
+    WHO_TEST_KIT,
+} from "../../../../domain/entities/__fixtures__/studyValues";
+
+const OTHER_CLASS = "otherClass";
+const OTHER_INSECTICIDE = "otherInsecticide";
+const OUTSIDE_YEARS = "outsideYears";
+const OTHER_COUNTRY_STUDY = "otherCountry";
 
 const YEARS = [2018, 2022];
 const REGION: RegionState = { country: "BF" };
-
-const GAMBIAE = "An. gambiae s.l.";
-const FUNESTUS = "An. funestus s.l.";
-const ARABIENSIS = "An. arabiensis";
-const PYRETHROIDS = "PYRETHROIDS";
-const DELTAMETHRIN = "DELTAMETHRIN";
-const WHO_TEST_KIT = "WHO_TEST_KIT_ADULTS";
-const CDC_BOTTLE = "CDC_BOTTLE_ADULTS";
-const MONO_OXYGENASES = "MONO_OXYGENASES";
-const MOLECULAR = "MOLECULAR_ASSAY";
 
 function speciesOptions(studies: PreventionStudy[], filters: PreventionFilters): ReadonlyArray<string> {
     return getSpeciesFilterOptions(filters, studies, YEARS, REGION).map(option => option.value);
@@ -62,11 +75,11 @@ describe("getSpeciesFilterOptions", () => {
             it("is narrowed by insecticide class, insecticide type, test type, years and region", () => {
                 const studies = [
                     speciesStudy(GAMBIAE),
-                    speciesStudy("otherClass", { INSECTICIDE_CLASS: "ORGANOPHOSPHATES" }),
-                    speciesStudy("otherInsecticide", { INSECTICIDE_TYPE: "PERMETHRIN" }),
+                    speciesStudy(OTHER_CLASS, { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
+                    speciesStudy(OTHER_INSECTICIDE, { INSECTICIDE_TYPE: PERMETHRIN }),
                     speciesStudy("otherTestType", { TYPE: CDC_BOTTLE }),
-                    speciesStudy("outsideYears", { YEAR_START: 2015 }),
-                    speciesStudy("otherCountry", { ISO2: "IN", COUNTRY_NAME: "India" }),
+                    speciesStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                    speciesStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
                 expect(speciesOptions(studies, filters)).toEqual([GAMBIAE]);
@@ -81,10 +94,10 @@ describe("getSpeciesFilterOptions", () => {
 
             it("is not narrowed by Ministry of Health, mosquitoes, mortality or intensity, unlike the map chain", () => {
                 const studies = [
-                    speciesStudy("notMoH", { INSTITUTION_TYPE: "Research" }),
+                    speciesStudy("notMoH", { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
                     speciesStudy("fewMosquitoes", { NUMBER: "20" }),
-                    speciesStudy("naMortality", { MORTALITY_ADJUSTED: "NA" }),
-                    speciesStudy("naIntensity", { RESISTANCE_INTENSITY: "NA" }),
+                    speciesStudy("naMortality", { MORTALITY_ADJUSTED: NOT_AVAILABLE }),
+                    speciesStudy("naIntensity", { RESISTANCE_INTENSITY: NOT_AVAILABLE }),
                 ];
 
                 expect(speciesOptions(studies, filters)).toEqual([
@@ -111,9 +124,9 @@ describe("getSpeciesFilterOptions", () => {
             const studies = [
                 speciesStudy(GAMBIAE),
                 speciesStudy("otherMechanism", { TYPE: CDC_BOTTLE }),
-                speciesStudy("otherAssayType", { ASSAY_TYPE: "BIOCHEMICAL_ASSAY" }),
-                speciesStudy("outsideYears", { YEAR_START: 2015 }),
-                speciesStudy("otherCountry", { ISO2: "IN", COUNTRY_NAME: "India" }),
+                speciesStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
+                speciesStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                speciesStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
             expect(speciesOptions(studies, filters)).toEqual([GAMBIAE]);
@@ -122,10 +135,10 @@ describe("getSpeciesFilterOptions", () => {
         it("is not narrowed by the species filter, the insecticide class or the synergist types", () => {
             const studies = [
                 speciesStudy(FUNESTUS),
-                speciesStudy("otherClass", { INSECTICIDE_CLASS: "ORGANOPHOSPHATES" }),
+                speciesStudy(OTHER_CLASS, { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
             ];
 
-            expect(speciesOptions(studies, filters)).toEqual([FUNESTUS, "otherClass"]);
+            expect(speciesOptions(studies, filters)).toEqual([FUNESTUS, OTHER_CLASS]);
         });
     });
 
@@ -142,10 +155,10 @@ describe("getSpeciesFilterOptions", () => {
         it("is narrowed by proxy type, synergist type, years and region", () => {
             const studies = [
                 speciesStudy(GAMBIAE),
-                speciesStudy("otherProxyType", { PROXY_TYPE: "ESTERASES" }),
+                speciesStudy("otherProxyType", { PROXY_TYPE: ESTERASES }),
                 speciesStudy("otherSynergistType", { TYPE: CDC_BOTTLE }),
-                speciesStudy("outsideYears", { YEAR_START: 2015 }),
-                speciesStudy("otherCountry", { ISO2: "IN", COUNTRY_NAME: "India" }),
+                speciesStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                speciesStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
             expect(speciesOptions(studies, filters)).toEqual([GAMBIAE]);
@@ -153,11 +166,11 @@ describe("getSpeciesFilterOptions", () => {
 
         it("is not narrowed by insecticide class and type, unlike the map chain", () => {
             const studies = [
-                speciesStudy("otherClass", { INSECTICIDE_CLASS: "ORGANOPHOSPHATES" }),
-                speciesStudy("otherInsecticide", { INSECTICIDE_TYPE: "PERMETHRIN" }),
+                speciesStudy(OTHER_CLASS, { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
+                speciesStudy(OTHER_INSECTICIDE, { INSECTICIDE_TYPE: PERMETHRIN }),
             ];
 
-            expect(speciesOptions(studies, filters)).toEqual(["otherClass", "otherInsecticide"]);
+            expect(speciesOptions(studies, filters)).toEqual([OTHER_CLASS, OTHER_INSECTICIDE]);
         });
     });
 });

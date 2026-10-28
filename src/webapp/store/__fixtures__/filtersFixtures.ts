@@ -1,9 +1,11 @@
+import { DISCRIMINATING, PYRETHROIDS } from "../../../domain/entities/__fixtures__/studyValues";
 import { InvasiveFilters, InvasiveMapType, PreventionFilters, PreventionMapType } from "../types";
 
-const defaultPreventionFilters: Readonly<PreventionFilters> = {
+// Functions, not shared objects, so every call gets its own arrays.
+const defaultPreventionFilters = (): PreventionFilters => ({
     mapType: PreventionMapType.RESISTANCE_STATUS,
-    dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
-    insecticideClass: "PYRETHROIDS",
+    dataset: DISCRIMINATING,
+    insecticideClass: PYRETHROIDS,
     insecticideTypes: [],
     synergistTypes: [],
     assayTypes: [],
@@ -12,18 +14,18 @@ const defaultPreventionFilters: Readonly<PreventionFilters> = {
     species: [],
     onlyIncludeBioassaysWithMoreMosquitoes: 0,
     onlyByHealthMinistries: false,
-};
+});
 
-const defaultInvasiveFilters: Readonly<InvasiveFilters> = {
+const defaultInvasiveFilters = (): InvasiveFilters => ({
     mapType: InvasiveMapType.VECTOR_OCCURANCE,
     dataset: "INVASIVE_VECTOR_SPECIES",
     vectorSpecies: [],
-};
+});
 
 export function createPreventionFilters(overrides: Partial<PreventionFilters> = {}): PreventionFilters {
-    return { ...defaultPreventionFilters, ...overrides };
+    return { ...defaultPreventionFilters(), ...overrides };
 }
 
 export function createInvasiveFilters(overrides: Partial<InvasiveFilters> = {}): InvasiveFilters {
-    return { ...defaultInvasiveFilters, ...overrides };
+    return { ...defaultInvasiveFilters(), ...overrides };
 }
