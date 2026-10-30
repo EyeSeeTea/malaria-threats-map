@@ -54,7 +54,7 @@ const NA_MORTALITY = "naMortality";
 const NA_INTENSITY = "naIntensity";
 const MOLECULAR_STUDY = "molecular";
 const OTHER_ASSAY_TYPE = "otherAssayType";
-const MECHANISM_TYPE_STUDY = "mechanismType";
+const SYNERGIST_STUDY = "synergist";
 const WITHOUT_YEAR = "withoutYear";
 const NOT_DOWNLOADABLE = "notDownloadable";
 const TYPE_FORM_KEY = "AN_STEPHENSI_TYPE_FORM";
@@ -223,30 +223,30 @@ describe("studies-filters chains", () => {
             });
 
             describe("with only the synergist assay selected (isSynergyst)", () => {
+                // As in the data: a synergist study carries the test kit in TYPE and the mechanism in PROXY_TYPE.
                 const synergistStudies = [
-                    mechanismStudy(MECHANISM_TYPE_STUDY, { ASSAY_TYPE: SYNERGIST, TYPE: MONO_OXYGENASES }),
-                    mechanismStudy("testKitType", { ASSAY_TYPE: SYNERGIST, TYPE: WHO_TEST_KIT }),
+                    mechanismStudy(SYNERGIST_STUDY, {
+                        ASSAY_TYPE: SYNERGIST,
+                        TYPE: WHO_TEST_KIT,
+                        PROXY_TYPE: MONO_OXYGENASES,
+                    }),
                 ];
 
-                it("applies the synergist types to TYPE, so with a mechanism selected every study is removed (finding)", () => {
-                    const synergistFilters: PreventionFilters = {
-                        ...filters,
-                        assayTypes: [SYNERGIST],
-                        synergistTypes: [WHO_TEST_KIT],
-                    };
+                it.each([
+                    ["no synergist type", []],
+                    ["a synergist type", [WHO_TEST_KIT]],
+                ])(
+                    "removes every synergist study with %s selected, because the mechanism filter reads TYPE (finding)",
+                    (_case, synergistTypes) => {
+                        const synergistFilters: PreventionFilters = {
+                            ...filters,
+                            assayTypes: [SYNERGIST],
+                            synergistTypes,
+                        };
 
-                    expect(survivingPrevention(synergistStudies, synergistFilters)).toEqual([]);
-                });
-
-                it("keeps the mechanism studies when no synergist type is selected", () => {
-                    const synergistFilters: PreventionFilters = {
-                        ...filters,
-                        assayTypes: [SYNERGIST],
-                        synergistTypes: [],
-                    };
-
-                    expect(survivingPrevention(synergistStudies, synergistFilters)).toEqual([MECHANISM_TYPE_STUDY]);
-                });
+                        expect(survivingPrevention(synergistStudies, synergistFilters)).toEqual([]);
+                    }
+                );
             });
         });
 

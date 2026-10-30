@@ -59,6 +59,17 @@ describe("getTypeFilterOptions", () => {
         ]);
     });
 
+    // Possibly a bug: a study without TYPE offers an empty test type in the filter (finding).
+    it("offers a null option for a study whose TYPE is null", () => {
+        const studies = [typeStudy(WHO_TEST_KIT), typeStudy(null)];
+        const filters = createPreventionFilters({ mapType: PreventionMapType.RESISTANCE_STATUS });
+
+        expect(getTypeFilterOptions(filters, studies, YEARS, REGION)).toEqual([
+            { label: WHO_TEST_KIT, value: WHO_TEST_KIT },
+            { label: null, value: null },
+        ]);
+    });
+
     describe.each([PreventionMapType.RESISTANCE_STATUS, PreventionMapType.INTENSITY_STATUS])(
         "bioassay map type %s",
         mapType => {
