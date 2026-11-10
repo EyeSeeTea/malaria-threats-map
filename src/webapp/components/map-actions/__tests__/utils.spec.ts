@@ -182,7 +182,9 @@ describe("map-actions utils", () => {
             ).toEqual({ years: FULL_RANGE, vectorSpecies: `${speciesLabel(TYPE_FORM)} | ${speciesLabel(MYSORENSIS)}` });
         });
 
-        it("throws for a species that is not in the hardcoded list (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a selected species that is not in
+        // the hardcoded list throws instead of showing a label.
+        it("throws for a species that is not in the hardcoded list", () => {
             const filters = createInvasiveFilters({ vectorSpecies: [UNLISTED_SPECIES] });
 
             expect(() => invasiveValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toThrow(TypeError);
@@ -322,7 +324,9 @@ describe("map-actions utils", () => {
             );
         });
 
-        it("throws for a species that is not in the hardcoded list (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a selected species that is not in
+        // the hardcoded list throws instead of showing a label.
+        it("throws for a species that is not in the hardcoded list", () => {
             const filters = createInvasiveFilters({ vectorSpecies: [UNLISTED_SPECIES] });
 
             expect(() => invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toThrow(TypeError);

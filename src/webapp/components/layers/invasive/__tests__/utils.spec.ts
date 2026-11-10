@@ -41,7 +41,9 @@ describe("invasive site colour", () => {
             expect(selectedCode(group.slice(0, 2))).toBe(NATIVE);
         });
 
-        it("ties not found, which is not in the order, with unknown, so the first one wins (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a status missing from the order
+        // ties with unknown, so the order of the studies decides the colour.
+        it("ties not found, which is not in the order, with unknown, so the first one wins", () => {
             const notFound = study(NOT_FOUND_STUDY, { INVASIVE_STATUS: NOT_FOUND });
             const unknown = study(UNKNOWN_STUDY, { INVASIVE_STATUS: UNKNOWN });
 
@@ -49,6 +51,8 @@ describe("invasive site colour", () => {
             expect(selectedCode([unknown, notFound])).toBe(UNKNOWN_STUDY);
         });
 
+        // This test and the next pin today's behaviour, a possible bug pending a decision: whether the
+        // studies without a year count depends on the first study of the group.
         it("uses the whole group when the first study has no YEAR_START", () => {
             const group = [
                 study(WITHOUT_YEAR, { YEAR_START: undefined, INVASIVE_STATUS: NATIVE }),

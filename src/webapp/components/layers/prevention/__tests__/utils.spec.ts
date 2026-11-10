@@ -77,7 +77,9 @@ describe("prevention site colour", () => {
                 expect(selectedCode(group, mapType)).toBe(FIRST);
             });
 
-            it("lets the input order decide for a status missing from the record (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: a status missing from the record
+            // ties with every status, so the order of the studies decides, even over confirmed resistance.
+            it("lets the input order decide for a status missing from the record", () => {
                 const unknown = study(UNKNOWN_STUDY, { RESISTANCE_STATUS: NOT_AVAILABLE });
                 const confirmed = study(CONFIRMED_STUDY, { RESISTANCE_STATUS: CONFIRMED_RESISTANCE });
 
@@ -98,7 +100,9 @@ describe("prevention site colour", () => {
                 expect(selectedCode(group, mapType)).toBe(RECENT);
             });
 
-            it("orders high, moderate, moderate to high, low, and then NA and not assessed (finding)", () => {
+            // Pins today's behaviour, pending a decision: moderate ranks above moderate to high. The order
+            // was changed on purpose, so it may be wanted.
+            it("orders high, moderate, moderate to high, low, and then NA and not assessed", () => {
                 const group = [
                     study(NOT_AVAILABLE, { RESISTANCE_INTENSITY: NOT_AVAILABLE }),
                     study(NOT_ASSESSED, { RESISTANCE_INTENSITY: NOT_ASSESSED }),
@@ -143,7 +147,9 @@ describe("prevention site colour", () => {
                 expect(selectedCode(group, mapType)).toBe(DETECTED);
             });
 
-            it("ties not detected, NA and an unknown status, so the first one of the group wins (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: a status missing from the record
+            // ties with the lowest one, so the order of the studies decides.
+            it("ties not detected, NA and an unknown status, so the first one of the group wins", () => {
                 const group = [UNKNOWN_STATUS, NOT_DETECTED, NOT_AVAILABLE].map(status =>
                     study(status, { MECHANISM_STATUS: status })
                 );
@@ -178,7 +184,9 @@ describe("prevention site colour", () => {
                 expect(selectedCode(group.slice(0, 2), mapType)).toBe(NOT_ASSESSED);
             });
 
-            it("ties an unknown involvement with no involvement, so the first one of the group wins (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: a study without a level of
+            // involvement ties with no involvement, so the order of the studies decides the colour.
+            it("ties an unknown involvement with no involvement, so the first one of the group wins", () => {
                 const unknown = study(UNKNOWN_STUDY, { MECHANISM_PROXY: NOT_AVAILABLE });
                 const none = study(NONE_STUDY, { MECHANISM_PROXY: NO_INVOLVEMENT });
 
@@ -197,7 +205,9 @@ describe("prevention site colour", () => {
             expect(getMostPriorityUsingMortalityAdjusted(group).Code).toBe(HIGH_MORTALITY);
         });
 
-        it("picks a non-numeric value before any number, since it sorts as -Infinity (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: the intensity chart picks a
+        // non-numeric mortality before any number.
+        it("picks a non-numeric value before any number, since it sorts as -Infinity", () => {
             const group = [HIGH_MORTALITY, NOT_AVAILABLE, LOW_MORTALITY].map(value =>
                 study(value, { MORTALITY_ADJUSTED: value })
             );
@@ -226,7 +236,9 @@ describe("prevention site colour", () => {
             expect(codes(getMostPriorityStudiesUsingMechanismProxy(group))).toEqual([OLDER]);
         });
 
-        it("keeps only the first proxy among tied unknown and no involvement (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a study without a level of
+        // involvement ties with no involvement, so the side panel keeps only the first one's studies.
+        it("keeps only the first proxy among tied unknown and no involvement", () => {
             const group = [
                 study(UNKNOWN_STUDY, { MECHANISM_PROXY: NOT_AVAILABLE }),
                 study(NONE_STUDY, { MECHANISM_PROXY: NO_INVOLVEMENT }),

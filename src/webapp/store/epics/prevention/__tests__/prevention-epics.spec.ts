@@ -45,7 +45,9 @@ describe("setPreventionTypeEpic", () => {
         expect(await actionsAfterSetType(undefined)).toEqual(allAssayTypes);
     });
 
-    it("looks only at the first selected mechanism (finding)", async () => {
+    // Pins today's behaviour, a possible bug pending a decision: with several mechanisms selected,
+    // only the first one decides the assay types.
+    it("looks only at the first selected mechanism", async () => {
         expect(await actionsAfterSetType([KDR_L1014S, MONO_OXYGENASES])).toEqual([setAssayTypes([MOLECULAR])]);
         expect(await actionsAfterSetType([MONO_OXYGENASES, KDR_L1014S])).toEqual([
             setAssayTypes([MOLECULAR, BIOCHEMICAL, SYNERGIST]),

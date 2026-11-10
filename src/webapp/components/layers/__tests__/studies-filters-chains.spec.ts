@@ -232,11 +232,13 @@ describe("studies-filters chains", () => {
                     }),
                 ];
 
+                // Pins today's behaviour, a possible bug pending a decision: synergist studies never
+                // show on this map, because the mechanism filter compares TYPE, which holds the test kit.
                 it.each([
                     ["no synergist type", []],
                     ["a synergist type", [WHO_TEST_KIT]],
                 ])(
-                    "removes every synergist study with %s selected, because the mechanism filter reads TYPE (finding)",
+                    "removes every synergist study with %s selected, because the mechanism filter reads TYPE",
                     (_case, synergistTypes) => {
                         const synergistFilters: PreventionFilters = {
                             ...filters,
@@ -387,7 +389,9 @@ describe("studies-filters chains", () => {
                 expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([BIOCHEMICAL_STUDY]);
             });
 
-            it("keeps only MOLECULAR_MECHANISM_TYPES, which are the biochemical mechanisms, so kdr is removed (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: the two mechanism lists of the
+            // download look swapped, so the molecular file has no kdr or Ace1R rows.
+            it("keeps only MOLECULAR_MECHANISM_TYPES, which are the biochemical mechanisms, so kdr is removed", () => {
                 const studies = [
                     molecularStudy(MONO_OXYGENASES_STUDY, { TYPE: MONO_OXYGENASES }),
                     molecularStudy("esterases", { TYPE: ESTERASES }),
@@ -403,7 +407,9 @@ describe("studies-filters chains", () => {
                 ]);
             });
 
-            it("ignores the selected type, and the year range (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: the molecular file ignores the
+            // selected mechanism and the year range. It applies the region filter twice instead.
+            it("ignores the selected type, and the year range", () => {
                 const studies = [molecularStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR })];
 
                 expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([OUTSIDE_YEARS]);
@@ -427,7 +433,9 @@ describe("studies-filters chains", () => {
                 expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KEPT]);
             });
 
-            it("keeps only BIOCHEMICAL_MECHANISM_TYPES, which are the molecular mechanisms (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: the two mechanism lists of the
+            // download look swapped, so the biochemical file keeps only kdr and Ace1R.
+            it("keeps only BIOCHEMICAL_MECHANISM_TYPES, which are the molecular mechanisms", () => {
                 const studies = [
                     biochemicalStudy(KDR_STUDY, { TYPE: KDR_L1014F }),
                     biochemicalStudy(MONO_OXYGENASES_STUDY, { TYPE: MONO_OXYGENASES }),
@@ -436,12 +444,16 @@ describe("studies-filters chains", () => {
                 expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KDR_STUDY]);
             });
 
-            it("does not filter by assay type, so a molecular assay is kept (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: with no assay type filter, the
+            // biochemical file is made of molecular assays.
+            it("does not filter by assay type, so a molecular assay is kept", () => {
                 const studies = [biochemicalStudy(MOLECULAR_ASSAY_STUDY, { ASSAY_TYPE: MOLECULAR, TYPE: KDR_L1014F })];
 
                 expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([MOLECULAR_ASSAY_STUDY]);
             });
 
+            // Pins today's behaviour, a possible bug pending a decision: the biochemical file ignores the
+            // selected mechanism.
             it("ignores the selected type", () => {
                 const studies = [biochemicalStudy(KDR_STUDY, { TYPE: KDR_L1014S })];
 

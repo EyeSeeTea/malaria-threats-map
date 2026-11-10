@@ -506,7 +506,9 @@ describe("studies-filters", () => {
                 ).toBe(false);
             });
 
-            it("keeps NR and an empty string, which are not numbers (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: NR and an empty mortality pass as
+            // valid values on the resistance status map.
+            it("keeps NR and an empty string, which are not numbers", () => {
                 const studies = [NOT_REPORTED, ""].map(value => createPreventionStudy({ MORTALITY_ADJUSTED: value }));
 
                 expect(studies.map(filterValidMortalityAdjustedValue)).toEqual([true, true]);
