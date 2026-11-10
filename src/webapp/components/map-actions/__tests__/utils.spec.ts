@@ -19,6 +19,7 @@ import {
     CDC_BOTTLE,
     DELTAMETHRIN,
     DISCRIMINATING,
+    ESTERASES,
     FUNESTUS,
     GAMBIAE,
     MOLECULAR,
@@ -69,6 +70,12 @@ const everyFilter = (mapType: PreventionMapType) =>
         synergistTypes: [WHO_TEST_KIT],
     });
 
+// On the resistance mechanisms map, the type filter holds mechanisms, not test kits.
+const everyMechanismFilter = () => ({
+    ...everyFilter(PreventionMapType.RESISTANCE_MECHANISM),
+    type: [MONO_OXYGENASES, ESTERASES],
+});
+
 describe("map-actions utils", () => {
     it("runs with i18next returning the key, which every assertion below relies on", () => {
         expect(i18next.t(SOME_KEY)).toBe(SOME_KEY);
@@ -113,12 +120,12 @@ describe("map-actions utils", () => {
             });
 
             it("joins several values with a pipe", () => {
-                const filters = everyFilter(PreventionMapType.RESISTANCE_MECHANISM);
+                const filters = everyMechanismFilter();
 
                 expect(preventionValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toEqual({
                     years: FULL_RANGE,
                     assayTypes: `${MOLECULAR} | ${BIOCHEMICAL}`,
-                    mechanismType: `${WHO_TEST_KIT} | ${CDC_BOTTLE}`,
+                    mechanismType: `${MONO_OXYGENASES} | ${ESTERASES}`,
                     species: `${GAMBIAE} | ${FUNESTUS}`,
                 });
             });
@@ -229,11 +236,11 @@ describe("map-actions utils", () => {
             );
 
             it("Resistance mechanisms shows mechanism, assay types, species and years", () => {
-                const filters = everyFilter(PreventionMapType.RESISTANCE_MECHANISM);
+                const filters = everyMechanismFilter();
 
                 expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
                     [
-                        entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+                        entry(TEST_TYPE_FILTER, `${MONO_OXYGENASES}, ${ESTERASES}`),
                         entry(ASSAY_TYPES_FILTER, `${MOLECULAR}, ${BIOCHEMICAL}`),
                         entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
                         entry(YEARS_FILTER, FULL_RANGE),
