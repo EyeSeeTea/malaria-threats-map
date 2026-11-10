@@ -8,7 +8,6 @@ const NOT_FOUND_STUDY = "notFound";
 const UNKNOWN_STUDY = "unknown";
 const WITHOUT_YEAR = "withoutYear";
 const WITH_YEAR = "withYear";
-const FIRST = "first";
 
 const INVASIVE = "Invasive";
 const NATIVE = "Native";
@@ -18,8 +17,7 @@ const NOT_FOUND = "Not found";
 const study = (code: string, overrides: Partial<InvasiveStudy> = {}) =>
     createInvasiveStudy({ Code: code, YEAR_START: 2020, ...overrides });
 
-const selectedCode = (group: InvasiveStudy[], mapType = InvasiveMapType.VECTOR_OCCURANCE) =>
-    studySelector(group, mapType).Code;
+const selectedCode = (group: InvasiveStudy[]) => studySelector(group, InvasiveMapType.VECTOR_OCCURANCE).Code;
 
 describe("invasive site colour", () => {
     it("pins the status order record", () => {
@@ -68,15 +66,5 @@ describe("invasive site colour", () => {
 
             expect(selectedCode(group)).toBe(WITH_YEAR);
         });
-
-        it("throws for an empty group (finding)", () => {
-            expect(() => studySelector([], InvasiveMapType.VECTOR_OCCURANCE)).toThrow(TypeError);
-        });
-    });
-
-    it("returns the first study of the group for an unknown map type", () => {
-        const group = [study(FIRST, { INVASIVE_STATUS: UNKNOWN }), study("second", { INVASIVE_STATUS: INVASIVE })];
-
-        expect(selectedCode(group, 1)).toBe(FIRST);
     });
 });

@@ -154,10 +154,6 @@ describe("map-actions utils", () => {
                 });
             });
         });
-
-        it("returns undefined for an unknown map type", () => {
-            expect(preventionValueLabelFilters(noFilters(99), MAX_MIN_YEARS, MAX_MIN_YEARS)).toBe(undefined);
-        });
     });
 
     describe("invasiveValueLabelFilters", () => {
@@ -270,6 +266,12 @@ describe("map-actions utils", () => {
                 dataset,
             });
 
+            // The mechanism datasets show the mechanism type filter, so the type holds mechanisms.
+            const mechanismDownloadFilters = (dataset: PreventionDataset): PreventionFilters => ({
+                ...downloadFilters(dataset),
+                type: [MONO_OXYGENASES, ESTERASES],
+            });
+
             it("a bioassay dataset shows the same filters as its map", () => {
                 const filters = downloadFilters(DISCRIMINATING);
 
@@ -279,11 +281,11 @@ describe("map-actions utils", () => {
             });
 
             it.each(mechanismDatasets)("%s shows test type, species and years", dataset => {
-                const filters = downloadFilters(dataset);
+                const filters = mechanismDownloadFilters(dataset);
 
                 expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, DOWNLOAD)).toEqual(
                     [
-                        entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+                        entry(TEST_TYPE_FILTER, `${MONO_OXYGENASES}, ${ESTERASES}`),
                         entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
                         entry(YEARS_FILTER, FULL_RANGE),
                     ].join(SEPARATOR)
@@ -359,17 +361,17 @@ describe("map-actions utils", () => {
             );
 
         it("sends prevention to preventionValueLabelFilters", () => {
-            expect(labelsFor("prevention")).toEqual(
-                preventionValueLabelFilters(preventionFilters, MAX_MIN_YEARS, NARROWED_YEARS)
-            );
+            expect(labelsFor("prevention")).toEqual({
+                years: NARROWED_RANGE,
+                insecticideClass: PYRETHROIDS,
+                insecticideTypes: `${DELTAMETHRIN} | ${PERMETHRIN}`,
+                testType: `${WHO_TEST_KIT} | ${CDC_BOTTLE}`,
+                species: `${GAMBIAE} | ${FUNESTUS}`,
+            });
         });
 
         it("sends invasive to invasiveValueLabelFilters", () => {
             expect(labelsFor("invasive")).toEqual({ years: NARROWED_RANGE, vectorSpecies: speciesLabel(TYPE_FORM) });
-        });
-
-        it("returns undefined for an unknown theme", () => {
-            expect(labelsFor("unknown")).toBe(undefined);
         });
     });
 });

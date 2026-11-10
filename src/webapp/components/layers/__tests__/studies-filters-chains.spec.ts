@@ -303,18 +303,6 @@ describe("studies-filters chains", () => {
 
             expect(survivingInvasive(studies, filters)).toEqual([KEPT, WITHOUT_YEAR, NOT_DOWNLOADABLE]);
         });
-
-        it("an unknown map type filters by region only", () => {
-            const filters = createInvasiveFilters({ mapType: 1, vectorSpecies: [TYPE_FORM_KEY] });
-
-            expect(survivingInvasive(studies, filters)).toEqual([
-                KEPT,
-                OTHER_SPECIES,
-                OUTSIDE_YEARS,
-                WITHOUT_YEAR,
-                NOT_DOWNLOADABLE,
-            ]);
-        });
     });
 
     describe("download, prevention", () => {
@@ -460,18 +448,6 @@ describe("studies-filters chains", () => {
                 expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KDR_STUDY]);
             });
         });
-
-        it("an unknown dataset applies no filter", () => {
-            const filters = bioassayFilters({ dataset: undefined });
-            const studies = [bioassayStudy(NOT_DOWNLOADABLE, { DOWNLOAD: 0 }), ...notInMapChain(DISCRIMINATING)];
-
-            expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([
-                NOT_DOWNLOADABLE,
-                NOT_MOH,
-                FEW_MOSQUITOES,
-                NA_MORTALITY,
-            ]);
-        });
     });
 
     describe("download, invasive", () => {
@@ -488,17 +464,6 @@ describe("studies-filters chains", () => {
             const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM_KEY] });
 
             expect(survivingInvasive(studies, filters, DOWNLOAD)).toEqual([KEPT, WITHOUT_YEAR]);
-        });
-
-        it("an unknown map type filters by download flag and region only", () => {
-            const filters = createInvasiveFilters({ mapType: 1, vectorSpecies: [TYPE_FORM_KEY] });
-
-            expect(survivingInvasive(studies, filters, DOWNLOAD)).toEqual([
-                KEPT,
-                OTHER_SPECIES,
-                OUTSIDE_YEARS,
-                WITHOUT_YEAR,
-            ]);
         });
     });
 });

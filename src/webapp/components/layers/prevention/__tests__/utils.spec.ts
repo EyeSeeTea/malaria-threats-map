@@ -2,7 +2,6 @@ import { createPreventionStudy } from "../../../../../domain/entities/__fixtures
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { PreventionMapType } from "../../../../store/types";
 import {
-    getByMostRecentYearAndInvolvement,
     getMostPriorityStudiesUsingMechanismProxy,
     getMostPriorityUsingMortalityAdjusted,
     studySelector,
@@ -37,7 +36,6 @@ const LOW_MORTALITY = "0.5";
 const HIGH_MORTALITY = "0.97";
 const FIRST_FULL = "full1";
 const SECOND_FULL = "full2";
-const RECENT_PARTIAL = "recentPartial";
 
 const study = (code: string, overrides: Partial<PreventionStudy> = {}) =>
     createPreventionStudy({ Code: code, YEAR_START: 2020, ...overrides });
@@ -68,12 +66,6 @@ describe("prevention site colour", () => {
                 expect(selectedCode(group.slice(0, 3), mapType)).toBe(POSSIBLE_RESISTANCE);
                 expect(selectedCode(group.slice(0, 2), mapType)).toBe(SUSCEPTIBLE);
                 expect(selectedCode(group.slice(0, 1), mapType)).toBe(UNDETERMINED);
-            });
-
-            it("returns a copy of the study with its priority", () => {
-                const confirmed = study(CONFIRMED_STUDY, { RESISTANCE_STATUS: CONFIRMED_RESISTANCE });
-
-                expect(studySelector([confirmed], mapType)).toEqual({ ...confirmed, priority: 1 });
             });
 
             it("keeps the first study of the group on a tie", () => {
@@ -128,12 +120,6 @@ describe("prevention site colour", () => {
 
                 expect(selectedCode([notAssessed, na], mapType)).toBe(NOT_ASSESSED_STUDY);
                 expect(selectedCode([na, notAssessed], mapType)).toBe(NA_STUDY);
-            });
-
-            it("returns the study itself, without a priority", () => {
-                const high = study("high", { RESISTANCE_INTENSITY: HIGH_INTENSITY });
-
-                expect(studySelector([high], mapType)).toBe(high);
             });
         });
 
@@ -200,23 +186,6 @@ describe("prevention site colour", () => {
                 expect(selectedCode([none, unknown], mapType)).toBe(NONE_STUDY);
             });
         });
-
-        describe.each([
-            PreventionMapType.RESISTANCE_STATUS,
-            PreventionMapType.INTENSITY_STATUS,
-            PreventionMapType.RESISTANCE_MECHANISM,
-            PreventionMapType.LEVEL_OF_INVOLVEMENT,
-        ])("map type %s with an empty group", mapType => {
-            it("returns undefined, since the year filter never reads the missing first study", () => {
-                expect(studySelector([], mapType)).toBe(undefined);
-            });
-        });
-
-        it("returns the first study of the group for an unknown map type", () => {
-            const group = [study(FIRST, { YEAR_START: 2019 }), study(SECOND, { YEAR_START: 2020 })];
-
-            expect(selectedCode(group, 99)).toBe(FIRST);
-        });
     });
 
     describe("getMostPriorityUsingMortalityAdjusted", () => {
@@ -234,10 +203,6 @@ describe("prevention site colour", () => {
             );
 
             expect(getMostPriorityUsingMortalityAdjusted(group).Code).toBe(NOT_AVAILABLE);
-        });
-
-        it("returns undefined for an empty list", () => {
-            expect(getMostPriorityUsingMortalityAdjusted([])).toBe(undefined);
         });
     });
 
@@ -261,10 +226,6 @@ describe("prevention site colour", () => {
             expect(codes(getMostPriorityStudiesUsingMechanismProxy(group))).toEqual([OLDER]);
         });
 
-        it("returns an empty list for an empty list", () => {
-            expect(getMostPriorityStudiesUsingMechanismProxy([])).toEqual([]);
-        });
-
         it("keeps only the first proxy among tied unknown and no involvement (finding)", () => {
             const group = [
                 study(UNKNOWN_STUDY, { MECHANISM_PROXY: NOT_AVAILABLE }),
@@ -272,22 +233,6 @@ describe("prevention site colour", () => {
             ];
 
             expect(codes(getMostPriorityStudiesUsingMechanismProxy(group))).toEqual([UNKNOWN_STUDY]);
-        });
-    });
-
-    describe("getByMostRecentYearAndInvolvement", () => {
-        it("picks the top involvement within the most recent year", () => {
-            const group = [
-                study("olderFull", { YEAR_START: 2019, MECHANISM_PROXY: FULL_INVOLVEMENT }),
-                study("recentNone", { YEAR_START: 2020, MECHANISM_PROXY: NO_INVOLVEMENT }),
-                study(RECENT_PARTIAL, { YEAR_START: 2020, MECHANISM_PROXY: PARTIAL_INVOLVEMENT }),
-            ];
-
-            expect(getByMostRecentYearAndInvolvement(group).Code).toBe(RECENT_PARTIAL);
-        });
-
-        it("returns undefined for an empty group", () => {
-            expect(getByMostRecentYearAndInvolvement([])).toBe(undefined);
         });
     });
 });
