@@ -2,13 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
-import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
+import { selectInvasiveFilters, selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
 import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import { Option } from "../BasicSelect";
+import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
+import { getVectorSpecies } from "../../../domain/entities/VectorSpecies";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
+    invasiveStudies: selectInvasiveStudies(state),
 });
 
 const mapDispatchToProps = {
@@ -19,45 +23,25 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-export const suggestions = () => [
-    {
-        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_TYPE_FORM"),
-        value: "AN_STEPHENSI_TYPE_FORM",
-    },
-    {
-        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_MYSORENSIS"),
-        value: "AN_STEPHENSI_MYSORENSIS",
-    },
-    {
-        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_INTERMEDIATE_FORM"),
-        value: "AN_STEPHENSI_INTERMEDIATE_FORM",
-    },
-    {
-        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_FORM_UNSPECIFIED"),
-        value: "AN_STEPHENSI_FORM_UNSPECIFIED",
-    },
-    {
-        label: i18next.t("common.filters.vector_species_options.AN_STEPHENSI_NOT_FOUND"),
-        value: "AN_STEPHENSI_NOT_FOUND",
-    },
-];
+/** The label of a vector species: its xMART translation, else the app's, else the value itself. */
+export function getVectorSpeciesLabel(value: string): string {
+    return i18next.t([`VECTOR_SPECIES.${value}`, `common.filters.vector_species_options.${value}`], {
+        defaultValue: value,
+    });
+}
 
-export const VectorSpeciesKey: { [key: string]: string } = {
-    AN_STEPHENSI_TYPE_FORM: "An. stephensi type form",
-    AN_STEPHENSI_MYSORENSIS: "An. stephensi mysorensis",
-    AN_STEPHENSI_INTERMEDIATE_FORM: "An. stephensi intermediate form",
-    AN_STEPHENSI_FORM_UNSPECIFIED: "NR",
-    AN_STEPHENSI_NOT_FOUND: "An. stephensi (not found)",
-};
+export function getVectorSpeciesOptions(studies: ReadonlyArray<InvasiveStudy>): Option[] {
+    return getVectorSpecies(studies).map(value => ({ label: getVectorSpeciesLabel(value), value }));
+}
 
-const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, setVectorSpecies }) => {
+const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies, setVectorSpecies }) => {
     const { t } = useTranslation();
 
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
             placeholder={t("common.filters.select_vector_species_placeholder")}
-            options={suggestions()}
+            options={getVectorSpeciesOptions(invasiveStudies)}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}

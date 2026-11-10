@@ -855,11 +855,11 @@
             "select_vector_species": "Seleccionar especies vectoras",
             "select_vector_species_placeholder": "Especies vectoras: todas",
             "vector_species_options": {
-                "AN_STEPHENSI_TYPE_FORM": "An. stephensi forma tipo",
-                "AN_STEPHENSI_MYSORENSIS": "An. stephensi mysorensis",
-                "AN_STEPHENSI_INTERMEDIATE_FORM": "An. stephensi forma intermedia",
-                "AN_STEPHENSI_FORM_UNSPECIFIED": "An. stephensi forma no especificada",
-                "AN_STEPHENSI_NOT_FOUND": "An. stephensi (no encontrado)"
+                "An. stephensi type form": "An. stephensi forma tipo",
+                "An. stephensi mysorensis": "An. stephensi mysorensis",
+                "An. stephensi intermediate form": "An. stephensi forma intermedia",
+                "NR": "An. stephensi forma no especificada",
+                "An. stephensi (not found)": "An. stephensi (no encontrado)"
             },
             "plasmodium_species": "Especie de plasmodium",
             "select_plasmodium_species": "Seleccionar especie de plasmodium",

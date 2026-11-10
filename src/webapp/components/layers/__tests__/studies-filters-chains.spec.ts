@@ -57,7 +57,7 @@ const OTHER_ASSAY_TYPE = "otherAssayType";
 const SYNERGIST_STUDY = "synergist";
 const WITHOUT_YEAR = "withoutYear";
 const NOT_DOWNLOADABLE = "notDownloadable";
-const TYPE_FORM_KEY = "AN_STEPHENSI_TYPE_FORM";
+const TYPE_FORM = "An. stephensi type form";
 const BIOCHEMICAL_STUDY = "biochemical";
 const MONO_OXYGENASES_STUDY = "monoOxygenases";
 const KDR_STUDY = "kdr";
@@ -301,7 +301,7 @@ describe("studies-filters chains", () => {
         ];
 
         it("Vector occurrence filters by species, year range allowing no year, and region", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM_KEY] });
+            const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM] });
 
             expect(survivingInvasive(studies, filters)).toEqual([KEPT, WITHOUT_YEAR, NOT_DOWNLOADABLE]);
         });
@@ -473,7 +473,7 @@ describe("studies-filters chains", () => {
         ];
 
         it("Vector occurrence adds the download flag to the map chain", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM_KEY] });
+            const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM] });
 
             expect(survivingInvasive(studies, filters, DOWNLOAD)).toEqual([KEPT, WITHOUT_YEAR]);
         });

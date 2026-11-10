@@ -51,6 +51,7 @@ import {
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
 const TYPE_FORM_VALUE = "An. stephensi type form";
+const NOT_FOUND_VALUE = "An. stephensi (not found)";
 
 describe("studies-filters", () => {
     describe("filterByOnlyIncludeBioassaysWithMoreMosquitoes", () => {
@@ -278,28 +279,24 @@ describe("studies-filters", () => {
         describe("filterByVectorSpecies", () => {
             const typeForm = createInvasiveStudy({ VECTOR_SPECIES: TYPE_FORM_VALUE });
             const unspecified = createInvasiveStudy({ VECTOR_SPECIES: NOT_REPORTED });
-            const notFound = createInvasiveStudy({ VECTOR_SPECIES: "An. stephensi (not found)" });
+            const notFound = createInvasiveStudy({ VECTOR_SPECIES: NOT_FOUND_VALUE });
             const studies = [typeForm, unspecified, notFound];
 
             it("keeps every study when no species is selected", () => {
                 expect(studies.map(filterByVectorSpecies([]))).toEqual([true, true, true]);
             });
 
-            it("maps each selected key through VectorSpeciesKey before comparing", () => {
-                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_TYPE_FORM"]))).toEqual([true, false, false]);
-                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_NOT_FOUND"]))).toEqual([false, false, true]);
+            it("keeps only the studies of the selected species values", () => {
+                expect(studies.map(filterByVectorSpecies([TYPE_FORM_VALUE]))).toEqual([true, false, false]);
+                expect(studies.map(filterByVectorSpecies([NOT_FOUND_VALUE]))).toEqual([false, false, true]);
             });
 
-            it("matches the form unspecified key against the value NR", () => {
-                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_FORM_UNSPECIFIED"]))).toEqual([
-                    false,
-                    true,
-                    false,
-                ]);
+            it("matches NR like any other value", () => {
+                expect(studies.map(filterByVectorSpecies([NOT_REPORTED]))).toEqual([false, true, false]);
             });
 
-            it("does not match the raw value when it is selected instead of a key", () => {
-                expect(studies.map(filterByVectorSpecies([TYPE_FORM_VALUE]))).toEqual([false, false, false]);
+            it("does not match an old key, which the link turns into a value before it reaches the filter", () => {
+                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_TYPE_FORM"]))).toEqual([false, false, false]);
             });
         });
     });

@@ -36,6 +36,7 @@ import {
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "../store/actions/invasive-actions";
 import { PreventionMapType } from "../store/types";
 import ReduxQuerySync from "../store/query-middleware";
+import { toVectorSpeciesValues } from "../store/legacyUrlValues";
 import { useStore } from "react-redux";
 
 const MapContainer: React.FC = () => {
@@ -122,7 +123,8 @@ const MapContainer: React.FC = () => {
                 },
                 vectorSpecies: {
                     selector: (state: State) => state.invasive.filters.vectorSpecies,
-                    action: (value: string) => setInvasiveVectorSpecies(value ? value.split(",") : undefined),
+                    action: (value: string) =>
+                        setInvasiveVectorSpecies(value ? toVectorSpeciesValues(value.split(",")) : undefined),
                 },
                 surveyTypes: {
                     selector: (state: State) => state.diagnosis.filters.surveyTypes,
