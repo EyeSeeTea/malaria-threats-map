@@ -542,13 +542,17 @@ describe("createPreventionSelectionData", () => {
             it.each([
                 ["a number", "12.5", [12.5, "12.5%"]],
                 ["NA", NOT_AVAILABLE, [0, NA_LABEL]],
-                ["null as NaN (finding)", null, [NaN, NA_LABEL]],
+                // Pins today's behaviour, a possible bug pending a decision: an empty
+                // frequency gets the N/A label but a NaN value in the chart.
+                ["null as NaN", null, [NaN, NA_LABEL]],
                 ["NR", NOT_REPORTED, [0, NOT_REPORTED_LABEL]],
             ])("shows %s", (_case, frequency, expected) => {
                 expect(allelicsOf([mechanismStudy(STUDY, { MECHANISM_FREQUENCY: frequency })])).toEqual([expected]);
             });
 
-            it("shows only the first study of a year, the others of that year are left out (finding)", () => {
+            // Pins today's behaviour, a possible bug pending a decision: the allelic frequency chart
+            // shows one study per year and hides the others of that year.
+            it("shows only the first study of a year, the others of that year are left out", () => {
                 const studies = [
                     mechanismStudy("first", { MECHANISM_FREQUENCY: "10" }),
                     mechanismStudy("second", { MECHANISM_FREQUENCY: "90" }),

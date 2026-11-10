@@ -111,6 +111,8 @@ describe("createInvasiveSelectionData", () => {
     });
 
     describe("order of the studies", () => {
+        // Pins today's behaviour, pending a decision: the studies are ordered by status before year,
+        // which may or may not be the wanted order.
         it("puts the invasive status first and the year second, so an older invasive study comes before a recent native one", () => {
             const studies = [
                 invasiveStudy(NATIVE_2022, { YEAR_START: 2022, INVASIVE_STATUS: STATUS_NATIVE }),
@@ -151,7 +153,9 @@ describe("createInvasiveSelectionData", () => {
             ]);
         });
 
-        it("keeps NA and an empty text as they are, because it checks null with lodash, not the app's isNull (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: NA and empty texts are shown as
+        // they are, not as "not reported".
+        it("keeps NA and an empty text as they are, because it checks null with lodash, not the app's isNull", () => {
             expect(
                 [firstRow({ SAMPLING_METHOD: NOT_AVAILABLE }), firstRow({ SAMPLING_METHOD: "" })].map(
                     row => row.samplingMethod

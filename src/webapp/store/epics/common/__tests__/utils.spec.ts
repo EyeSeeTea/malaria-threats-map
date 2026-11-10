@@ -117,7 +117,9 @@ describe("side panel shared functions", () => {
             ]);
         });
 
-        it("gives no key to the 27th source, because the keys are the 26 letters (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a site with more than 26 sources
+        // shows the 27th without a letter.
+        it("gives no key to the 27th source, because the keys are the 26 letters", () => {
             const studies = Array.from({ length: 27 }, (_value, index) =>
                 citedStudy({ CITATION_LONG: `source ${index}` })
             );
@@ -160,7 +162,9 @@ describe("side panel shared functions", () => {
             expect(selectDataSourcesByStudies(dataSources, studies)).toEqual(["a", "d"]);
         });
 
-        it("gives two sources with the same URL the key of the first one (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: two sources with the same link and
+        // different texts both get listed, but every study with that link shows the first letter.
+        it("gives two sources with the same URL the key of the first one", () => {
             const sameUrlSources = [dataSource("a", CITATION_LONG, URL), dataSource("b", CITATION, URL)];
             const studies = [citedStudy({ CITATION_URL: URL, CITATION_LONG: CITATION })];
 
@@ -190,7 +194,9 @@ describe("side panel shared functions", () => {
             expect(createCurations(dataSources, studies)).toEqual([{ text: INSTITUTE_CURATION, dataSources: [] }]);
         });
 
-        it("drops the curation when the institute curation is NA, even if the curation has a value (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a curation is hidden when its
+        // institute curation is NA.
+        it("drops the curation when the institute curation is NA, even if the curation has a value", () => {
             const studies = [citedStudy({ INSTITUTE_CURATION: NOT_AVAILABLE, CURATION: CURATION })];
 
             expect(createCurations(dataSources, studies)).toEqual([]);
