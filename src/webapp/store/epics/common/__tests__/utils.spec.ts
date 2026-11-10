@@ -1,5 +1,5 @@
 import { createPreventionStudy } from "../../../../../domain/entities/__fixtures__/studyFixtures";
-import { NOT_AVAILABLE } from "../../../../../domain/entities/__fixtures__/studyValues";
+import { NOT_AVAILABLE, NOT_REPORTED } from "../../../../../domain/entities/__fixtures__/studyValues";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { setFiltersAction, setMaxMinYearsAction } from "../../../actions/base-actions";
 import createRootReducer from "../../../reducers";
@@ -66,7 +66,7 @@ describe("side panel shared functions", () => {
             });
 
             it("treats NR like an empty value", () => {
-                const studies = [citedStudy({ CITATION_URL: URL, CITATION_LONG: "NR", CITATION: CITATION })];
+                const studies = [citedStudy({ CITATION_URL: URL, CITATION_LONG: NOT_REPORTED, CITATION: CITATION })];
 
                 expect(createCitationDataSources(PREVENTION, studies)).toEqual([dataSource("a", CITATION, URL)]);
             });
