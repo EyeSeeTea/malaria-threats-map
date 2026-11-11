@@ -117,8 +117,8 @@ describe("side panel shared functions", () => {
             ]);
         });
 
-        // Pins today's behaviour, a possible bug pending a decision: a site with more than 26 sources
-        // shows the 27th without a letter.
+        // A site with more than 26 sources shows the 27th without a letter. Kept as it is: today a site
+        // has at most 16 sources.
         it("gives no key to the 27th source, because the keys are the 26 letters", () => {
             const studies = Array.from({ length: 27 }, (_value, index) =>
                 citedStudy({ CITATION_LONG: `source ${index}` })
@@ -194,8 +194,8 @@ describe("side panel shared functions", () => {
             expect(createCurations(dataSources, studies)).toEqual([{ text: INSTITUTE_CURATION, dataSources: [] }]);
         });
 
-        // Pins today's behaviour, a possible bug pending a decision: a curation is hidden when its
-        // institute curation is NA.
+        // A curation is hidden when its institute curation is NA. Kept as it is: that field is never NA
+        // today.
         it("drops the curation when the institute curation is NA, even if the curation has a value", () => {
             const studies = [citedStudy({ INSTITUTE_CURATION: NOT_AVAILABLE, CURATION: CURATION })];
 
