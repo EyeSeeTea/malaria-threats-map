@@ -9,6 +9,8 @@ import i18next from "i18next";
 import { Option } from "../BasicSelect";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
 import { getVectorSpecies } from "../../../domain/entities/VectorSpecies";
+import { Source } from "../../store/actions/base-actions";
+import { legacyVectorSpecies } from "../../store/vectorSpeciesUrlValues";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
@@ -21,7 +23,8 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = { from: Source };
+type Props = DispatchProps & StateProps & OwnProps;
 
 /** The label of a vector species: its xMART translation, else the app's, else the value itself. */
 export function getVectorSpeciesLabel(value: string): string {
@@ -30,18 +33,21 @@ export function getVectorSpeciesLabel(value: string): string {
     });
 }
 
-export function getVectorSpeciesOptions(studies: ReadonlyArray<InvasiveStudy>): Option[] {
-    return getVectorSpecies(studies).map(value => ({ label: getVectorSpeciesLabel(value), value }));
+/** The map offers the species of the data; Data Download, out of scope, keeps the 5 it offered before. */
+export function getVectorSpeciesOptions(studies: ReadonlyArray<InvasiveStudy>, from: Source): Option[] {
+    const values = from === "map" ? getVectorSpecies(studies) : legacyVectorSpecies;
+
+    return values.map(value => ({ label: getVectorSpeciesLabel(value), value }));
 }
 
-const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies, setVectorSpecies }) => {
+const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies, setVectorSpecies, from }) => {
     const { t } = useTranslation();
 
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
             placeholder={t("common.filters.select_vector_species_placeholder")}
-            options={getVectorSpeciesOptions(invasiveStudies)}
+            options={getVectorSpeciesOptions(invasiveStudies, from)}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}

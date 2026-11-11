@@ -7,6 +7,9 @@ const legacyVectorSpeciesValues: ReadonlyMap<string, string> = new Map([
     ["AN_STEPHENSI_NOT_FOUND", "An. stephensi (not found)"],
 ]);
 
+/** The 5 species the filter offered before they came from the data. Data Download still offers them. */
+export const legacyVectorSpecies: ReadonlyArray<string> = Array.from(legacyVectorSpeciesValues.values());
+
 /** Turns the old species keys of a link into data values, and leaves any other value as it is. */
 export function toVectorSpeciesValues(values: ReadonlyArray<string>): string[] {
     return values.map(value => legacyVectorSpeciesValues.get(value) ?? value);

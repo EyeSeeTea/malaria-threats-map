@@ -5,6 +5,8 @@ import {
     NOT_REPORTED,
     STEPHENSI,
     STEPHENSI_TYPE_FORM,
+    STEPHENSI_INTERMEDIATE_FORM,
+    STEPHENSI_NOT_FOUND,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 import { getVectorSpeciesLabel, getVectorSpeciesOptions } from "../VectorSpeciesFilter";
 
@@ -52,20 +54,44 @@ describe("VectorSpeciesFilter", () => {
     });
 
     describe("getVectorSpeciesOptions", () => {
-        it("offers each species of the studies once, with its label", () => {
-            const studies = [STEPHENSI_MYSORENSIS, STEPHENSI, NOT_REPORTED, STEPHENSI_MYSORENSIS].map(VECTOR_SPECIES =>
-                createInvasiveStudy({ VECTOR_SPECIES })
-            );
+        const studiesOf = (species: ReadonlyArray<string>) =>
+            species.map(VECTOR_SPECIES => createInvasiveStudy({ VECTOR_SPECIES }));
 
-            expect(getVectorSpeciesOptions(studies)).toEqual([
-                { label: APP_MYSORENSIS_LABEL, value: STEPHENSI_MYSORENSIS },
-                { label: STEPHENSI, value: STEPHENSI },
-                { label: APP_NOT_REPORTED_LABEL, value: NOT_REPORTED },
-            ]);
+        describe("on the map", () => {
+            it("offers each species of the studies once, with its label", () => {
+                const studies = studiesOf([STEPHENSI_MYSORENSIS, STEPHENSI, NOT_REPORTED, STEPHENSI_MYSORENSIS]);
+
+                expect(getVectorSpeciesOptions(studies, "map")).toEqual([
+                    { label: APP_MYSORENSIS_LABEL, value: STEPHENSI_MYSORENSIS },
+                    { label: STEPHENSI, value: STEPHENSI },
+                    { label: APP_NOT_REPORTED_LABEL, value: NOT_REPORTED },
+                ]);
+            });
+
+            it("offers nothing without studies", () => {
+                expect(getVectorSpeciesOptions([], "map")).toEqual([]);
+            });
         });
 
-        it("offers nothing without studies", () => {
-            expect(getVectorSpeciesOptions([])).toEqual([]);
+        // Data Download is out of scope: it keeps the 5 species it offered before they came from the data.
+        describe("on Data Download", () => {
+            const todaysOptions = [
+                { label: XMART_TYPE_FORM_LABEL, value: STEPHENSI_TYPE_FORM },
+                { label: APP_MYSORENSIS_LABEL, value: STEPHENSI_MYSORENSIS },
+                { label: STEPHENSI_INTERMEDIATE_FORM, value: STEPHENSI_INTERMEDIATE_FORM },
+                { label: APP_NOT_REPORTED_LABEL, value: NOT_REPORTED },
+                { label: STEPHENSI_NOT_FOUND, value: STEPHENSI_NOT_FOUND },
+            ];
+
+            it("offers today's 5 species, not An. stephensi from the studies", () => {
+                expect(getVectorSpeciesOptions(studiesOf([STEPHENSI, STEPHENSI_MYSORENSIS]), "download")).toEqual(
+                    todaysOptions
+                );
+            });
+
+            it("offers today's 5 species without studies", () => {
+                expect(getVectorSpeciesOptions([], "download")).toEqual(todaysOptions);
+            });
         });
     });
 });
