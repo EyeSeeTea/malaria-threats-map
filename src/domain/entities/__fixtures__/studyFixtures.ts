@@ -4,16 +4,18 @@ import { Study } from "../Study";
 import {
     DELTAMETHRIN,
     DISCRIMINATING,
+    DJIBOUTI,
     GAMBIAE,
+    INVASIVE_STATUS_INVASIVE,
     NOT_AVAILABLE,
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
+    STEPHENSI,
+    STEPHENSI_TYPE_FORM,
     WHO_TEST_KIT,
 } from "./studyValues";
 
-const DJIBOUTI = "Djibouti";
 const BOBO_DIOULASSO = "Bobo-Dioulasso";
-const STEPHENSI = "An. stephensi";
 
 const defaultStudy: Readonly<Study> = {
     OBJECTID: 1,
@@ -96,12 +98,12 @@ const defaultInvasiveStudy: Readonly<InvasiveStudy> = {
     SAMPLING_METHOD: "LARVAL_SAMPLING",
     TOT_STUDIES: 1,
     ID_METHOD: "MORPHOLOGY",
-    VECTOR_SPECIES: "An. stephensi type form",
+    VECTOR_SPECIES: STEPHENSI_TYPE_FORM,
     VECTOR_SPECIES_COMPLEX: STEPHENSI,
     Code: "INV_001",
     STAGE: "LARVAE",
     BREEDING_HABITAT: "WATER_TANK",
-    INVASIVE_STATUS: "Invasive",
+    INVASIVE_STATUS: INVASIVE_STATUS_INVASIVE,
     MTM_DOWNLOAD: 1,
     VILLAGE_ORIG: DJIBOUTI,
     VILLAGE_FLAG: 0,

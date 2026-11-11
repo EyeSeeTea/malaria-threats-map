@@ -1,4 +1,3 @@
-import { VectorSpeciesKey } from "../filters/VectorSpeciesFilter";
 import {
     DiagnosisFilters,
     DiagnosisMapType,
@@ -261,7 +260,7 @@ export const filterByDrugs = (drugs: string[]) => (study: any) => {
 };
 
 export const filterByVectorSpecies = (species: string[]) => (study: any) => {
-    return !species.length || species.map(specie => VectorSpeciesKey[specie]).includes(study.VECTOR_SPECIES);
+    return !species.length || species.includes(study.VECTOR_SPECIES);
 };
 
 export const filterByMolecularMarkerStudy = () => (study: any) => {
