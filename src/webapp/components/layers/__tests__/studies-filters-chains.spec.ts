@@ -35,6 +35,7 @@ import {
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
     SYNERGIST,
+    TYPE_FORM,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
@@ -57,7 +58,6 @@ const OTHER_ASSAY_TYPE = "otherAssayType";
 const SYNERGIST_STUDY = "synergist";
 const WITHOUT_YEAR = "withoutYear";
 const NOT_DOWNLOADABLE = "notDownloadable";
-const TYPE_FORM = "An. stephensi type form";
 const BIOCHEMICAL_STUDY = "biochemical";
 const MONO_OXYGENASES_STUDY = "monoOxygenases";
 const KDR_STUDY = "kdr";

@@ -24,9 +24,12 @@ import {
     GAMBIAE,
     MOLECULAR,
     MONO_OXYGENASES,
+    MYSORENSIS,
     PERMETHRIN,
     PYRETHROIDS,
+    STEPHENSI,
     SYNERGIST,
+    TYPE_FORM,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
@@ -42,7 +45,6 @@ const SEPARATOR = " | ";
 const MAP = "map";
 const DOWNLOAD = "download";
 const SOME_KEY = "some.key";
-const UNTRANSLATED_SPECIES = "An. stephensi";
 
 // i18next runs without resources in the tests (src/setupTests.ts), so every label is its key,
 // except the two species labels added below.
@@ -54,8 +56,6 @@ const NARROWED_YEARS = [2015, 2020];
 const FULL_RANGE = "2010-2024";
 const NARROWED_RANGE = "2015-2020";
 
-const TYPE_FORM = "An. stephensi type form";
-const MYSORENSIS = "An. stephensi mysorensis";
 const TYPE_FORM_LABEL = "Type form label";
 const MYSORENSIS_LABEL = "Mysorensis label";
 
@@ -197,11 +197,11 @@ describe("map-actions utils", () => {
         });
 
         it("shows the value of a species without a translation", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [UNTRANSLATED_SPECIES] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI] });
 
             expect(invasiveValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toEqual({
                 years: FULL_RANGE,
-                vectorSpecies: UNTRANSLATED_SPECIES,
+                vectorSpecies: STEPHENSI,
             });
         });
     });
@@ -340,10 +340,10 @@ describe("map-actions utils", () => {
         });
 
         it("shows the value of a species without a translation", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [UNTRANSLATED_SPECIES] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI] });
 
             expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
-                [entry(VECTOR_SPECIES_FILTER, UNTRANSLATED_SPECIES), entry(YEARS_FILTER, FULL_RANGE)].join(SEPARATOR)
+                [entry(VECTOR_SPECIES_FILTER, STEPHENSI), entry(YEARS_FILTER, FULL_RANGE)].join(SEPARATOR)
             );
         });
     });

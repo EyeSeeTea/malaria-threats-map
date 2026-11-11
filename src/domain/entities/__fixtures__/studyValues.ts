@@ -18,6 +18,12 @@ export const GAMBIAE = "An. gambiae s.l.";
 export const FUNESTUS = "An. funestus s.l.";
 export const ARABIENSIS = "An. arabiensis";
 
+export const STEPHENSI = "An. stephensi";
+export const TYPE_FORM = "An. stephensi type form";
+export const MYSORENSIS = "An. stephensi mysorensis";
+export const INTERMEDIATE_FORM = "An. stephensi intermediate form";
+export const NOT_FOUND = "An. stephensi (not found)";
+
 export const MONO_OXYGENASES = "MONO_OXYGENASES";
 export const ESTERASES = "ESTERASES";
 export const GSTS = "GSTS";

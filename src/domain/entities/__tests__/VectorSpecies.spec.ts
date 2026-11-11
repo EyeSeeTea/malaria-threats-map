@@ -1,9 +1,6 @@
 import { createInvasiveStudy } from "../__fixtures__/studyFixtures";
-import { NOT_REPORTED } from "../__fixtures__/studyValues";
+import { MYSORENSIS, NOT_REPORTED, TYPE_FORM } from "../__fixtures__/studyValues";
 import { getVectorSpecies } from "../VectorSpecies";
-
-const TYPE_FORM = "An. stephensi type form";
-const MYSORENSIS = "An. stephensi mysorensis";
 
 const studiesOf = (species: ReadonlyArray<string | null | undefined>) =>
     species.map(VECTOR_SPECIES => createInvasiveStudy({ VECTOR_SPECIES }));

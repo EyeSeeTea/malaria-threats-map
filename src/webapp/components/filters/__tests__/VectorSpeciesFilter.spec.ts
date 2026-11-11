@@ -1,11 +1,7 @@
 import i18next from "i18next";
 import { createInvasiveStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
-import { NOT_REPORTED } from "../../../../domain/entities/__fixtures__/studyValues";
+import { MYSORENSIS, NOT_REPORTED, STEPHENSI, TYPE_FORM } from "../../../../domain/entities/__fixtures__/studyValues";
 import { getVectorSpeciesLabel, getVectorSpeciesOptions } from "../VectorSpeciesFilter";
-
-const TYPE_FORM = "An. stephensi type form";
-const MYSORENSIS = "An. stephensi mysorensis";
-const STEPHENSI = "An. stephensi";
 
 const XMART_TYPE_FORM_LABEL = "Type form (xMART)";
 const APP_TYPE_FORM_LABEL = "Type form (app)";

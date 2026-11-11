@@ -36,7 +36,7 @@ import {
 import { setInvasiveMapType, setInvasiveVectorSpecies } from "../store/actions/invasive-actions";
 import { PreventionMapType } from "../store/types";
 import ReduxQuerySync from "../store/query-middleware";
-import { toVectorSpeciesValues } from "../store/legacyUrlValues";
+import { toVectorSpeciesValues } from "../store/vectorSpeciesUrlValues";
 import { useStore } from "react-redux";
 
 const MapContainer: React.FC = () => {

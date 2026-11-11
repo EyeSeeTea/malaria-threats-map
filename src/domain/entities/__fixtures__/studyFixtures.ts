@@ -8,12 +8,13 @@ import {
     NOT_AVAILABLE,
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
+    STEPHENSI,
+    TYPE_FORM,
     WHO_TEST_KIT,
 } from "./studyValues";
 
 const DJIBOUTI = "Djibouti";
 const BOBO_DIOULASSO = "Bobo-Dioulasso";
-const STEPHENSI = "An. stephensi";
 
 const defaultStudy: Readonly<Study> = {
     OBJECTID: 1,
@@ -96,7 +97,7 @@ const defaultInvasiveStudy: Readonly<InvasiveStudy> = {
     SAMPLING_METHOD: "LARVAL_SAMPLING",
     TOT_STUDIES: 1,
     ID_METHOD: "MORPHOLOGY",
-    VECTOR_SPECIES: "An. stephensi type form",
+    VECTOR_SPECIES: TYPE_FORM,
     VECTOR_SPECIES_COMPLEX: STEPHENSI,
     Code: "INV_001",
     STAGE: "LARVAE",

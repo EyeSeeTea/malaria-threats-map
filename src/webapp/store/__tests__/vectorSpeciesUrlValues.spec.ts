@@ -1,10 +1,14 @@
-import { NOT_REPORTED } from "../../../domain/entities/__fixtures__/studyValues";
-import { toVectorSpeciesValues } from "../legacyUrlValues";
+import {
+    INTERMEDIATE_FORM,
+    MYSORENSIS,
+    NOT_FOUND,
+    NOT_REPORTED,
+    TYPE_FORM,
+} from "../../../domain/entities/__fixtures__/studyValues";
+import { TYPE_FORM_KEY } from "../__fixtures__/vectorSpeciesUrlKeys";
+import { toVectorSpeciesValues } from "../vectorSpeciesUrlValues";
 
-const TYPE_FORM = "An. stephensi type form";
-const TYPE_FORM_KEY = "AN_STEPHENSI_TYPE_FORM";
-
-describe("legacyUrlValues", () => {
+describe("vectorSpeciesUrlValues", () => {
     describe("toVectorSpeciesValues", () => {
         it("turns each old key into its data value", () => {
             const oldKeys = [
@@ -17,10 +21,10 @@ describe("legacyUrlValues", () => {
 
             expect(toVectorSpeciesValues(oldKeys)).toEqual([
                 TYPE_FORM,
-                "An. stephensi mysorensis",
-                "An. stephensi intermediate form",
+                MYSORENSIS,
+                INTERMEDIATE_FORM,
                 NOT_REPORTED,
-                "An. stephensi (not found)",
+                NOT_FOUND,
             ]);
         });
 

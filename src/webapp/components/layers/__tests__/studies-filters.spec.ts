@@ -40,6 +40,7 @@ import {
     MOLECULAR,
     MONO_OXYGENASES,
     NOT_AVAILABLE,
+    NOT_FOUND,
     NOT_REPORTED,
     ORGANOPHOSPHATES,
     OTHER_COUNTRY,
@@ -47,11 +48,10 @@ import {
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
     SYNERGIST,
+    TYPE_FORM,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
-
-const TYPE_FORM_VALUE = "An. stephensi type form";
-const NOT_FOUND_VALUE = "An. stephensi (not found)";
+import { TYPE_FORM_KEY } from "../../../store/__fixtures__/vectorSpeciesUrlKeys";
 
 describe("studies-filters", () => {
     describe("filterByOnlyIncludeBioassaysWithMoreMosquitoes", () => {
@@ -277,9 +277,9 @@ describe("studies-filters", () => {
         });
 
         describe("filterByVectorSpecies", () => {
-            const typeForm = createInvasiveStudy({ VECTOR_SPECIES: TYPE_FORM_VALUE });
+            const typeForm = createInvasiveStudy({ VECTOR_SPECIES: TYPE_FORM });
             const unspecified = createInvasiveStudy({ VECTOR_SPECIES: NOT_REPORTED });
-            const notFound = createInvasiveStudy({ VECTOR_SPECIES: NOT_FOUND_VALUE });
+            const notFound = createInvasiveStudy({ VECTOR_SPECIES: NOT_FOUND });
             const studies = [typeForm, unspecified, notFound];
 
             it("keeps every study when no species is selected", () => {
@@ -287,8 +287,8 @@ describe("studies-filters", () => {
             });
 
             it("keeps only the studies of the selected species values", () => {
-                expect(studies.map(filterByVectorSpecies([TYPE_FORM_VALUE]))).toEqual([true, false, false]);
-                expect(studies.map(filterByVectorSpecies([NOT_FOUND_VALUE]))).toEqual([false, false, true]);
+                expect(studies.map(filterByVectorSpecies([TYPE_FORM]))).toEqual([true, false, false]);
+                expect(studies.map(filterByVectorSpecies([NOT_FOUND]))).toEqual([false, false, true]);
             });
 
             it("matches NR like any other value", () => {
@@ -296,7 +296,7 @@ describe("studies-filters", () => {
             });
 
             it("does not match an old key, which the link turns into a value before it reaches the filter", () => {
-                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_TYPE_FORM"]))).toEqual([false, false, false]);
+                expect(studies.map(filterByVectorSpecies([TYPE_FORM_KEY]))).toEqual([false, false, false]);
             });
         });
     });
