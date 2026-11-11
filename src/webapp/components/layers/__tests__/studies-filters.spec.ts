@@ -1,5 +1,56 @@
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { filterByOnlyIncludeBioassaysWithMoreMosquitoes } from "../studies-filters";
+import { ResistanceIntensity } from "../../../../domain/entities/Study";
+import { createInvasiveStudy, createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
+import {
+    filterByAssayTypes,
+    filterByDownload,
+    filterByInsecticideClass,
+    filterByInsecticideResistanceStatusOptions,
+    filterByInsecticideTypes,
+    filterByIntensityStatus,
+    filterByLevelOfInvolvement,
+    filterByOnlyDataByHealthMinistries,
+    filterByOnlyIncludeBioassaysWithMoreMosquitoes,
+    filterByProxyType,
+    filterByRegion,
+    filterByResistanceMechanism,
+    filterByResistanceStatus,
+    filterBySpecies,
+    filterByStudiesWithInsecticideClass,
+    filterByType,
+    filterByTypes,
+    filterByTypeSynergist,
+    filterByVectorSpecies,
+    filterByYearRange,
+    filterInvasiveByDownload,
+    filterValidMortalityAdjustedValue,
+    filterValidResistanceIntensityValue,
+} from "../studies-filters";
+import {
+    ARABIENSIS,
+    BIOCHEMICAL,
+    CDC_BOTTLE,
+    DELTAMETHRIN,
+    DISCRIMINATING,
+    ESTERASES,
+    FUNESTUS,
+    GAMBIAE,
+    INTENSITY,
+    MINISTRY_OF_HEALTH,
+    MOLECULAR,
+    MONO_OXYGENASES,
+    NOT_AVAILABLE,
+    NOT_REPORTED,
+    ORGANOPHOSPHATES,
+    OTHER_COUNTRY,
+    PERMETHRIN,
+    PYRETHROIDS,
+    RESEARCH_INSTITUTION,
+    SYNERGIST,
+    WHO_TEST_KIT,
+} from "../../../../domain/entities/__fixtures__/studyValues";
+
+const TYPE_FORM_VALUE = "An. stephensi type form";
 
 describe("studies-filters", () => {
     describe("filterByOnlyIncludeBioassaysWithMoreMosquitoes", () => {
@@ -124,6 +175,393 @@ describe("studies-filters", () => {
                 [2, "1+"],
             ];
             runTestCases(cases, true);
+        });
+    });
+
+    describe("selection predicates", () => {
+        describe("filterBySpecies", () => {
+            const studies = [createPreventionStudy({ SPECIES: GAMBIAE }), createPreventionStudy({ SPECIES: FUNESTUS })];
+
+            it("keeps every study when no species is selected", () => {
+                expect(studies.map(filterBySpecies([]))).toEqual([true, true]);
+            });
+
+            it("keeps only the studies of the selected species", () => {
+                expect(studies.map(filterBySpecies([FUNESTUS]))).toEqual([false, true]);
+            });
+
+            it("removes every study when no study has the selected species", () => {
+                expect(studies.map(filterBySpecies([ARABIENSIS]))).toEqual([false, false]);
+            });
+        });
+
+        describe("filterByTypes", () => {
+            const studies = [
+                createPreventionStudy({ TYPE: WHO_TEST_KIT }),
+                createPreventionStudy({ TYPE: CDC_BOTTLE }),
+            ];
+
+            it("keeps every study when the types are null or empty", () => {
+                expect(studies.map(filterByTypes(null))).toEqual([true, true]);
+                expect(studies.map(filterByTypes([]))).toEqual([true, true]);
+            });
+
+            it("keeps only the studies of the selected types", () => {
+                expect(studies.map(filterByTypes([CDC_BOTTLE]))).toEqual([false, true]);
+            });
+
+            it("removes every study when no study has a selected type", () => {
+                expect(studies.map(filterByTypes([MONO_OXYGENASES]))).toEqual([false, false]);
+            });
+        });
+
+        describe("filterByAssayTypes", () => {
+            const studies = [
+                createPreventionStudy({ ASSAY_TYPE: MOLECULAR }),
+                createPreventionStudy({ ASSAY_TYPE: BIOCHEMICAL }),
+            ];
+
+            it("keeps every study when no assay type is selected", () => {
+                expect(studies.map(filterByAssayTypes([]))).toEqual([true, true]);
+            });
+
+            it("keeps only the studies of the selected assay types", () => {
+                expect(studies.map(filterByAssayTypes([BIOCHEMICAL]))).toEqual([false, true]);
+            });
+
+            it("removes every study when no study has a selected assay type", () => {
+                expect(studies.map(filterByAssayTypes([SYNERGIST]))).toEqual([false, false]);
+            });
+        });
+
+        describe("filterByTypeSynergist", () => {
+            const studies = [
+                createPreventionStudy({ TYPE: WHO_TEST_KIT }),
+                createPreventionStudy({ TYPE: CDC_BOTTLE }),
+            ];
+
+            it("keeps every study when no synergist type is selected", () => {
+                expect(studies.map(filterByTypeSynergist([]))).toEqual([true, true]);
+            });
+
+            it("matches the synergist types against TYPE, not TYPE_SYNERGIST", () => {
+                const study = createPreventionStudy({ TYPE: WHO_TEST_KIT, TYPE_SYNERGIST: CDC_BOTTLE });
+
+                expect(filterByTypeSynergist([WHO_TEST_KIT])(study)).toBe(true);
+                expect(filterByTypeSynergist([CDC_BOTTLE])(study)).toBe(false);
+            });
+
+            it("keeps only the studies of the selected synergist types", () => {
+                expect(studies.map(filterByTypeSynergist([WHO_TEST_KIT]))).toEqual([true, false]);
+            });
+        });
+
+        describe("filterByInsecticideTypes", () => {
+            const studies = [
+                createPreventionStudy({ INSECTICIDE_TYPE: DELTAMETHRIN }),
+                createPreventionStudy({ INSECTICIDE_TYPE: PERMETHRIN }),
+            ];
+
+            it("keeps every study when no insecticide type is selected", () => {
+                expect(studies.map(filterByInsecticideTypes([]))).toEqual([true, true]);
+            });
+
+            it("keeps only the studies of the selected insecticide types", () => {
+                expect(studies.map(filterByInsecticideTypes([PERMETHRIN]))).toEqual([false, true]);
+            });
+
+            it("removes every study when no study has a selected insecticide type", () => {
+                expect(studies.map(filterByInsecticideTypes(["MALATHION"]))).toEqual([false, false]);
+            });
+        });
+
+        describe("filterByVectorSpecies", () => {
+            const typeForm = createInvasiveStudy({ VECTOR_SPECIES: TYPE_FORM_VALUE });
+            const unspecified = createInvasiveStudy({ VECTOR_SPECIES: NOT_REPORTED });
+            const notFound = createInvasiveStudy({ VECTOR_SPECIES: "An. stephensi (not found)" });
+            const studies = [typeForm, unspecified, notFound];
+
+            it("keeps every study when no species is selected", () => {
+                expect(studies.map(filterByVectorSpecies([]))).toEqual([true, true, true]);
+            });
+
+            it("maps each selected key through VectorSpeciesKey before comparing", () => {
+                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_TYPE_FORM"]))).toEqual([true, false, false]);
+                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_NOT_FOUND"]))).toEqual([false, false, true]);
+            });
+
+            it("matches the form unspecified key against the value NR", () => {
+                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_FORM_UNSPECIFIED"]))).toEqual([
+                    false,
+                    true,
+                    false,
+                ]);
+            });
+
+            it("does not match the raw value when it is selected instead of a key", () => {
+                expect(studies.map(filterByVectorSpecies([TYPE_FORM_VALUE]))).toEqual([false, false, false]);
+            });
+        });
+    });
+
+    describe("single-value predicates", () => {
+        describe("filterByInsecticideClass", () => {
+            const studies = [
+                createPreventionStudy({ INSECTICIDE_CLASS: PYRETHROIDS }),
+                createPreventionStudy({ INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
+            ];
+
+            it("keeps only the studies of the class", () => {
+                expect(studies.map(filterByInsecticideClass(PYRETHROIDS))).toEqual([true, false]);
+            });
+
+            it("keeps every study when the class is empty or null", () => {
+                expect(studies.map(filterByInsecticideClass(""))).toEqual([true, true]);
+                expect(studies.map(filterByInsecticideClass(null))).toEqual([true, true]);
+            });
+        });
+
+        describe("filterByType", () => {
+            const studies = [
+                createPreventionStudy({ TYPE: MONO_OXYGENASES }),
+                createPreventionStudy({ TYPE: ESTERASES }),
+            ];
+
+            it("keeps only the studies of the type", () => {
+                expect(studies.map(filterByType(ESTERASES))).toEqual([false, true]);
+            });
+
+            it("keeps every study when the type is empty or null", () => {
+                expect(studies.map(filterByType(""))).toEqual([true, true]);
+                expect(studies.map(filterByType(null))).toEqual([true, true]);
+            });
+        });
+
+        describe("filterByProxyType", () => {
+            const studies = [
+                createPreventionStudy({ PROXY_TYPE: MONO_OXYGENASES }),
+                createPreventionStudy({ PROXY_TYPE: ESTERASES }),
+            ];
+
+            it("keeps only the studies of the proxy type", () => {
+                expect(studies.map(filterByProxyType(MONO_OXYGENASES))).toEqual([true, false]);
+            });
+
+            it("keeps every study when the proxy type is empty or null", () => {
+                expect(studies.map(filterByProxyType(""))).toEqual([true, true]);
+                expect(studies.map(filterByProxyType(null))).toEqual([true, true]);
+            });
+        });
+    });
+
+    describe("filterByYearRange", () => {
+        const range = [2018, 2020];
+        const studies = [2017, 2018, 2019, 2020, 2021].map(year => createPreventionStudy({ YEAR_START: year }));
+        const withoutYear = createPreventionStudy({ YEAR_START: undefined });
+
+        it("keeps the years inside the range, both limits included", () => {
+            expect(studies.map(filterByYearRange(range))).toEqual([false, true, true, true, false]);
+        });
+
+        it("removes a study without YEAR_START by default", () => {
+            expect(filterByYearRange(range)(withoutYear)).toBe(false);
+        });
+
+        it("keeps a study without YEAR_START when allowEmpty is true", () => {
+            expect(filterByYearRange(range, true)(withoutYear)).toBe(true);
+        });
+
+        it("still removes a study outside the range when allowEmpty is true", () => {
+            expect(studies.map(filterByYearRange(range, true))).toEqual([false, true, true, true, false]);
+        });
+    });
+
+    describe("filterByRegion", () => {
+        const BURKINA_FASO_ISO2 = "BF";
+        const AFRICA = "AFRICA";
+        const SOUTH_ASIA = "SOUTH_ASIA";
+
+        const burkinaFaso = createPreventionStudy({
+            ISO2: BURKINA_FASO_ISO2,
+            COUNTRY_NAME: "Burkina Faso",
+            REGION_FULL: AFRICA,
+            SUBREGION: "WEST_AFRICA",
+        });
+        const india = createPreventionStudy({
+            ...OTHER_COUNTRY,
+            REGION_FULL: "SOUTH-EAST_ASIA",
+            SUBREGION: SOUTH_ASIA,
+        });
+        const studies = [burkinaFaso, india];
+
+        it("keeps every study when no region is set", () => {
+            expect(studies.map(filterByRegion({}))).toEqual([true, true]);
+        });
+
+        it("matches a country by ISO2 or by country name", () => {
+            expect(studies.map(filterByRegion({ country: BURKINA_FASO_ISO2 }))).toEqual([true, false]);
+            expect(studies.map(filterByRegion({ country: OTHER_COUNTRY.COUNTRY_NAME }))).toEqual([false, true]);
+        });
+
+        it("matches a region against REGION_FULL", () => {
+            expect(studies.map(filterByRegion({ region: AFRICA }))).toEqual([true, false]);
+        });
+
+        it("matches a subregion against SUBREGION", () => {
+            expect(studies.map(filterByRegion({ subRegion: SOUTH_ASIA }))).toEqual([false, true]);
+        });
+
+        it("uses only the country when country and region are both set", () => {
+            expect(studies.map(filterByRegion({ country: OTHER_COUNTRY.ISO2, region: AFRICA }))).toEqual([false, true]);
+        });
+
+        it("uses only the region when region and subregion are both set", () => {
+            expect(studies.map(filterByRegion({ region: AFRICA, subRegion: SOUTH_ASIA }))).toEqual([true, false]);
+        });
+
+        it("ignores a site, which is not a region kind it handles", () => {
+            expect(studies.map(filterByRegion({ site: "SITE_IN_001" }))).toEqual([true, true]);
+        });
+    });
+
+    describe("filterByOnlyDataByHealthMinistries", () => {
+        const studies = [
+            createPreventionStudy({ INSTITUTION_TYPE: MINISTRY_OF_HEALTH }),
+            createPreventionStudy({ INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
+        ];
+
+        it("keeps only Ministry of Health studies when true", () => {
+            expect(studies.map(filterByOnlyDataByHealthMinistries(true))).toEqual([true, false]);
+        });
+
+        it("keeps every study when false", () => {
+            expect(studies.map(filterByOnlyDataByHealthMinistries(false))).toEqual([true, true]);
+        });
+    });
+
+    describe("assay discriminators", () => {
+        const assayTypes = [DISCRIMINATING, INTENSITY, SYNERGIST, MOLECULAR, BIOCHEMICAL];
+        const studies = assayTypes.map(assayType => createPreventionStudy({ ASSAY_TYPE: assayType }));
+
+        it("filterByResistanceStatus keeps only the discriminating concentration bioassay", () => {
+            expect(studies.map(filterByResistanceStatus)).toEqual([true, false, false, false, false]);
+        });
+
+        it("filterByIntensityStatus keeps only the intensity concentration bioassay", () => {
+            expect(studies.map(filterByIntensityStatus)).toEqual([false, true, false, false, false]);
+        });
+
+        it("filterByResistanceMechanism keeps the synergist, molecular and biochemical assays", () => {
+            expect(studies.map(filterByResistanceMechanism)).toEqual([false, false, true, true, true]);
+        });
+
+        it("filterByLevelOfInvolvement keeps only the synergist-insecticide bioassay", () => {
+            expect(studies.map(filterByLevelOfInvolvement)).toEqual([false, false, true, false, false]);
+        });
+    });
+
+    describe("validity checks", () => {
+        describe("filterValidResistanceIntensityValue", () => {
+            it("keeps the four intensity levels and removes the rest", () => {
+                const intensities: ResistanceIntensity[] = [
+                    "LOW_INTENSITY",
+                    "MODERATE_INTENSITY",
+                    "MODERATE_TO_HIGH_INTENSITY",
+                    "HIGH_INTENSITY",
+                    NOT_AVAILABLE,
+                    "COULD_NOT_BE_RELIABLY_ASSESSED",
+                ];
+                const studies = intensities.map(intensity =>
+                    createPreventionStudy({ RESISTANCE_INTENSITY: intensity })
+                );
+
+                expect(studies.map(filterValidResistanceIntensityValue)).toEqual([
+                    true,
+                    true,
+                    true,
+                    true,
+                    false,
+                    false,
+                ]);
+            });
+        });
+
+        describe("filterValidMortalityAdjustedValue", () => {
+            it("keeps a numeric value", () => {
+                expect(filterValidMortalityAdjustedValue(createPreventionStudy({ MORTALITY_ADJUSTED: "0.5" }))).toBe(
+                    true
+                );
+            });
+
+            it("removes NA in any case, and N/A", () => {
+                const values = [NOT_AVAILABLE, "na", "N/A", " NA "];
+                const studies = values.map(value => createPreventionStudy({ MORTALITY_ADJUSTED: value }));
+
+                expect(studies.map(filterValidMortalityAdjustedValue)).toEqual([false, false, false, false]);
+            });
+
+            it("removes a missing value", () => {
+                expect(
+                    filterValidMortalityAdjustedValue(createPreventionStudy({ MORTALITY_ADJUSTED: undefined }))
+                ).toBe(false);
+            });
+
+            // Pins today's behaviour, a possible bug pending a decision: NR and an empty mortality pass as
+            // valid values on the resistance status map.
+            it("keeps NR and an empty string, which are not numbers", () => {
+                const studies = [NOT_REPORTED, ""].map(value => createPreventionStudy({ MORTALITY_ADJUSTED: value }));
+
+                expect(studies.map(filterValidMortalityAdjustedValue)).toEqual([true, true]);
+            });
+        });
+
+        describe("filterByStudiesWithInsecticideClass", () => {
+            it("removes only the class NA", () => {
+                const studies = [PYRETHROIDS, NOT_AVAILABLE, ""].map(insecticideClass =>
+                    createPreventionStudy({ INSECTICIDE_CLASS: insecticideClass })
+                );
+
+                expect(studies.map(filterByStudiesWithInsecticideClass)).toEqual([true, false, true]);
+            });
+        });
+
+        describe("filterByInsecticideResistanceStatusOptions", () => {
+            it("keeps confirmed, possible and susceptible, and removes the rest", () => {
+                const statuses = [
+                    "CONFIRMED_RESISTANCE",
+                    "POSSIBLE_RESISTANCE",
+                    "SUSCEPTIBLE",
+                    "UNDETERMINED",
+                    NOT_AVAILABLE,
+                ];
+                const studies = statuses.map(status => createPreventionStudy({ RESISTANCE_STATUS: status }));
+
+                expect(studies.map(filterByInsecticideResistanceStatusOptions)).toEqual([
+                    true,
+                    true,
+                    true,
+                    false,
+                    false,
+                ]);
+            });
+        });
+    });
+
+    describe("download predicates", () => {
+        describe("filterByDownload", () => {
+            it("keeps only DOWNLOAD equal to 1", () => {
+                const studies = [1, 0, 2].map(download => createPreventionStudy({ DOWNLOAD: download }));
+
+                expect(studies.map(filterByDownload())).toEqual([true, false, false]);
+            });
+        });
+
+        describe("filterInvasiveByDownload", () => {
+            it("removes only MTM_DOWNLOAD equal to 0, so a missing value is kept", () => {
+                const studies = [1, 0, undefined].map(download => createInvasiveStudy({ MTM_DOWNLOAD: download }));
+
+                expect(studies.map(filterInvasiveByDownload())).toEqual([true, false, true]);
+            });
         });
     });
 });

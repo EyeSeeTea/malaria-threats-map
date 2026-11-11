@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PreventionMapType, State } from "../../store/types";
+import { PreventionFilters, PreventionMapType, RegionState, State } from "../../store/types";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import {
     selectPreventionFilters,
@@ -39,14 +39,12 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const TypeFilter: React.FC<Props> = ({
-    setType,
-    preventionFilters,
-    preventionStudiesOfMapType,
-    yearFilter,
-    region,
-}) => {
-    const { t } = useTranslation();
+export function getTypeFilterOptions(
+    preventionFilters: PreventionFilters,
+    preventionStudiesOfMapType: PreventionStudy[],
+    yearFilter: number[],
+    region: RegionState
+) {
     const { mapType } = preventionFilters;
 
     const filtersMap: { [mapType: string]: any[] } = {
@@ -85,6 +83,19 @@ const TypeFilter: React.FC<Props> = ({
         label: type,
         value: type,
     }));
+
+    return suggestions;
+}
+
+const TypeFilter: React.FC<Props> = ({
+    setType,
+    preventionFilters,
+    preventionStudiesOfMapType,
+    yearFilter,
+    region,
+}) => {
+    const { t } = useTranslation();
+    const suggestions = getTypeFilterOptions(preventionFilters, preventionStudiesOfMapType, yearFilter, region);
 
     return (
         <MultiFilter
