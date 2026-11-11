@@ -6,9 +6,13 @@ import {
     BIOCHEMICAL,
     ESTERASES,
     GSTS,
+    KDR_L1014F,
+    KDR_L1014S,
+    KDR_UNSPECIFIED,
     MOLECULAR,
     MONO_OXYGENASES,
     SYNERGIST,
+    UNKNOWN_MECHANISM,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
 // In the opposite order of ASSAY_TYPES, to show that the output follows ASSAY_TYPES.
@@ -33,12 +37,9 @@ describe("getAssayTypeOptions", () => {
             expect(offeredAssayTypes([mechanism])).toEqual([MOLECULAR, BIOCHEMICAL, SYNERGIST]);
         });
 
-        it.each(["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)"])(
-            "%s offers only the molecular assay",
-            mechanism => {
-                expect(offeredAssayTypes([mechanism])).toEqual([MOLECULAR]);
-            }
-        );
+        it.each([KDR_L1014S, KDR_L1014F, KDR_UNSPECIFIED])("%s offers only the molecular assay", mechanism => {
+            expect(offeredAssayTypes([mechanism])).toEqual([MOLECULAR]);
+        });
 
         it("ACE1R offers the molecular and biochemical assays", () => {
             expect(offeredAssayTypes([ACE1R])).toEqual([MOLECULAR, BIOCHEMICAL]);
@@ -55,7 +56,7 @@ describe("getAssayTypeOptions", () => {
     });
 
     it("offers nothing for an unknown mechanism", () => {
-        expect(offeredAssayTypes(["UNKNOWN_MECHANISM"])).toEqual([]);
+        expect(offeredAssayTypes([UNKNOWN_MECHANISM])).toEqual([]);
     });
 
     it("drops an assay type missing from the translations", () => {

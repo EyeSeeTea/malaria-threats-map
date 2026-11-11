@@ -59,7 +59,8 @@ describe("getTypeFilterOptions", () => {
         ]);
     });
 
-    // Possibly a bug: a study without TYPE offers an empty test type in the filter (finding).
+    // Pins today's behaviour, a possible bug pending a decision: the filter offers an empty option
+    // for a study without a test type.
     it("offers a null option for a study whose TYPE is null", () => {
         const studies = [typeStudy(WHO_TEST_KIT), typeStudy(null)];
         const filters = createPreventionFilters({ mapType: PreventionMapType.RESISTANCE_STATUS });

@@ -21,7 +21,7 @@ jobs:
                   node-version: "18"
 
             - name: Install yarn
-              run: npm install -g yarn
+              run: command -v yarn || npm install -g yarn
 
             - name: Get yarn cache directory path
               id: yarn-cache-dir-path

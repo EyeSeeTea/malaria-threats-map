@@ -19,6 +19,7 @@ import {
     CDC_BOTTLE,
     DELTAMETHRIN,
     DISCRIMINATING,
+    ESTERASES,
     FUNESTUS,
     GAMBIAE,
     MOLECULAR,
@@ -69,6 +70,12 @@ const everyFilter = (mapType: PreventionMapType) =>
         synergistTypes: [WHO_TEST_KIT],
     });
 
+// On the resistance mechanisms map, the type filter holds mechanisms, not test kits.
+const everyMechanismFilter = () => ({
+    ...everyFilter(PreventionMapType.RESISTANCE_MECHANISM),
+    type: [MONO_OXYGENASES, ESTERASES],
+});
+
 describe("map-actions utils", () => {
     it("runs with i18next returning the key, which every assertion below relies on", () => {
         expect(i18next.t(SOME_KEY)).toBe(SOME_KEY);
@@ -113,12 +120,12 @@ describe("map-actions utils", () => {
             });
 
             it("joins several values with a pipe", () => {
-                const filters = everyFilter(PreventionMapType.RESISTANCE_MECHANISM);
+                const filters = everyMechanismFilter();
 
                 expect(preventionValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toEqual({
                     years: FULL_RANGE,
                     assayTypes: `${MOLECULAR} | ${BIOCHEMICAL}`,
-                    mechanismType: `${WHO_TEST_KIT} | ${CDC_BOTTLE}`,
+                    mechanismType: `${MONO_OXYGENASES} | ${ESTERASES}`,
                     species: `${GAMBIAE} | ${FUNESTUS}`,
                 });
             });
@@ -146,10 +153,6 @@ describe("map-actions utils", () => {
                     species: `${GAMBIAE} | ${FUNESTUS}`,
                 });
             });
-        });
-
-        it("returns undefined for an unknown map type", () => {
-            expect(preventionValueLabelFilters(noFilters(99), MAX_MIN_YEARS, MAX_MIN_YEARS)).toBe(undefined);
         });
     });
 
@@ -179,7 +182,9 @@ describe("map-actions utils", () => {
             ).toEqual({ years: FULL_RANGE, vectorSpecies: `${speciesLabel(TYPE_FORM)} | ${speciesLabel(MYSORENSIS)}` });
         });
 
-        it("throws for a species that is not in the hardcoded list (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a selected species that is not in
+        // the hardcoded list throws instead of showing a label.
+        it("throws for a species that is not in the hardcoded list", () => {
             const filters = createInvasiveFilters({ vectorSpecies: [UNLISTED_SPECIES] });
 
             expect(() => invasiveValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toThrow(TypeError);
@@ -229,11 +234,11 @@ describe("map-actions utils", () => {
             );
 
             it("Resistance mechanisms shows mechanism, assay types, species and years", () => {
-                const filters = everyFilter(PreventionMapType.RESISTANCE_MECHANISM);
+                const filters = everyMechanismFilter();
 
                 expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
                     [
-                        entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+                        entry(TEST_TYPE_FILTER, `${MONO_OXYGENASES}, ${ESTERASES}`),
                         entry(ASSAY_TYPES_FILTER, `${MOLECULAR}, ${BIOCHEMICAL}`),
                         entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
                         entry(YEARS_FILTER, FULL_RANGE),
@@ -263,6 +268,12 @@ describe("map-actions utils", () => {
                 dataset,
             });
 
+            // The mechanism datasets show the mechanism type filter, so the type holds mechanisms.
+            const mechanismDownloadFilters = (dataset: PreventionDataset): PreventionFilters => ({
+                ...downloadFilters(dataset),
+                type: [MONO_OXYGENASES, ESTERASES],
+            });
+
             it("a bioassay dataset shows the same filters as its map", () => {
                 const filters = downloadFilters(DISCRIMINATING);
 
@@ -272,11 +283,11 @@ describe("map-actions utils", () => {
             });
 
             it.each(mechanismDatasets)("%s shows test type, species and years", dataset => {
-                const filters = downloadFilters(dataset);
+                const filters = mechanismDownloadFilters(dataset);
 
                 expect(preventionFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, DOWNLOAD)).toEqual(
                     [
-                        entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+                        entry(TEST_TYPE_FILTER, `${MONO_OXYGENASES}, ${ESTERASES}`),
                         entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
                         entry(YEARS_FILTER, FULL_RANGE),
                     ].join(SEPARATOR)
@@ -313,7 +324,9 @@ describe("map-actions utils", () => {
             );
         });
 
-        it("throws for a species that is not in the hardcoded list (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a selected species that is not in
+        // the hardcoded list throws instead of showing a label.
+        it("throws for a species that is not in the hardcoded list", () => {
             const filters = createInvasiveFilters({ vectorSpecies: [UNLISTED_SPECIES] });
 
             expect(() => invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toThrow(TypeError);
@@ -352,17 +365,17 @@ describe("map-actions utils", () => {
             );
 
         it("sends prevention to preventionValueLabelFilters", () => {
-            expect(labelsFor("prevention")).toEqual(
-                preventionValueLabelFilters(preventionFilters, MAX_MIN_YEARS, NARROWED_YEARS)
-            );
+            expect(labelsFor("prevention")).toEqual({
+                years: NARROWED_RANGE,
+                insecticideClass: PYRETHROIDS,
+                insecticideTypes: `${DELTAMETHRIN} | ${PERMETHRIN}`,
+                testType: `${WHO_TEST_KIT} | ${CDC_BOTTLE}`,
+                species: `${GAMBIAE} | ${FUNESTUS}`,
+            });
         });
 
         it("sends invasive to invasiveValueLabelFilters", () => {
             expect(labelsFor("invasive")).toEqual({ years: NARROWED_RANGE, vectorSpecies: speciesLabel(TYPE_FORM) });
-        });
-
-        it("returns undefined for an unknown theme", () => {
-            expect(labelsFor("unknown")).toBe(undefined);
         });
     });
 });

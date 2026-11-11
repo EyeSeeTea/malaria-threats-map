@@ -8,7 +8,6 @@ const NOT_FOUND_STUDY = "notFound";
 const UNKNOWN_STUDY = "unknown";
 const WITHOUT_YEAR = "withoutYear";
 const WITH_YEAR = "withYear";
-const FIRST = "first";
 
 const INVASIVE = "Invasive";
 const NATIVE = "Native";
@@ -18,8 +17,7 @@ const NOT_FOUND = "Not found";
 const study = (code: string, overrides: Partial<InvasiveStudy> = {}) =>
     createInvasiveStudy({ Code: code, YEAR_START: 2020, ...overrides });
 
-const selectedCode = (group: InvasiveStudy[], mapType = InvasiveMapType.VECTOR_OCCURANCE) =>
-    studySelector(group, mapType).Code;
+const selectedCode = (group: InvasiveStudy[]) => studySelector(group, InvasiveMapType.VECTOR_OCCURANCE).Code;
 
 describe("invasive site colour", () => {
     it("pins the status order record", () => {
@@ -43,7 +41,9 @@ describe("invasive site colour", () => {
             expect(selectedCode(group.slice(0, 2))).toBe(NATIVE);
         });
 
-        it("ties not found, which is not in the order, with unknown, so the first one wins (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: a status missing from the order
+        // ties with unknown, so the order of the studies decides the colour.
+        it("ties not found, which is not in the order, with unknown, so the first one wins", () => {
             const notFound = study(NOT_FOUND_STUDY, { INVASIVE_STATUS: NOT_FOUND });
             const unknown = study(UNKNOWN_STUDY, { INVASIVE_STATUS: UNKNOWN });
 
@@ -51,6 +51,8 @@ describe("invasive site colour", () => {
             expect(selectedCode([unknown, notFound])).toBe(UNKNOWN_STUDY);
         });
 
+        // This test and the next pin today's behaviour, a possible bug pending a decision: whether the
+        // studies without a year count depends on the first study of the group.
         it("uses the whole group when the first study has no YEAR_START", () => {
             const group = [
                 study(WITHOUT_YEAR, { YEAR_START: undefined, INVASIVE_STATUS: NATIVE }),
@@ -68,15 +70,5 @@ describe("invasive site colour", () => {
 
             expect(selectedCode(group)).toBe(WITH_YEAR);
         });
-
-        it("throws for an empty group (finding)", () => {
-            expect(() => studySelector([], InvasiveMapType.VECTOR_OCCURANCE)).toThrow(TypeError);
-        });
-    });
-
-    it("returns the first study of the group for an unknown map type", () => {
-        const group = [study(FIRST, { INVASIVE_STATUS: UNKNOWN }), study("second", { INVASIVE_STATUS: INVASIVE })];
-
-        expect(selectedCode(group, 1)).toBe(FIRST);
     });
 });

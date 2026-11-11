@@ -111,10 +111,14 @@ describe("getSpeciesFilterOptions", () => {
     );
 
     describe("Resistance mechanisms", () => {
+        // On this map type, TYPE holds the mechanism, not the test kit.
+        const mechanismStudy = (species: string, overrides: Partial<PreventionStudy> = {}) =>
+            speciesStudy(species, { TYPE: MONO_OXYGENASES, ...overrides });
+
         const filters = createPreventionFilters({
             mapType: PreventionMapType.RESISTANCE_MECHANISM,
             insecticideClass: PYRETHROIDS,
-            type: [WHO_TEST_KIT],
+            type: [MONO_OXYGENASES],
             assayTypes: [MOLECULAR],
             species: [GAMBIAE],
             synergistTypes: [CDC_BOTTLE],
@@ -122,11 +126,11 @@ describe("getSpeciesFilterOptions", () => {
 
         it("is narrowed by mechanism type, assay type, years and region", () => {
             const studies = [
-                speciesStudy(GAMBIAE),
-                speciesStudy("otherMechanism", { TYPE: CDC_BOTTLE }),
-                speciesStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
-                speciesStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
-                speciesStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
+                mechanismStudy(GAMBIAE),
+                mechanismStudy("otherMechanism", { TYPE: ESTERASES }),
+                mechanismStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
+                mechanismStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                mechanismStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
             expect(speciesOptions(studies, filters)).toEqual([GAMBIAE]);
@@ -134,8 +138,8 @@ describe("getSpeciesFilterOptions", () => {
 
         it("is not narrowed by the species filter, the insecticide class or the synergist types", () => {
             const studies = [
-                speciesStudy(FUNESTUS),
-                speciesStudy(OTHER_CLASS, { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
+                mechanismStudy(FUNESTUS),
+                mechanismStudy(OTHER_CLASS, { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
             ];
 
             expect(speciesOptions(studies, filters)).toEqual([FUNESTUS, OTHER_CLASS]);

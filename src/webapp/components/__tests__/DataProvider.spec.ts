@@ -55,7 +55,9 @@ describe("buildTranslationResources", () => {
             });
         });
 
-        it("escapes only the first dot of a value with two dots (finding)", () => {
+        // Pins today's behaviour, a possible bug pending a decision: only the first dot of the value
+        // is escaped.
+        it("escapes only the first dot of a value with two dots", () => {
             expect(englishFor(GAMBIAE)).toEqual({
                 "An%2E gambiae s.l.": SPECIES_LABEL,
                 [`${SPECIES_FIELD}.${GAMBIAE}`]: SPECIES_LABEL,
@@ -63,7 +65,9 @@ describe("buildTranslationResources", () => {
         });
     });
 
-    it("keeps the last translation for a value shared by two fields, and both FIELD.VALUE keys (finding)", () => {
+    // Pins today's behaviour, a possible bug pending a decision: when two fields share a value, the
+    // value key keeps the label of the last one, so Mono-oxygenases can show the PBO label.
+    it("keeps the last translation for a value shared by two fields, and both FIELD.VALUE keys", () => {
         const monoOxygenasesProxy = createTranslation({
             FIELD: PROXY_TYPE_FIELD,
             VALUE_: MONO_OXYGENASES,
