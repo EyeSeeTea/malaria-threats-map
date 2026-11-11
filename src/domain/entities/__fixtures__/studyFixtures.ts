@@ -4,7 +4,9 @@ import { Study } from "../Study";
 import {
     DELTAMETHRIN,
     DISCRIMINATING,
+    DJIBOUTI,
     GAMBIAE,
+    INVASIVE_STATUS_INVASIVE,
     NOT_AVAILABLE,
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
@@ -13,7 +15,6 @@ import {
     WHO_TEST_KIT,
 } from "./studyValues";
 
-const DJIBOUTI = "Djibouti";
 const BOBO_DIOULASSO = "Bobo-Dioulasso";
 
 const defaultStudy: Readonly<Study> = {
@@ -102,7 +103,7 @@ const defaultInvasiveStudy: Readonly<InvasiveStudy> = {
     Code: "INV_001",
     STAGE: "LARVAE",
     BREEDING_HABITAT: "WATER_TANK",
-    INVASIVE_STATUS: "Invasive",
+    INVASIVE_STATUS: INVASIVE_STATUS_INVASIVE,
     MTM_DOWNLOAD: 1,
     VILLAGE_ORIG: DJIBOUTI,
     VILLAGE_FLAG: 0,

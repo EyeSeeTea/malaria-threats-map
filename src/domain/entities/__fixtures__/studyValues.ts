@@ -24,6 +24,10 @@ export const STEPHENSI_MYSORENSIS = "An. stephensi mysorensis";
 export const STEPHENSI_INTERMEDIATE_FORM = "An. stephensi intermediate form";
 export const STEPHENSI_NOT_FOUND = "An. stephensi (not found)";
 
+export const INVASIVE_STATUS_INVASIVE = "Invasive";
+export const INVASIVE_STATUS_NATIVE = "Native";
+export const INVASIVE_STATUS_NOT_FOUND = "Not found";
+
 export const MONO_OXYGENASES = "MONO_OXYGENASES";
 export const ESTERASES = "ESTERASES";
 export const GSTS = "GSTS";
@@ -41,5 +45,7 @@ export const BIOCHEMICAL = "BIOCHEMICAL_ASSAY";
 
 export const MINISTRY_OF_HEALTH = "MoH";
 export const RESEARCH_INSTITUTION = "Research";
+
+export const DJIBOUTI = "Djibouti";
 
 export const OTHER_COUNTRY: Readonly<Pick<Study, "ISO2" | "COUNTRY_NAME">> = { ISO2: "IN", COUNTRY_NAME: "India" };
