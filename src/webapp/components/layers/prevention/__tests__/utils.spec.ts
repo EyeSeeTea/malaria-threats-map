@@ -100,8 +100,7 @@ describe("prevention site colour", () => {
                 expect(selectedCode(group, mapType)).toBe(RECENT);
             });
 
-            // Pins today's behaviour, pending a decision: moderate ranks above moderate to high. The order
-            // was changed on purpose, so it may be wanted.
+            // Moderate ranks above moderate to high on purpose: the order was changed so in June 2024.
             it("orders high, moderate, moderate to high, low, and then NA and not assessed", () => {
                 const group = [
                     study(NOT_AVAILABLE, { RESISTANCE_INTENSITY: NOT_AVAILABLE }),
