@@ -12,18 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Divider, FilterColumContainer } from "./Filters";
 import { logEventAction } from "../../store/actions/base-actions";
 import { sendMultiFilterAnalytics } from "../../utils/analytics";
-
-export const ASSAY_TYPES = ["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY", "SYNERGIST-INSECTICIDE_BIOASSAY"];
-
-const ASSAY_TYPE_FILTER: { [key: string]: string[] } = {
-    MONO_OXYGENASES: ASSAY_TYPES,
-    ESTERASES: ASSAY_TYPES,
-    GSTS: ASSAY_TYPES,
-    KDR_L1014S: ["MOLECULAR_ASSAY"],
-    KDR_L1014F: ["MOLECULAR_ASSAY"],
-    "KDR_(MUTATION_UNSPECIFIED)": ["MOLECULAR_ASSAY"],
-    ACE1R: ["MOLECULAR_ASSAY", "BIOCHEMICAL_ASSAY"],
-};
+import { getAssayTypesDetecting } from "../../../domain/entities/ResistanceMechanism";
 
 const StyledFormControlLabel = styled(FormControlLabel)`
     & span {
@@ -50,7 +39,7 @@ export function getAssayTypeOptions(preventionFilters: PreventionFilters, assayT
     const type = preventionFilters?.type?.length === 1 ? preventionFilters.type[0] : undefined;
 
     const types =
-        ASSAY_TYPE_FILTER[type]
+        getAssayTypesDetecting(type)
             ?.map(value => (assayTypes as Translation[]).find(type => type.VALUE_ === value))
             .filter(Boolean) || [];
 

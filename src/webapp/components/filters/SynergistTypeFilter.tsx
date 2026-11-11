@@ -1,15 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
-import { Translation } from "../../types/Translation";
-import { selectTypes } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import {
+    selectPreventionFilters,
+    selectPreventionStudiesByMapTypeSelected,
+} from "../../store/reducers/prevention-reducer";
 import { setSynergistTypes } from "../../store/actions/prevention-actions";
 import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
+import { Option } from "../BasicSelect";
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { getSynergistTypes } from "../../../domain/entities/ResistanceMechanism";
 
 const mapStateToProps = (state: State) => ({
-    synergistTypes: selectTypes(state),
+    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
     preventionFilters: selectPreventionFilters(state),
 });
 
@@ -21,21 +25,15 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-export function getSynergistTypeOptions(synergistTypes: Translation[]) {
-    const suggestions: any[] = (synergistTypes as Translation[])
-        .filter(translation => ["WHO_TEST_KIT_ADULTS", "CDC_BOTTLE_ADULTS"].includes(translation.VALUE_))
-        .map((country: Translation) => ({
-            label: country.VALUE_,
-            value: country.VALUE_,
-        }));
-
-    return suggestions;
+/** The test types of the synergist bioassays of the map, with the value as label, as before. */
+export function getSynergistTypeOptions(preventionStudiesOfMapType: ReadonlyArray<PreventionStudy>): Option[] {
+    return getSynergistTypes(preventionStudiesOfMapType).map(value => ({ label: value, value }));
 }
 
-const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, synergistTypes, setSynergistTypes }) => {
+const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, preventionStudiesOfMapType, setSynergistTypes }) => {
     const { t } = useTranslation();
 
-    const suggestions = getSynergistTypeOptions(synergistTypes);
+    const suggestions = getSynergistTypeOptions(preventionStudiesOfMapType);
 
     return (
         <MultiFilter
