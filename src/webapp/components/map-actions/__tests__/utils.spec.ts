@@ -24,12 +24,12 @@ import {
     GAMBIAE,
     MOLECULAR,
     MONO_OXYGENASES,
-    MYSORENSIS,
+    STEPHENSI_MYSORENSIS,
     PERMETHRIN,
     PYRETHROIDS,
     STEPHENSI,
     SYNERGIST,
-    TYPE_FORM,
+    STEPHENSI_TYPE_FORM,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
@@ -60,7 +60,14 @@ const TYPE_FORM_LABEL = "Type form label";
 const MYSORENSIS_LABEL = "Mysorensis label";
 
 const speciesTranslations = {
-    common: { filters: { vector_species_options: { [TYPE_FORM]: TYPE_FORM_LABEL, [MYSORENSIS]: MYSORENSIS_LABEL } } },
+    common: {
+        filters: {
+            vector_species_options: {
+                [STEPHENSI_TYPE_FORM]: TYPE_FORM_LABEL,
+                [STEPHENSI_MYSORENSIS]: MYSORENSIS_LABEL,
+            },
+        },
+    },
 };
 
 const noFilters = (mapType: PreventionMapType) => createPreventionFilters({ mapType, insecticideClass: PYRETHROIDS });
@@ -181,7 +188,7 @@ describe("map-actions utils", () => {
         it("shows the label of each selected species, joined with a pipe", () => {
             expect(
                 invasiveValueLabelFilters(
-                    createInvasiveFilters({ vectorSpecies: [TYPE_FORM] }),
+                    createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] }),
                     MAX_MIN_YEARS,
                     MAX_MIN_YEARS
                 )
@@ -189,7 +196,7 @@ describe("map-actions utils", () => {
 
             expect(
                 invasiveValueLabelFilters(
-                    createInvasiveFilters({ vectorSpecies: [TYPE_FORM, MYSORENSIS] }),
+                    createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM, STEPHENSI_MYSORENSIS] }),
                     MAX_MIN_YEARS,
                     MAX_MIN_YEARS
                 )
@@ -329,7 +336,7 @@ describe("map-actions utils", () => {
         });
 
         it("shows the labels of the selected species, joined with a comma, and the narrowed years", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM, MYSORENSIS] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM, STEPHENSI_MYSORENSIS] });
 
             expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, NARROWED_YEARS, DOWNLOAD)).toEqual(
                 [
@@ -366,7 +373,7 @@ describe("map-actions utils", () => {
             deletionType: null,
         };
         const preventionFilters = everyFilter(PreventionMapType.RESISTANCE_STATUS);
-        const invasiveFilters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM] });
+        const invasiveFilters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
         const labelsFor = (theme: string) =>
             getValueLabelFilters(

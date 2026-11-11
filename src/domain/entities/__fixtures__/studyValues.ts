@@ -19,10 +19,10 @@ export const FUNESTUS = "An. funestus s.l.";
 export const ARABIENSIS = "An. arabiensis";
 
 export const STEPHENSI = "An. stephensi";
-export const TYPE_FORM = "An. stephensi type form";
-export const MYSORENSIS = "An. stephensi mysorensis";
-export const INTERMEDIATE_FORM = "An. stephensi intermediate form";
-export const NOT_FOUND = "An. stephensi (not found)";
+export const STEPHENSI_TYPE_FORM = "An. stephensi type form";
+export const STEPHENSI_MYSORENSIS = "An. stephensi mysorensis";
+export const STEPHENSI_INTERMEDIATE_FORM = "An. stephensi intermediate form";
+export const STEPHENSI_NOT_FOUND = "An. stephensi (not found)";
 
 export const MONO_OXYGENASES = "MONO_OXYGENASES";
 export const ESTERASES = "ESTERASES";

@@ -35,7 +35,7 @@ import {
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
     SYNERGIST,
-    TYPE_FORM,
+    STEPHENSI_TYPE_FORM,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
@@ -301,7 +301,7 @@ describe("studies-filters chains", () => {
         ];
 
         it("Vector occurrence filters by species, year range allowing no year, and region", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
             expect(survivingInvasive(studies, filters)).toEqual([KEPT, WITHOUT_YEAR, NOT_DOWNLOADABLE]);
         });
@@ -473,7 +473,7 @@ describe("studies-filters chains", () => {
         ];
 
         it("Vector occurrence adds the download flag to the map chain", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
             expect(survivingInvasive(studies, filters, DOWNLOAD)).toEqual([KEPT, WITHOUT_YEAR]);
         });

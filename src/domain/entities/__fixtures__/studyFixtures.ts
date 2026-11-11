@@ -9,7 +9,7 @@ import {
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
     STEPHENSI,
-    TYPE_FORM,
+    STEPHENSI_TYPE_FORM,
     WHO_TEST_KIT,
 } from "./studyValues";
 
@@ -97,7 +97,7 @@ const defaultInvasiveStudy: Readonly<InvasiveStudy> = {
     SAMPLING_METHOD: "LARVAL_SAMPLING",
     TOT_STUDIES: 1,
     ID_METHOD: "MORPHOLOGY",
-    VECTOR_SPECIES: TYPE_FORM,
+    VECTOR_SPECIES: STEPHENSI_TYPE_FORM,
     VECTOR_SPECIES_COMPLEX: STEPHENSI,
     Code: "INV_001",
     STAGE: "LARVAE",

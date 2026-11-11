@@ -1,5 +1,5 @@
 import { createInvasiveStudy } from "../__fixtures__/studyFixtures";
-import { MYSORENSIS, NOT_REPORTED, TYPE_FORM } from "../__fixtures__/studyValues";
+import { STEPHENSI_MYSORENSIS, NOT_REPORTED, STEPHENSI_TYPE_FORM } from "../__fixtures__/studyValues";
 import { getVectorSpecies } from "../VectorSpecies";
 
 const studiesOf = (species: ReadonlyArray<string | null | undefined>) =>
@@ -8,15 +8,22 @@ const studiesOf = (species: ReadonlyArray<string | null | undefined>) =>
 describe("VectorSpecies", () => {
     describe("getVectorSpecies", () => {
         it("returns each species once, in the order it first appears", () => {
-            expect(getVectorSpecies(studiesOf([MYSORENSIS, TYPE_FORM, MYSORENSIS]))).toEqual([MYSORENSIS, TYPE_FORM]);
+            expect(
+                getVectorSpecies(studiesOf([STEPHENSI_MYSORENSIS, STEPHENSI_TYPE_FORM, STEPHENSI_MYSORENSIS]))
+            ).toEqual([STEPHENSI_MYSORENSIS, STEPHENSI_TYPE_FORM]);
         });
 
         it("keeps NR, which is a value of the data", () => {
-            expect(getVectorSpecies(studiesOf([TYPE_FORM, NOT_REPORTED]))).toEqual([TYPE_FORM, NOT_REPORTED]);
+            expect(getVectorSpecies(studiesOf([STEPHENSI_TYPE_FORM, NOT_REPORTED]))).toEqual([
+                STEPHENSI_TYPE_FORM,
+                NOT_REPORTED,
+            ]);
         });
 
         it("leaves out empty and missing species", () => {
-            expect(getVectorSpecies(studiesOf([TYPE_FORM, "", null, undefined]))).toEqual([TYPE_FORM]);
+            expect(getVectorSpecies(studiesOf([STEPHENSI_TYPE_FORM, "", null, undefined]))).toEqual([
+                STEPHENSI_TYPE_FORM,
+            ]);
         });
 
         it("returns an empty list for no studies", () => {
