@@ -1,5 +1,10 @@
 import { createInvasiveStudy } from "../../../../../domain/entities/__fixtures__/studyFixtures";
-import { NOT_AVAILABLE, NOT_REPORTED } from "../../../../../domain/entities/__fixtures__/studyValues";
+import {
+    NOT_AVAILABLE,
+    NOT_REPORTED,
+    STEPHENSI,
+    STEPHENSI_TYPE_FORM,
+} from "../../../../../domain/entities/__fixtures__/studyValues";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
 import { SiteSelection } from "../../../types";
 import { createInvasiveSelectionData } from "../utils";
@@ -12,8 +17,6 @@ const IMMATURE = "Immature";
 const ADULTS = "Adults";
 const HABITAT = "Water tank";
 const VILLAGE = "Djibouti";
-const SPECIES = "An. stephensi type form";
-const COMPLEX = "An. stephensi";
 const STATUS_INVASIVE = "Invasive";
 const STATUS_NATIVE = "Native";
 const STATUS_NOT_FOUND = "Not found";
@@ -82,7 +85,7 @@ describe("createInvasiveSelectionData", () => {
             data: [
                 {
                     code: FIRST,
-                    species: SPECIES,
+                    species: STEPHENSI_TYPE_FORM,
                     samplingPeriod: "utils.July 2020 to utils.Sept. 2020",
                     samplingMethod: SAMPLING_METHOD,
                     speciedIdentificationMethod: ID_METHOD,
@@ -93,7 +96,7 @@ describe("createInvasiveSelectionData", () => {
                 },
                 {
                     code: SECOND,
-                    species: SPECIES,
+                    species: STEPHENSI_TYPE_FORM,
                     samplingPeriod: "utils.Mar. 2019",
                     samplingMethod: SAMPLING_METHOD,
                     speciedIdentificationMethod: ID_METHOD,
@@ -176,8 +179,8 @@ describe("createInvasiveSelectionData", () => {
 
     describe("species", () => {
         it.each([
-            ["the species", {}, SPECIES],
-            ["the complex when the species is NR", { VECTOR_SPECIES: NOT_REPORTED }, COMPLEX],
+            ["the species", {}, STEPHENSI_TYPE_FORM],
+            ["the complex when the species is NR", { VECTOR_SPECIES: NOT_REPORTED }, STEPHENSI],
             ["an empty text when both are empty", { VECTOR_SPECIES: null, VECTOR_SPECIES_COMPLEX: NOT_AVAILABLE }, ""],
         ])("shows %s", (_case, overrides, expected) => {
             expect(firstRow(overrides).species).toBe(expected);
