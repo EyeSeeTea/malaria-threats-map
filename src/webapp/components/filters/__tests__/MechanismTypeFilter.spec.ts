@@ -1,50 +1,63 @@
-import { cleanMechanismTypeOptions, WHITELISTED_TYPES } from "../MechanismTypeFilter";
+import i18next from "i18next";
+import { createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import {
     ACE1R,
     ESTERASES,
     GSTS,
-    KDR_L1014F,
     KDR_L1014S,
-    KDR_UNSPECIFIED,
     MONO_OXYGENASES,
     NOT_AVAILABLE,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
+import { createTranslation } from "../../../types/__fixtures__/translationFixtures";
+import { getMechanismTypeOptions } from "../MechanismTypeFilter";
 
-describe("cleanMechanismTypeOptions", () => {
-    it("pins the whitelist and its order", () => {
-        expect(WHITELISTED_TYPES).toEqual([
-            MONO_OXYGENASES,
-            ESTERASES,
-            GSTS,
-            KDR_L1014S,
-            KDR_L1014F,
-            KDR_UNSPECIFIED,
-            ACE1R,
-        ]);
+// The order of the catalogue and the label rules are pinned in ResistanceMechanism.spec; this spec pins
+// where each side of the filter reads its mechanisms from.
+
+const MONO_OXYGENASES_LABEL = "Mono-oxygenases (xMART)";
+const GSTS_LABEL = "GSTs (xMART)";
+
+const xmartTranslations = { [`TYPE.${MONO_OXYGENASES}`]: MONO_OXYGENASES_LABEL, [`TYPE.${GSTS}`]: GSTS_LABEL };
+
+const studiesOf = (types: ReadonlyArray<string>) => types.map(TYPE => createPreventionStudy({ TYPE }));
+const translationsOf = (values: ReadonlyArray<string>) =>
+    values.map(VALUE_ => createTranslation({ FIELD: "TYPE", VALUE_ }));
+
+beforeAll(() => {
+    i18next.addResourceBundle("en", "translation", xmartTranslations);
+});
+
+afterAll(() => {
+    i18next.removeResourceBundle("en", "translation");
+});
+
+describe("getMechanismTypeOptions", () => {
+    describe("on the map", () => {
+        it("offers the catalogue mechanisms of the studies, with the xMART label or the value", () => {
+            const studies = studiesOf([ACE1R, WHO_TEST_KIT, GSTS, NOT_AVAILABLE, ACE1R, MONO_OXYGENASES]);
+
+            expect(getMechanismTypeOptions("map", studies, translationsOf([ESTERASES]))).toEqual([
+                { value: MONO_OXYGENASES, label: MONO_OXYGENASES_LABEL },
+                { value: GSTS, label: GSTS_LABEL },
+                { value: ACE1R, label: ACE1R },
+            ]);
+        });
+
+        it("offers nothing when the studies carry no catalogue mechanism", () => {
+            expect(getMechanismTypeOptions("map", studiesOf([WHO_TEST_KIT]), translationsOf([GSTS]))).toEqual([]);
+        });
     });
 
-    it("returns the values in the order of the whitelist, not of the input", () => {
-        expect(cleanMechanismTypeOptions([ACE1R, GSTS, MONO_OXYGENASES, KDR_L1014F])).toEqual([
-            MONO_OXYGENASES,
-            GSTS,
-            KDR_L1014F,
-            ACE1R,
-        ]);
-    });
+    // Data Download is out of scope: it keeps offering the catalogue mechanisms of the TYPE translations.
+    describe("on Data Download", () => {
+        it("offers the catalogue mechanisms of the translations, not of the studies", () => {
+            const translations = translationsOf([KDR_L1014S, WHO_TEST_KIT, MONO_OXYGENASES]);
 
-    it("drops the values outside the whitelist, NA included", () => {
-        expect(cleanMechanismTypeOptions([ESTERASES, WHO_TEST_KIT, NOT_AVAILABLE, KDR_L1014S])).toEqual([
-            ESTERASES,
-            KDR_L1014S,
-        ]);
-    });
-
-    it("returns each value once when the input repeats it", () => {
-        expect(cleanMechanismTypeOptions([GSTS, GSTS, ESTERASES, GSTS])).toEqual([ESTERASES, GSTS]);
-    });
-
-    it("returns an empty list for an empty input", () => {
-        expect(cleanMechanismTypeOptions([])).toEqual([]);
+            expect(getMechanismTypeOptions("download", studiesOf([GSTS]), translations)).toEqual([
+                { value: MONO_OXYGENASES, label: MONO_OXYGENASES_LABEL },
+                { value: KDR_L1014S, label: KDR_L1014S },
+            ]);
+        });
     });
 });

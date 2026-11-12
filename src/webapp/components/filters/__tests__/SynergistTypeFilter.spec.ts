@@ -1,31 +1,40 @@
-import { createTranslation } from "../../../types/__fixtures__/translationFixtures";
+import { createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import { getSynergistTypeOptions } from "../SynergistTypeFilter";
 import {
+    BIOCHEMICAL,
     CDC_BOTTLE,
     ESTERASES,
+    MOLECULAR,
     MONO_OXYGENASES,
+    SYNERGIST,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
-const typeTranslations = (values: string[]) => values.map(value => createTranslation({ FIELD: "TYPE", VALUE_: value }));
+const WHO_TEST_KIT_LARVAE = "WHO_TEST_KIT_LARVAE";
+
+const study = (ASSAY_TYPE: string, TYPE: string) => createPreventionStudy({ ASSAY_TYPE, TYPE });
 
 describe("getSynergistTypeOptions", () => {
-    it("offers only the WHO test kit and the CDC bottle, with the value as label", () => {
-        const translations = typeTranslations([MONO_OXYGENASES, WHO_TEST_KIT, "WHO_TEST_KIT_LARVAE", CDC_BOTTLE]);
+    it("offers the test types of the synergist bioassays, with the value as label", () => {
+        const studies = [
+            study(SYNERGIST, WHO_TEST_KIT),
+            study(MOLECULAR, MONO_OXYGENASES),
+            study(SYNERGIST, CDC_BOTTLE),
+        ];
 
-        expect(getSynergistTypeOptions(translations)).toEqual([
+        expect(getSynergistTypeOptions(studies)).toEqual([
             { label: WHO_TEST_KIT, value: WHO_TEST_KIT },
             { label: CDC_BOTTLE, value: CDC_BOTTLE },
         ]);
     });
 
-    it("keeps the order of the translations", () => {
-        expect(
-            getSynergistTypeOptions(typeTranslations([CDC_BOTTLE, WHO_TEST_KIT])).map(option => option.value)
-        ).toEqual([CDC_BOTTLE, WHO_TEST_KIT]);
+    it("offers a test type of the data that the old whitelist left out", () => {
+        expect(getSynergistTypeOptions([study(SYNERGIST, WHO_TEST_KIT_LARVAE)])).toEqual([
+            { label: WHO_TEST_KIT_LARVAE, value: WHO_TEST_KIT_LARVAE },
+        ]);
     });
 
-    it("offers nothing when neither type is in the translations", () => {
-        expect(getSynergistTypeOptions(typeTranslations([ESTERASES]))).toEqual([]);
+    it("offers nothing when the map has no synergist bioassays", () => {
+        expect(getSynergistTypeOptions([study(BIOCHEMICAL, ESTERASES)])).toEqual([]);
     });
 });

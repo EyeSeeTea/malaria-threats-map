@@ -1,5 +1,5 @@
+import i18next from "i18next";
 import { createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
-import { createTranslation } from "../../../types/__fixtures__/translationFixtures";
 import { getAssayTypeOptions } from "../AssayTypeCheckboxFilter";
 import {
     ACE1R,
@@ -15,20 +15,27 @@ import {
     UNKNOWN_MECHANISM,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
-// In the opposite order of ASSAY_TYPES, to show that the output follows ASSAY_TYPES.
-const assayTypeTranslations = [SYNERGIST, BIOCHEMICAL, MOLECULAR].map(value =>
-    createTranslation({ FIELD: "ASSAY_TYPE", VALUE_: value })
-);
+const MOLECULAR_LABEL = "Molecular assay (xMART)";
 
-function offeredAssayTypes(type: string[] | null, translations = assayTypeTranslations): ReadonlyArray<string> {
-    return getAssayTypeOptions(createPreventionFilters({ type }), translations).map(translation => translation.VALUE_);
+const xmartTranslations = { [`ASSAY_TYPE.${MOLECULAR}`]: MOLECULAR_LABEL };
+
+function offeredAssayTypes(type: string[] | null): ReadonlyArray<string> {
+    return getAssayTypeOptions(createPreventionFilters({ type })).map(option => option.value);
 }
 
+beforeAll(() => {
+    i18next.addResourceBundle("en", "translation", xmartTranslations);
+});
+
+afterAll(() => {
+    i18next.removeResourceBundle("en", "translation");
+});
+
 describe("getAssayTypeOptions", () => {
-    it("returns the translations themselves, not new options", () => {
-        expect(getAssayTypeOptions(createPreventionFilters({ type: [ACE1R] }), assayTypeTranslations)).toEqual([
-            assayTypeTranslations[2],
-            assayTypeTranslations[1],
+    it("labels each assay type with its xMART label, or with the value when it has none", () => {
+        expect(getAssayTypeOptions(createPreventionFilters({ type: [ACE1R] }))).toEqual([
+            { value: MOLECULAR, label: MOLECULAR_LABEL },
+            { value: BIOCHEMICAL, label: BIOCHEMICAL },
         ]);
     });
 
@@ -57,11 +64,5 @@ describe("getAssayTypeOptions", () => {
 
     it("offers nothing for an unknown mechanism", () => {
         expect(offeredAssayTypes([UNKNOWN_MECHANISM])).toEqual([]);
-    });
-
-    it("drops an assay type missing from the translations", () => {
-        const withoutBiochemical = assayTypeTranslations.filter(translation => translation.VALUE_ !== BIOCHEMICAL);
-
-        expect(offeredAssayTypes([MONO_OXYGENASES], withoutBiochemical)).toEqual([MOLECULAR, SYNERGIST]);
     });
 });

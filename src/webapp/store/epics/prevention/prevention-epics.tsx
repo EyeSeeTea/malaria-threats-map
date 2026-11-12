@@ -13,7 +13,7 @@ import {
 } from "./utils";
 import { PreventionMapType, State } from "../../types";
 import { getAnalyticsPageView } from "../../analytics";
-import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
+import { assayTypes, getAssayTypesDetecting } from "../../../../domain/entities/ResistanceMechanism";
 import {
     logEventAction,
     logPageViewAction,
@@ -109,14 +109,9 @@ export const setPreventionTypeEpic = (action$: Observable<ActionType<typeof setT
     action$.pipe(
         ofType(ActionTypeEnum.SetType),
         switchMap(action => {
-            const kdr = ["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)"];
-            if (action.payload && kdr.includes(action.payload[0])) {
-                return of(setAssayTypes([ASSAY_TYPES[0]]));
-            } else if (action.payload && ["ACE1R"].includes(action.payload[0])) {
-                return of(setAssayTypes([ASSAY_TYPES[0], ASSAY_TYPES[1]]));
-            } else {
-                return of(setAssayTypes(ASSAY_TYPES));
-            }
+            // Only the first mechanism counts. An unknown one, or none, selects every assay type.
+            const detecting = getAssayTypesDetecting(action.payload?.[0]) ?? assayTypes;
+            return of(setAssayTypes([...detecting]));
         })
     );
 

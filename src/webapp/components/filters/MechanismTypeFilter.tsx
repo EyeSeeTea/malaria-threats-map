@@ -4,25 +4,21 @@ import { connect } from "react-redux";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { selectTypes } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import {
+    selectPreventionFilters,
+    selectPreventionStudiesByMapTypeSelected,
+} from "../../store/reducers/prevention-reducer";
 import { setType } from "../../store/actions/prevention-actions";
-import { logEventAction } from "../../store/actions/base-actions";
+import { logEventAction, Source } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
-
-export const WHITELISTED_TYPES = [
-    "MONO_OXYGENASES",
-    "ESTERASES",
-    "GSTS",
-    "KDR_L1014S",
-    "KDR_L1014F",
-    "KDR_(MUTATION_UNSPECIFIED)",
-    "ACE1R",
-];
+import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { getMechanismOptions } from "../../../domain/entities/ResistanceMechanism";
 
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),
     preventionFilters: selectPreventionFilters(state),
+    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
 });
 
 const mapDispatchToProps = {
@@ -32,31 +28,41 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = { from: Source };
+type Props = DispatchProps & StateProps & OwnProps;
 
-export function cleanMechanismTypeOptions(values: string[]) {
-    const filteredTypes = WHITELISTED_TYPES.map(wl_type => values.find((value: any) => value === wl_type)).filter(
-        Boolean
-    );
+/**
+ * The map offers the mechanisms of its studies. Data Download, out of scope, keeps reading the TYPE
+ * translations: there the selected map type is the last map visited, not the mechanisms one.
+ */
+export function getMechanismTypeOptions(
+    from: Source,
+    preventionStudiesOfMapType: ReadonlyArray<PreventionStudy>,
+    types: ReadonlyArray<Translation>
+) {
+    const codes = from === "map" ? preventionStudiesOfMapType.map(study => study.TYPE) : types.map(type => type.VALUE_);
 
-    const options = filteredTypes.filter(value => value !== "NA");
-
-    return options;
+    return getMechanismOptions(codes).map(value => ({
+        value: value,
+        label: i18next.t(`TYPE.${value}`, { defaultValue: value }),
+    }));
 }
 
-function MechanismTypeFilter({ types = [], preventionFilters, setType, logEventAction }: Props) {
+function MechanismTypeFilter({
+    types = [],
+    preventionFilters,
+    preventionStudiesOfMapType,
+    setType,
+    logEventAction,
+    from,
+}: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         const newValue = (event.target as HTMLInputElement).value;
         setType([newValue]);
         logEventAction({ category: "filter", action: "mechanismType", label: newValue });
     };
-    const suggestions: Translation[] = types as Translation[];
-
-    const options = cleanMechanismTypeOptions(suggestions.map((type: Translation) => type.VALUE_)).map(value => ({
-        value: value,
-        label: i18next.t(`TYPE.${value}`),
-    }));
+    const options = getMechanismTypeOptions(from, preventionStudiesOfMapType, types as Translation[]);
 
     const value = React.useMemo(
         () => (preventionFilters.type?.length === 1 ? preventionFilters.type[0] : undefined),

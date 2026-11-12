@@ -28,7 +28,7 @@ import _ from "lodash";
 import { ResistanceMechanismColors } from "../../../components/layers/prevention/ResistanceMechanisms/symbols";
 import { RESISTANCE_MECHANISM } from "../../../components/layers/prevention/ResistanceMechanisms/utils";
 import { PreventionMapType, SiteSelection, State } from "../../types";
-import { cleanMechanismTypeOptions } from "../../../components/filters/MechanismTypeFilter";
+import { getMechanismOptions } from "../../../../domain/entities/ResistanceMechanism";
 import {
     getMostPriorityUsignResistanceStatus,
     getMostPriorityUsingMortalityAdjusted,
@@ -453,7 +453,7 @@ function otherDetected(mapType: PreventionMapType, siteFilteredStudies: Study[],
                 .map(study => study.TYPE)
         );
 
-        return cleanMechanismTypeOptions(othertMechanisms).map(type => i18next.t(`TYPE.${type}`));
+        return getMechanismOptions(othertMechanisms).map(type => i18next.t(`TYPE.${type}`));
     } else {
         const currentInsecticideClasses = _.uniq(siteFilteredStudies.map(study => study.INSECTICIDE_CLASS));
         const otherInsecticideClasses = _.uniq(
