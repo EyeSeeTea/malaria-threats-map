@@ -5,6 +5,9 @@ import { Study } from "../Study";
 export const NOT_AVAILABLE = "NA";
 export const NOT_REPORTED = "NR";
 
+export const MALARIA = "MALARIA";
+export const DENGUE = "DENGUE";
+
 export const PYRETHROIDS = "PYRETHROIDS";
 export const ORGANOPHOSPHATES = "ORGANOPHOSPHATES";
 

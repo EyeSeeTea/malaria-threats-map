@@ -47,6 +47,7 @@ export interface Study {
     YEAR_END: number;
     YEAR_START: number;
     DOWNLOAD: number;
+    DISEASE?: string;
 }
 
 export type ResistanceIntensity =
