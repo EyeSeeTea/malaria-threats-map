@@ -20,15 +20,14 @@ type DiseaseFilterProps = Readonly<{
     setDisease: (disease: string) => void;
 }>;
 
-/**
- * One option per disease the studies of the theme carry, labelled with its xMART translation, or
- * with its code when it has none. No options when the studies carry no disease.
- */
+/** The label of a disease: its xMART translation, or its code when it has none. */
+export function getDiseaseLabel(disease: string): string {
+    return i18next.t(`DISEASE.${disease}`, { defaultValue: disease });
+}
+
+/** One option per disease the studies of the theme carry. No options when the studies carry no disease. */
 export function getDiseaseFilterOptions(studies: ReadonlyArray<DiseaseSource>): Option[] {
-    return getDiseases(studies).map(disease => ({
-        value: disease,
-        label: i18next.t(`DISEASE.${disease}`, { defaultValue: disease }),
-    }));
+    return getDiseases(studies).map(disease => ({ value: disease, label: getDiseaseLabel(disease) }));
 }
 
 /**
