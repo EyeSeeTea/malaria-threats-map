@@ -1,4 +1,5 @@
 import React from "react";
+import { PreventionDiseaseFilter } from "../../../filters/DiseaseFilter";
 import InsecticideClassFilter from "../../../filters/InsecticideClassFilter";
 import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 import TypeFilter from "../../../filters/TypeFilter";
@@ -10,6 +11,7 @@ import OnlyIncludeBioassaysWithMoreMosquitoesFilter from "../../../filters/OnlyI
 export default function IntensityStatusFilters() {
     return (
         <div>
+            <PreventionDiseaseFilter />
             <InsecticideClassFilter from="map" />
             <InsecticideTypeFilter from="map" />
             <TypeFilter from="map" />

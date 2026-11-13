@@ -1,4 +1,5 @@
 import React from "react";
+import { PreventionDiseaseFilter } from "../../../filters/DiseaseFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 import MechanismTypeFilter from "../../../filters/MechanismTypeFilter";
@@ -21,6 +22,7 @@ export const isSynergyst = (filters: PreventionFilters) =>
 function ResistanceMechanismFilters({ preventionFilters }: Props) {
     return (
         <div>
+            <PreventionDiseaseFilter />
             <MechanismTypeFilter from="map" />
             <AssayTypeCheckboxFilter />
             <SpeciesFilter from="map" />

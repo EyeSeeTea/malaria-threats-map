@@ -1,6 +1,7 @@
 import React from "react";
 import YearRangeSelector from "../../../YearRangeSelector";
 import VectorSpeciesFilter from "../../../filters/VectorSpeciesFilter";
+import { InvasiveDiseaseFilter } from "../../../filters/DiseaseFilter";
 import { Link } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { Snackbar } from "../../common/Snackbar";
@@ -9,6 +10,7 @@ export default function VectorOccuranceFilters() {
     const { t } = useTranslation();
     return (
         <>
+            <InvasiveDiseaseFilter />
             <VectorSpeciesFilter from="map" />
             <YearRangeSelector />
             <Snackbar>
