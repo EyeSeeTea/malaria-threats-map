@@ -26,17 +26,45 @@ export function getInitialDisease(studies: ReadonlyArray<DiseaseSource>): string
 }
 
 /**
+ * Whether the study belongs to the disease. Every study on the vector maps carries a disease: one
+ * without it is a data error and belongs to none, and with no disease set no study belongs.
+ */
+export function belongsToDisease(disease: string | undefined, study: DiseaseSource): boolean {
+    return disease !== undefined && study.DISEASE === disease;
+}
+
+/** Whether the change from one disease to the other is a switch, not the disease being set for the first time. */
+export function isDiseaseSwitch(previous: string | undefined, next: string | undefined): boolean {
+    return previous !== undefined && next !== undefined && previous !== next;
+}
+
+/**
  * Whether the Vector occurrence filters invite users to report invasive Anopheles species: for
  * malaria, and while no disease is set.
  */
 export function invitesAnophelesReports(disease: string | undefined): boolean {
-    return disease === undefined || disease === defaultDisease;
+    return isDefaultOrUnset(disease);
 }
 
 /**
- * The value a single-choice filter keeps when the disease changes: its current value if the new
- * disease offers it, otherwise the first value the new disease offers.
+ * Whether a map change checks the class and the mechanism against the options of the disease.
+ * Malaria, and no disease, keep the behaviour the maps had before the disease filter.
  */
-export function keepIfOffered(current: string | undefined, offered: ReadonlyArray<string>): string | undefined {
-    return current !== undefined && offered.includes(current) ? current : offered[0];
+export function checksOptionsOnMapChange(disease: string | undefined): boolean {
+    return !isDefaultOrUnset(disease);
+}
+
+/**
+ * The value a single-choice filter takes among the options of a disease: the current value if
+ * offered, otherwise the preferred one if offered, otherwise the first option. With no options,
+ * because the studies are not loaded yet, the current value, or else the preferred one.
+ */
+export function pickOption(offered: ReadonlyArray<string>, preferred: string, current?: string): string {
+    if (offered.length === 0) return current ?? preferred;
+
+    return [current, preferred].find(value => value !== undefined && offered.includes(value)) ?? offered[0];
+}
+
+function isDefaultOrUnset(disease: string | undefined): boolean {
+    return disease === undefined || disease === defaultDisease;
 }

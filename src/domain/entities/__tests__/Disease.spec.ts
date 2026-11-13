@@ -1,6 +1,15 @@
 import { createPreventionStudy } from "../__fixtures__/studyFixtures";
-import { DENGUE, MALARIA, ORGANOPHOSPHATES, PYRETHROIDS } from "../__fixtures__/studyValues";
-import { defaultDisease, getDiseases, getInitialDisease, invitesAnophelesReports, keepIfOffered } from "../Disease";
+import { CARBAMATES, DENGUE, MALARIA, ORGANOPHOSPHATES, PYRETHROIDS } from "../__fixtures__/studyValues";
+import {
+    belongsToDisease,
+    checksOptionsOnMapChange,
+    defaultDisease,
+    getDiseases,
+    getInitialDisease,
+    invitesAnophelesReports,
+    isDiseaseSwitch,
+    pickOption,
+} from "../Disease";
 
 const studiesOf = (diseases: ReadonlyArray<string | null | undefined>) =>
     diseases.map(DISEASE => createPreventionStudy({ DISEASE }));
@@ -64,21 +73,79 @@ describe("Disease", () => {
         });
     });
 
-    describe("keepIfOffered", () => {
-        it("keeps the current value when the new disease offers it", () => {
-            expect(keepIfOffered(PYRETHROIDS, [ORGANOPHOSPHATES, PYRETHROIDS])).toBe(PYRETHROIDS);
+    describe("belongsToDisease", () => {
+        it("keeps no study while no disease is set, with or without the field", () => {
+            expect(studiesOf([MALARIA, DENGUE, undefined]).map(study => belongsToDisease(undefined, study))).toEqual([
+                false,
+                false,
+                false,
+            ]);
         });
 
-        it("takes the first value offered when the new disease does not offer the current one", () => {
-            expect(keepIfOffered(PYRETHROIDS, [ORGANOPHOSPHATES])).toBe(ORGANOPHOSPHATES);
+        it("keeps only the studies of the disease, and drops those with an empty or missing field", () => {
+            expect(
+                studiesOf([MALARIA, DENGUE, "", null, undefined]).map(study => belongsToDisease(MALARIA, study))
+            ).toEqual([true, false, false, false, false]);
+        });
+    });
+
+    describe("isDiseaseSwitch", () => {
+        it("is a switch from one disease to another", () => {
+            expect(isDiseaseSwitch(MALARIA, DENGUE)).toBe(true);
         });
 
-        it("takes the first value offered when there is no current value", () => {
-            expect(keepIfOffered(undefined, [ORGANOPHOSPHATES, PYRETHROIDS])).toBe(ORGANOPHOSPHATES);
+        it("is not a switch when the disease is set for the first time", () => {
+            expect(isDiseaseSwitch(undefined, MALARIA)).toBe(false);
         });
 
-        it("returns undefined when the new disease offers nothing", () => {
-            expect(keepIfOffered(PYRETHROIDS, [])).toBeUndefined();
+        it("is not a switch when the disease is unset", () => {
+            expect(isDiseaseSwitch(DENGUE, undefined)).toBe(false);
+        });
+
+        it("is not a switch when the disease stays the same", () => {
+            expect(isDiseaseSwitch(DENGUE, DENGUE)).toBe(false);
+        });
+    });
+
+    describe("checksOptionsOnMapChange", () => {
+        it("does not check while no disease is set, as the map does today", () => {
+            expect(checksOptionsOnMapChange(undefined)).toBe(false);
+        });
+
+        it("does not check for malaria", () => {
+            expect(checksOptionsOnMapChange(MALARIA)).toBe(false);
+        });
+
+        it("checks for another disease", () => {
+            expect(checksOptionsOnMapChange(DENGUE)).toBe(true);
+        });
+    });
+
+    describe("pickOption", () => {
+        it("keeps the current value when it is offered", () => {
+            expect(pickOption([CARBAMATES, ORGANOPHOSPHATES, PYRETHROIDS], PYRETHROIDS, ORGANOPHOSPHATES)).toBe(
+                ORGANOPHOSPHATES
+            );
+        });
+
+        it("takes the preferred value when the current one is not offered", () => {
+            expect(pickOption([CARBAMATES, PYRETHROIDS], PYRETHROIDS, ORGANOPHOSPHATES)).toBe(PYRETHROIDS);
+        });
+
+        it("takes the preferred value when there is no current value", () => {
+            expect(pickOption([CARBAMATES, PYRETHROIDS], PYRETHROIDS)).toBe(PYRETHROIDS);
+        });
+
+        it("takes the first option when neither the current nor the preferred value is offered", () => {
+            expect(pickOption([CARBAMATES, ORGANOPHOSPHATES], PYRETHROIDS)).toBe(CARBAMATES);
+        });
+
+        it("keeps the current value when nothing is offered, because the studies are not loaded yet", () => {
+            expect(pickOption([], PYRETHROIDS, ORGANOPHOSPHATES)).toBe(ORGANOPHOSPHATES);
+        });
+
+        it("takes the preferred value when nothing is offered and there is no current value", () => {
+            expect(pickOption([], PYRETHROIDS)).toBe(PYRETHROIDS);
         });
     });
 });
