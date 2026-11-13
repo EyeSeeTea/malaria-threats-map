@@ -1,22 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Source } from "../../store/actions/base-actions";
 import { State } from "../../store/types";
 import { selectInsecticideTypes } from "../../store/reducers/translations-reducer";
 import { setInsecticideTypes } from "../../store/actions/prevention-actions";
 import {
     selectFilteredPreventionStudies,
     selectPreventionFilters,
-    selectPreventionStudiesByMapTypeSelected,
+    selectPreventionStudiesOfMapTypeFrom,
 } from "../../store/reducers/prevention-reducer";
 import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import { filterByInsecticideClass } from "../layers/studies-filters";
 import { extractInsecticideTypeOptions } from "../../../domain/entities/PreventionStudy";
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State, { from }: OwnProps) => ({
     insecticideTypes: selectInsecticideTypes(state),
     preventionFilters: selectPreventionFilters(state),
-    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeFrom(state, from),
     filteredStudies: selectFilteredPreventionStudies(state),
 });
 
@@ -26,7 +27,8 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = { from: Source };
+type Props = DispatchProps & StateProps & OwnProps;
 
 const InsecticideTypeFilter: React.FC<Props> = ({
     preventionFilters,

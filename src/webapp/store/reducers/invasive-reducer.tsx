@@ -4,6 +4,7 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { InvasiveDataset, InvasiveMapType, InvasiveState, State } from "../types";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
+import { belongsToDisease } from "../../../domain/entities/Disease";
 
 const initialState: InvasiveState = Object.freeze({
     studies: [],
@@ -14,6 +15,7 @@ const initialState: InvasiveState = Object.freeze({
         mapType: InvasiveMapType.VECTOR_OCCURANCE,
         dataset: "INVASIVE_VECTOR_SPECIES",
         vectorSpecies: [],
+        disease: undefined,
     },
     selectionStudies: [],
 });
@@ -38,6 +40,10 @@ function updateSpecies(vectorSpecies: string[]) {
     return updateFilter("vectorSpecies", vectorSpecies, []);
 }
 
+function updateDisease(disease: string | undefined) {
+    return updateFilter("disease", disease);
+}
+
 export default createReducer<InvasiveState>(initialState, {
     [ActionTypeEnum.FetchInvasiveStudiesRequest]: () => (state: InvasiveState) => ({
         ...state,
@@ -55,6 +61,7 @@ export default createReducer<InvasiveState>(initialState, {
     }),
     [ActionTypeEnum.SetInvasiveDataset]: updateDataset,
     [ActionTypeEnum.SetInvasiveVectorSpecies]: updateSpecies,
+    [ActionTypeEnum.SetInvasiveDisease]: updateDisease,
     [ActionTypeEnum.SetInvasiveFilteredStudies]: (filteredStudies: InvasiveStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
 });
@@ -62,6 +69,10 @@ export default createReducer<InvasiveState>(initialState, {
 const selectInvasiveState = (state: State) => state.invasive;
 
 export const selectInvasiveStudies = createSelector(selectInvasiveState, invasiveState => invasiveState.studies);
+
+export const selectInvasiveStudiesOfDisease = createSelector(selectInvasiveState, invasiveState =>
+    invasiveState.studies.filter(study => belongsToDisease(invasiveState.filters.disease, study))
+);
 
 export const selectInvasiveStudiesLoading = createSelector(selectInvasiveState, invasiveState => invasiveState.loading);
 

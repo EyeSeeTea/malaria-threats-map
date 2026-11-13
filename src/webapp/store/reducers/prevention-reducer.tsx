@@ -4,6 +4,8 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { PreventionDataset, PreventionFilters, PreventionMapType, PreventionState, State } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
+import { belongsToDisease } from "../../../domain/entities/Disease";
+import { Source } from "../actions/base-actions";
 
 const initialFilters: PreventionFilters = {
     mapType: PreventionMapType.RESISTANCE_STATUS,
@@ -17,6 +19,7 @@ const initialFilters: PreventionFilters = {
     species: [],
     onlyByHealthMinistries: false,
     onlyIncludeBioassaysWithMoreMosquitoes: 0,
+    disease: undefined,
 };
 
 const initialState: PreventionState = Object.freeze({
@@ -97,6 +100,10 @@ function updateSynergistTypes(synergistTypes: string[]) {
 
 function updateSpecies(species: string[]) {
     return updateFilter("species", species, []);
+}
+
+function updateDisease(disease: string | undefined) {
+    return updateFilter("disease", disease);
 }
 
 function updateAssayTypes(assayTypes: string[]) {
@@ -215,6 +222,7 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.SetType]: updateType,
     [ActionTypeEnum.SetProxyType]: updateProxyType,
     [ActionTypeEnum.SetSpecies]: updateSpecies,
+    [ActionTypeEnum.SetPreventionDisease]: updateDisease,
     [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
     [ActionTypeEnum.SetPreventionSelectionStudies]: (studies: PreventionStudy[]) => (state: PreventionState) => ({
@@ -246,6 +254,19 @@ export const selectPreventionStudiesByMapTypeSelected = createSelector(selectPre
 
     return studiesByMapType[state.filters.mapType] ?? [];
 });
+
+export const selectPreventionStudiesOfMapTypeAndDisease = createSelector(
+    selectPreventionStudiesByMapTypeSelected,
+    selectPreventionState,
+    (studies, state) => studies.filter(study => belongsToDisease(state.filters.disease, study))
+);
+
+/** The studies a filter takes its options from: on the map, those of the chosen disease; in Data Download, all of them. */
+export function selectPreventionStudiesOfMapTypeFrom(state: State, from: Source): PreventionStudy[] {
+    return from === "map"
+        ? selectPreventionStudiesOfMapTypeAndDisease(state)
+        : selectPreventionStudiesByMapTypeSelected(state);
+}
 
 export const selectResistanceStatusStudies = createSelector(
     selectPreventionState,

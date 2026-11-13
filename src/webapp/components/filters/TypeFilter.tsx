@@ -2,10 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PreventionFilters, PreventionMapType, RegionState, State } from "../../store/types";
 import { selectTypes } from "../../store/reducers/translations-reducer";
-import {
-    selectPreventionFilters,
-    selectPreventionStudiesByMapTypeSelected,
-} from "../../store/reducers/prevention-reducer";
+import { selectPreventionFilters, selectPreventionStudiesOfMapTypeFrom } from "../../store/reducers/prevention-reducer";
 import { setType } from "../../store/actions/prevention-actions";
 import * as R from "ramda";
 import {
@@ -17,14 +14,14 @@ import {
     filterByYearRange,
 } from "../layers/studies-filters";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
-import { logEventAction } from "../../store/actions/base-actions";
+import { logEventAction, Source } from "../../store/actions/base-actions";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { useTranslation } from "react-i18next";
 import MultiFilter from "./common/MultiFilter";
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State, { from }: OwnProps) => ({
     types: selectTypes(state),
-    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeFrom(state, from),
     yearFilter: selectFilters(state),
     region: selectRegion(state),
     preventionFilters: selectPreventionFilters(state),
@@ -37,7 +34,8 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = { from: Source };
+type Props = DispatchProps & StateProps & OwnProps;
 
 export function getTypeFilterOptions(
     preventionFilters: PreventionFilters,

@@ -29,6 +29,10 @@ const resistanceMechanisms: ReadonlyArray<ResistanceMechanism> = [
 
 type SynergistTypeSource = Pick<PreventionStudy, "TYPE" | "ASSAY_TYPE">;
 
+type ProxyTypeSource = Pick<PreventionStudy, "PROXY_TYPE">;
+
+const notAvailable = "NA";
+
 /** The mechanisms among the codes, each once, in catalogue order. Codes outside the catalogue are dropped. */
 export function getMechanismOptions(codes: ReadonlyArray<string>): ReadonlyArray<string> {
     return _c([...resistanceMechanisms])
@@ -50,5 +54,21 @@ export function getSynergistTypes(studies: ReadonlyArray<SynergistTypeSource>): 
         .compact()
         .reject(type => type === "")
         .uniq()
+        .toArray();
+}
+
+/**
+ * The mechanisms the Level of involvement map offers: the translated PROXY_TYPE codes the studies of
+ * the chosen disease carry, NA left out, in the order of the translations.
+ */
+export function getInvolvementMechanisms(
+    translatedCodes: ReadonlyArray<string>,
+    studiesOfDisease: ReadonlyArray<ProxyTypeSource>
+): ReadonlyArray<string> {
+    const carried = studiesOfDisease.map(study => study.PROXY_TYPE);
+
+    return _c([...translatedCodes])
+        .reject(code => code === notAvailable)
+        .select(code => carried.includes(code))
         .toArray();
 }

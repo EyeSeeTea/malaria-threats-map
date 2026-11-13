@@ -14,12 +14,14 @@ const defaultPreventionFilters = (): PreventionFilters => ({
     species: [],
     onlyIncludeBioassaysWithMoreMosquitoes: 0,
     onlyByHealthMinistries: false,
+    disease: undefined,
 });
 
 const defaultInvasiveFilters = (): InvasiveFilters => ({
     mapType: InvasiveMapType.VECTOR_OCCURANCE,
     dataset: "INVASIVE_VECTOR_SPECIES",
     vectorSpecies: [],
+    disease: undefined,
 });
 
 export function createPreventionFilters(overrides: Partial<PreventionFilters> = {}): PreventionFilters {

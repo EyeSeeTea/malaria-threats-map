@@ -11,10 +11,10 @@ export default function LevelOfInvolvementFilters() {
     return (
         <div>
             <ProxyTypeFilter />
-            <InsecticideClassFilter />
-            <InsecticideTypeFilter />
+            <InsecticideClassFilter from="map" />
+            <InsecticideTypeFilter from="map" />
             <SynergistTypeFilter />
-            <SpeciesFilter />
+            <SpeciesFilter from="map" />
             <YearRangeSelector />
         </div>
     );

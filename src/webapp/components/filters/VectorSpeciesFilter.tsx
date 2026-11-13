@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
-import { selectInvasiveFilters, selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
+import { selectInvasiveFilters, selectInvasiveStudiesOfDisease } from "../../store/reducers/invasive-reducer";
 import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
@@ -14,7 +14,7 @@ import { legacyVectorSpecies } from "../../store/vectorSpeciesUrlValues";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
-    invasiveStudies: selectInvasiveStudies(state),
+    invasiveStudies: selectInvasiveStudiesOfDisease(state),
 });
 
 const mapDispatchToProps = {

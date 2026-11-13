@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import {
     selectPreventionFilters,
-    selectPreventionStudiesByMapTypeSelected,
+    selectPreventionStudiesOfMapTypeAndDisease,
 } from "../../store/reducers/prevention-reducer";
 import { setSynergistTypes } from "../../store/actions/prevention-actions";
 import MultiFilter from "./common/MultiFilter";
@@ -13,7 +13,7 @@ import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { getSynergistTypes } from "../../../domain/entities/ResistanceMechanism";
 
 const mapStateToProps = (state: State) => ({
-    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeAndDisease(state),
     preventionFilters: selectPreventionFilters(state),
 });
 

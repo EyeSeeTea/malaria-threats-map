@@ -3,7 +3,8 @@ import { ActionType } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
-import { skip, switchMap, withLatestFrom } from "rxjs/operators";
+import { filter, map, skip, switchMap, withLatestFrom } from "rxjs/operators";
+import { AnyAction } from "redux";
 
 import {
     buildPreventionStudiesEpic,
@@ -13,7 +14,20 @@ import {
 } from "./utils";
 import { PreventionMapType, State } from "../../types";
 import { getAnalyticsPageView } from "../../analytics";
-import { assayTypes, getAssayTypesDetecting } from "../../../../domain/entities/ResistanceMechanism";
+import {
+    assayTypes,
+    getAssayTypesDetecting,
+    getInvolvementMechanisms,
+    getMechanismOptions,
+} from "../../../../domain/entities/ResistanceMechanism";
+import { getSelectableInsecticideClasses } from "../../../../domain/entities/InsecticideClass";
+import _c from "../../../../domain/entities/generic/Collection";
+import {
+    belongsToDisease,
+    checksOptionsOnMapChange,
+    getInitialDisease,
+    pickOption,
+} from "../../../../domain/entities/Disease";
 import {
     logEventAction,
     logPageViewAction,
@@ -26,14 +40,108 @@ import {
     setAssayTypes,
     setInsecticideClass,
     setInsecticideTypes,
+    setPreventionDisease,
     setPreventionFilteredStudies,
     setPreventionMapType,
     setProxyType,
     setSpecies,
+    setSynergistTypes,
     setType,
 } from "../../actions/prevention-actions";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
+import { diseaseSwitches } from "../common/diseaseSwitches";
+import { selectPreventionStudies } from "../../reducers/prevention-reducer";
+import { selectProxyTypes } from "../../reducers/translations-reducer";
+import { Translation } from "../../../types/Translation";
+
+const defaultInsecticideClass = "PYRETHROIDS";
+const defaultMechanism = "MONO_OXYGENASES";
+
+const preventionStudiesLoaded = [
+    ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess,
+    ActionTypeEnum.FetchResistanceIntensityTypeStudiesSuccess,
+    ActionTypeEnum.FetchResistanceMechanismTypeStudiesSuccess,
+    ActionTypeEnum.FetchSynergistEffectTypeStudiesSuccess,
+] as const;
+
+type DiseaseOptions = Readonly<{
+    insecticideClasses: ReadonlyArray<string>;
+    mechanisms: ReadonlyArray<string>;
+    proxyTypes: ReadonlyArray<string>;
+}>;
+
+/** The options the filters of a map offer for the chosen disease, as the filters compute them. */
+function getDiseaseOptions(state: State, mapType: PreventionMapType): DiseaseOptions {
+    const { disease } = state.prevention.filters;
+    const studies = getStudiesByMapType(state, mapType).filter(study => belongsToDisease(disease, study));
+    const proxyTranslations: ReadonlyArray<Translation> = selectProxyTypes(state);
+    const translatedProxyTypes = proxyTranslations.map(translation => translation.VALUE_);
+
+    return {
+        insecticideClasses: getSelectableInsecticideClasses(
+            _c(studies)
+                .map(study => study.INSECTICIDE_CLASS)
+                .uniq()
+                .toArray()
+        ),
+        mechanisms: getMechanismOptions(studies.map(study => study.TYPE)),
+        proxyTypes: getInvolvementMechanisms(translatedProxyTypes, studies),
+    };
+}
+
+type MapChangeValues = Readonly<{
+    mechanism: string;
+    proxyType: string;
+    insecticideClass: ActionType<typeof setInsecticideClass> | null;
+}>;
+
+/**
+ * What a map change sets for the mechanism and the class. With malaria, or no disease, what it set
+ * before the disease filter: the default mechanism, and the class untouched. With another disease,
+ * the same values checked against the options of the new map for that disease.
+ */
+function getMapChangeValues(state: State, mapType: PreventionMapType): MapChangeValues {
+    const { disease, insecticideClass } = state.prevention.filters;
+    if (!checksOptionsOnMapChange(disease)) {
+        return { mechanism: defaultMechanism, proxyType: defaultMechanism, insecticideClass: null };
+    }
+
+    const options = getDiseaseOptions(state, mapType);
+    const checkedClass = pickOption(options.insecticideClasses, defaultInsecticideClass, insecticideClass);
+
+    return {
+        mechanism: pickOption(options.mechanisms, defaultMechanism),
+        proxyType: pickOption(options.proxyTypes, defaultMechanism),
+        insecticideClass: checkedClass === insecticideClass ? null : setInsecticideClass(checkedClass),
+    };
+}
+
+/**
+ * The top filter of the current map after a disease switch. The existing chain then empties the
+ * filters below it: class, insecticide types, test type or mechanism, species. On Resistance
+ * mechanisms the class is left alone, because the chain would empty the mechanism; the map change
+ * checks it later.
+ */
+function getActionsAfterDiseaseSwitch(state: State): ReadonlyArray<AnyAction> {
+    const { mapType } = state.prevention.filters;
+    const options = getDiseaseOptions(state, mapType);
+    const emptySynergistTypes = setSynergistTypes([]);
+    const insecticideClass = setInsecticideClass(pickOption(options.insecticideClasses, defaultInsecticideClass));
+
+    switch (mapType) {
+        case PreventionMapType.RESISTANCE_MECHANISM:
+            return [emptySynergistTypes, setType([pickOption(options.mechanisms, defaultMechanism)])];
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return [
+                emptySynergistTypes,
+                setProxyType(pickOption(options.proxyTypes, defaultMechanism)),
+                insecticideClass,
+            ];
+        default:
+            return [emptySynergistTypes, insecticideClass];
+    }
+}
 
 export const fetchAllPreventionStudiesEpic = buildPreventionStudiesEpic(
     ActionTypeEnum.FetchPreventionStudiesRequest,
@@ -91,14 +199,23 @@ export const setPreventionMapTypeEpic = (
                       })
                     : [];
 
+            const mapChange = getMapChangeValues(state, action.payload);
+
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(..._.compact([...dateResets, setType(["MONO_OXYGENASES"]), logPageView]));
+                return of(..._.compact([...dateResets, setType([mapChange.mechanism]), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
-                return of(..._.compact([...dateResets, setType(undefined), logPageView]));
+                return of(..._.compact([...dateResets, setType(undefined), mapChange.insecticideClass, logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
-                return of(..._.compact([...dateResets, setType(undefined), logPageView]));
+                return of(..._.compact([...dateResets, setType(undefined), mapChange.insecticideClass, logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-                return of(..._.compact([...dateResets, setProxyType("MONO_OXYGENASES"), logPageView]));
+                return of(
+                    ..._.compact([
+                        ...dateResets,
+                        setProxyType(mapChange.proxyType),
+                        mapChange.insecticideClass,
+                        logPageView,
+                    ])
+                );
             } else {
                 return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             }
@@ -223,4 +340,28 @@ export const setPreventionThemeEpic = (
                 return of(setInsecticideClass(null));
             }
         })
+    );
+
+export const setInitialPreventionDiseaseEpic = (action$: Observable<AnyAction>, state$: StateObservable<State>) =>
+    action$.pipe(
+        ofType(...preventionStudiesLoaded, ActionTypeEnum.SetPreventionDisease),
+        withLatestFrom(state$),
+        filter(([, state]) => state.prevention.filters.disease === undefined),
+        map(([, state]) => getInitialDisease(selectPreventionStudies(state))),
+        filter((disease): disease is string => disease !== undefined),
+        map(disease => setPreventionDisease(disease))
+    );
+
+export const resetPreventionFiltersOnDiseaseSwitchEpic = (
+    action$: Observable<ActionType<typeof setPreventionDisease>>,
+    state$: StateObservable<State>
+) =>
+    diseaseSwitches(
+        action$.pipe(
+            ofType(ActionTypeEnum.SetPreventionDisease),
+            map(action => action.payload)
+        )
+    ).pipe(
+        withLatestFrom(state$),
+        switchMap(([, state]) => of(...getActionsAfterDiseaseSwitch(state)))
     );

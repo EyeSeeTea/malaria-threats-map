@@ -15,7 +15,12 @@ import {
     UNKNOWN_MECHANISM,
     WHO_TEST_KIT,
 } from "../__fixtures__/studyValues";
-import { getAssayTypesDetecting, getMechanismOptions, getSynergistTypes } from "../ResistanceMechanism";
+import {
+    getAssayTypesDetecting,
+    getInvolvementMechanisms,
+    getMechanismOptions,
+    getSynergistTypes,
+} from "../ResistanceMechanism";
 
 const catalogueOrder = [MONO_OXYGENASES, ESTERASES, GSTS, KDR_L1014S, KDR_L1014F, KDR_UNSPECIFIED, ACE1R];
 
@@ -107,6 +112,33 @@ describe("ResistanceMechanism", () => {
 
         it("returns an empty list for no studies", () => {
             expect(getSynergistTypes([])).toEqual([]);
+        });
+    });
+
+    describe("getInvolvementMechanisms", () => {
+        const translatedCodes = [MONO_OXYGENASES, NOT_AVAILABLE, ESTERASES, GSTS];
+        const studiesOf = (proxyTypes: ReadonlyArray<string>) =>
+            proxyTypes.map(PROXY_TYPE => createPreventionStudy({ PROXY_TYPE }));
+
+        it("offers only the translated codes the studies carry, each once, in the order of the translations", () => {
+            expect(getInvolvementMechanisms(translatedCodes, studiesOf([GSTS, ESTERASES, GSTS]))).toEqual([
+                ESTERASES,
+                GSTS,
+            ]);
+        });
+
+        it("does not offer NA, even when the studies carry it", () => {
+            expect(getInvolvementMechanisms(translatedCodes, studiesOf([NOT_AVAILABLE, ESTERASES]))).toEqual([
+                ESTERASES,
+            ]);
+        });
+
+        it("offers nothing when there are no studies, as with no disease set", () => {
+            expect(getInvolvementMechanisms(translatedCodes, [])).toEqual([]);
+        });
+
+        it("does not offer a code the studies carry without a translation", () => {
+            expect(getInvolvementMechanisms([], studiesOf([ESTERASES]))).toEqual([]);
         });
     });
 });
