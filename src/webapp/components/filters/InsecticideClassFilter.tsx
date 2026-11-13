@@ -11,6 +11,7 @@ import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
 import _ from "lodash";
+import { getSelectableInsecticideClasses, sortInsecticideClasses } from "../../../domain/entities/InsecticideClass";
 
 const mapStateToProps = (state: State) => ({
     preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
@@ -26,28 +27,13 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-export const INSECTICIDE_CLASSES: string[] = [
-    "CARBAMATES",
-    "NEONICOTINOIDS",
-    "ORGANOCHLORINES",
-    "ORGANOPHOSPHATES",
-    "PYRETHROIDS",
-    "PYRROLES",
-];
-
-export function sortInsecticideClasses(insecticideClasses: string[]) {
-    return insecticideClasses.sort((a, b) =>
-        INSECTICIDE_CLASSES.indexOf(a) - INSECTICIDE_CLASSES.indexOf(b) > 0 ? 1 : -1
-    );
-}
+export { sortInsecticideClasses };
 
 export function getInsecticideClassOptions(insecticideClasses: string[]) {
-    return sortInsecticideClasses(insecticideClasses.filter(insecticideClass => insecticideClass !== "NA")).map(
-        insecticideClass => ({
-            value: insecticideClass,
-            label: i18next.t(insecticideClass),
-        })
-    );
+    return getSelectableInsecticideClasses(insecticideClasses).map(insecticideClass => ({
+        value: insecticideClass,
+        label: i18next.t(insecticideClass),
+    }));
 }
 
 function InsecticideClassFilter({ preventionStudiesOfMapType = [], preventionFilters, setInsecticideClass }: Props) {
