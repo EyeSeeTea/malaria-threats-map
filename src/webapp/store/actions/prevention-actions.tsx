@@ -61,6 +61,8 @@ export const setSynergistTypes = createAction(ActionTypeEnum.SetSynergistTypes)<
 
 export const setSpecies = createAction(ActionTypeEnum.SetSpecies)<string[]>();
 
+export const setPreventionDisease = createAction(ActionTypeEnum.SetPreventionDisease)<string | undefined>();
+
 export const setPreventionFilteredStudies = createAction(ActionTypeEnum.SetPreventionFilteredStudies)<
     PreventionStudy[]
 >();

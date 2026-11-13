@@ -14,6 +14,7 @@ const initialState: InvasiveState = Object.freeze({
         mapType: InvasiveMapType.VECTOR_OCCURANCE,
         dataset: "INVASIVE_VECTOR_SPECIES",
         vectorSpecies: [],
+        disease: undefined,
     },
     selectionStudies: [],
 });
@@ -38,6 +39,10 @@ function updateSpecies(vectorSpecies: string[]) {
     return updateFilter("vectorSpecies", vectorSpecies, []);
 }
 
+function updateDisease(disease: string | undefined) {
+    return updateFilter("disease", disease);
+}
+
 export default createReducer<InvasiveState>(initialState, {
     [ActionTypeEnum.FetchInvasiveStudiesRequest]: () => (state: InvasiveState) => ({
         ...state,
@@ -55,6 +60,7 @@ export default createReducer<InvasiveState>(initialState, {
     }),
     [ActionTypeEnum.SetInvasiveDataset]: updateDataset,
     [ActionTypeEnum.SetInvasiveVectorSpecies]: updateSpecies,
+    [ActionTypeEnum.SetInvasiveDisease]: updateDisease,
     [ActionTypeEnum.SetInvasiveFilteredStudies]: (filteredStudies: InvasiveStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
 });

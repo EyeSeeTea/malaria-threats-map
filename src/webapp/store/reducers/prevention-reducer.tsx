@@ -17,6 +17,7 @@ const initialFilters: PreventionFilters = {
     species: [],
     onlyByHealthMinistries: false,
     onlyIncludeBioassaysWithMoreMosquitoes: 0,
+    disease: undefined,
 };
 
 const initialState: PreventionState = Object.freeze({
@@ -97,6 +98,10 @@ function updateSynergistTypes(synergistTypes: string[]) {
 
 function updateSpecies(species: string[]) {
     return updateFilter("species", species, []);
+}
+
+function updateDisease(disease: string | undefined) {
+    return updateFilter("disease", disease);
 }
 
 function updateAssayTypes(assayTypes: string[]) {
@@ -215,6 +220,7 @@ export default createReducer<PreventionState>(initialState, {
     [ActionTypeEnum.SetType]: updateType,
     [ActionTypeEnum.SetProxyType]: updateProxyType,
     [ActionTypeEnum.SetSpecies]: updateSpecies,
+    [ActionTypeEnum.SetPreventionDisease]: updateDisease,
     [ActionTypeEnum.SetPreventionFilteredStudies]: (filteredStudies: PreventionStudy[]) =>
         R.assoc("filteredStudies", filteredStudies),
     [ActionTypeEnum.SetPreventionSelectionStudies]: (studies: PreventionStudy[]) => (state: PreventionState) => ({
