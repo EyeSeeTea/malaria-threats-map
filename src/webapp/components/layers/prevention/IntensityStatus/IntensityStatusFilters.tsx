@@ -10,10 +10,10 @@ import OnlyIncludeBioassaysWithMoreMosquitoesFilter from "../../../filters/OnlyI
 export default function IntensityStatusFilters() {
     return (
         <div>
-            <InsecticideClassFilter />
-            <InsecticideTypeFilter />
-            <TypeFilter />
-            <SpeciesFilter />
+            <InsecticideClassFilter from="map" />
+            <InsecticideTypeFilter from="map" />
+            <TypeFilter from="map" />
+            <SpeciesFilter from="map" />
             <YearRangeSelector />
             <OnlyIncludeBioassaysWithMoreMosquitoesFilter />
             <OnlyByHealthMinistriesFilter />

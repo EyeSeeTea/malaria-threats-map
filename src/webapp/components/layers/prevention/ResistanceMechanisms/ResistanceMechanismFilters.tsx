@@ -23,7 +23,7 @@ function ResistanceMechanismFilters({ preventionFilters }: Props) {
         <div>
             <MechanismTypeFilter from="map" />
             <AssayTypeCheckboxFilter />
-            <SpeciesFilter />
+            <SpeciesFilter from="map" />
             {isSynergyst(preventionFilters) && <SynergistTypeFilter />}
             <YearRangeSelector />
         </div>

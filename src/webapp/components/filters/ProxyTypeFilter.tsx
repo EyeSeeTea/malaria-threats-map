@@ -4,14 +4,19 @@ import { connect } from "react-redux";
 import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { selectProxyTypes } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import {
+    selectPreventionFilters,
+    selectPreventionStudiesOfMapTypeAndDisease,
+} from "../../store/reducers/prevention-reducer";
 import { setProxyType } from "../../store/actions/prevention-actions";
 import { logEventAction } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
+import { getInvolvementMechanisms } from "../../../domain/entities/ResistanceMechanism";
 
 const mapStateToProps = (state: State) => ({
     proxyTypes: selectProxyTypes(state),
     preventionFilters: selectPreventionFilters(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeAndDisease(state),
 });
 
 const mapDispatchToProps = {
@@ -23,7 +28,13 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function ProxyTypeFilter({ proxyTypes = [], preventionFilters, setProxyType, logEventAction }: Props) {
+function ProxyTypeFilter({
+    proxyTypes = [],
+    preventionFilters,
+    preventionStudiesOfMapType,
+    setProxyType,
+    logEventAction,
+}: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         const newValue = (event.target as HTMLInputElement).value;
@@ -33,12 +44,11 @@ function ProxyTypeFilter({ proxyTypes = [], preventionFilters, setProxyType, log
 
     const suggestions: Translation[] = proxyTypes as Translation[];
 
-    const options = suggestions
-        .filter(translation => translation.VALUE_ !== "NA")
-        .map(mechanism => ({
-            value: mechanism.VALUE_,
-            label: t(`PROXY_TYPE.${mechanism.VALUE_}`),
-        }));
+    const translatedCodes = suggestions.map(translation => translation.VALUE_);
+    const options = getInvolvementMechanisms(translatedCodes, preventionStudiesOfMapType).map(value => ({
+        value,
+        label: t(`PROXY_TYPE.${value}`),
+    }));
 
     return (
         <RadioGroupFilter

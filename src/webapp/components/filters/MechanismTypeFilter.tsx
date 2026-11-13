@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import {
     selectPreventionFilters,
-    selectPreventionStudiesByMapTypeSelected,
+    selectPreventionStudiesOfMapTypeAndDisease,
 } from "../../store/reducers/prevention-reducer";
 import { setType } from "../../store/actions/prevention-actions";
 import { logEventAction, Source } from "../../store/actions/base-actions";
@@ -18,7 +18,7 @@ import { getMechanismOptions } from "../../../domain/entities/ResistanceMechanis
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),
     preventionFilters: selectPreventionFilters(state),
-    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeAndDisease(state),
 });
 
 const mapDispatchToProps = {

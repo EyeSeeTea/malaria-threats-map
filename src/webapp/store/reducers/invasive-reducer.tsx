@@ -4,6 +4,7 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { InvasiveDataset, InvasiveMapType, InvasiveState, State } from "../types";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
+import { belongsToDisease } from "../../../domain/entities/Disease";
 
 const initialState: InvasiveState = Object.freeze({
     studies: [],
@@ -68,6 +69,10 @@ export default createReducer<InvasiveState>(initialState, {
 const selectInvasiveState = (state: State) => state.invasive;
 
 export const selectInvasiveStudies = createSelector(selectInvasiveState, invasiveState => invasiveState.studies);
+
+export const selectInvasiveStudiesOfDisease = createSelector(selectInvasiveState, invasiveState =>
+    invasiveState.studies.filter(study => belongsToDisease(invasiveState.filters.disease, study))
+);
 
 export const selectInvasiveStudiesLoading = createSelector(selectInvasiveState, invasiveState => invasiveState.loading);
 

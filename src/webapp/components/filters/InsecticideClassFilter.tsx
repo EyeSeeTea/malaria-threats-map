@@ -1,11 +1,12 @@
 import React from "react";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
+import { Source } from "../../store/actions/base-actions";
 import { useTranslation } from "react-i18next";
 import {
     selectFilteredPreventionStudies,
     selectPreventionFilters,
-    selectPreventionStudiesByMapTypeSelected,
+    selectPreventionStudiesOfMapTypeFrom,
 } from "../../store/reducers/prevention-reducer";
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
@@ -13,8 +14,8 @@ import i18next from "i18next";
 import _ from "lodash";
 import { getSelectableInsecticideClasses, sortInsecticideClasses } from "../../../domain/entities/InsecticideClass";
 
-const mapStateToProps = (state: State) => ({
-    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+const mapStateToProps = (state: State, { from }: OwnProps) => ({
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeFrom(state, from),
     preventionFilters: selectPreventionFilters(state),
     filteredStudies: selectFilteredPreventionStudies(state),
 });
@@ -25,7 +26,8 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = { from: Source };
+type Props = DispatchProps & StateProps & OwnProps;
 
 export { sortInsecticideClasses };
 
