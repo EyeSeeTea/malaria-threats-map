@@ -24,6 +24,7 @@ import {
     INTENSITY,
     KDR_L1014F,
     KDR_L1014S,
+    MALARIA,
     MINISTRY_OF_HEALTH,
     MOLECULAR,
     MONO_OXYGENASES,
@@ -88,6 +89,7 @@ function survivingInvasive(
 function bioassayStudy(code: string, overrides: Partial<PreventionStudy> = {}): PreventionStudy {
     return createPreventionStudy({
         Code: code,
+        DISEASE: MALARIA,
         INSECTICIDE_CLASS: PYRETHROIDS,
         INSECTICIDE_TYPE: DELTAMETHRIN,
         TYPE: WHO_TEST_KIT,
@@ -101,8 +103,13 @@ function bioassayStudy(code: string, overrides: Partial<PreventionStudy> = {}): 
     });
 }
 
+/** An invasive study of malaria, the disease the filters of these tests are set to. */
+const invasiveStudy = (overrides: Partial<InvasiveStudy>): InvasiveStudy =>
+    createInvasiveStudy({ DISEASE: MALARIA, ...overrides });
+
 const bioassayFilters = (overrides: Partial<PreventionFilters>) =>
     createPreventionFilters({
+        disease: MALARIA,
         insecticideClass: PYRETHROIDS,
         insecticideTypes: [DELTAMETHRIN],
         type: [WHO_TEST_KIT],
@@ -292,16 +299,16 @@ describe("studies-filters chains", () => {
 
     describe("map, invasive", () => {
         const studies = [
-            createInvasiveStudy({ Code: KEPT }),
-            createInvasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
-            createInvasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: OUTSIDE_YEAR }),
-            createInvasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
-            createInvasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
-            createInvasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
+            invasiveStudy({ Code: KEPT }),
+            invasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
+            invasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: OUTSIDE_YEAR }),
+            invasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
+            invasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
+            invasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
         ];
 
         it("Vector occurrence filters by species, year range allowing no year, and region", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
+            const filters = createInvasiveFilters({ disease: MALARIA, vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
             expect(survivingInvasive(studies, filters)).toEqual([KEPT, WITHOUT_YEAR, NOT_DOWNLOADABLE]);
         });
@@ -464,16 +471,16 @@ describe("studies-filters chains", () => {
 
     describe("download, invasive", () => {
         const studies = [
-            createInvasiveStudy({ Code: KEPT }),
-            createInvasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
-            createInvasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
-            createInvasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: OUTSIDE_YEAR }),
-            createInvasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
-            createInvasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
+            invasiveStudy({ Code: KEPT }),
+            invasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
+            invasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
+            invasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: OUTSIDE_YEAR }),
+            invasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
+            invasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
         ];
 
         it("Vector occurrence adds the download flag to the map chain", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
+            const filters = createInvasiveFilters({ disease: MALARIA, vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
             expect(survivingInvasive(studies, filters, DOWNLOAD)).toEqual([KEPT, WITHOUT_YEAR]);
         });

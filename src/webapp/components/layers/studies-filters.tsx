@@ -19,6 +19,7 @@ import { Source } from "../../store/actions/base-actions";
 import { MOLECULAR_MARKERS_MAP } from "./treatment/MolecularMarkersOngoingStudies/utils";
 import { Study } from "../../../domain/entities/Study";
 import { isNA } from "../../utils/number-utils";
+import { belongsToDisease } from "../../../domain/entities/Disease";
 
 export const DELETION_TYPES = {
     HRP2_PROPORTION_DELETION: {
@@ -259,6 +260,8 @@ export const filterByDrugs = (drugs: string[]) => (study: any) => {
     return !drugs.length || drugs.includes(study.DRUG_NAME);
 };
 
+export const filterByDisease = (disease: string | undefined) => (study: Study) => belongsToDisease(disease, study);
+
 export const filterByVectorSpecies = (species: string[]) => (study: any) => {
     return !species.length || species.includes(study.VECTOR_SPECIES);
 };
@@ -344,12 +347,13 @@ function buildInvasiveFiltersByMap(invasiveFilters: InvasiveFilters, filters: nu
     switch (invasiveFilters.mapType) {
         case InvasiveMapType.VECTOR_OCCURANCE:
             return [
+                filterByDisease(invasiveFilters.disease),
                 filterByVectorSpecies(invasiveFilters.vectorSpecies),
                 filterByYearRange(filters, true),
                 filterByRegion(region),
             ];
         default:
-            return [filterByRegion(region)];
+            return [filterByDisease(invasiveFilters.disease), filterByRegion(region)];
     }
 }
 
@@ -492,6 +496,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
     switch (preventionFilters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS:
             return [
+                filterByDisease(preventionFilters.disease),
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
                 filterByTypes(preventionFilters.type),
@@ -506,6 +511,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
             ];
         case PreventionMapType.INTENSITY_STATUS:
             return [
+                filterByDisease(preventionFilters.disease),
                 filterValidResistanceIntensityValue,
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
@@ -520,6 +526,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
             ];
         case PreventionMapType.RESISTANCE_MECHANISM: {
             const base = [
+                filterByDisease(preventionFilters.disease),
                 filterByTypes(preventionFilters.type),
                 filterBySpecies(preventionFilters.species),
                 filterByAssayTypes(preventionFilters.assayTypes),
@@ -532,6 +539,7 @@ function buildPreventionFiltersByMap(preventionFilters: PreventionFilters, filte
         }
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
+                filterByDisease(preventionFilters.disease),
                 filterByProxyType(preventionFilters.proxyType),
                 filterByInsecticideClass(preventionFilters.insecticideClass),
                 filterByInsecticideTypes(preventionFilters.insecticideTypes),
