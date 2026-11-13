@@ -5,6 +5,7 @@ import { catchError, filter, map, mergeMap, switchMap, withLatestFrom } from "rx
 import { ofType, StateObservable } from "redux-observable";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { getMinMaxYears, Study } from "../../../../domain/entities/Study";
+import { belongsToDisease } from "../../../../domain/entities/Disease";
 import { Option } from "../../../components/BasicSelect";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { isNA, isNotNull, isNR } from "../../../utils/number-utils";
@@ -602,3 +603,7 @@ export const getStudiesByMapType = (state: State, mapType: PreventionMapType): P
     };
     return studiesByMapType[mapType] || [];
 };
+
+/** The studies of the map type that belong to the chosen disease: those the map and its side panel show. */
+export const getStudiesOfDiseaseByMapType = (state: State, mapType: PreventionMapType): PreventionStudy[] =>
+    getStudiesByMapType(state, mapType).filter(study => belongsToDisease(state.prevention.filters.disease, study));

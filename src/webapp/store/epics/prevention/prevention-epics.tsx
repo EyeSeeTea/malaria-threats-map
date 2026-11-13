@@ -10,6 +10,7 @@ import {
     buildPreventionStudiesEpic,
     createPreventionSelectionData,
     getStudiesByMapType,
+    getStudiesOfDiseaseByMapType,
     REQUESTED_VIR_START_DATE,
 } from "./utils";
 import { PreventionMapType, State } from "../../types";
@@ -22,12 +23,7 @@ import {
 } from "../../../../domain/entities/ResistanceMechanism";
 import { getSelectableInsecticideClasses } from "../../../../domain/entities/InsecticideClass";
 import _c from "../../../../domain/entities/generic/Collection";
-import {
-    belongsToDisease,
-    checksOptionsOnMapChange,
-    getInitialDisease,
-    pickOption,
-} from "../../../../domain/entities/Disease";
+import { checksOptionsOnMapChange, getInitialDisease, pickOption } from "../../../../domain/entities/Disease";
 import {
     logEventAction,
     logPageViewAction,
@@ -73,8 +69,7 @@ type DiseaseOptions = Readonly<{
 
 /** The options the filters of a map offer for the chosen disease, as the filters compute them. */
 function getDiseaseOptions(state: State, mapType: PreventionMapType): DiseaseOptions {
-    const { disease } = state.prevention.filters;
-    const studies = getStudiesByMapType(state, mapType).filter(study => belongsToDisease(disease, study));
+    const studies = getStudiesOfDiseaseByMapType(state, mapType);
     const proxyTranslations: ReadonlyArray<Translation> = selectProxyTypes(state);
     const translatedProxyTypes = proxyTranslations.map(translation => translation.VALUE_);
 
@@ -279,7 +274,7 @@ export const setPreventionFilteredStudiesEpic = (
         withLatestFrom(state$),
         switchMap(([, state]) => {
             const mapType = state.prevention.filters.mapType;
-            const nonFilteredStudies = getStudiesByMapType(state, mapType);
+            const nonFilteredStudies = getStudiesOfDiseaseByMapType(state, mapType);
 
             const selectionData = createPreventionSelectionData(
                 state.malaria.theme,

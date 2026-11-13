@@ -35,7 +35,7 @@ import { fetchCountryLayerRequest } from "../actions/country-layer-actions";
 import { fromFuture } from "./utils";
 import { EpicDependencies } from "..";
 import { ActionTypeEnum } from "../actions";
-import { createPreventionSelectionData, getStudiesByMapType } from "./prevention/utils";
+import { createPreventionSelectionData, getStudiesOfDiseaseByMapType } from "./prevention/utils";
 import { createDiagnosisSelectionData } from "./diagnosis/utils";
 import { createInvasiveSelectionData } from "./invasive/utils";
 import { createTreatmentSelectionData } from "./treatment/utils";
@@ -288,7 +288,7 @@ function buildSelectionDataFromState(state: State): SelectionData | null {
                 mapType,
                 state.malaria.selection,
                 state.prevention.filteredStudies,
-                getStudiesByMapType(state, mapType)
+                getStudiesOfDiseaseByMapType(state, mapType)
             );
         }
         case "diagnosis":
@@ -342,7 +342,7 @@ export const setSelectionDataFilterSelectionEpic = (
             switch (state.malaria.theme) {
                 case "prevention": {
                     const mapType = state.prevention.filters.mapType;
-                    const nonFilteredStudies = getStudiesByMapType(state, mapType);
+                    const nonFilteredStudies = getStudiesOfDiseaseByMapType(state, mapType);
 
                     const selectionData = createPreventionSelectionData(
                         state.malaria.theme,
