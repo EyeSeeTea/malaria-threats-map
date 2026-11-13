@@ -2,13 +2,16 @@ import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
-import { catchError, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { catchError, filter, map, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { AnyAction } from "redux";
 import {
     fetchInvasiveStudiesError,
     fetchInvasiveStudiesRequest,
     fetchInvasiveStudiesSuccess,
+    setInvasiveDisease,
     setInvasiveFilteredStudiesAction,
     setInvasiveMapType,
+    setInvasiveVectorSpecies,
 } from "../../actions/invasive-actions";
 import {
     setFiltersAction,
@@ -26,6 +29,8 @@ import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { createInvasiveSelectionData } from "./utils";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
+import { getInitialDisease } from "../../../../domain/entities/Disease";
+import { diseaseSwitches } from "../common/diseaseSwitches";
 
 export const getInvasiveStudiesEpic = (
     action$: Observable<ActionType<typeof fetchInvasiveStudiesRequest>>,
@@ -104,3 +109,21 @@ export const setInvasiveFilteredStudiesEpic = (
             return of(setSelectionData(null), setSelectionData(selectionData));
         })
     );
+
+export const setInitialInvasiveDiseaseEpic = (action$: Observable<AnyAction>, state$: StateObservable<State>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchInvasiveStudiesSuccess, ActionTypeEnum.SetInvasiveDisease),
+        withLatestFrom(state$),
+        filter(([, state]) => state.invasive.filters.disease === undefined),
+        map(([, state]) => getInitialDisease(state.invasive.studies)),
+        filter((disease): disease is string => disease !== undefined),
+        map(disease => setInvasiveDisease(disease))
+    );
+
+export const resetInvasiveFiltersOnDiseaseSwitchEpic = (action$: Observable<ActionType<typeof setInvasiveDisease>>) =>
+    diseaseSwitches(
+        action$.pipe(
+            ofType(ActionTypeEnum.SetInvasiveDisease),
+            map(action => action.payload)
+        )
+    ).pipe(map(() => setInvasiveVectorSpecies([])));
