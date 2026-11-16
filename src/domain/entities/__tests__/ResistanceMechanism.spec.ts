@@ -1,17 +1,17 @@
 import { createPreventionStudy } from "../__fixtures__/studyFixtures";
 import {
     ACE1R,
-    BIOCHEMICAL,
+    BIOCHEMICAL_ASSAY,
     CDC_BOTTLE,
     ESTERASES,
     GSTS,
     KDR_L1014F,
     KDR_L1014S,
     KDR_UNSPECIFIED,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     NOT_AVAILABLE,
-    SYNERGIST,
+    SYNERGIST_ASSAY,
     UNKNOWN_MECHANISM,
     WHO_TEST_KIT,
 } from "../__fixtures__/studyValues";
@@ -54,15 +54,15 @@ describe("ResistanceMechanism", () => {
 
     describe("getAssayTypesDetecting", () => {
         it.each([MONO_OXYGENASES, ESTERASES, GSTS])("%s is detected by the three assay types", mechanism => {
-            expect(getAssayTypesDetecting(mechanism)).toEqual([MOLECULAR, BIOCHEMICAL, SYNERGIST]);
+            expect(getAssayTypesDetecting(mechanism)).toEqual([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY]);
         });
 
         it.each([KDR_L1014S, KDR_L1014F, KDR_UNSPECIFIED])("%s is detected only by the molecular assay", mechanism => {
-            expect(getAssayTypesDetecting(mechanism)).toEqual([MOLECULAR]);
+            expect(getAssayTypesDetecting(mechanism)).toEqual([MOLECULAR_ASSAY]);
         });
 
         it("ACE1R is detected by the molecular and biochemical assays", () => {
-            expect(getAssayTypesDetecting(ACE1R)).toEqual([MOLECULAR, BIOCHEMICAL]);
+            expect(getAssayTypesDetecting(ACE1R)).toEqual([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY]);
         });
 
         it("returns undefined for a mechanism outside the catalogue", () => {
@@ -80,10 +80,10 @@ describe("ResistanceMechanism", () => {
 
         it("returns the test types of the synergist bioassays only", () => {
             const studies = [
-                study(SYNERGIST, WHO_TEST_KIT),
-                study(MOLECULAR, MONO_OXYGENASES),
-                study(BIOCHEMICAL, ESTERASES),
-                study(SYNERGIST, CDC_BOTTLE),
+                study(SYNERGIST_ASSAY, WHO_TEST_KIT),
+                study(MOLECULAR_ASSAY, MONO_OXYGENASES),
+                study(BIOCHEMICAL_ASSAY, ESTERASES),
+                study(SYNERGIST_ASSAY, CDC_BOTTLE),
             ];
 
             expect(getSynergistTypes(studies)).toEqual([WHO_TEST_KIT, CDC_BOTTLE]);
@@ -91,18 +91,22 @@ describe("ResistanceMechanism", () => {
 
         it("returns each test type once, in the order it first appears", () => {
             const studies = [
-                study(SYNERGIST, CDC_BOTTLE),
-                study(SYNERGIST, WHO_TEST_KIT),
-                study(SYNERGIST, CDC_BOTTLE),
+                study(SYNERGIST_ASSAY, CDC_BOTTLE),
+                study(SYNERGIST_ASSAY, WHO_TEST_KIT),
+                study(SYNERGIST_ASSAY, CDC_BOTTLE),
             ];
 
             expect(getSynergistTypes(studies)).toEqual([CDC_BOTTLE, WHO_TEST_KIT]);
         });
 
         it("leaves out empty and missing test types", () => {
-            const studies = [study(SYNERGIST, ""), study(SYNERGIST, null), study(SYNERGIST, undefined)];
+            const studies = [
+                study(SYNERGIST_ASSAY, ""),
+                study(SYNERGIST_ASSAY, null),
+                study(SYNERGIST_ASSAY, undefined),
+            ];
 
-            expect(getSynergistTypes([...studies, study(SYNERGIST, WHO_TEST_KIT)])).toEqual([WHO_TEST_KIT]);
+            expect(getSynergistTypes([...studies, study(SYNERGIST_ASSAY, WHO_TEST_KIT)])).toEqual([WHO_TEST_KIT]);
         });
 
         it("returns an empty list for no studies", () => {

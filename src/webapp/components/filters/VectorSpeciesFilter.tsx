@@ -8,9 +8,12 @@ import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { Option } from "../BasicSelect";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
-import { getVectorSpecies } from "../../../domain/entities/VectorSpecies";
+import {
+    getVectorSpecies,
+    legacyVectorSpecies,
+    legacyVectorSpeciesValues,
+} from "../../../domain/entities/VectorSpecies";
 import { Source } from "../../store/actions/base-actions";
-import { legacyVectorSpecies } from "../../store/vectorSpeciesUrlValues";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
@@ -40,6 +43,18 @@ export function getVectorSpeciesOptions(studies: ReadonlyArray<InvasiveStudy>, f
     return values.map(value => ({ label: getVectorSpeciesLabel(value), value }));
 }
 
+/** Data Download offers only its 5 species, so it drops any other species selected on the map. */
+export function keepVectorSpeciesOfferedOnDataDownload(selected: ReadonlyArray<string>): string[] {
+    return selected.filter(species => legacyVectorSpecies.includes(species));
+}
+
+/** Analytics keep receiving the code a species had before they came from the data, so its reports do not split. */
+export function getVectorSpeciesAnalyticsLabel(species: string): string {
+    const legacyCode = Array.from(legacyVectorSpeciesValues.entries()).find(([, value]) => value === species)?.[0];
+
+    return legacyCode ?? species;
+}
+
 const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies, setVectorSpecies, from }) => {
     const { t } = useTranslation();
 
@@ -51,6 +66,7 @@ const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}
+            analyticsLabel={getVectorSpeciesAnalyticsLabel}
             optionsStyle={{ fontStyle: "italic" }}
         />
     );
