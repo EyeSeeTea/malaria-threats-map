@@ -39,14 +39,6 @@ export function isDiseaseSwitch(previous: string | undefined, next: string | und
 }
 
 /**
- * Whether a map change checks the class and the mechanism against the options of the disease.
- * Malaria, and no disease, keep the behaviour the maps had before the disease filter.
- */
-export function checksOptionsOnMapChange(disease: string | undefined): boolean {
-    return !isDefaultOrUnset(disease);
-}
-
-/**
  * The value a single-choice filter takes among the options of a disease: the current value if
  * offered, otherwise the preferred one if offered, otherwise the first option. With no options,
  * because the studies are not loaded yet, the current value, or else the preferred one.

@@ -23,7 +23,7 @@ import {
 } from "../../../../domain/entities/ResistanceMechanism";
 import { getSelectableInsecticideClasses } from "../../../../domain/entities/InsecticideClass";
 import _c from "../../../../domain/entities/generic/Collection";
-import { checksOptionsOnMapChange, getInitialDisease, pickOption } from "../../../../domain/entities/Disease";
+import { getInitialDisease, isDefaultOrUnset, pickOption } from "../../../../domain/entities/Disease";
 import {
     logEventAction,
     logPageViewAction,
@@ -98,7 +98,7 @@ type MapChangeValues = Readonly<{
  */
 function getMapChangeValues(state: State, mapType: PreventionMapType): MapChangeValues {
     const { disease, insecticideClass } = state.prevention.filters;
-    if (!checksOptionsOnMapChange(disease)) {
+    if (isDefaultOrUnset(disease)) {
         return { mechanism: defaultMechanism, proxyType: defaultMechanism, insecticideClass: null };
     }
 

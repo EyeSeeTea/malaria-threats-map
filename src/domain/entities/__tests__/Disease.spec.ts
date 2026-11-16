@@ -2,7 +2,6 @@ import { createPreventionStudy } from "../__fixtures__/studyFixtures";
 import { CARBAMATES, DENGUE, MALARIA, ORGANOPHOSPHATES, PYRETHROIDS } from "../__fixtures__/studyValues";
 import {
     belongsToDisease,
-    checksOptionsOnMapChange,
     defaultDisease,
     getDiseases,
     getInitialDisease,
@@ -104,20 +103,6 @@ describe("Disease", () => {
 
         it("is not a switch when the disease stays the same", () => {
             expect(isDiseaseSwitch(DENGUE, DENGUE)).toBe(false);
-        });
-    });
-
-    describe("checksOptionsOnMapChange", () => {
-        it("does not check while no disease is set, as the map does today", () => {
-            expect(checksOptionsOnMapChange(undefined)).toBe(false);
-        });
-
-        it("does not check for malaria", () => {
-            expect(checksOptionsOnMapChange(MALARIA)).toBe(false);
-        });
-
-        it("checks for another disease", () => {
-            expect(checksOptionsOnMapChange(DENGUE)).toBe(true);
         });
     });
 
