@@ -10,7 +10,6 @@ import {
     INVASIVE_STUDY_REGION,
     MAP,
     PREVENTION_STUDY_REGION,
-    STEPHENSI_TYPE_FORM_KEY,
     YEAR_BEFORE_RANGE,
 } from "../../../store/__fixtures__/filtersFixtures";
 import { InvasiveFilters, PreventionDataset, PreventionFilters, PreventionMapType } from "../../../store/types";
@@ -42,6 +41,7 @@ import {
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
     SYNERGIST_ASSAY,
+    STEPHENSI_TYPE_FORM,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
@@ -320,7 +320,7 @@ describe("studies-filters chains", () => {
         ];
 
         it("Vector occurrence filters by species, year range allowing no year, and region", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
             expect(codesKeptByInvasiveChain(studies, filters)).toEqual([KEPT, WITHOUT_YEAR, NOT_DOWNLOADABLE]);
         });
@@ -497,7 +497,7 @@ describe("studies-filters chains", () => {
         ];
 
         it("Vector occurrence adds the download flag to the map chain", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
             expect(codesKeptByInvasiveChain(studies, filters, DOWNLOAD)).toEqual([KEPT, WITHOUT_YEAR]);
         });

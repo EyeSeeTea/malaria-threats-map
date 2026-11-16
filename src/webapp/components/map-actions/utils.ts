@@ -22,7 +22,7 @@ import { invasiveSuggestions } from "../filters/InvasiveMapTypesSelector";
 import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilter";
 import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
 import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
-import { suggestions } from "../filters/VectorSpeciesFilter";
+import { getVectorSpeciesLabel } from "../filters/VectorSpeciesFilter";
 import { MOLECULAR_MARKERS_LABELS } from "../layers/treatment/MolecularMarkersOngoingStudies/utils";
 
 export function getValueLabelFilters(
@@ -137,10 +137,7 @@ export function invasiveValueLabelFilters(
 ) {
     const years = getYearsSummary(maxMinYears, yearFilters);
 
-    const vectorSpecies = invasiveFilters.vectorSpecies.map(item => {
-        const vectorSpecie = suggestions().find(sug => sug.value === item);
-        return vectorSpecie.label;
-    });
+    const vectorSpecies = invasiveFilters.vectorSpecies.map(item => getVectorSpeciesLabel(item));
 
     return {
         years,
@@ -508,10 +505,7 @@ export function invasiveFiltersToString(
 
     const vectorSpecies = buildFilters(
         "vectorSpecies",
-        invasiveFilters.vectorSpecies.map(item => {
-            const vectorSpecie = suggestions().find(sug => sug.value === item);
-            return vectorSpecie.label;
-        })
+        invasiveFilters.vectorSpecies.map(item => getVectorSpeciesLabel(item))
     );
 
     return _.compact([...vectorSpecies, years]).join(" | ");

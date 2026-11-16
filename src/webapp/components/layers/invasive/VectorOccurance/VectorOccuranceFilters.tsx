@@ -9,7 +9,7 @@ export default function VectorOccuranceFilters() {
     const { t } = useTranslation();
     return (
         <>
-            <VectorSpeciesFilter />
+            <VectorSpeciesFilter from="map" />
             <YearRangeSelector />
             <Snackbar>
                 <Trans i18nKey="common.invasive.legend.vector_occurrance.link_content_1">

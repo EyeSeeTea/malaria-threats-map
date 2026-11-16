@@ -8,12 +8,12 @@ import {
 } from "../../../../../domain/entities/__fixtures__/studyFixtures";
 import {
     DJIBOUTI,
-    INVASIVE,
+    INVASIVE_STATUS_INVASIVE,
+    INVASIVE_STATUS_NATIVE,
+    INVASIVE_STATUS_NOT_FOUND,
     LARVAL_SAMPLING,
     MORPHOLOGY,
-    NATIVE,
     NOT_AVAILABLE,
-    NOT_FOUND,
     NOT_REPORTED,
     STEPHENSI,
     STEPHENSI_TYPE_FORM,
@@ -128,10 +128,10 @@ describe("createInvasiveSelectionData", () => {
         // which may or may not be the wanted order.
         it("puts the invasive status first and the year second, so an older invasive study comes before a recent native one", () => {
             const studies = [
-                invasiveStudy(NATIVE_2022, { YEAR_START: 2022, INVASIVE_STATUS: NATIVE }),
-                invasiveStudy(INVASIVE_2019, { YEAR_START: 2019, INVASIVE_STATUS: INVASIVE }),
-                invasiveStudy(NATIVE_2021, { YEAR_START: 2021, INVASIVE_STATUS: NATIVE }),
-                invasiveStudy(NOT_FOUND_2023, { YEAR_START: 2023, INVASIVE_STATUS: NOT_FOUND }),
+                invasiveStudy(NATIVE_2022, { YEAR_START: 2022, INVASIVE_STATUS: INVASIVE_STATUS_NATIVE }),
+                invasiveStudy(INVASIVE_2019, { YEAR_START: 2019, INVASIVE_STATUS: INVASIVE_STATUS_INVASIVE }),
+                invasiveStudy(NATIVE_2021, { YEAR_START: 2021, INVASIVE_STATUS: INVASIVE_STATUS_NATIVE }),
+                invasiveStudy(NOT_FOUND_2023, { YEAR_START: 2023, INVASIVE_STATUS: INVASIVE_STATUS_NOT_FOUND }),
             ];
 
             expect(selectionData(studies).data.map(row => row.code)).toEqual([
@@ -145,8 +145,8 @@ describe("createInvasiveSelectionData", () => {
         it("takes the title from the first study of that order", () => {
             const invasiveVillage = "Invasive village";
             const studies = [
-                invasiveStudy("native", { INVASIVE_STATUS: NATIVE, VILLAGE_NAME: "Native village" }),
-                invasiveStudy("invasive", { INVASIVE_STATUS: INVASIVE, VILLAGE_NAME: invasiveVillage }),
+                invasiveStudy("native", { INVASIVE_STATUS: INVASIVE_STATUS_NATIVE, VILLAGE_NAME: "Native village" }),
+                invasiveStudy("invasive", { INVASIVE_STATUS: INVASIVE_STATUS_INVASIVE, VILLAGE_NAME: invasiveVillage }),
             ];
 
             expect(selectionData(studies).title).toBe(`${invasiveVillage}, ${DJIBOUTI.ISO2}`);

@@ -18,6 +18,24 @@ export const GAMBIAE = "An. gambiae s.l.";
 export const FUNESTUS = "An. funestus s.l.";
 export const ARABIENSIS = "An. arabiensis";
 
+export const STEPHENSI = "An. stephensi";
+export const STEPHENSI_TYPE_FORM = "An. stephensi type form";
+export const STEPHENSI_MYSORENSIS = "An. stephensi mysorensis";
+export const STEPHENSI_INTERMEDIATE_FORM = "An. stephensi intermediate form";
+export const STEPHENSI_NOT_FOUND = "An. stephensi (not found)";
+
+/** The codes the app gave the 5 An. stephensi species before they came from the data. Old links still carry them. */
+export const STEPHENSI_TYPE_FORM_KEY = "AN_STEPHENSI_TYPE_FORM";
+export const STEPHENSI_MYSORENSIS_KEY = "AN_STEPHENSI_MYSORENSIS";
+export const STEPHENSI_INTERMEDIATE_FORM_KEY = "AN_STEPHENSI_INTERMEDIATE_FORM";
+export const STEPHENSI_FORM_UNSPECIFIED_KEY = "AN_STEPHENSI_FORM_UNSPECIFIED";
+export const STEPHENSI_NOT_FOUND_KEY = "AN_STEPHENSI_NOT_FOUND";
+
+export const INVASIVE_STATUS_INVASIVE = "Invasive";
+export const INVASIVE_STATUS_NATIVE = "Native";
+export const INVASIVE_STATUS_NOT_FOUND = "Not found";
+export const INVASIVE_STATUS_UNKNOWN = "UNKNOWN";
+
 export const MONO_OXYGENASES = "MONO_OXYGENASES";
 export const ESTERASES = "ESTERASES";
 export const GSTS = "GSTS";
@@ -54,13 +72,8 @@ export const MODERATE_TO_HIGH_INTENSITY = "MODERATE_TO_HIGH_INTENSITY";
 export const LOW_INTENSITY = "LOW_INTENSITY";
 export const NOT_ASSESSED = "COULD_NOT_BE_RELIABLY_ASSESSED";
 
-export const INVASIVE = "Invasive";
-export const NATIVE = "Native";
-export const NOT_FOUND = "Not found";
+/** A mechanism status the site colour order does not list. Any value missing from that order would do. */
 export const UNKNOWN_STATUS = "UNKNOWN";
-
-export const STEPHENSI = "An. stephensi";
-export const STEPHENSI_TYPE_FORM = "An. stephensi type form";
 
 export const LARVAL_SAMPLING = "LARVAL_SAMPLING";
 export const MORPHOLOGY = "MORPHOLOGY";

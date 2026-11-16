@@ -20,9 +20,6 @@ export const INVASIVE_THEME: MapTheme = "invasive";
 export const MAP: Source = "map";
 export const DOWNLOAD: Source = "download";
 
-/** The vector species key the invasive filter sets for An. stephensi type form. */
-export const STEPHENSI_TYPE_FORM_KEY = "AN_STEPHENSI_TYPE_FORM";
-
 /** A year before the range of createYearFilter. */
 export const YEAR_BEFORE_RANGE = 2015;
 

@@ -15,6 +15,8 @@ type Props = {
     onChange: (selection: string[]) => void;
     value: string[];
     analyticsMultiFilterAction?: string;
+    /** The label analytics receive for a value, when it is not the value itself. */
+    analyticsLabel?: (value: string) => string;
     isClearable?: boolean;
     disabled?: boolean;
     optionsStyle?: React.CSSProperties;
@@ -28,6 +30,7 @@ function MultiFilter({
     onChange,
     value,
     analyticsMultiFilterAction,
+    analyticsLabel,
     placeholder,
     isClearable = false,
     margin,
@@ -39,7 +42,13 @@ function MultiFilter({
         onChange((options || []).map(o => o.value));
 
         if (analyticsMultiFilterAction) {
-            sendMultiFilterAnalytics(analyticsMultiFilterAction, value, options);
+            const toAnalyticsLabel = analyticsLabel ?? ((selected: string) => selected);
+
+            sendMultiFilterAnalytics(
+                analyticsMultiFilterAction,
+                (value || []).map(toAnalyticsLabel),
+                (options || []).map(option => ({ value: toAnalyticsLabel(option.value) }))
+            );
         }
     };
 

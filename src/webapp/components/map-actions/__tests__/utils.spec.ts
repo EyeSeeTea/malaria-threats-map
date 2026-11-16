@@ -6,8 +6,13 @@ import {
     INVASIVE_THEME,
     MAP,
     PREVENTION_THEME,
-    STEPHENSI_TYPE_FORM_KEY,
 } from "../../../store/__fixtures__/filtersFixtures";
+import {
+    addVectorSpeciesAppLabels,
+    removeEnglishResources,
+    STEPHENSI_MYSORENSIS_APP_LABEL,
+    STEPHENSI_TYPE_FORM_APP_LABEL,
+} from "../../../types/__fixtures__/translationFixtures";
 import {
     DiagnosisFilters,
     PreventionDataset,
@@ -33,9 +38,12 @@ import {
     GAMBIAE,
     MOLECULAR_ASSAY,
     MONO_OXYGENASES,
+    STEPHENSI_MYSORENSIS,
     PERMETHRIN,
     PYRETHROIDS,
+    STEPHENSI,
     SYNERGIST_ASSAY,
+    STEPHENSI_TYPE_FORM,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
@@ -49,19 +57,16 @@ const SYNERGIST_TYPES_FILTER = "synergistTypes";
 const VECTOR_SPECIES_FILTER = "vectorSpecies";
 const SEPARATOR = " | ";
 const SOME_KEY = "some.key";
-const UNLISTED_SPECIES = "AN_GAMBIAE";
 
-// i18next runs without resources in the tests (src/setupTests.ts), so every label is its key.
+// i18next runs without resources in the tests (src/setupTests.ts), so every label is its key,
+// except the vector species labels added below.
 const ALL = "common.map_info_summary.all";
 const entry = (filter: string, value: string) => `common.map_info_summary.${filter}: ${value}`;
-const speciesLabel = (key: string) => `common.filters.vector_species_options.${key}`;
 
 const MAX_MIN_YEARS = [2010, 2024];
 const NARROWED_YEARS = [2015, 2020];
 const FULL_RANGE = "2010-2024";
 const NARROWED_RANGE = "2015-2020";
-
-const MYSORENSIS = "AN_STEPHENSI_MYSORENSIS";
 
 const filtersWithOnlyInsecticideClass = (mapType: PreventionMapType) =>
     createPreventionFilters({ mapType, insecticideClass: PYRETHROIDS });
@@ -84,6 +89,14 @@ const everyMechanismFilter = () => ({
 });
 
 describe("map-actions utils", () => {
+    beforeAll(() => {
+        addVectorSpeciesAppLabels();
+    });
+
+    afterAll(() => {
+        removeEnglishResources();
+    });
+
     it("runs with i18next returning the key, which every assertion below relies on", () => {
         expect(i18next.t(SOME_KEY)).toBe(SOME_KEY);
     });
@@ -180,30 +193,31 @@ describe("map-actions utils", () => {
         it("shows the label of each selected species, joined with a pipe", () => {
             expect(
                 invasiveValueLabelFilters(
-                    createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY] }),
+                    createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] }),
                     MAX_MIN_YEARS,
                     MAX_MIN_YEARS
                 )
-            ).toEqual({ years: FULL_RANGE, vectorSpecies: speciesLabel(STEPHENSI_TYPE_FORM_KEY) });
+            ).toEqual({ years: FULL_RANGE, vectorSpecies: STEPHENSI_TYPE_FORM_APP_LABEL });
 
             expect(
                 invasiveValueLabelFilters(
-                    createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY, MYSORENSIS] }),
+                    createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM, STEPHENSI_MYSORENSIS] }),
                     MAX_MIN_YEARS,
                     MAX_MIN_YEARS
                 )
             ).toEqual({
                 years: FULL_RANGE,
-                vectorSpecies: `${speciesLabel(STEPHENSI_TYPE_FORM_KEY)} | ${speciesLabel(MYSORENSIS)}`,
+                vectorSpecies: `${STEPHENSI_TYPE_FORM_APP_LABEL} | ${STEPHENSI_MYSORENSIS_APP_LABEL}`,
             });
         });
 
-        // Pins today's behaviour, a possible bug pending a decision: a selected species that is not in
-        // the hardcoded list throws instead of showing a label.
-        it("throws for a species that is not in the hardcoded list", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [UNLISTED_SPECIES] });
+        it("shows the value of a species without a translation", () => {
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI] });
 
-            expect(() => invasiveValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toThrow(TypeError);
+            expect(invasiveValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toEqual({
+                years: FULL_RANGE,
+                vectorSpecies: STEPHENSI,
+            });
         });
     });
 
@@ -340,25 +354,22 @@ describe("map-actions utils", () => {
         });
 
         it("shows the labels of the selected species, joined with a comma, and the narrowed years", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY, MYSORENSIS] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM, STEPHENSI_MYSORENSIS] });
 
             expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, NARROWED_YEARS, DOWNLOAD)).toEqual(
                 [
-                    entry(
-                        VECTOR_SPECIES_FILTER,
-                        `${speciesLabel(STEPHENSI_TYPE_FORM_KEY)}, ${speciesLabel(MYSORENSIS)}`
-                    ),
+                    entry(VECTOR_SPECIES_FILTER, `${STEPHENSI_TYPE_FORM_APP_LABEL}, ${STEPHENSI_MYSORENSIS_APP_LABEL}`),
                     entry(YEARS_FILTER, NARROWED_RANGE),
                 ].join(SEPARATOR)
             );
         });
 
-        // Pins today's behaviour, a possible bug pending a decision: a selected species that is not in
-        // the hardcoded list throws instead of showing a label.
-        it("throws for a species that is not in the hardcoded list", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [UNLISTED_SPECIES] });
+        it("shows the value of a species without a translation", () => {
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI] });
 
-            expect(() => invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toThrow(TypeError);
+            expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
+                [entry(VECTOR_SPECIES_FILTER, STEPHENSI), entry(YEARS_FILTER, FULL_RANGE)].join(SEPARATOR)
+            );
         });
     });
 
@@ -380,7 +391,7 @@ describe("map-actions utils", () => {
             deletionType: null,
         };
         const preventionFilters = everyFilter(PreventionMapType.RESISTANCE_STATUS);
-        const invasiveFilters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY] });
+        const invasiveFilters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
         describe("getValueLabelFilters", () => {
             const labelsFor = (theme: string) =>
@@ -407,7 +418,7 @@ describe("map-actions utils", () => {
             it("sends invasive to invasiveValueLabelFilters", () => {
                 expect(labelsFor(INVASIVE_THEME)).toEqual({
                     years: NARROWED_RANGE,
-                    vectorSpecies: speciesLabel(STEPHENSI_TYPE_FORM_KEY),
+                    vectorSpecies: STEPHENSI_TYPE_FORM_APP_LABEL,
                 });
             });
         });
@@ -440,7 +451,7 @@ describe("map-actions utils", () => {
             it("sends invasive to invasiveFiltersToString", () => {
                 expect(summaryFor(INVASIVE_THEME)).toEqual(
                     [
-                        entry(VECTOR_SPECIES_FILTER, speciesLabel(STEPHENSI_TYPE_FORM_KEY)),
+                        entry(VECTOR_SPECIES_FILTER, STEPHENSI_TYPE_FORM_APP_LABEL),
                         entry(YEARS_FILTER, NARROWED_RANGE),
                     ].join(SEPARATOR)
                 );

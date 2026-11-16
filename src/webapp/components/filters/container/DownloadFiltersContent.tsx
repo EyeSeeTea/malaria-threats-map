@@ -149,7 +149,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                 case "INVASIVE_VECTOR_SPECIES":
                     return (
                         <div>
-                            <VectorSpeciesFilter />
+                            <VectorSpeciesFilter from="download" />
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
