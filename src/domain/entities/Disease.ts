@@ -39,14 +39,6 @@ export function isDiseaseSwitch(previous: string | undefined, next: string | und
 }
 
 /**
- * Whether the Vector occurrence filters invite users to report invasive Anopheles species: for
- * malaria, and while no disease is set.
- */
-export function invitesAnophelesReports(disease: string | undefined): boolean {
-    return isDefaultOrUnset(disease);
-}
-
-/**
  * Whether a map change checks the class and the mechanism against the options of the disease.
  * Malaria, and no disease, keep the behaviour the maps had before the disease filter.
  */
@@ -65,6 +57,7 @@ export function pickOption(offered: ReadonlyArray<string>, preferred: string, cu
     return [current, preferred].find(value => value !== undefined && offered.includes(value)) ?? offered[0];
 }
 
-function isDefaultOrUnset(disease: string | undefined): boolean {
+/** Whether the disease is the default one or not set yet: the maps behave as before the disease filter. */
+export function isDefaultOrUnset(disease: string | undefined): boolean {
     return disease === undefined || disease === defaultDisease;
 }

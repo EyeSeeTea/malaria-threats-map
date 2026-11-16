@@ -6,7 +6,7 @@ import {
     defaultDisease,
     getDiseases,
     getInitialDisease,
-    invitesAnophelesReports,
+    isDefaultOrUnset,
     isDiseaseSwitch,
     pickOption,
 } from "../Disease";
@@ -59,17 +59,17 @@ describe("Disease", () => {
         });
     });
 
-    describe("invitesAnophelesReports", () => {
-        it("invites while no disease is set, as the map does today", () => {
-            expect(invitesAnophelesReports(undefined)).toBe(true);
+    describe("isDefaultOrUnset", () => {
+        it("is true while no disease is set", () => {
+            expect(isDefaultOrUnset(undefined)).toBe(true);
         });
 
-        it("invites for malaria", () => {
-            expect(invitesAnophelesReports(MALARIA)).toBe(true);
+        it("is true for malaria", () => {
+            expect(isDefaultOrUnset(MALARIA)).toBe(true);
         });
 
-        it("does not invite for another disease", () => {
-            expect(invitesAnophelesReports(DENGUE)).toBe(false);
+        it("is false for another disease", () => {
+            expect(isDefaultOrUnset(DENGUE)).toBe(false);
         });
     });
 

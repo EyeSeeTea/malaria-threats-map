@@ -8,13 +8,21 @@ import { Trans, useTranslation } from "react-i18next";
 import { Snackbar } from "../../common/Snackbar";
 import { State } from "../../../../store/types";
 import { selectInvasiveFilters } from "../../../../store/reducers/invasive-reducer";
-import { invitesAnophelesReports } from "../../../../../domain/entities/Disease";
+import { isDefaultOrUnset } from "../../../../../domain/entities/Disease";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
 });
 
 type Props = ReturnType<typeof mapStateToProps>;
+
+/**
+ * Whether the filters show the link to report invasive Anopheles species: for malaria, and while
+ * no disease is set. Anopheles carries malaria, not dengue.
+ */
+export function showsAnophelesReportLink(disease: string | undefined): boolean {
+    return isDefaultOrUnset(disease);
+}
 
 function VectorOccuranceFilters({ invasiveFilters }: Props) {
     const { t } = useTranslation();
@@ -23,7 +31,7 @@ function VectorOccuranceFilters({ invasiveFilters }: Props) {
             <InvasiveDiseaseFilter />
             <VectorSpeciesFilter from="map" />
             <YearRangeSelector />
-            {invitesAnophelesReports(invasiveFilters.disease) && (
+            {showsAnophelesReportLink(invasiveFilters.disease) && (
                 <Snackbar>
                     <Trans i18nKey="common.invasive.legend.vector_occurrance.link_content_1">
                         If you have detected invasive <i>Anopheles</i> vector species please report to us through the
