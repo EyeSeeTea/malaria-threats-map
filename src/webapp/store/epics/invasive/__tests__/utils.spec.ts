@@ -143,15 +143,13 @@ describe("createInvasiveSelectionData", () => {
         });
 
         it("takes the title from the first study of that order", () => {
+            const invasiveVillage = "Invasive village";
             const studies = [
                 invasiveStudy("native", { INVASIVE_STATUS: INVASIVE_STATUS_NATIVE, VILLAGE_NAME: "Native village" }),
-                invasiveStudy("invasive", {
-                    INVASIVE_STATUS: INVASIVE_STATUS_INVASIVE,
-                    VILLAGE_NAME: "Invasive village",
-                }),
+                invasiveStudy("invasive", { INVASIVE_STATUS: INVASIVE_STATUS_INVASIVE, VILLAGE_NAME: invasiveVillage }),
             ];
 
-            expect(selectionData(studies).title).toBe("Invasive village, DJ");
+            expect(selectionData(studies).title).toBe(`${invasiveVillage}, ${DJIBOUTI.ISO2}`);
         });
     });
 

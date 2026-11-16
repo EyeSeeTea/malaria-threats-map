@@ -201,11 +201,12 @@ describe("createPreventionSelectionData", () => {
         });
 
         it("takes the studies of a site in order of year, the most recent first, for the title and the study object", () => {
-            const recent = study(RECENT, { YEAR_START: 2022, VILLAGE_NAME: "Recent village" });
+            const recentVillage = "Recent village";
+            const recent = study(RECENT, { YEAR_START: 2022, VILLAGE_NAME: recentVillage });
             const data = selectionData(mapType, [study(OLDER), recent]);
 
             expect(data.kind === "common" && [data.title, data.studyObject]).toEqual([
-                `Recent village, ${BURKINA_FASO.ISO2}`,
+                `${recentVillage}, ${BURKINA_FASO.ISO2}`,
                 recent,
             ]);
         });
