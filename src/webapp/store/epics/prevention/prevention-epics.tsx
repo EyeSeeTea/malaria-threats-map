@@ -13,7 +13,8 @@ import {
 } from "./utils";
 import { PreventionMapType, State } from "../../types";
 import { getAnalyticsPageView } from "../../analytics";
-import { assayTypes, getAssayTypesDetecting } from "../../../../domain/entities/ResistanceMechanism";
+import { getAssayTypesDetecting } from "../../../../domain/entities/ResistanceMechanism";
+import { mechanismAssayTypes } from "../../../../domain/entities/AssayType";
 import {
     logEventAction,
     logPageViewAction,
@@ -110,7 +111,7 @@ export const setPreventionTypeEpic = (action$: Observable<ActionType<typeof setT
         ofType(ActionTypeEnum.SetType),
         switchMap(action => {
             // Only the first mechanism counts. An unknown one, or none, selects every assay type.
-            const detecting = getAssayTypesDetecting(action.payload?.[0]) ?? assayTypes;
+            const detecting = getAssayTypesDetecting(action.payload?.[0]) ?? mechanismAssayTypes;
             return of(setAssayTypes([...detecting]));
         })
     );

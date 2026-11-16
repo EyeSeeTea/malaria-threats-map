@@ -13,7 +13,7 @@ import { logEventAction, Source } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
-import { getMechanismOptions } from "../../../domain/entities/ResistanceMechanism";
+import { getKnownMechanisms } from "../../../domain/entities/ResistanceMechanism";
 
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),
@@ -42,7 +42,7 @@ export function getMechanismTypeOptions(
 ) {
     const codes = from === "map" ? preventionStudiesOfMapType.map(study => study.TYPE) : types.map(type => type.VALUE_);
 
-    return getMechanismOptions(codes).map(value => ({
+    return getKnownMechanisms(codes).map(value => ({
         value: value,
         label: i18next.t(`TYPE.${value}`, { defaultValue: value }),
     }));

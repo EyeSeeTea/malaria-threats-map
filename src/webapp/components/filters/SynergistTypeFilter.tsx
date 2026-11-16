@@ -10,7 +10,7 @@ import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import { Option } from "../BasicSelect";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
-import { getSynergistTypes } from "../../../domain/entities/ResistanceMechanism";
+import { getSynergistTypes } from "../../../domain/entities/SynergistType";
 
 const mapStateToProps = (state: State) => ({
     preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
