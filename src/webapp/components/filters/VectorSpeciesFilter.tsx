@@ -39,6 +39,11 @@ export function getVectorSpeciesOptions(studies: ReadonlyArray<InvasiveStudy>, f
     return values.map(value => ({ label: getVectorSpeciesLabel(value), value }));
 }
 
+/** Data Download offers only its 5 species, so it drops any other species selected on the map. */
+export function keepVectorSpeciesOfferedOnDataDownload(selected: ReadonlyArray<string>): string[] {
+    return selected.filter(species => legacyVectorSpecies.includes(species));
+}
+
 const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies, setVectorSpecies, from }) => {
     const { t } = useTranslation();
 

@@ -14,7 +14,11 @@ import {
     removeEnglishResources,
     STEPHENSI_MYSORENSIS_APP_LABEL,
 } from "../../../types/__fixtures__/translationFixtures";
-import { getVectorSpeciesLabel, getVectorSpeciesOptions } from "../VectorSpeciesFilter";
+import {
+    getVectorSpeciesLabel,
+    getVectorSpeciesOptions,
+    keepVectorSpeciesOfferedOnDataDownload,
+} from "../VectorSpeciesFilter";
 
 const XMART_TYPE_FORM_LABEL = "Type form (xMART)";
 
@@ -67,6 +71,16 @@ describe("VectorSpeciesFilter", () => {
                 { label: STEPHENSI_INTERMEDIATE_FORM, value: STEPHENSI_INTERMEDIATE_FORM },
                 { label: NOT_REPORTED_APP_LABEL, value: NOT_REPORTED },
                 { label: STEPHENSI_NOT_FOUND, value: STEPHENSI_NOT_FOUND },
+            ]);
+        });
+    });
+
+    // The map and Data Download share the selected species, so a species picked on the map reaches Data Download.
+    describe("keepVectorSpeciesOfferedOnDataDownload", () => {
+        it("drops a species selected on the map that Data Download does not offer", () => {
+            expect(keepVectorSpeciesOfferedOnDataDownload([STEPHENSI, STEPHENSI_TYPE_FORM, NOT_REPORTED])).toEqual([
+                STEPHENSI_TYPE_FORM,
+                NOT_REPORTED,
             ]);
         });
     });

@@ -18,9 +18,13 @@ import CheckIcon from "@mui/icons-material/Check";
 import { useDownload } from "./useDownload";
 import { setPreventionDataset } from "../../store/actions/prevention-actions";
 import { selectTheme } from "../../store/reducers/base-reducer";
+import { selectInvasiveFilters } from "../../store/reducers/invasive-reducer";
+import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
+import { keepVectorSpeciesOfferedOnDataDownload } from "../filters/VectorSpeciesFilter";
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
+    vectorSpecies: selectInvasiveFilters(state).vectorSpecies,
 });
 
 const mapDispatchToProps = {
@@ -29,6 +33,7 @@ const mapDispatchToProps = {
     setActionGroupSelected: setActionGroupSelected,
     addDownload: addDataDownloadRequestAction,
     logEvent: logEventAction,
+    setVectorSpecies: setInvasiveVectorSpecies,
 };
 type OwnProps = {};
 type StateProps = ReturnType<typeof mapStateToProps>;
@@ -47,8 +52,25 @@ export type Contact = {
     country: string;
 };
 
-function DataDownload({ logEvent, addDownload, setTheme, setPreventionDataset, setActionGroupSelected, theme }: Props) {
+function DataDownload({
+    logEvent,
+    addDownload,
+    setTheme,
+    setPreventionDataset,
+    setActionGroupSelected,
+    theme,
+    vectorSpecies,
+    setVectorSpecies,
+}: Props) {
     const { t } = useTranslation();
+
+    React.useEffect(() => {
+        const offeredVectorSpecies = keepVectorSpeciesOfferedOnDataDownload(vectorSpecies);
+
+        if (offeredVectorSpecies.length !== vectorSpecies.length) {
+            setVectorSpecies(offeredVectorSpecies);
+        }
+    }, [vectorSpecies, setVectorSpecies]);
     const {
         activeStep,
         messageLoader,
