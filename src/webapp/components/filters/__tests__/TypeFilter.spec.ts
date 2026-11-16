@@ -18,6 +18,7 @@ import {
     GAMBIAE,
     MOLECULAR_ASSAY,
     MONO_OXYGENASES,
+    NOT_AVAILABLE,
     ORGANOPHOSPHATES,
     OTHER_COUNTRY,
     PERMETHRIN,
@@ -32,6 +33,8 @@ const OTHER_SPECIES = "otherSpecies";
 const NOT_MOH = "notMoH";
 const FEW_MOSQUITOES = "fewMosquitoes";
 const PROXY_ONLY_TYPE = "proxyOnlyType";
+const NA_MORTALITY = "naMortality";
+const NA_INTENSITY = "naIntensity";
 
 function typeOptions(studies: PreventionStudy[], filters: PreventionFilters): ReadonlyArray<string> {
     return getTypeFilterOptions(filters, studies, createYearFilter(), PREVENTION_STUDY_REGION).map(
@@ -108,14 +111,22 @@ describe("getTypeFilterOptions", () => {
                 ]);
             });
 
-            it("is not narrowed by species, Ministry of Health or mosquitoes, unlike the map chain", () => {
+            it("is not narrowed by species, Ministry of Health, mosquitoes, mortality or intensity, unlike the map chain", () => {
                 const studies = [
                     typeStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
                     typeStudy(NOT_MOH, { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
                     typeStudy(FEW_MOSQUITOES, { NUMBER: FEW_MOSQUITOES_NUMBER }),
+                    typeStudy(NA_MORTALITY, { MORTALITY_ADJUSTED: NOT_AVAILABLE }),
+                    typeStudy(NA_INTENSITY, { RESISTANCE_INTENSITY: NOT_AVAILABLE }),
                 ];
 
-                expect(typeOptions(studies, filters)).toEqual([OTHER_SPECIES, NOT_MOH, FEW_MOSQUITOES]);
+                expect(typeOptions(studies, filters)).toEqual([
+                    OTHER_SPECIES,
+                    NOT_MOH,
+                    FEW_MOSQUITOES,
+                    NA_MORTALITY,
+                    NA_INTENSITY,
+                ]);
             });
         }
     );

@@ -251,6 +251,23 @@ describe("studies-filters chains", () => {
                         expect(codesKeptByPreventionChain(synergistStudies, synergistFilters)).toEqual([]);
                     }
                 );
+
+                // Reachable only from a link: the mechanism filter is a radio group and always has a value,
+                // but a URL with an empty type clears it.
+                it("keeps only the selected synergist types when no mechanism is selected", () => {
+                    const studies = [
+                        mechanismStudy(WHO_TEST_KIT, { ASSAY_TYPE: SYNERGIST_ASSAY, TYPE: WHO_TEST_KIT }),
+                        mechanismStudy(CDC_BOTTLE, { ASSAY_TYPE: SYNERGIST_ASSAY, TYPE: CDC_BOTTLE }),
+                    ];
+                    const withoutMechanism: PreventionFilters = {
+                        ...filters,
+                        type: undefined,
+                        assayTypes: [SYNERGIST_ASSAY],
+                        synergistTypes: [WHO_TEST_KIT],
+                    };
+
+                    expect(codesKeptByPreventionChain(studies, withoutMechanism)).toEqual([WHO_TEST_KIT]);
+                });
             });
         });
 
