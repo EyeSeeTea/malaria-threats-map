@@ -5,7 +5,7 @@ import i18next from "i18next";
 import { selectTranslations } from "../store/reducers/translations-reducer";
 import { fetchTranslationsRequestAction } from "../store/actions/translations-actions";
 import { getLastUpdatedRequestAction } from "../store/actions/base-actions";
-import { getTranslationsKey } from "../types/Translation";
+import { getTranslationsKey, Translation } from "../types/Translation";
 
 const mapStateToProps = (state: State) => ({
     translations: selectTranslations(state),
@@ -19,6 +19,38 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
+
+export function buildTranslationResources(translations: Translation[]) {
+    const englishResources = translations.reduce((acc, translation) => {
+        const value = translation.VALUE_.replace(".", "%2E");
+
+        return {
+            ...acc,
+            [value]: translation.EN,
+            [getTranslationsKey(translation)]: translation.EN,
+        };
+    }, {});
+    const spanishResources = translations.reduce((acc, translation) => {
+        const value = translation.VALUE_.replace(".", "%2E");
+
+        return {
+            ...acc,
+            [value]: translation.ES,
+            [getTranslationsKey(translation)]: translation.ES,
+        };
+    }, {});
+    const frenchResources = translations.reduce((acc, translation) => {
+        const value = translation.VALUE_.replace(".", "%2E");
+
+        return {
+            ...acc,
+            [value]: translation.FR,
+            [getTranslationsKey(translation)]: translation.FR,
+        };
+    }, {});
+
+    return { englishResources, spanishResources, frenchResources };
+}
 
 const DataProvider: React.FC<Props> = ({ fetchTranslations, getLastUpdated, translations, children }) => {
     useEffect(() => {
@@ -35,33 +67,7 @@ const DataProvider: React.FC<Props> = ({ fetchTranslations, getLastUpdated, tran
     //In the future when there are not any access to dynamic translations only by value we will can to have one strategy or when we have time for a big refactor
     //remember use '{FIELD}.{_VALUE}' as key for new components when it access to translations
     useEffect(() => {
-        const englishResources = translations.reduce((acc, translation) => {
-            const value = translation.VALUE_.replace(".", "%2E");
-
-            return {
-                ...acc,
-                [value]: translation.EN,
-                [getTranslationsKey(translation)]: translation.EN,
-            };
-        }, {});
-        const spanishResources = translations.reduce((acc, translation) => {
-            const value = translation.VALUE_.replace(".", "%2E");
-
-            return {
-                ...acc,
-                [value]: translation.ES,
-                [getTranslationsKey(translation)]: translation.ES,
-            };
-        }, {});
-        const frenchResources = translations.reduce((acc, translation) => {
-            const value = translation.VALUE_.replace(".", "%2E");
-
-            return {
-                ...acc,
-                [value]: translation.FR,
-                [getTranslationsKey(translation)]: translation.FR,
-            };
-        }, {});
+        const { englishResources, spanishResources, frenchResources } = buildTranslationResources(translations);
 
         i18next.addResourceBundle("en", "translation", englishResources);
         i18next.addResourceBundle("es", "translation", spanishResources);

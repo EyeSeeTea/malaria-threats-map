@@ -21,6 +21,8 @@ import { MOLECULAR_MARKERS_MAP } from "./treatment/MolecularMarkersOngoingStudie
 import { Study } from "../../../domain/entities/Study";
 import { isNA } from "../../utils/number-utils";
 
+export type PreventionStudyFilter = (study: PreventionStudy) => boolean;
+
 export const DELETION_TYPES = {
     HRP2_PROPORTION_DELETION: {
         label: "pfhrp2",
@@ -95,10 +97,6 @@ export const filterInvasiveByDownload = () => (study: InvasiveStudy) => {
     return study.MTM_DOWNLOAD !== 0;
 };
 
-export const filterByIntensityStatus = (study: any) => {
-    return study.ASSAY_TYPE === "INTENSITY_CONCENTRATION_BIOASSAY";
-};
-
 export const filterValidResistanceIntensityValue = (study: any) => {
     return (
         study.RESISTANCE_INTENSITY === "LOW_INTENSITY" ||
@@ -122,10 +120,6 @@ export const filterByResistanceMechanism = (study: any) => {
         study.ASSAY_TYPE === "BIOCHEMICAL_ASSAY" ||
         study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY"
     );
-};
-
-export const filterByLevelOfInvolvement = (study: any) => {
-    return study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY";
 };
 
 export const filterByStudiesWithInsecticideClass = (study: any) => {

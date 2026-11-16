@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PreventionMapType, State } from "../../store/types";
+import { PreventionFilters, PreventionMapType, RegionState, State } from "../../store/types";
 import { selectSpecies } from "../../store/reducers/translations-reducer";
 import {
     selectPreventionFilters,
@@ -16,8 +16,9 @@ import {
     filterByTypes,
     filterByTypeSynergist,
     filterByYearRange,
+    PreventionStudyFilter,
 } from "../layers/studies-filters";
-import * as R from "ramda";
+import { Option } from "../BasicSelect";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { useTranslation } from "react-i18next";
@@ -39,16 +40,14 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-const SpeciesFilter: React.FC<Props> = ({
-    preventionFilters,
-    preventionStudiesOfMapType,
-    yearFilter,
-    region,
-    setSpecies,
-}) => {
-    const { t } = useTranslation();
+export function getSpeciesFilterOptions(
+    preventionFilters: PreventionFilters,
+    preventionStudiesOfMapType: PreventionStudy[],
+    yearFilter: number[],
+    region: RegionState
+): Option[] {
     const { mapType } = preventionFilters;
-    const filtersMap: { [mapType: string]: any[] } = {
+    const filtersMap: Record<string, ReadonlyArray<PreventionStudyFilter>> = {
         [PreventionMapType.INTENSITY_STATUS]: [
             filterByInsecticideClass(preventionFilters.insecticideClass),
             filterByInsecticideTypes(preventionFilters.insecticideTypes),
@@ -77,17 +76,25 @@ const SpeciesFilter: React.FC<Props> = ({
         ],
     };
 
-    const filteredStudies: PreventionStudy[] = filtersMap[mapType].reduce(
+    const filteredStudies = filtersMap[mapType].reduce(
         (studies, filter) => studies.filter(filter),
         preventionStudiesOfMapType
     );
 
-    const uniques = R.uniq(R.map(R.prop("SPECIES"), filteredStudies)).sort();
+    const uniqueSpecies = Array.from(new Set(filteredStudies.map(study => study.SPECIES))).sort();
 
-    const suggestions: any[] = uniques.map((specie: string) => ({
-        label: specie,
-        value: specie,
-    }));
+    return uniqueSpecies.map(species => ({ label: species, value: species }));
+}
+
+const SpeciesFilter: React.FC<Props> = ({
+    preventionFilters,
+    preventionStudiesOfMapType,
+    yearFilter,
+    region,
+    setSpecies,
+}) => {
+    const { t } = useTranslation();
+    const suggestions = getSpeciesFilterOptions(preventionFilters, preventionStudiesOfMapType, yearFilter, region);
 
     return (
         <MultiFilter
