@@ -8,9 +8,8 @@ import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { Option } from "../BasicSelect";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
-import { getVectorSpecies } from "../../../domain/entities/VectorSpecies";
+import { getVectorSpecies, legacyVectorSpecies } from "../../../domain/entities/VectorSpecies";
 import { Source } from "../../store/actions/base-actions";
-import { legacyVectorSpecies } from "../../store/vectorSpeciesUrlValues";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
