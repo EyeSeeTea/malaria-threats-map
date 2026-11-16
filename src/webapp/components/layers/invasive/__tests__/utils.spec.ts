@@ -3,7 +3,7 @@ import {
     INVASIVE_STATUS_INVASIVE,
     INVASIVE_STATUS_NATIVE,
     INVASIVE_STATUS_NOT_FOUND,
-    UNKNOWN_STATUS,
+    INVASIVE_STATUS_UNKNOWN,
 } from "../../../../../domain/entities/__fixtures__/studyValues";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
 import { InvasiveMapType } from "../../../../store/types";
@@ -23,7 +23,7 @@ const selectedCode = (group: InvasiveStudy[]) => studySelector(group, InvasiveMa
 describe("invasive site colour", () => {
     it("pins the status order record", () => {
         expect(InvasiveStatusOrder).toEqual({
-            [UNKNOWN_STATUS]: 0,
+            [INVASIVE_STATUS_UNKNOWN]: 0,
             [INVASIVE_STATUS_NATIVE]: 1,
             [INVASIVE_STATUS_INVASIVE]: 2,
         });
@@ -40,7 +40,7 @@ describe("invasive site colour", () => {
         });
 
         it("orders invasive, native, unknown", () => {
-            const group = [UNKNOWN_STATUS, INVASIVE_STATUS_NATIVE, INVASIVE_STATUS_INVASIVE].map(status =>
+            const group = [INVASIVE_STATUS_UNKNOWN, INVASIVE_STATUS_NATIVE, INVASIVE_STATUS_INVASIVE].map(status =>
                 study(status, { INVASIVE_STATUS: status })
             );
 
@@ -52,7 +52,7 @@ describe("invasive site colour", () => {
         // ties with unknown, so the order of the studies decides the colour.
         it("ties not found, which is not in the order, with unknown, so the first one wins", () => {
             const notFound = study(NOT_FOUND_STUDY, { INVASIVE_STATUS: INVASIVE_STATUS_NOT_FOUND });
-            const unknown = study(UNKNOWN_STUDY, { INVASIVE_STATUS: UNKNOWN_STATUS });
+            const unknown = study(UNKNOWN_STUDY, { INVASIVE_STATUS: INVASIVE_STATUS_UNKNOWN });
 
             expect(selectedCode([notFound, unknown])).toBe(NOT_FOUND_STUDY);
             expect(selectedCode([unknown, notFound])).toBe(UNKNOWN_STUDY);

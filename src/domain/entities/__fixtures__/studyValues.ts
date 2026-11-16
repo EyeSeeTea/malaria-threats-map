@@ -34,6 +34,7 @@ export const STEPHENSI_NOT_FOUND_KEY = "AN_STEPHENSI_NOT_FOUND";
 export const INVASIVE_STATUS_INVASIVE = "Invasive";
 export const INVASIVE_STATUS_NATIVE = "Native";
 export const INVASIVE_STATUS_NOT_FOUND = "Not found";
+export const INVASIVE_STATUS_UNKNOWN = "UNKNOWN";
 
 export const MONO_OXYGENASES = "MONO_OXYGENASES";
 export const ESTERASES = "ESTERASES";
@@ -71,6 +72,7 @@ export const MODERATE_TO_HIGH_INTENSITY = "MODERATE_TO_HIGH_INTENSITY";
 export const LOW_INTENSITY = "LOW_INTENSITY";
 export const NOT_ASSESSED = "COULD_NOT_BE_RELIABLY_ASSESSED";
 
+/** A mechanism status the site colour order does not list. Any value missing from that order would do. */
 export const UNKNOWN_STATUS = "UNKNOWN";
 
 export const LARVAL_SAMPLING = "LARVAL_SAMPLING";
