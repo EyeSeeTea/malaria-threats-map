@@ -46,7 +46,10 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-export function getAssayTypeOptions(preventionFilters: PreventionFilters, assayTypes: Translation[]): Translation[] {
+export function getAssayTypeFilterOptions(
+    preventionFilters: PreventionFilters,
+    assayTypes: Translation[]
+): Translation[] {
     const type = preventionFilters?.type?.length === 1 ? preventionFilters.type[0] : undefined;
 
     return (ASSAY_TYPE_FILTER[type] ?? []).flatMap(value => {
@@ -71,7 +74,7 @@ function AssayTypeCheckboxFilter({ assayTypes, preventionFilters, setAssayTypes 
         );
     };
 
-    const types = getAssayTypeOptions(preventionFilters, assayTypes);
+    const types = getAssayTypeFilterOptions(preventionFilters, assayTypes);
 
     const { t } = useTranslation();
 

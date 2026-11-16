@@ -9,14 +9,14 @@ import {
 import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import { getTypeFilterOptions } from "../TypeFilter";
 import {
-    BIOCHEMICAL,
+    BIOCHEMICAL_ASSAY,
     CDC_BOTTLE,
     DELTAMETHRIN,
     ESTERASES,
     FEW_MOSQUITOES_NUMBER,
     FUNESTUS,
     GAMBIAE,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     ORGANOPHOSPHATES,
     OTHER_COUNTRY,
@@ -47,7 +47,7 @@ function typeStudy(type: string, overrides: Partial<PreventionStudy> = {}): Prev
         INSECTICIDE_CLASS: PYRETHROIDS,
         INSECTICIDE_TYPE: DELTAMETHRIN,
         PROXY_TYPE: MONO_OXYGENASES,
-        ASSAY_TYPE: MOLECULAR,
+        ASSAY_TYPE: MOLECULAR_ASSAY,
         YEAR_START: 2020,
         ...overrides,
     });
@@ -123,7 +123,7 @@ describe("getTypeFilterOptions", () => {
     describe("Resistance mechanisms", () => {
         const filters = createPreventionFilters({
             mapType: PreventionMapType.RESISTANCE_MECHANISM,
-            assayTypes: [MOLECULAR],
+            assayTypes: [MOLECULAR_ASSAY],
             type: [MONO_OXYGENASES],
             species: [GAMBIAE],
         });
@@ -131,7 +131,7 @@ describe("getTypeFilterOptions", () => {
         it("is narrowed by assay type, years and region", () => {
             const studies = [
                 typeStudy(MONO_OXYGENASES),
-                typeStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
+                typeStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL_ASSAY }),
                 typeStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                 typeStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];

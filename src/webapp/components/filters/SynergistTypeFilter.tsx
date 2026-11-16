@@ -22,7 +22,7 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-export function getSynergistTypeOptions(synergistTypes: Translation[]): Option[] {
+export function getSynergistTypeFilterOptions(synergistTypes: Translation[]): Option[] {
     return synergistTypes
         .filter(translation => ["WHO_TEST_KIT_ADULTS", "CDC_BOTTLE_ADULTS"].includes(translation.VALUE_))
         .map(translation => ({ label: translation.VALUE_, value: translation.VALUE_ }));
@@ -31,7 +31,7 @@ export function getSynergistTypeOptions(synergistTypes: Translation[]): Option[]
 const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, synergistTypes, setSynergistTypes }) => {
     const { t } = useTranslation();
 
-    const suggestions = getSynergistTypeOptions(synergistTypes);
+    const suggestions = getSynergistTypeFilterOptions(synergistTypes);
 
     return (
         <MultiFilter
