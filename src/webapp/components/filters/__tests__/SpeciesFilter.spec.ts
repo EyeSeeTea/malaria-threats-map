@@ -1,7 +1,12 @@
 import { createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
-import { PreventionFilters, PreventionMapType, RegionState } from "../../../store/types";
+import {
+    createPreventionFilters,
+    createYearFilter,
+    PREVENTION_STUDY_REGION,
+    YEAR_BEFORE_RANGE,
+} from "../../../store/__fixtures__/filtersFixtures";
+import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import { getSpeciesFilterOptions } from "../SpeciesFilter";
 import {
     ARABIENSIS,
@@ -9,6 +14,7 @@ import {
     CDC_BOTTLE,
     DELTAMETHRIN,
     ESTERASES,
+    FEW_MOSQUITOES_NUMBER,
     FUNESTUS,
     GAMBIAE,
     MOLECULAR,
@@ -27,11 +33,10 @@ const OTHER_INSECTICIDE = "otherInsecticide";
 const OUTSIDE_YEARS = "outsideYears";
 const OTHER_COUNTRY_STUDY = "otherCountry";
 
-const YEARS = [2018, 2022];
-const REGION: RegionState = { country: "BF" };
-
 function speciesOptions(studies: PreventionStudy[], filters: PreventionFilters): ReadonlyArray<string> {
-    return getSpeciesFilterOptions(filters, studies, YEARS, REGION).map(option => option.value);
+    return getSpeciesFilterOptions(filters, studies, createYearFilter(), PREVENTION_STUDY_REGION).map(
+        option => option.value
+    );
 }
 
 /** A study that passes every filter the cascades set, with the given species. */
@@ -53,7 +58,7 @@ describe("getSpeciesFilterOptions", () => {
         const studies = [speciesStudy(GAMBIAE), speciesStudy(ARABIENSIS), speciesStudy(GAMBIAE)];
         const filters = createPreventionFilters({ mapType: PreventionMapType.RESISTANCE_STATUS });
 
-        expect(getSpeciesFilterOptions(filters, studies, YEARS, REGION)).toEqual([
+        expect(getSpeciesFilterOptions(filters, studies, createYearFilter(), PREVENTION_STUDY_REGION)).toEqual([
             { label: ARABIENSIS, value: ARABIENSIS },
             { label: GAMBIAE, value: GAMBIAE },
         ]);
@@ -78,7 +83,7 @@ describe("getSpeciesFilterOptions", () => {
                     speciesStudy(OTHER_CLASS, { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
                     speciesStudy(OTHER_INSECTICIDE, { INSECTICIDE_TYPE: PERMETHRIN }),
                     speciesStudy("otherTestType", { TYPE: CDC_BOTTLE }),
-                    speciesStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                    speciesStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     speciesStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
@@ -95,7 +100,7 @@ describe("getSpeciesFilterOptions", () => {
             it("is not narrowed by Ministry of Health, mosquitoes, mortality or intensity, unlike the map chain", () => {
                 const studies = [
                     speciesStudy("notMoH", { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
-                    speciesStudy("fewMosquitoes", { NUMBER: "20" }),
+                    speciesStudy("fewMosquitoes", { NUMBER: FEW_MOSQUITOES_NUMBER }),
                     speciesStudy("naMortality", { MORTALITY_ADJUSTED: NOT_AVAILABLE }),
                     speciesStudy("naIntensity", { RESISTANCE_INTENSITY: NOT_AVAILABLE }),
                 ];
@@ -129,7 +134,7 @@ describe("getSpeciesFilterOptions", () => {
                 mechanismStudy(GAMBIAE),
                 mechanismStudy("otherMechanism", { TYPE: ESTERASES }),
                 mechanismStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
-                mechanismStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                mechanismStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                 mechanismStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
@@ -161,7 +166,7 @@ describe("getSpeciesFilterOptions", () => {
                 speciesStudy(GAMBIAE),
                 speciesStudy("otherProxyType", { PROXY_TYPE: ESTERASES }),
                 speciesStudy("otherSynergistType", { TYPE: CDC_BOTTLE }),
-                speciesStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                speciesStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                 speciesStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 

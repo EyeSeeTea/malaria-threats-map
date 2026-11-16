@@ -1,5 +1,11 @@
 import i18next from "i18next";
-import { createInvasiveFilters, createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
+import {
+    createInvasiveFilters,
+    createPreventionFilters,
+    DOWNLOAD,
+    MAP,
+    STEPHENSI_TYPE_FORM_KEY,
+} from "../../../store/__fixtures__/filtersFixtures";
 import {
     DiagnosisFilters,
     PreventionDataset,
@@ -39,8 +45,6 @@ const ASSAY_TYPES_FILTER = "assayTypes";
 const SYNERGIST_TYPES_FILTER = "synergistTypes";
 const VECTOR_SPECIES_FILTER = "vectorSpecies";
 const SEPARATOR = " | ";
-const MAP = "map";
-const DOWNLOAD = "download";
 const SOME_KEY = "some.key";
 const UNLISTED_SPECIES = "AN_GAMBIAE";
 
@@ -54,7 +58,6 @@ const NARROWED_YEARS = [2015, 2020];
 const FULL_RANGE = "2010-2024";
 const NARROWED_RANGE = "2015-2020";
 
-const TYPE_FORM = "AN_STEPHENSI_TYPE_FORM";
 const MYSORENSIS = "AN_STEPHENSI_MYSORENSIS";
 
 const noFilters = (mapType: PreventionMapType) => createPreventionFilters({ mapType, insecticideClass: PYRETHROIDS });
@@ -167,19 +170,22 @@ describe("map-actions utils", () => {
         it("shows the label of each selected species, joined with a pipe", () => {
             expect(
                 invasiveValueLabelFilters(
-                    createInvasiveFilters({ vectorSpecies: [TYPE_FORM] }),
+                    createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY] }),
                     MAX_MIN_YEARS,
                     MAX_MIN_YEARS
                 )
-            ).toEqual({ years: FULL_RANGE, vectorSpecies: speciesLabel(TYPE_FORM) });
+            ).toEqual({ years: FULL_RANGE, vectorSpecies: speciesLabel(STEPHENSI_TYPE_FORM_KEY) });
 
             expect(
                 invasiveValueLabelFilters(
-                    createInvasiveFilters({ vectorSpecies: [TYPE_FORM, MYSORENSIS] }),
+                    createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY, MYSORENSIS] }),
                     MAX_MIN_YEARS,
                     MAX_MIN_YEARS
                 )
-            ).toEqual({ years: FULL_RANGE, vectorSpecies: `${speciesLabel(TYPE_FORM)} | ${speciesLabel(MYSORENSIS)}` });
+            ).toEqual({
+                years: FULL_RANGE,
+                vectorSpecies: `${speciesLabel(STEPHENSI_TYPE_FORM_KEY)} | ${speciesLabel(MYSORENSIS)}`,
+            });
         });
 
         // Pins today's behaviour, a possible bug pending a decision: a selected species that is not in
@@ -314,11 +320,14 @@ describe("map-actions utils", () => {
         });
 
         it("shows the labels of the selected species, joined with a comma, and the narrowed years", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM, MYSORENSIS] });
+            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY, MYSORENSIS] });
 
             expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, NARROWED_YEARS, DOWNLOAD)).toEqual(
                 [
-                    entry(VECTOR_SPECIES_FILTER, `${speciesLabel(TYPE_FORM)}, ${speciesLabel(MYSORENSIS)}`),
+                    entry(
+                        VECTOR_SPECIES_FILTER,
+                        `${speciesLabel(STEPHENSI_TYPE_FORM_KEY)}, ${speciesLabel(MYSORENSIS)}`
+                    ),
                     entry(YEARS_FILTER, NARROWED_RANGE),
                 ].join(SEPARATOR)
             );
@@ -351,7 +360,7 @@ describe("map-actions utils", () => {
             deletionType: null,
         };
         const preventionFilters = everyFilter(PreventionMapType.RESISTANCE_STATUS);
-        const invasiveFilters = createInvasiveFilters({ vectorSpecies: [TYPE_FORM] });
+        const invasiveFilters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY] });
 
         const labelsFor = (theme: string) =>
             getValueLabelFilters(
@@ -375,7 +384,10 @@ describe("map-actions utils", () => {
         });
 
         it("sends invasive to invasiveValueLabelFilters", () => {
-            expect(labelsFor("invasive")).toEqual({ years: NARROWED_RANGE, vectorSpecies: speciesLabel(TYPE_FORM) });
+            expect(labelsFor("invasive")).toEqual({
+                years: NARROWED_RANGE,
+                vectorSpecies: speciesLabel(STEPHENSI_TYPE_FORM_KEY),
+            });
         });
     });
 });

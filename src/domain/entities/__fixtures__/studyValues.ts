@@ -36,4 +36,33 @@ export const BIOCHEMICAL = "BIOCHEMICAL_ASSAY";
 export const MINISTRY_OF_HEALTH = "MoH";
 export const RESEARCH_INSTITUTION = "Research";
 
-export const OTHER_COUNTRY: Readonly<Pick<Study, "ISO2" | "COUNTRY_NAME">> = { ISO2: "IN", COUNTRY_NAME: "India" };
+export const CONFIRMED_RESISTANCE = "CONFIRMED_RESISTANCE";
+export const POSSIBLE_RESISTANCE = "POSSIBLE_RESISTANCE";
+export const SUSCEPTIBLE = "SUSCEPTIBLE";
+export const UNDETERMINED = "UNDETERMINED";
+
+export const HIGH_INTENSITY = "HIGH_INTENSITY";
+export const MODERATE_INTENSITY = "MODERATE_INTENSITY";
+export const MODERATE_TO_HIGH_INTENSITY = "MODERATE_TO_HIGH_INTENSITY";
+export const LOW_INTENSITY = "LOW_INTENSITY";
+export const NOT_ASSESSED = "COULD_NOT_BE_RELIABLY_ASSESSED";
+
+export const INVASIVE = "Invasive";
+export const NATIVE = "Native";
+export const UNKNOWN_STATUS = "UNKNOWN";
+
+export const STEPHENSI_TYPE_FORM = "An. stephensi type form";
+
+/** Fewer mosquitoes than the minimum the filters set in the specs. */
+export const FEW_MOSQUITOES_NUMBER = "20";
+
+export const AFRICA = "AFRICA";
+export const WEST_AFRICA = "WEST_AFRICA";
+
+type Country = Readonly<Pick<Study, "ISO2" | "COUNTRY_NAME">>;
+
+/** The country of the default prevention study. */
+export const BURKINA_FASO: Country = { ISO2: "BF", COUNTRY_NAME: "Burkina Faso" };
+/** The country of the default invasive study. */
+export const DJIBOUTI: Country = { ISO2: "DJ", COUNTRY_NAME: "Djibouti" };
+export const OTHER_COUNTRY: Country = { ISO2: "IN", COUNTRY_NAME: "India" };

@@ -1,34 +1,36 @@
-import { createTranslation } from "../../types/__fixtures__/translationFixtures";
+import {
+    createTranslation,
+    MONO_OXYGENASES_ENGLISH,
+    MONO_OXYGENASES_FRENCH,
+    MONO_OXYGENASES_SPANISH,
+    TYPE_FIELD,
+} from "../../types/__fixtures__/translationFixtures";
 import { buildTranslationResources } from "../DataProvider";
 import { GAMBIAE, MONO_OXYGENASES } from "../../../domain/entities/__fixtures__/studyValues";
 
-const TYPE_FIELD = "TYPE";
 const PROXY_TYPE_FIELD = "PROXY_TYPE";
 const SPECIES_FIELD = "SPECIES";
 
 const TYPE_KEY = `${TYPE_FIELD}.${MONO_OXYGENASES}`;
 const PROXY_TYPE_KEY = `${PROXY_TYPE_FIELD}.${MONO_OXYGENASES}`;
 
-const ENGLISH_LABEL = "Mono-oxygenases";
-const SPANISH_LABEL = "Monooxigenasas";
-const FRENCH_LABEL = "Mono-oxygénases";
 const PROXY_ENGLISH_LABEL = "Mono-oxygenases (proxy)";
 const SPECIES_LABEL = "label";
 
 const monoOxygenasesType = createTranslation({
     FIELD: TYPE_FIELD,
     VALUE_: MONO_OXYGENASES,
-    EN: ENGLISH_LABEL,
-    ES: SPANISH_LABEL,
-    FR: FRENCH_LABEL,
+    EN: MONO_OXYGENASES_ENGLISH,
+    ES: MONO_OXYGENASES_SPANISH,
+    FR: MONO_OXYGENASES_FRENCH,
 });
 
 describe("buildTranslationResources", () => {
     it("registers each translation under its value and under FIELD.VALUE, in each language", () => {
         expect(buildTranslationResources([monoOxygenasesType])).toEqual({
-            englishResources: { [MONO_OXYGENASES]: ENGLISH_LABEL, [TYPE_KEY]: ENGLISH_LABEL },
-            spanishResources: { [MONO_OXYGENASES]: SPANISH_LABEL, [TYPE_KEY]: SPANISH_LABEL },
-            frenchResources: { [MONO_OXYGENASES]: FRENCH_LABEL, [TYPE_KEY]: FRENCH_LABEL },
+            englishResources: { [MONO_OXYGENASES]: MONO_OXYGENASES_ENGLISH, [TYPE_KEY]: MONO_OXYGENASES_ENGLISH },
+            spanishResources: { [MONO_OXYGENASES]: MONO_OXYGENASES_SPANISH, [TYPE_KEY]: MONO_OXYGENASES_SPANISH },
+            frenchResources: { [MONO_OXYGENASES]: MONO_OXYGENASES_FRENCH, [TYPE_KEY]: MONO_OXYGENASES_FRENCH },
         });
     });
 
@@ -76,12 +78,12 @@ describe("buildTranslationResources", () => {
 
         expect(buildTranslationResources([monoOxygenasesType, monoOxygenasesProxy]).englishResources).toEqual({
             [MONO_OXYGENASES]: PROXY_ENGLISH_LABEL,
-            [TYPE_KEY]: ENGLISH_LABEL,
+            [TYPE_KEY]: MONO_OXYGENASES_ENGLISH,
             [PROXY_TYPE_KEY]: PROXY_ENGLISH_LABEL,
         });
         expect(buildTranslationResources([monoOxygenasesProxy, monoOxygenasesType]).englishResources).toEqual({
-            [MONO_OXYGENASES]: ENGLISH_LABEL,
-            [TYPE_KEY]: ENGLISH_LABEL,
+            [MONO_OXYGENASES]: MONO_OXYGENASES_ENGLISH,
+            [TYPE_KEY]: MONO_OXYGENASES_ENGLISH,
             [PROXY_TYPE_KEY]: PROXY_ENGLISH_LABEL,
         });
     });

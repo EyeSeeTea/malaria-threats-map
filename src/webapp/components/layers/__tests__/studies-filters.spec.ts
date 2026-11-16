@@ -1,14 +1,13 @@
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { ResistanceIntensity } from "../../../../domain/entities/Study";
 import { createInvasiveStudy, createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
+import { STEPHENSI_TYPE_FORM_KEY } from "../../../store/__fixtures__/filtersFixtures";
 import {
     filterByAssayTypes,
     filterByDownload,
     filterByInsecticideClass,
     filterByInsecticideResistanceStatusOptions,
     filterByInsecticideTypes,
-    filterByIntensityStatus,
-    filterByLevelOfInvolvement,
     filterByOnlyDataByHealthMinistries,
     filterByOnlyIncludeBioassaysWithMoreMosquitoes,
     filterByProxyType,
@@ -27,30 +26,41 @@ import {
     filterValidResistanceIntensityValue,
 } from "../studies-filters";
 import {
+    AFRICA,
     ARABIENSIS,
     BIOCHEMICAL,
+    BURKINA_FASO,
     CDC_BOTTLE,
+    CONFIRMED_RESISTANCE,
     DELTAMETHRIN,
     DISCRIMINATING,
     ESTERASES,
     FUNESTUS,
     GAMBIAE,
+    HIGH_INTENSITY,
     INTENSITY,
+    LOW_INTENSITY,
     MINISTRY_OF_HEALTH,
+    MODERATE_INTENSITY,
+    MODERATE_TO_HIGH_INTENSITY,
     MOLECULAR,
     MONO_OXYGENASES,
+    NOT_ASSESSED,
     NOT_AVAILABLE,
     NOT_REPORTED,
     ORGANOPHOSPHATES,
     OTHER_COUNTRY,
     PERMETHRIN,
+    POSSIBLE_RESISTANCE,
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
+    STEPHENSI_TYPE_FORM,
+    SUSCEPTIBLE,
     SYNERGIST,
+    UNDETERMINED,
+    WEST_AFRICA,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
-
-const TYPE_FORM_VALUE = "An. stephensi type form";
 
 describe("studies-filters", () => {
     describe("filterByOnlyIncludeBioassaysWithMoreMosquitoes", () => {
@@ -276,7 +286,7 @@ describe("studies-filters", () => {
         });
 
         describe("filterByVectorSpecies", () => {
-            const typeForm = createInvasiveStudy({ VECTOR_SPECIES: TYPE_FORM_VALUE });
+            const typeForm = createInvasiveStudy({ VECTOR_SPECIES: STEPHENSI_TYPE_FORM });
             const unspecified = createInvasiveStudy({ VECTOR_SPECIES: NOT_REPORTED });
             const notFound = createInvasiveStudy({ VECTOR_SPECIES: "An. stephensi (not found)" });
             const studies = [typeForm, unspecified, notFound];
@@ -286,7 +296,7 @@ describe("studies-filters", () => {
             });
 
             it("maps each selected key through VectorSpeciesKey before comparing", () => {
-                expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_TYPE_FORM"]))).toEqual([true, false, false]);
+                expect(studies.map(filterByVectorSpecies([STEPHENSI_TYPE_FORM_KEY]))).toEqual([true, false, false]);
                 expect(studies.map(filterByVectorSpecies(["AN_STEPHENSI_NOT_FOUND"]))).toEqual([false, false, true]);
             });
 
@@ -299,7 +309,7 @@ describe("studies-filters", () => {
             });
 
             it("does not match the raw value when it is selected instead of a key", () => {
-                expect(studies.map(filterByVectorSpecies([TYPE_FORM_VALUE]))).toEqual([false, false, false]);
+                expect(studies.map(filterByVectorSpecies([STEPHENSI_TYPE_FORM]))).toEqual([false, false, false]);
             });
         });
     });
@@ -377,15 +387,12 @@ describe("studies-filters", () => {
     });
 
     describe("filterByRegion", () => {
-        const BURKINA_FASO_ISO2 = "BF";
-        const AFRICA = "AFRICA";
         const SOUTH_ASIA = "SOUTH_ASIA";
 
         const burkinaFaso = createPreventionStudy({
-            ISO2: BURKINA_FASO_ISO2,
-            COUNTRY_NAME: "Burkina Faso",
+            ...BURKINA_FASO,
             REGION_FULL: AFRICA,
-            SUBREGION: "WEST_AFRICA",
+            SUBREGION: WEST_AFRICA,
         });
         const india = createPreventionStudy({
             ...OTHER_COUNTRY,
@@ -399,7 +406,7 @@ describe("studies-filters", () => {
         });
 
         it("matches a country by ISO2 or by country name", () => {
-            expect(studies.map(filterByRegion({ country: BURKINA_FASO_ISO2 }))).toEqual([true, false]);
+            expect(studies.map(filterByRegion({ country: BURKINA_FASO.ISO2 }))).toEqual([true, false]);
             expect(studies.map(filterByRegion({ country: OTHER_COUNTRY.COUNTRY_NAME }))).toEqual([false, true]);
         });
 
@@ -447,16 +454,8 @@ describe("studies-filters", () => {
             expect(studies.map(filterByResistanceStatus)).toEqual([true, false, false, false, false]);
         });
 
-        it("filterByIntensityStatus keeps only the intensity concentration bioassay", () => {
-            expect(studies.map(filterByIntensityStatus)).toEqual([false, true, false, false, false]);
-        });
-
         it("filterByResistanceMechanism keeps the synergist, molecular and biochemical assays", () => {
             expect(studies.map(filterByResistanceMechanism)).toEqual([false, false, true, true, true]);
-        });
-
-        it("filterByLevelOfInvolvement keeps only the synergist-insecticide bioassay", () => {
-            expect(studies.map(filterByLevelOfInvolvement)).toEqual([false, false, true, false, false]);
         });
     });
 
@@ -464,12 +463,12 @@ describe("studies-filters", () => {
         describe("filterValidResistanceIntensityValue", () => {
             it("keeps the four intensity levels and removes the rest", () => {
                 const intensities: ResistanceIntensity[] = [
-                    "LOW_INTENSITY",
-                    "MODERATE_INTENSITY",
-                    "MODERATE_TO_HIGH_INTENSITY",
-                    "HIGH_INTENSITY",
+                    LOW_INTENSITY,
+                    MODERATE_INTENSITY,
+                    MODERATE_TO_HIGH_INTENSITY,
+                    HIGH_INTENSITY,
                     NOT_AVAILABLE,
-                    "COULD_NOT_BE_RELIABLY_ASSESSED",
+                    NOT_ASSESSED,
                 ];
                 const studies = intensities.map(intensity =>
                     createPreventionStudy({ RESISTANCE_INTENSITY: intensity })
@@ -527,13 +526,7 @@ describe("studies-filters", () => {
 
         describe("filterByInsecticideResistanceStatusOptions", () => {
             it("keeps confirmed, possible and susceptible, and removes the rest", () => {
-                const statuses = [
-                    "CONFIRMED_RESISTANCE",
-                    "POSSIBLE_RESISTANCE",
-                    "SUSCEPTIBLE",
-                    "UNDETERMINED",
-                    NOT_AVAILABLE,
-                ];
+                const statuses = [CONFIRMED_RESISTANCE, POSSIBLE_RESISTANCE, SUSCEPTIBLE, UNDETERMINED, NOT_AVAILABLE];
                 const studies = statuses.map(status => createPreventionStudy({ RESISTANCE_STATUS: status }));
 
                 expect(studies.map(filterByInsecticideResistanceStatusOptions)).toEqual([
