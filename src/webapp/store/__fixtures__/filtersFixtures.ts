@@ -5,7 +5,17 @@ import {
     PYRETHROIDS,
 } from "../../../domain/entities/__fixtures__/studyValues";
 import { Source } from "../actions/base-actions";
-import { InvasiveFilters, InvasiveMapType, PreventionFilters, PreventionMapType, RegionState } from "../types";
+import {
+    InvasiveFilters,
+    InvasiveMapType,
+    MapTheme,
+    PreventionFilters,
+    PreventionMapType,
+    RegionState,
+} from "../types";
+
+export const PREVENTION_THEME: MapTheme = "prevention";
+export const INVASIVE_THEME: MapTheme = "invasive";
 
 export const MAP: Source = "map";
 export const DOWNLOAD: Source = "download";

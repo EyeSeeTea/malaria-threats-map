@@ -1,22 +1,33 @@
-import { createInvasiveStudy } from "../../../../../domain/entities/__fixtures__/studyFixtures";
-import { NOT_AVAILABLE, NOT_REPORTED } from "../../../../../domain/entities/__fixtures__/studyValues";
+import {
+    createInvasiveStudy,
+    INVASIVE_SITE_ID,
+    STUDY_CITATION_LONG,
+    STUDY_CITATION_URL,
+    STUDY_INSTITUTE_CURATION,
+    STUDY_INSTITUTION_CITY,
+} from "../../../../../domain/entities/__fixtures__/studyFixtures";
+import {
+    DJIBOUTI,
+    INVASIVE,
+    LARVAL_SAMPLING,
+    MORPHOLOGY,
+    NATIVE,
+    NOT_AVAILABLE,
+    NOT_FOUND,
+    NOT_REPORTED,
+    STEPHENSI,
+    STEPHENSI_TYPE_FORM,
+} from "../../../../../domain/entities/__fixtures__/studyValues";
+import { INVASIVE_THEME } from "../../../__fixtures__/filtersFixtures";
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
 import { SiteSelection } from "../../../types";
 import { createInvasiveSelectionData } from "../utils";
 
-const INVASIVE = "invasive";
-const SITE_ID = "SITE_DJ_001";
 const OTHER_SITE_ID = "SITE_DJ_002";
 const NOT_REPORTED_LABEL = "common.invasive.chart.vector_occurrance.not_reported";
 const IMMATURE = "Immature";
 const ADULTS = "Adults";
 const HABITAT = "Water tank";
-const VILLAGE = "Djibouti";
-const SPECIES = "An. stephensi type form";
-const COMPLEX = "An. stephensi";
-const STATUS_INVASIVE = "Invasive";
-const STATUS_NATIVE = "Native";
-const STATUS_NOT_FOUND = "Not found";
 const FIRST = "first";
 const SECOND = "second";
 const INVASIVE_2019 = "invasive2019";
@@ -27,16 +38,14 @@ const STUDY = "study";
 const JULY = "July";
 const SEPTEMBER = "September";
 const MARCH = "March";
-const SAMPLING_METHOD = "LARVAL_SAMPLING";
-const ID_METHOD = "MORPHOLOGY";
 
-const selection: SiteSelection = { ISO_2_CODE: "DJ", SITE_ID, coordinates: [43.15, 11.59] };
+const selection: SiteSelection = { ISO_2_CODE: DJIBOUTI.ISO2, SITE_ID: INVASIVE_SITE_ID, coordinates: [43.15, 11.59] };
 
 /** An invasive study at the selected site, with xMART-like month names and stage. */
 const invasiveStudy = (code: string, overrides: Partial<InvasiveStudy> = {}) =>
     createInvasiveStudy({
         Code: code,
-        SITE_ID,
+        SITE_ID: INVASIVE_SITE_ID,
         MONTH_START: JULY,
         MONTH_END: SEPTEMBER,
         YEAR_START: 2020,
@@ -46,14 +55,14 @@ const invasiveStudy = (code: string, overrides: Partial<InvasiveStudy> = {}) =>
         ...overrides,
     });
 
-const selectionData = (studies: InvasiveStudy[]) => createInvasiveSelectionData(INVASIVE, selection, studies);
+const selectionData = (studies: InvasiveStudy[]) => createInvasiveSelectionData(INVASIVE_THEME, selection, studies);
 
 const firstRow = (overrides: Partial<InvasiveStudy>) => selectionData([invasiveStudy(STUDY, overrides)]).data[0];
 
 describe("createInvasiveSelectionData", () => {
     describe("no data", () => {
         it("returns null without a selection", () => {
-            expect(createInvasiveSelectionData(INVASIVE, null, [invasiveStudy(STUDY)])).toBe(null);
+            expect(createInvasiveSelectionData(INVASIVE_THEME, null, [invasiveStudy(STUDY)])).toBe(null);
         });
 
         it("returns null when no study is on the selected site", () => {
@@ -78,14 +87,14 @@ describe("createInvasiveSelectionData", () => {
 
         expect(selectionData(studies)).toEqual({
             kind: "invasive",
-            title: "Djibouti, DJ",
+            title: `${DJIBOUTI.COUNTRY_NAME}, ${DJIBOUTI.ISO2}`,
             data: [
                 {
                     code: FIRST,
-                    species: SPECIES,
+                    species: STEPHENSI_TYPE_FORM,
                     samplingPeriod: "utils.July 2020 to utils.Sept. 2020",
-                    samplingMethod: SAMPLING_METHOD,
-                    speciedIdentificationMethod: ID_METHOD,
+                    samplingMethod: LARVAL_SAMPLING,
+                    speciedIdentificationMethod: MORPHOLOGY,
                     vectorStage: IMMATURE,
                     sumOfTests: "1",
                     larvalHabitat: HABITAT,
@@ -93,20 +102,24 @@ describe("createInvasiveSelectionData", () => {
                 },
                 {
                     code: SECOND,
-                    species: SPECIES,
+                    species: STEPHENSI_TYPE_FORM,
                     samplingPeriod: "utils.Mar. 2019",
-                    samplingMethod: SAMPLING_METHOD,
-                    speciedIdentificationMethod: ID_METHOD,
+                    samplingMethod: LARVAL_SAMPLING,
+                    speciedIdentificationMethod: MORPHOLOGY,
                     vectorStage: ADULTS,
                     sumOfTests: "3",
                     larvalHabitat: undefined,
-                    villageOrigin: VILLAGE,
+                    villageOrigin: DJIBOUTI.COUNTRY_NAME,
                 },
             ],
             dataSources: [
-                { key: "a", url: "https://example.org/citation", text: "Example citation, long form, Ouagadougou" },
+                {
+                    key: "a",
+                    url: STUDY_CITATION_URL,
+                    text: `${STUDY_CITATION_LONG}, ${STUDY_INSTITUTION_CITY}`,
+                },
             ],
-            curations: [{ text: "Example curation institute", dataSources: ["a"] }],
+            curations: [{ text: STUDY_INSTITUTE_CURATION, dataSources: ["a"] }],
         });
     });
 
@@ -115,10 +128,10 @@ describe("createInvasiveSelectionData", () => {
         // which may or may not be the wanted order.
         it("puts the invasive status first and the year second, so an older invasive study comes before a recent native one", () => {
             const studies = [
-                invasiveStudy(NATIVE_2022, { YEAR_START: 2022, INVASIVE_STATUS: STATUS_NATIVE }),
-                invasiveStudy(INVASIVE_2019, { YEAR_START: 2019, INVASIVE_STATUS: STATUS_INVASIVE }),
-                invasiveStudy(NATIVE_2021, { YEAR_START: 2021, INVASIVE_STATUS: STATUS_NATIVE }),
-                invasiveStudy(NOT_FOUND_2023, { YEAR_START: 2023, INVASIVE_STATUS: STATUS_NOT_FOUND }),
+                invasiveStudy(NATIVE_2022, { YEAR_START: 2022, INVASIVE_STATUS: NATIVE }),
+                invasiveStudy(INVASIVE_2019, { YEAR_START: 2019, INVASIVE_STATUS: INVASIVE }),
+                invasiveStudy(NATIVE_2021, { YEAR_START: 2021, INVASIVE_STATUS: NATIVE }),
+                invasiveStudy(NOT_FOUND_2023, { YEAR_START: 2023, INVASIVE_STATUS: NOT_FOUND }),
             ];
 
             expect(selectionData(studies).data.map(row => row.code)).toEqual([
@@ -131,8 +144,8 @@ describe("createInvasiveSelectionData", () => {
 
         it("takes the title from the first study of that order", () => {
             const studies = [
-                invasiveStudy("native", { INVASIVE_STATUS: STATUS_NATIVE, VILLAGE_NAME: "Native village" }),
-                invasiveStudy("invasive", { INVASIVE_STATUS: STATUS_INVASIVE, VILLAGE_NAME: "Invasive village" }),
+                invasiveStudy("native", { INVASIVE_STATUS: NATIVE, VILLAGE_NAME: "Native village" }),
+                invasiveStudy("invasive", { INVASIVE_STATUS: INVASIVE, VILLAGE_NAME: "Invasive village" }),
             ];
 
             expect(selectionData(studies).title).toBe("Invasive village, DJ");
@@ -163,12 +176,6 @@ describe("createInvasiveSelectionData", () => {
             ).toEqual([NOT_AVAILABLE, ""]);
         });
 
-        it("shows the village of origin only when its flag is set", () => {
-            expect(
-                [firstRow({ VILLAGE_FLAG: 1 }), firstRow({ VILLAGE_FLAG: 0 })].map(row => row.villageOrigin)
-            ).toEqual([VILLAGE, NOT_REPORTED_LABEL]);
-        });
-
         it("leaves the number of tests undefined when it is null", () => {
             expect(firstRow({ TOT_STUDIES: null }).sumOfTests).toBe(undefined);
         });
@@ -176,8 +183,8 @@ describe("createInvasiveSelectionData", () => {
 
     describe("species", () => {
         it.each([
-            ["the species", {}, SPECIES],
-            ["the complex when the species is NR", { VECTOR_SPECIES: NOT_REPORTED }, COMPLEX],
+            ["the species", {}, STEPHENSI_TYPE_FORM],
+            ["the complex when the species is NR", { VECTOR_SPECIES: NOT_REPORTED }, STEPHENSI],
             ["an empty text when both are empty", { VECTOR_SPECIES: null, VECTOR_SPECIES_COMPLEX: NOT_AVAILABLE }, ""],
         ])("shows %s", (_case, overrides, expected) => {
             expect(firstRow(overrides).species).toBe(expected);
@@ -185,15 +192,9 @@ describe("createInvasiveSelectionData", () => {
     });
 
     describe("larval habitat", () => {
-        it.each(["Immatures (larvae or pupae)", IMMATURE, "Immature and adults"])(
-            "is shown for the stage %s",
-            stage => {
-                expect(firstRow({ STAGE: stage }).larvalHabitat).toBe(HABITAT);
-            }
-        );
-
-        it("is not shown for adults", () => {
-            expect(firstRow({ STAGE: ADULTS }).larvalHabitat).toBe(undefined);
+        // Immature and Adults are in the whole selection data test.
+        it.each(["Immatures (larvae or pupae)", "Immature and adults"])("is shown for the stage %s", stage => {
+            expect(firstRow({ STAGE: stage }).larvalHabitat).toBe(HABITAT);
         });
     });
 

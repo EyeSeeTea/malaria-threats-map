@@ -2,15 +2,13 @@ import { createInvasiveStudy } from "../../../../../domain/entities/__fixtures__
 import { InvasiveStudy } from "../../../../../domain/entities/InvasiveStudy";
 import { InvasiveMapType } from "../../../../store/types";
 import { InvasiveStatusOrder, studySelector } from "../utils";
-import { INVASIVE, NATIVE, UNKNOWN_STATUS } from "../../../../../domain/entities/__fixtures__/studyValues";
+import { INVASIVE, NATIVE, NOT_FOUND, UNKNOWN_STATUS } from "../../../../../domain/entities/__fixtures__/studyValues";
 
 const RECENT = "recent";
 const NOT_FOUND_STUDY = "notFound";
 const UNKNOWN_STUDY = "unknown";
 const WITHOUT_YEAR = "withoutYear";
 const WITH_YEAR = "withYear";
-
-const NOT_FOUND = "Not found";
 
 const study = (code: string, overrides: Partial<InvasiveStudy> = {}) =>
     createInvasiveStudy({ Code: code, YEAR_START: 2020, ...overrides });

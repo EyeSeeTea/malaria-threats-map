@@ -27,6 +27,13 @@ export const KDR_UNSPECIFIED = "KDR_(MUTATION_UNSPECIFIED)";
 export const ACE1R = "ACE1R";
 export const UNKNOWN_MECHANISM = "UNKNOWN_MECHANISM";
 
+export const DETECTED = "DETECTED";
+export const NOT_DETECTED = "NOT_DETECTED";
+
+export const FULL_INVOLVEMENT = "FULL_INVOLVEMENT";
+export const PARTIAL_INVOLVEMENT = "PARTIAL_INVOLVEMENT";
+export const NO_INVOLVEMENT = "NO_INVOLVEMENT";
+
 export const DISCRIMINATING_ASSAY = "DISCRIMINATING_CONCENTRATION_BIOASSAY";
 export const INTENSITY_ASSAY = "INTENSITY_CONCENTRATION_BIOASSAY";
 export const SYNERGIST_ASSAY = "SYNERGIST-INSECTICIDE_BIOASSAY";
@@ -49,9 +56,14 @@ export const NOT_ASSESSED = "COULD_NOT_BE_RELIABLY_ASSESSED";
 
 export const INVASIVE = "Invasive";
 export const NATIVE = "Native";
+export const NOT_FOUND = "Not found";
 export const UNKNOWN_STATUS = "UNKNOWN";
 
+export const STEPHENSI = "An. stephensi";
 export const STEPHENSI_TYPE_FORM = "An. stephensi type form";
+
+export const LARVAL_SAMPLING = "LARVAL_SAMPLING";
+export const MORPHOLOGY = "MORPHOLOGY";
 
 /** Fewer mosquitoes than the minimum the filters set in the specs. */
 export const FEW_MOSQUITOES_NUMBER = "20";
