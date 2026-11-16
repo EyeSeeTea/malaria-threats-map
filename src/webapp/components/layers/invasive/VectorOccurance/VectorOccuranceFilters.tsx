@@ -17,8 +17,8 @@ const mapStateToProps = (state: State) => ({
 type Props = ReturnType<typeof mapStateToProps>;
 
 /**
- * Whether the filters show the link to report invasive Anopheles species: for malaria, and while
- * no disease is set. Anopheles carries malaria, not dengue.
+ * Whether the filters and the legend show the link to report invasive Anopheles species: for malaria,
+ * and while no disease is set. Anopheles carries malaria, not dengue.
  */
 export function showsAnophelesReportLink(disease: string | undefined): boolean {
     return isDefaultOrUnset(disease);

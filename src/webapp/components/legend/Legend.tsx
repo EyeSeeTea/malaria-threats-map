@@ -17,6 +17,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Trans, useTranslation } from "react-i18next";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Link } from "react-router-dom";
+import { showsAnophelesReportLink } from "../layers/invasive/VectorOccurance/VectorOccuranceFilters";
 
 const StyledButton = styled(Button)`
     color: black;
@@ -66,6 +67,14 @@ const TitleContainer = styled.div`
 const Body = styled.div`
     padding: 20px;
 `;
+
+/**
+ * Whether the legend shows the notice below its help: on the diagnosis maps, and on the invasive map
+ * while it invites reports of invasive Anopheles species.
+ */
+export function showsLegendNotice(theme: string, invasiveDisease: string | undefined): boolean {
+    return theme === "diagnosis" || (theme === "invasive" && showsAnophelesReportLink(invasiveDisease));
+}
 
 const mapStateToProps = (state: State) => ({
     filters: selectFilters(state),
@@ -186,7 +195,7 @@ const Legend: React.FC<Props> = ({
                             <Footer>
                                 <Subtitle fontStyle={"italic"}>{t(`${mapTypeHelpKey}.footer`)}</Subtitle>
                             </Footer>
-                            {(theme === "invasive" || theme === "diagnosis") && (
+                            {showsLegendNotice(theme, invasiveFilters.disease) && (
                                 <Question>
                                     <ErrorOutlineIcon sx={{ color: "#2fb3af" }} />
                                     <span style={{ marginLeft: "6px" }}>
