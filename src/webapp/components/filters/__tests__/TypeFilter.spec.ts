@@ -1,13 +1,19 @@
 import { createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
-import { PreventionFilters, PreventionMapType, RegionState } from "../../../store/types";
+import {
+    createPreventionFilters,
+    createYearFilter,
+    PREVENTION_STUDY_REGION,
+    YEAR_BEFORE_RANGE,
+} from "../../../store/__fixtures__/filtersFixtures";
+import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import { getTypeFilterOptions } from "../TypeFilter";
 import {
     BIOCHEMICAL,
     CDC_BOTTLE,
     DELTAMETHRIN,
     ESTERASES,
+    FEW_MOSQUITOES_NUMBER,
     FUNESTUS,
     GAMBIAE,
     MOLECULAR,
@@ -27,11 +33,10 @@ const NOT_MOH = "notMoH";
 const FEW_MOSQUITOES = "fewMosquitoes";
 const PROXY_ONLY_TYPE = "proxyOnlyType";
 
-const YEARS = [2018, 2022];
-const REGION: RegionState = { country: "BF" };
-
 function typeOptions(studies: PreventionStudy[], filters: PreventionFilters): ReadonlyArray<string> {
-    return getTypeFilterOptions(filters, studies, YEARS, REGION).map(option => option.value);
+    return getTypeFilterOptions(filters, studies, createYearFilter(), PREVENTION_STUDY_REGION).map(
+        option => option.value
+    );
 }
 
 /** A study that passes every filter the cascades set, with the given type. */
@@ -53,7 +58,7 @@ describe("getTypeFilterOptions", () => {
         const studies = [typeStudy(WHO_TEST_KIT), typeStudy(CDC_BOTTLE), typeStudy(WHO_TEST_KIT)];
         const filters = createPreventionFilters({ mapType: PreventionMapType.RESISTANCE_STATUS });
 
-        expect(getTypeFilterOptions(filters, studies, YEARS, REGION)).toEqual([
+        expect(getTypeFilterOptions(filters, studies, createYearFilter(), PREVENTION_STUDY_REGION)).toEqual([
             { label: WHO_TEST_KIT, value: WHO_TEST_KIT },
             { label: CDC_BOTTLE, value: CDC_BOTTLE },
         ]);
@@ -65,7 +70,7 @@ describe("getTypeFilterOptions", () => {
         const studies = [typeStudy(WHO_TEST_KIT), typeStudy(null)];
         const filters = createPreventionFilters({ mapType: PreventionMapType.RESISTANCE_STATUS });
 
-        expect(getTypeFilterOptions(filters, studies, YEARS, REGION)).toEqual([
+        expect(getTypeFilterOptions(filters, studies, createYearFilter(), PREVENTION_STUDY_REGION)).toEqual([
             { label: WHO_TEST_KIT, value: WHO_TEST_KIT },
             { label: null, value: null },
         ]);
@@ -89,7 +94,7 @@ describe("getTypeFilterOptions", () => {
                     typeStudy(WHO_TEST_KIT),
                     typeStudy("otherClass", { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
                     typeStudy("otherInsecticide", { INSECTICIDE_TYPE: PERMETHRIN }),
-                    typeStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                    typeStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     typeStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
@@ -107,7 +112,7 @@ describe("getTypeFilterOptions", () => {
                 const studies = [
                     typeStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
                     typeStudy(NOT_MOH, { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
-                    typeStudy(FEW_MOSQUITOES, { NUMBER: "20" }),
+                    typeStudy(FEW_MOSQUITOES, { NUMBER: FEW_MOSQUITOES_NUMBER }),
                 ];
 
                 expect(typeOptions(studies, filters)).toEqual([OTHER_SPECIES, NOT_MOH, FEW_MOSQUITOES]);
@@ -127,7 +132,7 @@ describe("getTypeFilterOptions", () => {
             const studies = [
                 typeStudy(MONO_OXYGENASES),
                 typeStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
-                typeStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                typeStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                 typeStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
@@ -159,7 +164,7 @@ describe("getTypeFilterOptions", () => {
 
         it("is narrowed by years and region", () => {
             const studies = [
-                typeStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                typeStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                 typeStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
