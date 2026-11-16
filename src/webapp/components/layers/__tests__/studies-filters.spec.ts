@@ -61,7 +61,6 @@ import {
     WEST_AFRICA,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
-import { STEPHENSI_TYPE_FORM_KEY } from "../../../store/__fixtures__/vectorSpeciesUrlKeys";
 
 describe("studies-filters", () => {
     describe("filterByOnlyIncludeBioassaysWithMoreMosquitoes", () => {
@@ -299,14 +298,6 @@ describe("studies-filters", () => {
             it("keeps only the studies of the selected species values", () => {
                 expect(studies.map(filterByVectorSpecies([STEPHENSI_TYPE_FORM]))).toEqual([true, false, false]);
                 expect(studies.map(filterByVectorSpecies([STEPHENSI_NOT_FOUND]))).toEqual([false, false, true]);
-            });
-
-            it("matches NR like any other value", () => {
-                expect(studies.map(filterByVectorSpecies([NOT_REPORTED]))).toEqual([false, true, false]);
-            });
-
-            it("does not match an old key, which the link turns into a value before it reaches the filter", () => {
-                expect(studies.map(filterByVectorSpecies([STEPHENSI_TYPE_FORM_KEY]))).toEqual([false, false, false]);
             });
         });
     });

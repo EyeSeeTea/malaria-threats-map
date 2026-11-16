@@ -8,6 +8,12 @@ import {
     PREVENTION_THEME,
 } from "../../../store/__fixtures__/filtersFixtures";
 import {
+    addVectorSpeciesAppLabels,
+    removeEnglishResources,
+    STEPHENSI_MYSORENSIS_APP_LABEL,
+    STEPHENSI_TYPE_FORM_APP_LABEL,
+} from "../../../types/__fixtures__/translationFixtures";
+import {
     DiagnosisFilters,
     PreventionDataset,
     PreventionFilters,
@@ -53,7 +59,7 @@ const SEPARATOR = " | ";
 const SOME_KEY = "some.key";
 
 // i18next runs without resources in the tests (src/setupTests.ts), so every label is its key,
-// except the two species labels added below.
+// except the vector species labels added below.
 const ALL = "common.map_info_summary.all";
 const entry = (filter: string, value: string) => `common.map_info_summary.${filter}: ${value}`;
 
@@ -61,20 +67,6 @@ const MAX_MIN_YEARS = [2010, 2024];
 const NARROWED_YEARS = [2015, 2020];
 const FULL_RANGE = "2010-2024";
 const NARROWED_RANGE = "2015-2020";
-
-const TYPE_FORM_LABEL = "Type form label";
-const MYSORENSIS_LABEL = "Mysorensis label";
-
-const speciesTranslations = {
-    common: {
-        filters: {
-            vector_species_options: {
-                [STEPHENSI_TYPE_FORM]: TYPE_FORM_LABEL,
-                [STEPHENSI_MYSORENSIS]: MYSORENSIS_LABEL,
-            },
-        },
-    },
-};
 
 const filtersWithOnlyInsecticideClass = (mapType: PreventionMapType) =>
     createPreventionFilters({ mapType, insecticideClass: PYRETHROIDS });
@@ -98,11 +90,11 @@ const everyMechanismFilter = () => ({
 
 describe("map-actions utils", () => {
     beforeAll(() => {
-        i18next.addResourceBundle("en", "translation", speciesTranslations, true, true);
+        addVectorSpeciesAppLabels();
     });
 
     afterAll(() => {
-        i18next.removeResourceBundle("en", "translation");
+        removeEnglishResources();
     });
 
     it("runs with i18next returning the key, which every assertion below relies on", () => {
@@ -205,7 +197,7 @@ describe("map-actions utils", () => {
                     MAX_MIN_YEARS,
                     MAX_MIN_YEARS
                 )
-            ).toEqual({ years: FULL_RANGE, vectorSpecies: TYPE_FORM_LABEL });
+            ).toEqual({ years: FULL_RANGE, vectorSpecies: STEPHENSI_TYPE_FORM_APP_LABEL });
 
             expect(
                 invasiveValueLabelFilters(
@@ -213,7 +205,10 @@ describe("map-actions utils", () => {
                     MAX_MIN_YEARS,
                     MAX_MIN_YEARS
                 )
-            ).toEqual({ years: FULL_RANGE, vectorSpecies: `${TYPE_FORM_LABEL} | ${MYSORENSIS_LABEL}` });
+            ).toEqual({
+                years: FULL_RANGE,
+                vectorSpecies: `${STEPHENSI_TYPE_FORM_APP_LABEL} | ${STEPHENSI_MYSORENSIS_APP_LABEL}`,
+            });
         });
 
         it("shows the value of a species without a translation", () => {
@@ -363,7 +358,7 @@ describe("map-actions utils", () => {
 
             expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, NARROWED_YEARS, DOWNLOAD)).toEqual(
                 [
-                    entry(VECTOR_SPECIES_FILTER, `${TYPE_FORM_LABEL}, ${MYSORENSIS_LABEL}`),
+                    entry(VECTOR_SPECIES_FILTER, `${STEPHENSI_TYPE_FORM_APP_LABEL}, ${STEPHENSI_MYSORENSIS_APP_LABEL}`),
                     entry(YEARS_FILTER, NARROWED_RANGE),
                 ].join(SEPARATOR)
             );
@@ -421,7 +416,10 @@ describe("map-actions utils", () => {
             });
 
             it("sends invasive to invasiveValueLabelFilters", () => {
-                expect(labelsFor(INVASIVE_THEME)).toEqual({ years: NARROWED_RANGE, vectorSpecies: TYPE_FORM_LABEL });
+                expect(labelsFor(INVASIVE_THEME)).toEqual({
+                    years: NARROWED_RANGE,
+                    vectorSpecies: STEPHENSI_TYPE_FORM_APP_LABEL,
+                });
             });
         });
 
@@ -452,7 +450,10 @@ describe("map-actions utils", () => {
 
             it("sends invasive to invasiveFiltersToString", () => {
                 expect(summaryFor(INVASIVE_THEME)).toEqual(
-                    [entry(VECTOR_SPECIES_FILTER, TYPE_FORM_LABEL), entry(YEARS_FILTER, NARROWED_RANGE)].join(SEPARATOR)
+                    [
+                        entry(VECTOR_SPECIES_FILTER, STEPHENSI_TYPE_FORM_APP_LABEL),
+                        entry(YEARS_FILTER, NARROWED_RANGE),
+                    ].join(SEPARATOR)
                 );
             });
         });

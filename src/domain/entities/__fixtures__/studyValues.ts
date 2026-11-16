@@ -24,6 +24,13 @@ export const STEPHENSI_MYSORENSIS = "An. stephensi mysorensis";
 export const STEPHENSI_INTERMEDIATE_FORM = "An. stephensi intermediate form";
 export const STEPHENSI_NOT_FOUND = "An. stephensi (not found)";
 
+/** The codes the app gave the 5 An. stephensi species before they came from the data. Old links still carry them. */
+export const STEPHENSI_TYPE_FORM_KEY = "AN_STEPHENSI_TYPE_FORM";
+export const STEPHENSI_MYSORENSIS_KEY = "AN_STEPHENSI_MYSORENSIS";
+export const STEPHENSI_INTERMEDIATE_FORM_KEY = "AN_STEPHENSI_INTERMEDIATE_FORM";
+export const STEPHENSI_FORM_UNSPECIFIED_KEY = "AN_STEPHENSI_FORM_UNSPECIFIED";
+export const STEPHENSI_NOT_FOUND_KEY = "AN_STEPHENSI_NOT_FOUND";
+
 export const INVASIVE_STATUS_INVASIVE = "Invasive";
 export const INVASIVE_STATUS_NATIVE = "Native";
 export const INVASIVE_STATUS_NOT_FOUND = "Not found";
