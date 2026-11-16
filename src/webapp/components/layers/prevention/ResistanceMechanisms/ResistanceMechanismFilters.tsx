@@ -21,7 +21,7 @@ export const isSynergyst = (filters: PreventionFilters) =>
 function ResistanceMechanismFilters({ preventionFilters }: Props) {
     return (
         <div>
-            <MechanismTypeFilter />
+            <MechanismTypeFilter from="map" />
             <AssayTypeCheckboxFilter />
             <SpeciesFilter />
             {isSynergyst(preventionFilters) && <SynergistTypeFilter />}

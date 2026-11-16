@@ -5,6 +5,9 @@ import { createSelector } from "reselect";
 import { PreventionDataset, PreventionFilters, PreventionMapType, PreventionState, State } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 
+/** The mechanism the resistance mechanisms map selects when it opens. */
+export const defaultMechanismType = "MONO_OXYGENASES";
+
 const initialFilters: PreventionFilters = {
     mapType: PreventionMapType.RESISTANCE_STATUS,
     dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",

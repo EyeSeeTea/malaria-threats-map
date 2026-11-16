@@ -13,7 +13,8 @@ import {
 } from "./utils";
 import { PreventionMapType, State } from "../../types";
 import { getAnalyticsPageView } from "../../analytics";
-import { ASSAY_TYPES } from "../../../components/filters/AssayTypeCheckboxFilter";
+import { getAssayTypesDetecting } from "../../../../domain/entities/ResistanceMechanism";
+import { mechanismAssayTypes } from "../../../../domain/entities/AssayType";
 import {
     logEventAction,
     logPageViewAction,
@@ -33,6 +34,7 @@ import {
     setType,
 } from "../../actions/prevention-actions";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
+import { defaultMechanismType } from "../../reducers/prevention-reducer";
 import { resetDatesRequired } from "../common/utils";
 
 export const fetchAllPreventionStudiesEpic = buildPreventionStudiesEpic(
@@ -92,7 +94,7 @@ export const setPreventionMapTypeEpic = (
                     : [];
 
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(..._.compact([...dateResets, setType(["MONO_OXYGENASES"]), logPageView]));
+                return of(..._.compact([...dateResets, setType([defaultMechanismType]), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
                 return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
@@ -109,14 +111,9 @@ export const setPreventionTypeEpic = (action$: Observable<ActionType<typeof setT
     action$.pipe(
         ofType(ActionTypeEnum.SetType),
         switchMap(action => {
-            const kdr = ["KDR_L1014S", "KDR_L1014F", "KDR_(MUTATION_UNSPECIFIED)"];
-            if (action.payload && kdr.includes(action.payload[0])) {
-                return of(setAssayTypes([ASSAY_TYPES[0]]));
-            } else if (action.payload && ["ACE1R"].includes(action.payload[0])) {
-                return of(setAssayTypes([ASSAY_TYPES[0], ASSAY_TYPES[1]]));
-            } else {
-                return of(setAssayTypes(ASSAY_TYPES));
-            }
+            // Only the first mechanism counts. An unknown one, or none, selects every assay type.
+            const detecting = getAssayTypesDetecting(action.payload?.[0]) ?? mechanismAssayTypes;
+            return of(setAssayTypes([...detecting]));
         })
     );
 
@@ -131,7 +128,7 @@ export const setPreventionInsecticideClassEpic = (
             const isTourOpen = state.malaria.tour.open;
             const actions = _.compact([
                 setInsecticideTypes([]),
-                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : ["MONO_OXYGENASES"]),
+                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : [defaultMechanismType]),
                 setSpecies([]),
                 isTourOpen
                     ? null

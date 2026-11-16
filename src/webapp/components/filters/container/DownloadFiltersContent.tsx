@@ -73,7 +73,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                 case "MOLECULAR_ASSAY":
                     return (
                         <div>
-                            <MechanismTypeFilter />
+                            <MechanismTypeFilter from="download" />
                             <SpeciesFilter />
                             {/* {isSynergyst(preventionFilters) && <SynergistTypeFilter />} */}
                             <YearRangeSelector showTheatherMode={false} />

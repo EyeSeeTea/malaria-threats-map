@@ -51,6 +51,11 @@ export function addVectorSpeciesAppLabels(): void {
     );
 }
 
+/** Adds English xMART labels, flat `FIELD.VALUE` keys as DataProvider loads them. */
+export function addXmartLabels(labels: Readonly<Record<string, string>>): void {
+    i18next.addResourceBundle("en", "translation", labels, true, true);
+}
+
 /** Removes every English resource a test added, so i18next returns keys again. */
 export function removeEnglishResources(): void {
     i18next.removeResourceBundle("en", "translation");

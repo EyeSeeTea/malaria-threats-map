@@ -5,11 +5,7 @@ import { setPreventionTypeEpic } from "../prevention-epics";
 import {
     ACE1R,
     BIOCHEMICAL_ASSAY,
-    ESTERASES,
-    GSTS,
-    KDR_L1014F,
     KDR_L1014S,
-    KDR_UNSPECIFIED,
     MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     SYNERGIST_ASSAY,
@@ -20,23 +16,19 @@ function actionsAfterSetType(types: string[] | undefined) {
     return firstValueFrom(setPreventionTypeEpic(of(setType(types))).pipe(toArray()));
 }
 
+// Which assay types detect each mechanism is pinned in ResistanceMechanism.spec; this spec pins what the
+// epic adds: the fallback to every assay type and the first-mechanism rule.
 describe("setPreventionTypeEpic", () => {
-    it.each([KDR_L1014S, KDR_L1014F, KDR_UNSPECIFIED])("selects only the molecular assay for %s", async mechanism => {
-        expect(await actionsAfterSetType([mechanism])).toEqual([setAssayTypes([MOLECULAR_ASSAY])]);
-    });
-
-    it("selects the molecular and biochemical assays for ACE1R", async () => {
+    it("selects the assay types that detect the mechanism", async () => {
         expect(await actionsAfterSetType([ACE1R])).toEqual([setAssayTypes([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY])]);
     });
 
-    it.each([MONO_OXYGENASES, ESTERASES, GSTS, UNKNOWN_MECHANISM])(
-        "selects the three assay types for %s",
-        async mechanism => {
-            expect(await actionsAfterSetType([mechanism])).toEqual([
-                setAssayTypes([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY]),
-            ]);
-        }
-    );
+    // Reachable from a link with a mechanism code the catalogue does not have.
+    it("selects the three assay types for an unknown mechanism", async () => {
+        expect(await actionsAfterSetType([UNKNOWN_MECHANISM])).toEqual([
+            setAssayTypes([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY]),
+        ]);
+    });
 
     it("selects the three assay types for an empty list and for undefined", async () => {
         const allAssayTypes = [setAssayTypes([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY])];
