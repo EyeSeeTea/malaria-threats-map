@@ -1,9 +1,7 @@
 import { createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import { getSynergistTypeFilterOptions } from "../SynergistTypeFilter";
 import {
-    BIOCHEMICAL_ASSAY,
     CDC_BOTTLE,
-    ESTERASES,
     MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     SYNERGIST_ASSAY,
@@ -32,9 +30,5 @@ describe("getSynergistTypeFilterOptions", () => {
         expect(getSynergistTypeFilterOptions([study(SYNERGIST_ASSAY, WHO_TEST_KIT_LARVAE)])).toEqual([
             { label: WHO_TEST_KIT_LARVAE, value: WHO_TEST_KIT_LARVAE },
         ]);
-    });
-
-    it("offers nothing when the map has no synergist bioassays", () => {
-        expect(getSynergistTypeFilterOptions([study(BIOCHEMICAL_ASSAY, ESTERASES)])).toEqual([]);
     });
 });

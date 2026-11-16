@@ -1,4 +1,3 @@
-import i18next from "i18next";
 import { createInvasiveStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import {
     STEPHENSI_MYSORENSIS,
@@ -15,6 +14,7 @@ import {
 } from "../../../../domain/entities/__fixtures__/studyValues";
 import {
     addVectorSpeciesAppLabels,
+    addXmartLabels,
     NOT_REPORTED_APP_LABEL,
     removeEnglishResources,
     STEPHENSI_MYSORENSIS_APP_LABEL,
@@ -28,13 +28,11 @@ import {
 
 const XMART_TYPE_FORM_LABEL = "Type form (xMART)";
 
-// The xMART translations arrive as flat FIELD.VALUE keys (see DataProvider), the app's as nested JSON.
-const xmartTranslations = { [`VECTOR_SPECIES.${STEPHENSI_TYPE_FORM}`]: XMART_TYPE_FORM_LABEL };
-
 describe("VectorSpeciesFilter", () => {
     beforeAll(() => {
+        // The xMART labels arrive as flat FIELD.VALUE keys (see DataProvider), the app's as nested JSON.
         addVectorSpeciesAppLabels();
-        i18next.addResourceBundle("en", "translation", xmartTranslations);
+        addXmartLabels({ [`VECTOR_SPECIES.${STEPHENSI_TYPE_FORM}`]: XMART_TYPE_FORM_LABEL });
     });
 
     afterAll(() => {
