@@ -3,7 +3,9 @@ import {
     createInvasiveFilters,
     createPreventionFilters,
     DOWNLOAD,
+    INVASIVE_THEME,
     MAP,
+    PREVENTION_THEME,
     STEPHENSI_TYPE_FORM_KEY,
 } from "../../../store/__fixtures__/filtersFixtures";
 import {
@@ -393,7 +395,7 @@ describe("map-actions utils", () => {
                 );
 
             it("sends prevention to preventionValueLabelFilters", () => {
-                expect(labelsFor("prevention")).toEqual({
+                expect(labelsFor(PREVENTION_THEME)).toEqual({
                     years: NARROWED_RANGE,
                     insecticideClass: PYRETHROIDS,
                     insecticideTypes: `${DELTAMETHRIN} | ${PERMETHRIN}`,
@@ -403,7 +405,7 @@ describe("map-actions utils", () => {
             });
 
             it("sends invasive to invasiveValueLabelFilters", () => {
-                expect(labelsFor("invasive")).toEqual({
+                expect(labelsFor(INVASIVE_THEME)).toEqual({
                     years: NARROWED_RANGE,
                     vectorSpecies: speciesLabel(STEPHENSI_TYPE_FORM_KEY),
                 });
@@ -424,7 +426,7 @@ describe("map-actions utils", () => {
                 );
 
             it("sends prevention to preventionFiltersToString", () => {
-                expect(summaryFor("prevention")).toEqual(
+                expect(summaryFor(PREVENTION_THEME)).toEqual(
                     [
                         entry(INSECTICIDE_CLASS_FILTER, PYRETHROIDS),
                         entry(INSECTICIDE_TYPES_FILTER, `${DELTAMETHRIN}, ${PERMETHRIN}`),
@@ -436,7 +438,7 @@ describe("map-actions utils", () => {
             });
 
             it("sends invasive to invasiveFiltersToString", () => {
-                expect(summaryFor("invasive")).toEqual(
+                expect(summaryFor(INVASIVE_THEME)).toEqual(
                     [
                         entry(VECTOR_SPECIES_FILTER, speciesLabel(STEPHENSI_TYPE_FORM_KEY)),
                         entry(YEARS_FILTER, NARROWED_RANGE),
