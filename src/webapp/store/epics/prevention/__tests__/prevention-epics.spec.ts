@@ -21,7 +21,7 @@ import {
 } from "../prevention-epics";
 import {
     ACE1R,
-    BIOCHEMICAL,
+    BIOCHEMICAL_ASSAY,
     CARBAMATES,
     DENGUE,
     ESTERASES,
@@ -30,11 +30,11 @@ import {
     KDR_L1014S,
     KDR_UNSPECIFIED,
     MALARIA,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     ORGANOPHOSPHATES,
     PYRETHROIDS,
-    SYNERGIST,
+    SYNERGIST_ASSAY,
     UNKNOWN_MECHANISM,
 } from "../../../../../domain/entities/__fixtures__/studyValues";
 import { createPreventionStudy } from "../../../../../domain/entities/__fixtures__/studyFixtures";
@@ -55,24 +55,24 @@ function actionsAfterSetType(types: string[] | undefined) {
 
 describe("setPreventionTypeEpic", () => {
     it.each([KDR_L1014S, KDR_L1014F, KDR_UNSPECIFIED])("selects only the molecular assay for %s", async mechanism => {
-        expect(await actionsAfterSetType([mechanism])).toEqual([setAssayTypes([MOLECULAR])]);
+        expect(await actionsAfterSetType([mechanism])).toEqual([setAssayTypes([MOLECULAR_ASSAY])]);
     });
 
     it("selects the molecular and biochemical assays for ACE1R", async () => {
-        expect(await actionsAfterSetType([ACE1R])).toEqual([setAssayTypes([MOLECULAR, BIOCHEMICAL])]);
+        expect(await actionsAfterSetType([ACE1R])).toEqual([setAssayTypes([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY])]);
     });
 
     it.each([MONO_OXYGENASES, ESTERASES, GSTS, UNKNOWN_MECHANISM])(
         "selects the three assay types for %s",
         async mechanism => {
             expect(await actionsAfterSetType([mechanism])).toEqual([
-                setAssayTypes([MOLECULAR, BIOCHEMICAL, SYNERGIST]),
+                setAssayTypes([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY]),
             ]);
         }
     );
 
     it("selects the three assay types for an empty list and for undefined", async () => {
-        const allAssayTypes = [setAssayTypes([MOLECULAR, BIOCHEMICAL, SYNERGIST])];
+        const allAssayTypes = [setAssayTypes([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY])];
 
         expect(await actionsAfterSetType([])).toEqual(allAssayTypes);
         expect(await actionsAfterSetType(undefined)).toEqual(allAssayTypes);
@@ -81,9 +81,9 @@ describe("setPreventionTypeEpic", () => {
     // The filter allows one mechanism, so only the first one decides the assay types.
     // A change that allows several must revisit this epic.
     it("looks only at the first selected mechanism", async () => {
-        expect(await actionsAfterSetType([KDR_L1014S, MONO_OXYGENASES])).toEqual([setAssayTypes([MOLECULAR])]);
+        expect(await actionsAfterSetType([KDR_L1014S, MONO_OXYGENASES])).toEqual([setAssayTypes([MOLECULAR_ASSAY])]);
         expect(await actionsAfterSetType([MONO_OXYGENASES, KDR_L1014S])).toEqual([
-            setAssayTypes([MOLECULAR, BIOCHEMICAL, SYNERGIST]),
+            setAssayTypes([MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY]),
         ]);
     });
 });

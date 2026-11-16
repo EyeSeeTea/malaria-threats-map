@@ -1,5 +1,10 @@
-import { createPreventionStudy } from "../../../../../domain/entities/__fixtures__/studyFixtures";
+import {
+    createPreventionStudy,
+    STUDY_CITATION_URL,
+    STUDY_INSTITUTION_CITY,
+} from "../../../../../domain/entities/__fixtures__/studyFixtures";
 import { NOT_AVAILABLE, NOT_REPORTED } from "../../../../../domain/entities/__fixtures__/studyValues";
+import { INVASIVE_THEME, PREVENTION_THEME } from "../../../__fixtures__/filtersFixtures";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { setFiltersAction, setMaxMinYearsAction } from "../../../actions/base-actions";
 import createRootReducer from "../../../reducers";
@@ -7,16 +12,12 @@ import { CitationDataSource } from "../../../SelectionData";
 import { MapTheme, State } from "../../../types";
 import { createCitationDataSources, createCurations, resetDatesRequired, selectDataSourcesByStudies } from "../utils";
 
-const PREVENTION = "prevention";
-const INVASIVE = "invasive";
-const TREATMENT = "treatment";
-const URL = "https://example.org/citation";
+const TREATMENT_THEME: MapTheme = "treatment";
 const OTHER_URL = "https://example.org/other";
 const CITATION_LONG = "Long citation";
 const CITATION = "Short citation";
 const INSTITUTION = "Institution";
 const INSTITUTE = "Institute";
-const CITY = "Ouagadougou";
 const CURATION = "Curation";
 const INSTITUTE_CURATION = "Institute curation";
 
@@ -41,34 +42,48 @@ describe("side panel shared functions", () => {
         describe("a study with a URL", () => {
             it("takes the long citation and the institution city as text", () => {
                 const studies = [
-                    citedStudy({ CITATION_URL: URL, CITATION_LONG: CITATION_LONG, INSTITUTION_CITY: CITY }),
+                    citedStudy({
+                        CITATION_URL: STUDY_CITATION_URL,
+                        CITATION_LONG: CITATION_LONG,
+                        INSTITUTION_CITY: STUDY_INSTITUTION_CITY,
+                    }),
                 ];
 
-                expect(createCitationDataSources(PREVENTION, studies)).toEqual([
-                    dataSource("a", `${CITATION_LONG}, ${CITY}`, URL),
+                expect(createCitationDataSources(PREVENTION_THEME, studies)).toEqual([
+                    dataSource("a", `${CITATION_LONG}, ${STUDY_INSTITUTION_CITY}`, STUDY_CITATION_URL),
                 ]);
             });
 
             it.each([
                 ["the citation", { CITATION: CITATION }, CITATION],
                 ["the institution", { INSTITUTION: INSTITUTION }, INSTITUTION],
-                ["the URL itself", {}, URL],
+                ["the URL itself", {}, STUDY_CITATION_URL],
             ])("falls back to %s when the fields before it are empty", (_case, overrides, text) => {
-                const studies = [citedStudy({ CITATION_URL: URL, ...overrides })];
+                const studies = [citedStudy({ CITATION_URL: STUDY_CITATION_URL, ...overrides })];
 
-                expect(createCitationDataSources(PREVENTION, studies)).toEqual([dataSource("a", text, URL)]);
+                expect(createCitationDataSources(PREVENTION_THEME, studies)).toEqual([
+                    dataSource("a", text, STUDY_CITATION_URL),
+                ]);
             });
 
             it("trims the citation", () => {
-                const studies = [citedStudy({ CITATION_URL: URL, CITATION_LONG: `  ${CITATION_LONG}  ` })];
+                const studies = [
+                    citedStudy({ CITATION_URL: STUDY_CITATION_URL, CITATION_LONG: `  ${CITATION_LONG}  ` }),
+                ];
 
-                expect(createCitationDataSources(PREVENTION, studies)).toEqual([dataSource("a", CITATION_LONG, URL)]);
+                expect(createCitationDataSources(PREVENTION_THEME, studies)).toEqual([
+                    dataSource("a", CITATION_LONG, STUDY_CITATION_URL),
+                ]);
             });
 
             it("treats NR like an empty value", () => {
-                const studies = [citedStudy({ CITATION_URL: URL, CITATION_LONG: NOT_REPORTED, CITATION: CITATION })];
+                const studies = [
+                    citedStudy({ CITATION_URL: STUDY_CITATION_URL, CITATION_LONG: NOT_REPORTED, CITATION: CITATION }),
+                ];
 
-                expect(createCitationDataSources(PREVENTION, studies)).toEqual([dataSource("a", CITATION, URL)]);
+                expect(createCitationDataSources(PREVENTION_THEME, studies)).toEqual([
+                    dataSource("a", CITATION, STUDY_CITATION_URL),
+                ]);
             });
         });
 
@@ -79,7 +94,7 @@ describe("side panel shared functions", () => {
                     citedStudy({ INSTITUTE: INSTITUTE }),
                 ];
 
-                expect(createCitationDataSources(PREVENTION, studies)).toEqual([
+                expect(createCitationDataSources(PREVENTION_THEME, studies)).toEqual([
                     dataSource("a", CITATION_LONG),
                     dataSource("b", INSTITUTE),
                 ]);
@@ -88,30 +103,30 @@ describe("side panel shared functions", () => {
             it("takes the short citation on invasive", () => {
                 const studies = [citedStudy({ CITATION_LONG: CITATION_LONG, CITATION: CITATION })];
 
-                expect(createCitationDataSources(INVASIVE, studies)).toEqual([dataSource("a", CITATION)]);
+                expect(createCitationDataSources(INVASIVE_THEME, studies)).toEqual([dataSource("a", CITATION)]);
             });
 
             it("takes the institution on treatment", () => {
                 const studies = [citedStudy({ CITATION_LONG: CITATION_LONG, INSTITUTION: INSTITUTION })];
 
-                expect(createCitationDataSources(TREATMENT, studies)).toEqual([dataSource("a", INSTITUTION)]);
+                expect(createCitationDataSources(TREATMENT_THEME, studies)).toEqual([dataSource("a", INSTITUTION)]);
             });
 
             it("drops the study when every citation field is empty", () => {
-                expect(createCitationDataSources(PREVENTION, [citedStudy()])).toEqual([]);
+                expect(createCitationDataSources(PREVENTION_THEME, [citedStudy()])).toEqual([]);
             });
         });
 
         it("keeps one source per text and URL, keyed a, b, c in the order of the studies", () => {
             const studies = [
-                citedStudy({ CITATION_URL: URL, CITATION_LONG: CITATION_LONG }),
+                citedStudy({ CITATION_URL: STUDY_CITATION_URL, CITATION_LONG: CITATION_LONG }),
                 citedStudy({ CITATION_LONG: CITATION }),
-                citedStudy({ CITATION_URL: URL, CITATION_LONG: CITATION_LONG }),
+                citedStudy({ CITATION_URL: STUDY_CITATION_URL, CITATION_LONG: CITATION_LONG }),
                 citedStudy({ CITATION_URL: OTHER_URL, CITATION_LONG: CITATION_LONG }),
             ];
 
-            expect(createCitationDataSources(PREVENTION, studies)).toEqual([
-                dataSource("a", CITATION_LONG, URL),
+            expect(createCitationDataSources(PREVENTION_THEME, studies)).toEqual([
+                dataSource("a", CITATION_LONG, STUDY_CITATION_URL),
                 dataSource("b", CITATION),
                 dataSource("c", CITATION_LONG, OTHER_URL),
             ]);
@@ -124,7 +139,7 @@ describe("side panel shared functions", () => {
                 citedStudy({ CITATION_LONG: `source ${index}` })
             );
 
-            const keys = createCitationDataSources(PREVENTION, studies).map(source => source.key);
+            const keys = createCitationDataSources(PREVENTION_THEME, studies).map(source => source.key);
 
             expect(keys.slice(24)).toEqual(["y", "z", undefined]);
         });
@@ -132,14 +147,16 @@ describe("side panel shared functions", () => {
 
     describe("selectDataSourcesByStudies", () => {
         const dataSources = [
-            dataSource("a", CITATION_LONG, URL),
+            dataSource("a", CITATION_LONG, STUDY_CITATION_URL),
             dataSource("b", CITATION),
             dataSource("c", INSTITUTE),
             dataSource("d", INSTITUTION),
         ];
 
         it("matches a study by its URL", () => {
-            expect(selectDataSourcesByStudies(dataSources, [citedStudy({ CITATION_URL: URL })])).toEqual(["a"]);
+            expect(selectDataSourcesByStudies(dataSources, [citedStudy({ CITATION_URL: STUDY_CITATION_URL })])).toEqual(
+                ["a"]
+            );
         });
 
         it.each([
@@ -154,7 +171,7 @@ describe("side panel shared functions", () => {
         it("returns each key once, sorted, and skips the studies that match nothing", () => {
             const studies = [
                 citedStudy({ INSTITUTION: INSTITUTION }),
-                citedStudy({ CITATION_URL: URL }),
+                citedStudy({ CITATION_URL: STUDY_CITATION_URL }),
                 citedStudy({ INSTITUTION: INSTITUTION }),
                 citedStudy(),
             ];
@@ -165,10 +182,27 @@ describe("side panel shared functions", () => {
         // Pins today's behaviour, a possible bug pending a decision: two sources with the same link and
         // different texts both get listed, but every study with that link shows the first letter.
         it("gives two sources with the same URL the key of the first one", () => {
-            const sameUrlSources = [dataSource("a", CITATION_LONG, URL), dataSource("b", CITATION, URL)];
-            const studies = [citedStudy({ CITATION_URL: URL, CITATION_LONG: CITATION })];
+            const sameUrlSources = [
+                dataSource("a", CITATION_LONG, STUDY_CITATION_URL),
+                dataSource("b", CITATION, STUDY_CITATION_URL),
+            ];
+            const studies = [citedStudy({ CITATION_URL: STUDY_CITATION_URL, CITATION_LONG: CITATION })];
 
             expect(selectDataSourcesByStudies(sameUrlSources, studies)).toEqual(["a"]);
+        });
+
+        // A study without institute is matched first by its URL and its institution, so here it gets the
+        // letter of its own source even when an earlier source shares the link.
+        it("matches a study by its URL and its institution before its URL alone", () => {
+            const sameUrlSources = [
+                dataSource("a", CITATION_LONG, STUDY_CITATION_URL),
+                dataSource("b", INSTITUTION, STUDY_CITATION_URL),
+            ];
+            const studies = [
+                citedStudy({ CITATION_URL: STUDY_CITATION_URL, INSTITUTE: null, INSTITUTION: INSTITUTION }),
+            ];
+
+            expect(selectDataSourcesByStudies(sameUrlSources, studies)).toEqual(["b"]);
         });
     });
 
@@ -215,36 +249,35 @@ describe("side panel shared functions", () => {
         };
 
         it("returns nothing when the state is on another theme", () => {
-            const state = stateWith(INVASIVE, [1990, END], [1990, END]);
+            const state = stateWith(INVASIVE_THEME, [1990, END], [1990, END]);
 
-            expect(resetDatesRequired({ minMaxYears, theme: PREVENTION, state })).toEqual([]);
+            expect(resetDatesRequired({ minMaxYears, theme: PREVENTION_THEME, state })).toEqual([]);
         });
 
         it("resets both ranges when neither starts at the studies' first year", () => {
-            const state = stateWith(PREVENTION, [1990, END], [1990, END]);
+            const state = stateWith(PREVENTION_THEME, [1990, END], [1990, END]);
 
-            expect(resetDatesRequired({ minMaxYears, theme: PREVENTION, state })).toEqual([
+            expect(resetDatesRequired({ minMaxYears, theme: PREVENTION_THEME, state })).toEqual([
                 setMaxMinYearsAction([START, END]),
                 setFiltersAction([START, END]),
             ]);
         });
 
         it("starts the filter at filterStart when it is given", () => {
-            const state = stateWith(PREVENTION, [1990, END], [1990, END]);
+            const state = stateWith(PREVENTION_THEME, [1990, END], [1990, END]);
 
-            expect(resetDatesRequired({ minMaxYears, theme: PREVENTION, state, filterStart: FILTER_START })).toEqual([
-                setMaxMinYearsAction([START, END]),
-                setFiltersAction([FILTER_START, END]),
-            ]);
+            expect(
+                resetDatesRequired({ minMaxYears, theme: PREVENTION_THEME, state, filterStart: FILTER_START })
+            ).toEqual([setMaxMinYearsAction([START, END]), setFiltersAction([FILTER_START, END])]);
         });
 
         it.each([
             ["the filter", [START, END], [1990, END]],
             ["the max-min range", [1990, END], [START, END]],
         ])("returns nothing when %s already starts at the studies' first year", (_case, filters, maxMinYears) => {
-            const state = stateWith(PREVENTION, filters, maxMinYears);
+            const state = stateWith(PREVENTION_THEME, filters, maxMinYears);
 
-            expect(resetDatesRequired({ minMaxYears, theme: PREVENTION, state })).toEqual([]);
+            expect(resetDatesRequired({ minMaxYears, theme: PREVENTION_THEME, state })).toEqual([]);
         });
     });
 });

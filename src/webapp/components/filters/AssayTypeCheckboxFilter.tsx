@@ -34,7 +34,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 /** The assay types that detect the one selected mechanism, with the xMART label or, without one, the value. */
-export function getAssayTypeOptions(preventionFilters: PreventionFilters) {
+export function getAssayTypeFilterOptions(preventionFilters: PreventionFilters) {
     const type = preventionFilters.type?.length === 1 ? preventionFilters.type[0] : undefined;
 
     return (getAssayTypesDetecting(type) ?? []).map(value => ({
@@ -59,7 +59,7 @@ function AssayTypeCheckboxFilter({ preventionFilters, setAssayTypes }: Props) {
         );
     };
 
-    const options = getAssayTypeOptions(preventionFilters);
+    const options = getAssayTypeFilterOptions(preventionFilters);
 
     const { t } = useTranslation();
 

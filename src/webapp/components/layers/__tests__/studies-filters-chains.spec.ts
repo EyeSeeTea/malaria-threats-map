@@ -2,32 +2,38 @@ import { createInvasiveStudy, createPreventionStudy } from "../../../../domain/e
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { Source } from "../../../store/actions/base-actions";
-import { createInvasiveFilters, createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
 import {
-    InvasiveFilters,
-    PreventionDataset,
-    PreventionFilters,
-    PreventionMapType,
-    RegionState,
-} from "../../../store/types";
+    createInvasiveFilters,
+    createPreventionFilters,
+    createYearFilter,
+    DOWNLOAD,
+    INVASIVE_STUDY_REGION,
+    MAP,
+    PREVENTION_STUDY_REGION,
+    YEAR_BEFORE_RANGE,
+} from "../../../store/__fixtures__/filtersFixtures";
+import { InvasiveFilters, PreventionDataset, PreventionFilters, PreventionMapType } from "../../../store/types";
 import { filterInvasiveStudies, filterPreventionStudies } from "../studies-filters";
 import {
     ACE1R,
-    BIOCHEMICAL,
+    BIOCHEMICAL_ASSAY,
     CDC_BOTTLE,
     DELTAMETHRIN,
-    DISCRIMINATING,
+    DISCRIMINATING_ASSAY,
     ESTERASES,
+    FEW_MOSQUITOES_NUMBER,
     FUNESTUS,
     GAMBIAE,
     GSTS,
-    INTENSITY,
+    HIGH_INTENSITY,
+    INTENSITY_ASSAY,
     KDR_L1014F,
     KDR_L1014S,
     MALARIA,
     MINISTRY_OF_HEALTH,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
+    NOT_ASSESSED,
     NOT_AVAILABLE,
     NOT_REPORTED,
     ORGANOPHOSPHATES,
@@ -35,13 +41,11 @@ import {
     PERMETHRIN,
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
-    SYNERGIST,
+    SYNERGIST_ASSAY,
     STEPHENSI_TYPE_FORM,
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
-const MAP = "map";
-const DOWNLOAD = "download";
 const OTHER_CLASS = "otherClass";
 const OTHER_INSECTICIDE = "otherInsecticide";
 const OTHER_TEST_TYPE = "otherTestType";
@@ -51,7 +55,6 @@ const OTHER_COUNTRY_STUDY = "otherCountry";
 const KEPT = "kept";
 const NOT_MOH = "notMoH";
 const FEW_MOSQUITOES = "fewMosquitoes";
-const FEW_MOSQUITOES_NUMBER = "20";
 const NA_MORTALITY = "naMortality";
 const NA_INTENSITY = "naIntensity";
 const MOLECULAR_STUDY = "molecular";
@@ -64,25 +67,24 @@ const MONO_OXYGENASES_STUDY = "monoOxygenases";
 const KDR_STUDY = "kdr";
 const MOLECULAR_ASSAY_STUDY = "molecularAssay";
 
-const YEARS = [2018, 2022];
-const OUTSIDE_YEAR = 2015;
-const PREVENTION_REGION: RegionState = { country: "BF" };
-const INVASIVE_REGION: RegionState = { country: "DJ" };
-
-function survivingPrevention(
+function codesKeptByPreventionChain(
     studies: PreventionStudy[],
     filters: PreventionFilters,
     from: Source = MAP
 ): ReadonlyArray<string> {
-    return filterPreventionStudies(studies, filters, YEARS, PREVENTION_REGION, from).map(study => study.Code);
+    return filterPreventionStudies(studies, filters, createYearFilter(), PREVENTION_STUDY_REGION, from).map(
+        study => study.Code
+    );
 }
 
-function survivingInvasive(
+function codesKeptByInvasiveChain(
     studies: InvasiveStudy[],
     filters: InvasiveFilters,
     from: Source = MAP
 ): ReadonlyArray<string> {
-    return filterInvasiveStudies(studies, filters, YEARS, INVASIVE_REGION, from).map(study => study.Code);
+    return filterInvasiveStudies(studies, filters, createYearFilter(), INVASIVE_STUDY_REGION, from).map(
+        study => study.Code
+    );
 }
 
 /** A study that passes every filter set by `bioassayFilters`, with the given code and overrides. */
@@ -98,7 +100,7 @@ function bioassayStudy(code: string, overrides: Partial<PreventionStudy> = {}): 
         INSTITUTION_TYPE: MINISTRY_OF_HEALTH,
         NUMBER: "100",
         MORTALITY_ADJUSTED: "0.85",
-        RESISTANCE_INTENSITY: "HIGH_INTENSITY",
+        RESISTANCE_INTENSITY: HIGH_INTENSITY,
         ...overrides,
     });
 }
@@ -124,7 +126,7 @@ const studiesRemovedByEachBioassayFilter = (assayType: string) => [
     bioassayStudy(OTHER_INSECTICIDE, { ASSAY_TYPE: assayType, INSECTICIDE_TYPE: PERMETHRIN }),
     bioassayStudy(OTHER_TEST_TYPE, { ASSAY_TYPE: assayType, TYPE: CDC_BOTTLE }),
     bioassayStudy(OTHER_SPECIES, { ASSAY_TYPE: assayType, SPECIES: FUNESTUS }),
-    bioassayStudy(OUTSIDE_YEARS, { ASSAY_TYPE: assayType, YEAR_START: OUTSIDE_YEAR }),
+    bioassayStudy(OUTSIDE_YEARS, { ASSAY_TYPE: assayType, YEAR_START: YEAR_BEFORE_RANGE }),
     bioassayStudy(OTHER_COUNTRY_STUDY, { ASSAY_TYPE: assayType, ...OTHER_COUNTRY }),
 ];
 
@@ -136,25 +138,25 @@ describe("studies-filters chains", () => {
             it("removes a study for each filter of its chain", () => {
                 const studies = [
                     bioassayStudy(KEPT),
-                    ...studiesRemovedByEachBioassayFilter(DISCRIMINATING),
+                    ...studiesRemovedByEachBioassayFilter(DISCRIMINATING_ASSAY),
                     bioassayStudy(NOT_MOH, { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
                     bioassayStudy(FEW_MOSQUITOES, { NUMBER: FEW_MOSQUITOES_NUMBER }),
                     bioassayStudy(NA_MORTALITY, { MORTALITY_ADJUSTED: NOT_AVAILABLE }),
                 ];
 
-                expect(survivingPrevention(studies, filters)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([KEPT]);
             });
 
             it("keeps a study without intensity, which the intensity map removes", () => {
                 const studies = [bioassayStudy(NA_INTENSITY, { RESISTANCE_INTENSITY: NOT_AVAILABLE })];
 
-                expect(survivingPrevention(studies, filters)).toEqual([NA_INTENSITY]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([NA_INTENSITY]);
             });
 
             it("does not filter by assay type, the studies of the map type are already split", () => {
-                const studies = [bioassayStudy(MOLECULAR_STUDY, { ASSAY_TYPE: MOLECULAR })];
+                const studies = [bioassayStudy(MOLECULAR_STUDY, { ASSAY_TYPE: MOLECULAR_ASSAY })];
 
-                expect(survivingPrevention(studies, filters)).toEqual([MOLECULAR_STUDY]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([MOLECULAR_STUDY]);
             });
         });
 
@@ -163,32 +165,32 @@ describe("studies-filters chains", () => {
 
             it("removes a study for each filter of its chain", () => {
                 const studies = [
-                    bioassayStudy(KEPT, { ASSAY_TYPE: INTENSITY }),
-                    ...studiesRemovedByEachBioassayFilter(INTENSITY),
+                    bioassayStudy(KEPT, { ASSAY_TYPE: INTENSITY_ASSAY }),
+                    ...studiesRemovedByEachBioassayFilter(INTENSITY_ASSAY),
                     bioassayStudy(NOT_MOH, { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
                     bioassayStudy(FEW_MOSQUITOES, { NUMBER: FEW_MOSQUITOES_NUMBER }),
                     bioassayStudy(NA_INTENSITY, { RESISTANCE_INTENSITY: NOT_AVAILABLE }),
-                    bioassayStudy("unassessedIntensity", { RESISTANCE_INTENSITY: "COULD_NOT_BE_RELIABLY_ASSESSED" }),
+                    bioassayStudy("unassessedIntensity", { RESISTANCE_INTENSITY: NOT_ASSESSED }),
                 ];
 
-                expect(survivingPrevention(studies, filters)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([KEPT]);
             });
 
             it("keeps a study without adjusted mortality, which the resistance status map removes", () => {
                 const studies = [bioassayStudy(NA_MORTALITY, { MORTALITY_ADJUSTED: NOT_AVAILABLE })];
 
-                expect(survivingPrevention(studies, filters)).toEqual([NA_MORTALITY]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([NA_MORTALITY]);
             });
         });
 
         describe("Resistance mechanisms", () => {
             const mechanismStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
-                bioassayStudy(code, { ASSAY_TYPE: MOLECULAR, TYPE: MONO_OXYGENASES, ...overrides });
+                bioassayStudy(code, { ASSAY_TYPE: MOLECULAR_ASSAY, TYPE: MONO_OXYGENASES, ...overrides });
 
             const filters = bioassayFilters({
                 mapType: PreventionMapType.RESISTANCE_MECHANISM,
                 type: [MONO_OXYGENASES],
-                assayTypes: [MOLECULAR, BIOCHEMICAL],
+                assayTypes: [MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY],
                 synergistTypes: [CDC_BOTTLE],
             });
 
@@ -197,12 +199,12 @@ describe("studies-filters chains", () => {
                     mechanismStudy(KEPT),
                     mechanismStudy("otherMechanism", { TYPE: ESTERASES }),
                     mechanismStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
-                    mechanismStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: SYNERGIST }),
-                    mechanismStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR }),
+                    mechanismStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: SYNERGIST_ASSAY }),
+                    mechanismStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     mechanismStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
-                expect(survivingPrevention(studies, filters)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([KEPT]);
             });
 
             it("ignores the bioassay filters: insecticide, Ministry of Health, mosquitoes and mortality", () => {
@@ -214,7 +216,7 @@ describe("studies-filters chains", () => {
                     mechanismStudy(NA_MORTALITY, { MORTALITY_ADJUSTED: NOT_AVAILABLE }),
                 ];
 
-                expect(survivingPrevention(studies, filters)).toEqual([
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([
                     OTHER_CLASS,
                     OTHER_INSECTICIDE,
                     NOT_MOH,
@@ -226,14 +228,14 @@ describe("studies-filters chains", () => {
             it("ignores the synergist types when the synergist assay is not the only one selected", () => {
                 const studies = [mechanismStudy(KEPT, { TYPE: MONO_OXYGENASES })];
 
-                expect(survivingPrevention(studies, filters)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([KEPT]);
             });
 
             describe("with only the synergist assay selected (isSynergyst)", () => {
                 // As in the data: a synergist study carries the test kit in TYPE and the mechanism in PROXY_TYPE.
                 const synergistStudies = [
                     mechanismStudy(SYNERGIST_STUDY, {
-                        ASSAY_TYPE: SYNERGIST,
+                        ASSAY_TYPE: SYNERGIST_ASSAY,
                         TYPE: WHO_TEST_KIT,
                         PROXY_TYPE: MONO_OXYGENASES,
                     }),
@@ -249,19 +251,36 @@ describe("studies-filters chains", () => {
                     (_case, synergistTypes) => {
                         const synergistFilters: PreventionFilters = {
                             ...filters,
-                            assayTypes: [SYNERGIST],
+                            assayTypes: [SYNERGIST_ASSAY],
                             synergistTypes,
                         };
 
-                        expect(survivingPrevention(synergistStudies, synergistFilters)).toEqual([]);
+                        expect(codesKeptByPreventionChain(synergistStudies, synergistFilters)).toEqual([]);
                     }
                 );
+
+                // Reachable only from a link: the mechanism filter is a radio group and always has a value,
+                // but a URL with an empty type clears it.
+                it("keeps only the selected synergist types when no mechanism is selected", () => {
+                    const studies = [
+                        mechanismStudy(WHO_TEST_KIT, { ASSAY_TYPE: SYNERGIST_ASSAY, TYPE: WHO_TEST_KIT }),
+                        mechanismStudy(CDC_BOTTLE, { ASSAY_TYPE: SYNERGIST_ASSAY, TYPE: CDC_BOTTLE }),
+                    ];
+                    const withoutMechanism: PreventionFilters = {
+                        ...filters,
+                        type: undefined,
+                        assayTypes: [SYNERGIST_ASSAY],
+                        synergistTypes: [WHO_TEST_KIT],
+                    };
+
+                    expect(codesKeptByPreventionChain(studies, withoutMechanism)).toEqual([WHO_TEST_KIT]);
+                });
             });
         });
 
         describe("Level of involvement", () => {
             const involvementStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
-                bioassayStudy(code, { ASSAY_TYPE: SYNERGIST, PROXY_TYPE: MONO_OXYGENASES, ...overrides });
+                bioassayStudy(code, { ASSAY_TYPE: SYNERGIST_ASSAY, PROXY_TYPE: MONO_OXYGENASES, ...overrides });
 
             const filters = bioassayFilters({
                 mapType: PreventionMapType.LEVEL_OF_INVOLVEMENT,
@@ -278,11 +297,11 @@ describe("studies-filters chains", () => {
                     involvementStudy(OTHER_INSECTICIDE, { INSECTICIDE_TYPE: PERMETHRIN }),
                     involvementStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
                     involvementStudy("otherSynergistType", { TYPE: CDC_BOTTLE }),
-                    involvementStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR }),
+                    involvementStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     involvementStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
-                expect(survivingPrevention(studies, filters)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([KEPT]);
             });
 
             it("ignores the test type, Ministry of Health, mosquitoes and mortality filters", () => {
@@ -292,7 +311,7 @@ describe("studies-filters chains", () => {
                     involvementStudy(NA_MORTALITY, { MORTALITY_ADJUSTED: NOT_AVAILABLE }),
                 ];
 
-                expect(survivingPrevention(studies, filters)).toEqual([NOT_MOH, FEW_MOSQUITOES, NA_MORTALITY]);
+                expect(codesKeptByPreventionChain(studies, filters)).toEqual([NOT_MOH, FEW_MOSQUITOES, NA_MORTALITY]);
             });
         });
     });
@@ -301,7 +320,7 @@ describe("studies-filters chains", () => {
         const studies = [
             invasiveStudy({ Code: KEPT }),
             invasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
-            invasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: OUTSIDE_YEAR }),
+            invasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: YEAR_BEFORE_RANGE }),
             invasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
             invasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
             invasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
@@ -310,7 +329,7 @@ describe("studies-filters chains", () => {
         it("Vector occurrence filters by species, year range allowing no year, and region", () => {
             const filters = createInvasiveFilters({ disease: MALARIA, vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
-            expect(survivingInvasive(studies, filters)).toEqual([KEPT, WITHOUT_YEAR, NOT_DOWNLOADABLE]);
+            expect(codesKeptByInvasiveChain(studies, filters)).toEqual([KEPT, WITHOUT_YEAR, NOT_DOWNLOADABLE]);
         });
     });
 
@@ -321,7 +340,7 @@ describe("studies-filters chains", () => {
             bioassayStudy(NA_MORTALITY, { ASSAY_TYPE: assayType, MORTALITY_ADJUSTED: NOT_AVAILABLE }),
         ];
 
-        const bioassayDatasets: ReadonlyArray<PreventionDataset> = [DISCRIMINATING, INTENSITY];
+        const bioassayDatasets: ReadonlyArray<PreventionDataset> = [DISCRIMINATING_ASSAY, INTENSITY_ASSAY];
 
         describe.each(bioassayDatasets)("%s", dataset => {
             const filters = bioassayFilters({ dataset });
@@ -330,15 +349,15 @@ describe("studies-filters chains", () => {
                 const studies = [
                     bioassayStudy(KEPT, { ASSAY_TYPE: dataset }),
                     bioassayStudy(NOT_DOWNLOADABLE, { ASSAY_TYPE: dataset, DOWNLOAD: 0 }),
-                    bioassayStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: SYNERGIST }),
+                    bioassayStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: SYNERGIST_ASSAY }),
                     ...studiesRemovedByEachBioassayFilter(dataset),
                 ];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([KEPT]);
             });
 
             it("ignores the Ministry of Health, mosquitoes and mortality filters of the map", () => {
-                expect(survivingPrevention(notInMapChain(dataset), filters, DOWNLOAD)).toEqual([
+                expect(codesKeptByPreventionChain(notInMapChain(dataset), filters, DOWNLOAD)).toEqual([
                     NOT_MOH,
                     FEW_MOSQUITOES,
                     NA_MORTALITY,
@@ -347,53 +366,56 @@ describe("studies-filters chains", () => {
         });
 
         describe("SYNERGIST-INSECTICIDE_BIOASSAY", () => {
-            const filters = bioassayFilters({ dataset: SYNERGIST });
+            const filters = bioassayFilters({ dataset: SYNERGIST_ASSAY });
 
             it("removes a study for each filter of its chain", () => {
                 const studies = [
-                    bioassayStudy(KEPT, { ASSAY_TYPE: SYNERGIST }),
-                    bioassayStudy(NOT_DOWNLOADABLE, { ASSAY_TYPE: SYNERGIST, DOWNLOAD: 0 }),
-                    bioassayStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: DISCRIMINATING }),
-                    bioassayStudy(OTHER_TEST_TYPE, { ASSAY_TYPE: SYNERGIST, TYPE: CDC_BOTTLE }),
-                    bioassayStudy(OTHER_SPECIES, { ASSAY_TYPE: SYNERGIST, SPECIES: FUNESTUS }),
-                    bioassayStudy(OUTSIDE_YEARS, { ASSAY_TYPE: SYNERGIST, YEAR_START: OUTSIDE_YEAR }),
-                    bioassayStudy(OTHER_COUNTRY_STUDY, { ASSAY_TYPE: SYNERGIST, ...OTHER_COUNTRY }),
+                    bioassayStudy(KEPT, { ASSAY_TYPE: SYNERGIST_ASSAY }),
+                    bioassayStudy(NOT_DOWNLOADABLE, { ASSAY_TYPE: SYNERGIST_ASSAY, DOWNLOAD: 0 }),
+                    bioassayStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: DISCRIMINATING_ASSAY }),
+                    bioassayStudy(OTHER_TEST_TYPE, { ASSAY_TYPE: SYNERGIST_ASSAY, TYPE: CDC_BOTTLE }),
+                    bioassayStudy(OTHER_SPECIES, { ASSAY_TYPE: SYNERGIST_ASSAY, SPECIES: FUNESTUS }),
+                    bioassayStudy(OUTSIDE_YEARS, { ASSAY_TYPE: SYNERGIST_ASSAY, YEAR_START: YEAR_BEFORE_RANGE }),
+                    bioassayStudy(OTHER_COUNTRY_STUDY, { ASSAY_TYPE: SYNERGIST_ASSAY, ...OTHER_COUNTRY }),
                 ];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([KEPT]);
             });
 
             it("ignores the insecticide class and insecticide type filters", () => {
                 const studies = [
-                    bioassayStudy(OTHER_CLASS, { ASSAY_TYPE: SYNERGIST, INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
-                    bioassayStudy(OTHER_INSECTICIDE, { ASSAY_TYPE: SYNERGIST, INSECTICIDE_TYPE: PERMETHRIN }),
+                    bioassayStudy(OTHER_CLASS, { ASSAY_TYPE: SYNERGIST_ASSAY, INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
+                    bioassayStudy(OTHER_INSECTICIDE, { ASSAY_TYPE: SYNERGIST_ASSAY, INSECTICIDE_TYPE: PERMETHRIN }),
                 ];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([OTHER_CLASS, OTHER_INSECTICIDE]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([
+                    OTHER_CLASS,
+                    OTHER_INSECTICIDE,
+                ]);
             });
         });
 
         describe("MOLECULAR_ASSAY", () => {
-            const filters = bioassayFilters({ dataset: MOLECULAR, type: [GSTS] });
+            const filters = bioassayFilters({ dataset: MOLECULAR_ASSAY, type: [GSTS] });
             const molecularStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
-                bioassayStudy(code, { ASSAY_TYPE: MOLECULAR, TYPE: MONO_OXYGENASES, ...overrides });
+                bioassayStudy(code, { ASSAY_TYPE: MOLECULAR_ASSAY, TYPE: MONO_OXYGENASES, ...overrides });
 
             it("removes a study for each filter of its chain", () => {
                 const studies = [
                     molecularStudy(KEPT),
                     molecularStudy(NOT_DOWNLOADABLE, { DOWNLOAD: 0 }),
-                    molecularStudy("synergistAssay", { ASSAY_TYPE: SYNERGIST }),
+                    molecularStudy("synergistAssay", { ASSAY_TYPE: SYNERGIST_ASSAY }),
                     molecularStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
                     molecularStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([KEPT]);
             });
 
             it("keeps biochemical assays too", () => {
-                const studies = [molecularStudy(BIOCHEMICAL_STUDY, { ASSAY_TYPE: BIOCHEMICAL, TYPE: ESTERASES })];
+                const studies = [molecularStudy(BIOCHEMICAL_STUDY, { ASSAY_TYPE: BIOCHEMICAL_ASSAY, TYPE: ESTERASES })];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([BIOCHEMICAL_STUDY]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([BIOCHEMICAL_STUDY]);
             });
 
             // Pins today's behaviour, a possible bug pending a decision: the two mechanism lists of the
@@ -407,7 +429,7 @@ describe("studies-filters chains", () => {
                     molecularStudy("ace1r", { TYPE: ACE1R }),
                 ];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([
                     MONO_OXYGENASES_STUDY,
                     "esterases",
                     "gsts",
@@ -417,27 +439,27 @@ describe("studies-filters chains", () => {
             // Pins today's behaviour, a possible bug pending a decision: the molecular file ignores the
             // selected mechanism and the year range. It applies the region filter twice instead.
             it("ignores the selected type, and the year range", () => {
-                const studies = [molecularStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR })];
+                const studies = [molecularStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE })];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([OUTSIDE_YEARS]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([OUTSIDE_YEARS]);
             });
         });
 
         describe("BIOCHEMICAL_ASSAY", () => {
-            const filters = bioassayFilters({ dataset: BIOCHEMICAL, type: [ACE1R] });
+            const filters = bioassayFilters({ dataset: BIOCHEMICAL_ASSAY, type: [ACE1R] });
             const biochemicalStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
-                bioassayStudy(code, { ASSAY_TYPE: BIOCHEMICAL, TYPE: ACE1R, ...overrides });
+                bioassayStudy(code, { ASSAY_TYPE: BIOCHEMICAL_ASSAY, TYPE: ACE1R, ...overrides });
 
             it("removes a study for each filter of its chain", () => {
                 const studies = [
                     biochemicalStudy(KEPT),
                     biochemicalStudy(NOT_DOWNLOADABLE, { DOWNLOAD: 0 }),
                     biochemicalStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
-                    biochemicalStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR }),
+                    biochemicalStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     biochemicalStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KEPT]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([KEPT]);
             });
 
             // Pins today's behaviour, a possible bug pending a decision: the two mechanism lists of the
@@ -448,15 +470,17 @@ describe("studies-filters chains", () => {
                     biochemicalStudy(MONO_OXYGENASES_STUDY, { TYPE: MONO_OXYGENASES }),
                 ];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KDR_STUDY]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([KDR_STUDY]);
             });
 
             // Pins today's behaviour, a possible bug pending a decision: with no assay type filter, the
             // biochemical file is made of molecular assays.
             it("does not filter by assay type, so a molecular assay is kept", () => {
-                const studies = [biochemicalStudy(MOLECULAR_ASSAY_STUDY, { ASSAY_TYPE: MOLECULAR, TYPE: KDR_L1014F })];
+                const studies = [
+                    biochemicalStudy(MOLECULAR_ASSAY_STUDY, { ASSAY_TYPE: MOLECULAR_ASSAY, TYPE: KDR_L1014F }),
+                ];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([MOLECULAR_ASSAY_STUDY]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([MOLECULAR_ASSAY_STUDY]);
             });
 
             // Pins today's behaviour, a possible bug pending a decision: the biochemical file ignores the
@@ -464,7 +488,7 @@ describe("studies-filters chains", () => {
             it("ignores the selected type", () => {
                 const studies = [biochemicalStudy(KDR_STUDY, { TYPE: KDR_L1014S })];
 
-                expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([KDR_STUDY]);
+                expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([KDR_STUDY]);
             });
         });
     });
@@ -474,7 +498,7 @@ describe("studies-filters chains", () => {
             invasiveStudy({ Code: KEPT }),
             invasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
             invasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
-            invasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: OUTSIDE_YEAR }),
+            invasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: YEAR_BEFORE_RANGE }),
             invasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
             invasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
         ];
@@ -482,7 +506,7 @@ describe("studies-filters chains", () => {
         it("Vector occurrence adds the download flag to the map chain", () => {
             const filters = createInvasiveFilters({ disease: MALARIA, vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
-            expect(survivingInvasive(studies, filters, DOWNLOAD)).toEqual([KEPT, WITHOUT_YEAR]);
+            expect(codesKeptByInvasiveChain(studies, filters, DOWNLOAD)).toEqual([KEPT, WITHOUT_YEAR]);
         });
     });
 });

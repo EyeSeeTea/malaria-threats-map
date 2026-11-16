@@ -15,7 +15,7 @@ import {
 import { PreventionMapType } from "../types";
 import { createPreventionStudy } from "../../../domain/entities/__fixtures__/studyFixtures";
 import {
-    BIOCHEMICAL,
+    BIOCHEMICAL_ASSAY,
     DELTAMETHRIN,
     DENGUE,
     ESTERASES,
@@ -23,11 +23,11 @@ import {
     GSTS,
     KDR_L1014S,
     MALARIA,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     ORGANOPHOSPHATES,
     PERMETHRIN,
     PYRETHROIDS,
-    SYNERGIST,
+    SYNERGIST_ASSAY,
     WHO_TEST_KIT,
 } from "../../../domain/entities/__fixtures__/studyValues";
 
@@ -101,7 +101,7 @@ describe("a disease switch through the store", () => {
         expect({ disease, type, assayTypes, species }).toEqual({
             disease: DENGUE,
             type: [ESTERASES],
-            assayTypes: [MOLECULAR, BIOCHEMICAL, SYNERGIST],
+            assayTypes: [MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY],
             species: [],
         });
     });

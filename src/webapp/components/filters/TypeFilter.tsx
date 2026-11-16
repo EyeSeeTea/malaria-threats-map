@@ -4,7 +4,6 @@ import { PreventionFilters, PreventionMapType, RegionState, State } from "../../
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import { selectPreventionFilters, selectPreventionStudiesOfMapTypeFrom } from "../../store/reducers/prevention-reducer";
 import { setType } from "../../store/actions/prevention-actions";
-import * as R from "ramda";
 import {
     filterByAssayTypes,
     filterByInsecticideClass,
@@ -12,7 +11,9 @@ import {
     filterByRegion,
     filterByTypeSynergist,
     filterByYearRange,
+    PreventionStudyFilter,
 } from "../layers/studies-filters";
+import { Option } from "../BasicSelect";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { logEventAction, Source } from "../../store/actions/base-actions";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
@@ -42,10 +43,10 @@ export function getTypeFilterOptions(
     preventionStudiesOfMapType: PreventionStudy[],
     yearFilter: number[],
     region: RegionState
-) {
+): Option[] {
     const { mapType } = preventionFilters;
 
-    const filtersMap: { [mapType: string]: any[] } = {
+    const filtersMap: Record<string, ReadonlyArray<PreventionStudyFilter>> = {
         [PreventionMapType.INTENSITY_STATUS]: [
             filterByInsecticideClass(preventionFilters.insecticideClass),
             filterByInsecticideTypes(preventionFilters.insecticideTypes),
@@ -70,19 +71,14 @@ export function getTypeFilterOptions(
         ],
     };
 
-    const filteredStudies: PreventionStudy[] = filtersMap[mapType].reduce(
+    const filteredStudies = filtersMap[mapType].reduce(
         (studies, filter) => studies.filter(filter),
         preventionStudiesOfMapType
     );
 
-    const uniques = R.uniq(R.map(R.prop("TYPE"), filteredStudies));
+    const uniqueTypes = Array.from(new Set(filteredStudies.map(study => study.TYPE)));
 
-    const suggestions: any[] = uniques.map((type: string) => ({
-        label: type,
-        value: type,
-    }));
-
-    return suggestions;
+    return uniqueTypes.map(type => ({ label: type, value: type }));
 }
 
 const TypeFilter: React.FC<Props> = ({

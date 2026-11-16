@@ -1,17 +1,23 @@
 import { createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
-import { createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
-import { PreventionFilters, PreventionMapType, RegionState } from "../../../store/types";
+import {
+    createPreventionFilters,
+    createYearFilter,
+    PREVENTION_STUDY_REGION,
+    YEAR_BEFORE_RANGE,
+} from "../../../store/__fixtures__/filtersFixtures";
+import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import { getSpeciesFilterOptions } from "../SpeciesFilter";
 import {
     ARABIENSIS,
-    BIOCHEMICAL,
+    BIOCHEMICAL_ASSAY,
     CDC_BOTTLE,
     DELTAMETHRIN,
     ESTERASES,
+    FEW_MOSQUITOES_NUMBER,
     FUNESTUS,
     GAMBIAE,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     NOT_AVAILABLE,
     ORGANOPHOSPHATES,
@@ -27,11 +33,10 @@ const OTHER_INSECTICIDE = "otherInsecticide";
 const OUTSIDE_YEARS = "outsideYears";
 const OTHER_COUNTRY_STUDY = "otherCountry";
 
-const YEARS = [2018, 2022];
-const REGION: RegionState = { country: "BF" };
-
 function speciesOptions(studies: PreventionStudy[], filters: PreventionFilters): ReadonlyArray<string> {
-    return getSpeciesFilterOptions(filters, studies, YEARS, REGION).map(option => option.value);
+    return getSpeciesFilterOptions(filters, studies, createYearFilter(), PREVENTION_STUDY_REGION).map(
+        option => option.value
+    );
 }
 
 /** A study that passes every filter the cascades set, with the given species. */
@@ -42,7 +47,7 @@ function speciesStudy(species: string, overrides: Partial<PreventionStudy> = {})
         INSECTICIDE_TYPE: DELTAMETHRIN,
         TYPE: WHO_TEST_KIT,
         PROXY_TYPE: MONO_OXYGENASES,
-        ASSAY_TYPE: MOLECULAR,
+        ASSAY_TYPE: MOLECULAR_ASSAY,
         YEAR_START: 2020,
         ...overrides,
     });
@@ -53,7 +58,7 @@ describe("getSpeciesFilterOptions", () => {
         const studies = [speciesStudy(GAMBIAE), speciesStudy(ARABIENSIS), speciesStudy(GAMBIAE)];
         const filters = createPreventionFilters({ mapType: PreventionMapType.RESISTANCE_STATUS });
 
-        expect(getSpeciesFilterOptions(filters, studies, YEARS, REGION)).toEqual([
+        expect(getSpeciesFilterOptions(filters, studies, createYearFilter(), PREVENTION_STUDY_REGION)).toEqual([
             { label: ARABIENSIS, value: ARABIENSIS },
             { label: GAMBIAE, value: GAMBIAE },
         ]);
@@ -78,7 +83,7 @@ describe("getSpeciesFilterOptions", () => {
                     speciesStudy(OTHER_CLASS, { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
                     speciesStudy(OTHER_INSECTICIDE, { INSECTICIDE_TYPE: PERMETHRIN }),
                     speciesStudy("otherTestType", { TYPE: CDC_BOTTLE }),
-                    speciesStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                    speciesStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     speciesStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
@@ -95,7 +100,7 @@ describe("getSpeciesFilterOptions", () => {
             it("is not narrowed by Ministry of Health, mosquitoes, mortality or intensity, unlike the map chain", () => {
                 const studies = [
                     speciesStudy("notMoH", { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
-                    speciesStudy("fewMosquitoes", { NUMBER: "20" }),
+                    speciesStudy("fewMosquitoes", { NUMBER: FEW_MOSQUITOES_NUMBER }),
                     speciesStudy("naMortality", { MORTALITY_ADJUSTED: NOT_AVAILABLE }),
                     speciesStudy("naIntensity", { RESISTANCE_INTENSITY: NOT_AVAILABLE }),
                 ];
@@ -119,7 +124,7 @@ describe("getSpeciesFilterOptions", () => {
             mapType: PreventionMapType.RESISTANCE_MECHANISM,
             insecticideClass: PYRETHROIDS,
             type: [MONO_OXYGENASES],
-            assayTypes: [MOLECULAR],
+            assayTypes: [MOLECULAR_ASSAY],
             species: [GAMBIAE],
             synergistTypes: [CDC_BOTTLE],
         });
@@ -128,8 +133,8 @@ describe("getSpeciesFilterOptions", () => {
             const studies = [
                 mechanismStudy(GAMBIAE),
                 mechanismStudy("otherMechanism", { TYPE: ESTERASES }),
-                mechanismStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
-                mechanismStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                mechanismStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL_ASSAY }),
+                mechanismStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                 mechanismStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 
@@ -161,7 +166,7 @@ describe("getSpeciesFilterOptions", () => {
                 speciesStudy(GAMBIAE),
                 speciesStudy("otherProxyType", { PROXY_TYPE: ESTERASES }),
                 speciesStudy("otherSynergistType", { TYPE: CDC_BOTTLE }),
-                speciesStudy(OUTSIDE_YEARS, { YEAR_START: 2015 }),
+                speciesStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                 speciesStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];
 

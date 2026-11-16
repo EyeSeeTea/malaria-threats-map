@@ -2,39 +2,53 @@ import { InvasiveStudy } from "../InvasiveStudy";
 import { PreventionStudy } from "../PreventionStudy";
 import { Study } from "../Study";
 import {
+    AFRICA,
+    BURKINA_FASO,
     DELTAMETHRIN,
-    DISCRIMINATING,
+    DISCRIMINATING_ASSAY,
     DJIBOUTI,
     GAMBIAE,
     INVASIVE_STATUS_INVASIVE,
+    LARVAL_SAMPLING,
+    MORPHOLOGY,
     NOT_AVAILABLE,
+    POSSIBLE_RESISTANCE,
     PYRETHROIDS,
     RESEARCH_INSTITUTION,
     STEPHENSI,
     STEPHENSI_TYPE_FORM,
+    WEST_AFRICA,
     WHO_TEST_KIT,
 } from "./studyValues";
 
-const BOBO_DIOULASSO = "Bobo-Dioulasso";
+// The values of the default studies that the side panel specs read back in their expected data.
+export const PREVENTION_SITE_NAME = "Bobo-Dioulasso";
+export const PREVENTION_SITE_ID = "SITE_BF_001";
+export const INVASIVE_SITE_ID = "SITE_DJ_001";
+export const STUDY_CITATION_URL = "https://example.org/citation";
+export const STUDY_CITATION_LONG = "Example citation, long form";
+export const STUDY_INSTITUTION_CITY = "Ouagadougou";
+export const STUDY_INSTITUTE_CURATION = "Example curation institute";
+export const STUDY_INSECTICIDE_CONCENTRATION = "0.05%";
 
 const defaultStudy: Readonly<Study> = {
     OBJECTID: 1,
-    VILLAGE_NAME: BOBO_DIOULASSO,
-    SITE_ID: "SITE_BF_001",
-    SITE_NAME: BOBO_DIOULASSO,
-    ISO2: "BF",
-    CITATION_LONG: "Example citation, long form",
-    INSTITUTE_CURATION: "Example curation institute",
+    VILLAGE_NAME: PREVENTION_SITE_NAME,
+    SITE_ID: PREVENTION_SITE_ID,
+    SITE_NAME: PREVENTION_SITE_NAME,
+    ISO2: BURKINA_FASO.ISO2,
+    CITATION_LONG: STUDY_CITATION_LONG,
+    INSTITUTE_CURATION: STUDY_INSTITUTE_CURATION,
     CURATION: "Example curation",
-    CITATION_URL: "https://example.org/citation",
+    CITATION_URL: STUDY_CITATION_URL,
     CITATION: "Example citation",
     Latitude: 11.18,
     Longitude: -4.3,
     INSTITUTION: "Example institution",
-    INSTITUTION_CITY: "Ouagadougou",
+    INSTITUTION_CITY: STUDY_INSTITUTION_CITY,
     INSTITUTION_TYPE: RESEARCH_INSTITUTION,
-    ASSAY_TYPE: DISCRIMINATING,
-    COUNTRY_NAME: "Burkina Faso",
+    ASSAY_TYPE: DISCRIMINATING_ASSAY,
+    COUNTRY_NAME: BURKINA_FASO.COUNTRY_NAME,
     INSECTICIDE_CLASS: PYRETHROIDS,
     INSECTICIDE_TYPE: DELTAMETHRIN,
     INSTITUTE: "Example institute",
@@ -46,14 +60,14 @@ const defaultStudy: Readonly<Study> = {
     MORTALITY_ADJUSTED: "0.85",
     NUMBER: "100",
     PROXY_TYPE: NOT_AVAILABLE,
-    REGION_FULL: "AFRICA",
+    REGION_FULL: AFRICA,
     RESISTANCE_FREQUENCY: NOT_AVAILABLE,
     RESISTANCE_INTENSITY: NOT_AVAILABLE,
-    RESISTANCE_STATUS: "POSSIBLE_RESISTANCE",
+    RESISTANCE_STATUS: POSSIBLE_RESISTANCE,
     RESISTANCE_STATUS_NUMERIC: "2",
     SPECIES: GAMBIAE,
     STAGE_ORIGIN: "F0_ADULTS",
-    SUBREGION: "WEST_AFRICA",
+    SUBREGION: WEST_AFRICA,
     SYNERGIST_CONC: NOT_AVAILABLE,
     SYNERGIST_TYPE: NOT_AVAILABLE,
     TIME: "60",
@@ -73,7 +87,7 @@ const defaultPreventionStudy: Readonly<PreventionStudy> = {
     ADMIN2: "Houet",
     ADMIN2_GUID: "admin2-guid",
     Code: "PREV_001",
-    INSECTICIDE_CONC: "0.05%",
+    INSECTICIDE_CONC: STUDY_INSECTICIDE_CONCENTRATION,
     INSECTICIDE_INTENSITY: 1,
 };
 
@@ -87,17 +101,17 @@ const defaultInvasiveStudy: Readonly<InvasiveStudy> = {
     RESISTANCE_STATUS_NUMERIC: NOT_AVAILABLE,
     SPECIES: STEPHENSI,
     TYPE: NOT_AVAILABLE,
-    VILLAGE_NAME: DJIBOUTI,
-    SITE_ID: "SITE_DJ_001",
-    SITE_NAME: DJIBOUTI,
-    ISO2: "DJ",
-    COUNTRY_NAME: DJIBOUTI,
+    VILLAGE_NAME: DJIBOUTI.COUNTRY_NAME,
+    SITE_ID: INVASIVE_SITE_ID,
+    SITE_NAME: DJIBOUTI.COUNTRY_NAME,
+    ISO2: DJIBOUTI.ISO2,
+    COUNTRY_NAME: DJIBOUTI.COUNTRY_NAME,
     SUBREGION: "EAST_AFRICA",
     Latitude: 11.59,
     Longitude: 43.15,
-    SAMPLING_METHOD: "LARVAL_SAMPLING",
+    SAMPLING_METHOD: LARVAL_SAMPLING,
     TOT_STUDIES: 1,
-    ID_METHOD: "MORPHOLOGY",
+    ID_METHOD: MORPHOLOGY,
     VECTOR_SPECIES: STEPHENSI_TYPE_FORM,
     VECTOR_SPECIES_COMPLEX: STEPHENSI,
     Code: "INV_001",
@@ -105,9 +119,9 @@ const defaultInvasiveStudy: Readonly<InvasiveStudy> = {
     BREEDING_HABITAT: "WATER_TANK",
     INVASIVE_STATUS: INVASIVE_STATUS_INVASIVE,
     MTM_DOWNLOAD: 1,
-    VILLAGE_ORIG: DJIBOUTI,
+    VILLAGE_ORIG: DJIBOUTI.COUNTRY_NAME,
     VILLAGE_FLAG: 0,
-    ADMIN1: DJIBOUTI,
+    ADMIN1: DJIBOUTI.COUNTRY_NAME,
 };
 
 export function createPreventionStudy(overrides: Partial<PreventionStudy> = {}): PreventionStudy {

@@ -14,8 +14,9 @@ import {
     filterByTypes,
     filterByTypeSynergist,
     filterByYearRange,
+    PreventionStudyFilter,
 } from "../layers/studies-filters";
-import * as R from "ramda";
+import { Option } from "../BasicSelect";
 import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { useTranslation } from "react-i18next";
@@ -43,9 +44,9 @@ export function getSpeciesFilterOptions(
     preventionStudiesOfMapType: PreventionStudy[],
     yearFilter: number[],
     region: RegionState
-) {
+): Option[] {
     const { mapType } = preventionFilters;
-    const filtersMap: { [mapType: string]: any[] } = {
+    const filtersMap: Record<string, ReadonlyArray<PreventionStudyFilter>> = {
         [PreventionMapType.INTENSITY_STATUS]: [
             filterByInsecticideClass(preventionFilters.insecticideClass),
             filterByInsecticideTypes(preventionFilters.insecticideTypes),
@@ -74,19 +75,14 @@ export function getSpeciesFilterOptions(
         ],
     };
 
-    const filteredStudies: PreventionStudy[] = filtersMap[mapType].reduce(
+    const filteredStudies = filtersMap[mapType].reduce(
         (studies, filter) => studies.filter(filter),
         preventionStudiesOfMapType
     );
 
-    const uniques = R.uniq(R.map(R.prop("SPECIES"), filteredStudies)).sort();
+    const uniqueSpecies = Array.from(new Set(filteredStudies.map(study => study.SPECIES))).sort();
 
-    const suggestions: any[] = uniques.map((specie: string) => ({
-        label: specie,
-        value: specie,
-    }));
-
-    return suggestions;
+    return uniqueSpecies.map(species => ({ label: species, value: species }));
 }
 
 const SpeciesFilter: React.FC<Props> = ({

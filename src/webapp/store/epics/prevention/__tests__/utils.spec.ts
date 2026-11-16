@@ -1,19 +1,37 @@
-import { createPreventionStudy } from "../../../../../domain/entities/__fixtures__/studyFixtures";
 import {
+    createPreventionStudy,
+    PREVENTION_SITE_ID,
+    PREVENTION_SITE_NAME,
+    STUDY_CITATION_LONG,
+    STUDY_CITATION_URL,
+    STUDY_INSECTICIDE_CONCENTRATION,
+    STUDY_INSTITUTE_CURATION,
+    STUDY_INSTITUTION_CITY,
+} from "../../../../../domain/entities/__fixtures__/studyFixtures";
+import {
+    BURKINA_FASO,
+    CONFIRMED_RESISTANCE,
     DELTAMETHRIN,
-    DISCRIMINATING,
+    DETECTED,
+    DISCRIMINATING_ASSAY,
     ESTERASES,
+    FULL_INVOLVEMENT,
     FUNESTUS,
     GAMBIAE,
-    INTENSITY,
+    INTENSITY_ASSAY,
     KDR_L1014F,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     NOT_AVAILABLE,
+    NOT_DETECTED,
     NOT_REPORTED,
     ORGANOPHOSPHATES,
+    PARTIAL_INVOLVEMENT,
     PERMETHRIN,
-    SYNERGIST,
+    POSSIBLE_RESISTANCE,
+    SUSCEPTIBLE,
+    SYNERGIST_ASSAY,
+    UNDETERMINED,
     WHO_TEST_KIT,
     CDC_BOTTLE,
     ACE1R,
@@ -23,20 +41,10 @@ import { Option } from "../../../../components/BasicSelect";
 import { PreventionChartDataItem, SelectionData } from "../../../SelectionData";
 import { PreventionMapType, SiteSelection } from "../../../types";
 import { createPreventionSelectionData } from "../utils";
+import { PREVENTION_THEME } from "../../../__fixtures__/filtersFixtures";
 
-const PREVENTION = "prevention";
-const SITE_ID = "SITE_BF_001";
 const OTHER_SITE_ID = "SITE_BF_002";
-const TITLE = "Bobo-Dioulasso, BF";
-const CONC = "0.05%";
-const CONFIRMED = "CONFIRMED_RESISTANCE";
-const POSSIBLE = "POSSIBLE_RESISTANCE";
-const SUSCEPTIBLE = "SUSCEPTIBLE";
-const UNDETERMINED = "UNDETERMINED";
-const DETECTED = "DETECTED";
-const NOT_DETECTED = "NOT_DETECTED";
-const FULL = "FULL_INVOLVEMENT";
-const PARTIAL = "PARTIAL_INVOLVEMENT";
+const TITLE = `${PREVENTION_SITE_NAME}, ${BURKINA_FASO.ISO2}`;
 const NO_SYNERGIST = "NO";
 const PBO = "PBO";
 const PBO_CONC = "4%";
@@ -64,22 +72,34 @@ const POSSIBLE_COLOR = "#FF9502";
 const NA_LABEL = "N/A";
 const DARK_GREY = "#717171";
 
-const SOURCE_A = { key: "a", url: "https://example.org/citation", text: "Example citation, long form, Ouagadougou" };
-const CURATION_A = { text: "Example curation institute", dataSources: ["a"] };
+const SOURCE_A = { key: "a", url: STUDY_CITATION_URL, text: `${STUDY_CITATION_LONG}, ${STUDY_INSTITUTION_CITY}` };
+const CURATION_A = { text: STUDY_INSTITUTE_CURATION, dataSources: ["a"] };
 const GAMBIAE_OPTION: Option = { label: GAMBIAE, value: GAMBIAE };
 const FUNESTUS_OPTION: Option = { label: FUNESTUS, value: FUNESTUS };
 
-const selection: SiteSelection = { ISO_2_CODE: "BF", SITE_ID, coordinates: [-4.3, 11.18] };
+const selection: SiteSelection = {
+    ISO_2_CODE: BURKINA_FASO.ISO2,
+    SITE_ID: PREVENTION_SITE_ID,
+    coordinates: [-4.3, 11.18],
+};
 
 const study = (code: string, overrides: Partial<PreventionStudy> = {}) =>
-    createPreventionStudy({ Code: code, SITE_ID, ...overrides });
+    createPreventionStudy({ Code: code, SITE_ID: PREVENTION_SITE_ID, ...overrides });
 
 const selectionData = (
     mapType: PreventionMapType,
     filteredStudies: PreventionStudy[],
     nonFilteredStudies: PreventionStudy[] = filteredStudies,
     speciesFilter?: Option[]
-) => createPreventionSelectionData(PREVENTION, mapType, selection, filteredStudies, nonFilteredStudies, speciesFilter);
+) =>
+    createPreventionSelectionData(
+        PREVENTION_THEME,
+        mapType,
+        selection,
+        filteredStudies,
+        nonFilteredStudies,
+        speciesFilter
+    );
 
 /** The chart series of a prevention map type, for one species and test type. */
 function seriesOf(data: SelectionData, species = GAMBIAE, type = WHO_TEST_KIT): PreventionChartDataItem[] {
@@ -97,7 +117,7 @@ function chartKeys(data: SelectionData): Record<string, string[]> {
 
 const item = (overrides: Partial<PreventionChartDataItem>) => ({
     number: "100",
-    resistanceStatus: POSSIBLE,
+    resistanceStatus: POSSIBLE_RESISTANCE,
     ...overrides,
 });
 
@@ -107,7 +127,13 @@ describe("createPreventionSelectionData", () => {
             const studies = [study(STUDY)];
 
             expect(
-                createPreventionSelectionData(PREVENTION, PreventionMapType.RESISTANCE_STATUS, null, studies, studies)
+                createPreventionSelectionData(
+                    PREVENTION_THEME,
+                    PreventionMapType.RESISTANCE_STATUS,
+                    null,
+                    studies,
+                    studies
+                )
             ).toBe(null);
         });
 
@@ -127,18 +153,18 @@ describe("createPreventionSelectionData", () => {
                 YEAR_START: 2021,
                 INSECTICIDE_TYPE: PERMETHRIN,
                 MORTALITY_ADJUSTED: "0.5",
-                RESISTANCE_STATUS: CONFIRMED,
+                RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
             });
             const filtered = [older, recent, study(OTHER_SITE, { SITE_ID: OTHER_SITE_ID })];
             const otherClass = study(OTHER_CLASS, {
                 INSECTICIDE_CLASS: ORGANOPHOSPHATES,
-                RESISTANCE_STATUS: CONFIRMED,
+                RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
             });
 
             expect(selectionData(mapType, filtered, [...filtered, otherClass])).toEqual({
                 kind: "common",
                 title: TITLE,
-                subtitle: DISCRIMINATING,
+                subtitle: DISCRIMINATING_ASSAY,
                 filterOptions: [GAMBIAE_OPTION],
                 filterSelection: [GAMBIAE_OPTION],
                 studyObject: recent,
@@ -150,15 +176,15 @@ describe("createPreventionSelectionData", () => {
                                 title: undefined,
                                 seriesData: [
                                     item({
-                                        name: `2020, ${DELTAMETHRIN} ${CONC} - 85% (a) `,
+                                        name: `2020, ${DELTAMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION} - 85% (a) `,
                                         y: 85,
                                         color: POSSIBLE_COLOR,
                                         group: "2020",
                                     }),
                                     item({
-                                        name: `2021, ${PERMETHRIN} ${CONC} - 50% (a) `,
+                                        name: `2021, ${PERMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION} - 50% (a) `,
                                         y: 50,
-                                        resistanceStatus: CONFIRMED,
+                                        resistanceStatus: CONFIRMED_RESISTANCE,
                                         color: CONFIRMED_COLOR,
                                         group: "2021",
                                     }),
@@ -175,10 +201,14 @@ describe("createPreventionSelectionData", () => {
         });
 
         it("takes the studies of a site in order of year, the most recent first, for the title and the study object", () => {
-            const recent = study(RECENT, { YEAR_START: 2022, VILLAGE_NAME: "Recent village" });
+            const recentVillage = "Recent village";
+            const recent = study(RECENT, { YEAR_START: 2022, VILLAGE_NAME: recentVillage });
             const data = selectionData(mapType, [study(OLDER), recent]);
 
-            expect(data.kind === "common" && [data.title, data.studyObject]).toEqual(["Recent village, BF", recent]);
+            expect(data.kind === "common" && [data.title, data.studyObject]).toEqual([
+                `${recentVillage}, ${BURKINA_FASO.ISO2}`,
+                recent,
+            ]);
         });
 
         it("groups the chart by species, sorted, then by test type", () => {
@@ -197,14 +227,14 @@ describe("createPreventionSelectionData", () => {
         it("joins the studies with the same year, insecticide, concentration and mortality into one bar, the most resistant", () => {
             const studies = [
                 study("susceptible", { RESISTANCE_STATUS: SUSCEPTIBLE, CITATION_URL: NOT_AVAILABLE }),
-                study("confirmed", { RESISTANCE_STATUS: CONFIRMED }),
+                study("confirmed", { RESISTANCE_STATUS: CONFIRMED_RESISTANCE }),
             ];
 
             expect(seriesOf(selectionData(mapType, studies))).toEqual([
                 item({
-                    name: `2020, ${DELTAMETHRIN} ${CONC} - 85% (a, b) `,
+                    name: `2020, ${DELTAMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION} - 85% (a, b) `,
                     y: 85,
-                    resistanceStatus: CONFIRMED,
+                    resistanceStatus: CONFIRMED_RESISTANCE,
                     color: CONFIRMED_COLOR,
                     group: "2020",
                 }),
@@ -220,16 +250,16 @@ describe("createPreventionSelectionData", () => {
             ];
 
             expect(seriesOf(selectionData(mapType, studies)).map(bar => bar.name)).toEqual([
-                `2019, ${DELTAMETHRIN} ${CONC} - 85% (a) `,
-                `2020, ${DELTAMETHRIN} ${CONC} - 10% (a) `,
-                `2020, ${DELTAMETHRIN} ${CONC} - 90% (a) `,
-                `2020, ${PERMETHRIN} ${CONC} - 85% (a) `,
+                `2019, ${DELTAMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION} - 85% (a) `,
+                `2020, ${DELTAMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION} - 10% (a) `,
+                `2020, ${DELTAMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION} - 90% (a) `,
+                `2020, ${PERMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION} - 85% (a) `,
             ]);
         });
 
         it.each([
-            [CONFIRMED, CONFIRMED_COLOR],
-            [POSSIBLE, POSSIBLE_COLOR],
+            [CONFIRMED_RESISTANCE, CONFIRMED_COLOR],
+            [POSSIBLE_RESISTANCE, POSSIBLE_COLOR],
             [SUSCEPTIBLE, "#869C66"],
             [UNDETERMINED, "#BEBEBE"],
             [NOT_AVAILABLE, undefined],
@@ -243,20 +273,20 @@ describe("createPreventionSelectionData", () => {
     describe("Intensity status", () => {
         const mapType = PreventionMapType.INTENSITY_STATUS;
         const intensityStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
-            study(code, { ASSAY_TYPE: INTENSITY, ...overrides });
+            study(code, { ASSAY_TYPE: INTENSITY_ASSAY, ...overrides });
 
         it("builds the whole selection data of a site", () => {
             const fivefold = intensityStudy("fivefold", { INSECTICIDE_INTENSITY: 5, MORTALITY_ADJUSTED: "1" });
             const studies = [fivefold, intensityStudy("onefold")];
             const otherClass = intensityStudy(OTHER_CLASS, {
                 INSECTICIDE_CLASS: ORGANOPHOSPHATES,
-                RESISTANCE_STATUS: CONFIRMED,
+                RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
             });
 
             expect(selectionData(mapType, studies, [...studies, otherClass])).toEqual({
                 kind: "common",
                 title: TITLE,
-                subtitle: INTENSITY,
+                subtitle: INTENSITY_ASSAY,
                 filterOptions: [GAMBIAE_OPTION],
                 filterSelection: [GAMBIAE_OPTION],
                 studyObject: fivefold,
@@ -314,9 +344,9 @@ describe("createPreventionSelectionData", () => {
         const mapType = PreventionMapType.LEVEL_OF_INVOLVEMENT;
         const involvementStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
             study(code, {
-                ASSAY_TYPE: SYNERGIST,
+                ASSAY_TYPE: SYNERGIST_ASSAY,
                 PROXY_TYPE: MONO_OXYGENASES,
-                MECHANISM_PROXY: FULL,
+                MECHANISM_PROXY: FULL_INVOLVEMENT,
                 SYNERGIST_TYPE: NO_SYNERGIST,
                 STUDY_PAIRING_CODE: PAIR_1,
                 ...overrides,
@@ -324,8 +354,8 @@ describe("createPreventionSelectionData", () => {
         const synergistStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
             involvementStudy(code, { SYNERGIST_TYPE: PBO, SYNERGIST_CONC: PBO_CONC, ...overrides });
 
-        const NO_SYNERGIST_NAME = `2020, ${DELTAMETHRIN} ${CONC}, ${NO_SYNERGIST_LABEL} (a) `;
-        const PBO_NAME = `2020, ${DELTAMETHRIN} ${CONC}, ${PBO} ${PBO_CONC} (a) `;
+        const NO_SYNERGIST_NAME = `2020, ${DELTAMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION}, ${NO_SYNERGIST_LABEL} (a) `;
+        const PBO_NAME = `2020, ${DELTAMETHRIN} ${STUDY_INSECTICIDE_CONCENTRATION}, ${PBO} ${PBO_CONC} (a) `;
 
         // Each study of these tests has its own mortality, so the bar's value tells which study it shows.
         const barCodes = (studies: PreventionStudy[]) =>
@@ -339,13 +369,13 @@ describe("createPreventionSelectionData", () => {
             const studies = [withoutSynergist, withSynergist];
             const otherClass = involvementStudy(OTHER_CLASS, {
                 INSECTICIDE_CLASS: ORGANOPHOSPHATES,
-                RESISTANCE_STATUS: CONFIRMED,
+                RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
             });
 
             expect(selectionData(mapType, studies, [...studies, otherClass])).toEqual({
                 kind: "common",
                 title: TITLE,
-                subtitle: SYNERGIST,
+                subtitle: SYNERGIST_ASSAY,
                 filterOptions: [GAMBIAE_OPTION],
                 filterSelection: [GAMBIAE_OPTION],
                 studyObject: withoutSynergist,
@@ -378,7 +408,7 @@ describe("createPreventionSelectionData", () => {
         describe("first study of each group", () => {
             it("keeps only the studies with the top level of involvement of each bar", () => {
                 const studies = [
-                    involvementStudy("partial", { MECHANISM_PROXY: PARTIAL, MORTALITY_ADJUSTED: "0.3" }),
+                    involvementStudy("partial", { MECHANISM_PROXY: PARTIAL_INVOLVEMENT, MORTALITY_ADJUSTED: "0.3" }),
                     involvementStudy(FULL_STUDY, { MORTALITY_ADJUSTED: "0.6" }),
                 ];
 
@@ -416,10 +446,26 @@ describe("createPreventionSelectionData", () => {
             it("shows only the study without synergist when there is no synergist study", () => {
                 const studies = [involvementStudy("without", { MORTALITY_ADJUSTED: "0.2" })];
 
-                expect(seriesOf(selectionData(mapType, studies)).map(bar => bar.name)).toEqual([
-                    `2020, ${DELTAMETHRIN} ${CONC}, ${NO_SYNERGIST_LABEL} (a) `,
-                ]);
+                expect(seriesOf(selectionData(mapType, studies)).map(bar => bar.name)).toEqual([NO_SYNERGIST_NAME]);
             });
+
+            it("shows only the synergist study when there is no study without synergist", () => {
+                const studies = [synergistStudy("withSynergist", { MORTALITY_ADJUSTED: "0.95" })];
+
+                expect(seriesOf(selectionData(mapType, studies)).map(bar => bar.name)).toEqual([PBO_NAME]);
+            });
+        });
+
+        it("orders the bars of a year and insecticide by synergist type before mortality", () => {
+            const studies = [
+                synergistStudy("withSynergist", { MORTALITY_ADJUSTED: "0.4" }),
+                involvementStudy("withoutSynergist", { MORTALITY_ADJUSTED: "0.95" }),
+            ];
+
+            expect(seriesOf(selectionData(mapType, studies)).map(bar => bar.name)).toEqual([
+                NO_SYNERGIST_NAME,
+                PBO_NAME,
+            ]);
         });
 
         it.each([
@@ -436,7 +482,7 @@ describe("createPreventionSelectionData", () => {
         const mapType = PreventionMapType.RESISTANCE_MECHANISM;
         const mechanismStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
             study(code, {
-                ASSAY_TYPE: MOLECULAR,
+                ASSAY_TYPE: MOLECULAR_ASSAY,
                 TYPE: KDR_L1014F,
                 MECHANISM_STATUS: DETECTED,
                 MECHANISM_FREQUENCY: "45",
@@ -459,7 +505,7 @@ describe("createPreventionSelectionData", () => {
             expect(selectionData(mapType, studies, [...studies, ...others])).toEqual({
                 kind: "common",
                 title: TITLE,
-                subtitle: MOLECULAR,
+                subtitle: MOLECULAR_ASSAY,
                 filterOptions: [GAMBIAE_OPTION],
                 filterSelection: [GAMBIAE_OPTION],
                 studyObject: recent,
@@ -563,8 +609,12 @@ describe("createPreventionSelectionData", () => {
         });
     });
 
-    describe("species filter", () => {
-        const mapType = PreventionMapType.RESISTANCE_STATUS;
+    // The resistance mechanisms chart filters the species with its own copy of the filter, and does not
+    // sort them: they come in the order of the studies.
+    describe.each([
+        [PreventionMapType.RESISTANCE_STATUS, [FUNESTUS, GAMBIAE]],
+        [PreventionMapType.RESISTANCE_MECHANISM, [GAMBIAE, FUNESTUS]],
+    ])("species filter, map type %s", (mapType, everySpeciesCharted) => {
         const studies = [study("gambiae"), study(FUNESTUS_STUDY, { SPECIES: FUNESTUS })];
 
         const filterAndChart = (speciesFilter?: Option[]) => {
@@ -576,7 +626,7 @@ describe("createPreventionSelectionData", () => {
             expect(filterAndChart()).toEqual([
                 [FUNESTUS_OPTION, GAMBIAE_OPTION],
                 [FUNESTUS_OPTION, GAMBIAE_OPTION],
-                [FUNESTUS, GAMBIAE],
+                everySpeciesCharted,
             ]);
         });
 
@@ -589,7 +639,7 @@ describe("createPreventionSelectionData", () => {
         });
 
         it("charts every species with an empty filter, but selects none", () => {
-            expect(filterAndChart([])).toEqual([[FUNESTUS_OPTION, GAMBIAE_OPTION], [], [FUNESTUS, GAMBIAE]]);
+            expect(filterAndChart([])).toEqual([[FUNESTUS_OPTION, GAMBIAE_OPTION], [], everySpeciesCharted]);
         });
     });
 
@@ -598,19 +648,22 @@ describe("createPreventionSelectionData", () => {
             const filtered = [study("pyrethroid")];
             const nonFiltered = [
                 ...filtered,
-                study("pyrethroidConfirmed", { RESISTANCE_STATUS: CONFIRMED }),
+                study("pyrethroidConfirmed", { RESISTANCE_STATUS: CONFIRMED_RESISTANCE }),
                 study("organophosphateConfirmed", {
                     INSECTICIDE_CLASS: ORGANOPHOSPHATES,
-                    RESISTANCE_STATUS: CONFIRMED,
+                    RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
                 }),
-                study("organophosphateTwice", { INSECTICIDE_CLASS: ORGANOPHOSPHATES, RESISTANCE_STATUS: CONFIRMED }),
+                study("organophosphateTwice", {
+                    INSECTICIDE_CLASS: ORGANOPHOSPHATES,
+                    RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
+                }),
                 study("carbamateSusceptible", { INSECTICIDE_CLASS: "CARBAMATES", RESISTANCE_STATUS: SUSCEPTIBLE }),
                 study(OTHER_SITE, {
                     SITE_ID: OTHER_SITE_ID,
                     INSECTICIDE_CLASS: "ORGANOCHLORINES",
-                    RESISTANCE_STATUS: CONFIRMED,
+                    RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
                 }),
-                study("noClass", { INSECTICIDE_CLASS: NOT_AVAILABLE, RESISTANCE_STATUS: CONFIRMED }),
+                study("noClass", { INSECTICIDE_CLASS: NOT_AVAILABLE, RESISTANCE_STATUS: CONFIRMED_RESISTANCE }),
             ];
 
             const data = selectionData(PreventionMapType.RESISTANCE_STATUS, filtered, nonFiltered);
@@ -621,7 +674,7 @@ describe("createPreventionSelectionData", () => {
         it("lists the detected mechanisms of the whitelist, in its order, missing from the filtered studies", () => {
             const mechanism = (code: string, overrides: Partial<PreventionStudy>) =>
                 study(code, {
-                    ASSAY_TYPE: MOLECULAR,
+                    ASSAY_TYPE: MOLECULAR_ASSAY,
                     MECHANISM_STATUS: DETECTED,
                     MECHANISM_FREQUENCY: "1",
                     ...overrides,

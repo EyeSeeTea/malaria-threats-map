@@ -26,14 +26,14 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 /** The test types of the synergist bioassays of the map, with the value as label, as before. */
-export function getSynergistTypeOptions(preventionStudiesOfMapType: ReadonlyArray<PreventionStudy>): Option[] {
+export function getSynergistTypeFilterOptions(preventionStudiesOfMapType: ReadonlyArray<PreventionStudy>): Option[] {
     return getSynergistTypes(preventionStudiesOfMapType).map(value => ({ label: value, value }));
 }
 
 const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, preventionStudiesOfMapType, setSynergistTypes }) => {
     const { t } = useTranslation();
 
-    const suggestions = getSynergistTypeOptions(preventionStudiesOfMapType);
+    const suggestions = getSynergistTypeFilterOptions(preventionStudiesOfMapType);
 
     return (
         <MultiFilter
