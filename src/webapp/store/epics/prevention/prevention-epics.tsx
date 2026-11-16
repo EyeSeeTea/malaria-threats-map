@@ -16,11 +16,11 @@ import {
 import { PreventionMapType, State } from "../../types";
 import { getAnalyticsPageView } from "../../analytics";
 import {
-    assayTypes,
     getAssayTypesDetecting,
     getInvolvementMechanisms,
-    getMechanismOptions,
+    getKnownMechanisms,
 } from "../../../../domain/entities/ResistanceMechanism";
+import { mechanismAssayTypes } from "../../../../domain/entities/AssayType";
 import { getSelectableInsecticideClasses } from "../../../../domain/entities/InsecticideClass";
 import _c from "../../../../domain/entities/generic/Collection";
 import { getInitialDisease, isDefaultOrUnset, pickOption } from "../../../../domain/entities/Disease";
@@ -47,12 +47,11 @@ import {
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
 import { diseaseSwitches } from "../common/diseaseSwitches";
-import { selectPreventionStudies } from "../../reducers/prevention-reducer";
+import { defaultMechanismType, selectPreventionStudies } from "../../reducers/prevention-reducer";
 import { selectProxyTypes } from "../../reducers/translations-reducer";
 import { Translation } from "../../../types/Translation";
 
 const defaultInsecticideClass = "PYRETHROIDS";
-const defaultMechanism = "MONO_OXYGENASES";
 
 const preventionStudiesLoaded = [
     ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess,
@@ -80,7 +79,7 @@ function getDiseaseOptions(state: State, mapType: PreventionMapType): DiseaseOpt
                 .uniq()
                 .toArray()
         ),
-        mechanisms: getMechanismOptions(studies.map(study => study.TYPE)),
+        mechanisms: getKnownMechanisms(studies.map(study => study.TYPE)),
         proxyTypes: getInvolvementMechanisms(translatedProxyTypes, studies),
     };
 }
@@ -99,15 +98,15 @@ type MapChangeValues = Readonly<{
 function getMapChangeValues(state: State, mapType: PreventionMapType): MapChangeValues {
     const { disease, insecticideClass } = state.prevention.filters;
     if (isDefaultOrUnset(disease)) {
-        return { mechanism: defaultMechanism, proxyType: defaultMechanism, insecticideClass: null };
+        return { mechanism: defaultMechanismType, proxyType: defaultMechanismType, insecticideClass: null };
     }
 
     const options = getDiseaseOptions(state, mapType);
     const checkedClass = pickOption(options.insecticideClasses, defaultInsecticideClass, insecticideClass);
 
     return {
-        mechanism: pickOption(options.mechanisms, defaultMechanism),
-        proxyType: pickOption(options.proxyTypes, defaultMechanism),
+        mechanism: pickOption(options.mechanisms, defaultMechanismType),
+        proxyType: pickOption(options.proxyTypes, defaultMechanismType),
         insecticideClass: checkedClass === insecticideClass ? null : setInsecticideClass(checkedClass),
     };
 }
@@ -126,11 +125,11 @@ function getActionsAfterDiseaseSwitch(state: State): ReadonlyArray<AnyAction> {
 
     switch (mapType) {
         case PreventionMapType.RESISTANCE_MECHANISM:
-            return [emptySynergistTypes, setType([pickOption(options.mechanisms, defaultMechanism)])];
+            return [emptySynergistTypes, setType([pickOption(options.mechanisms, defaultMechanismType)])];
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
                 emptySynergistTypes,
-                setProxyType(pickOption(options.proxyTypes, defaultMechanism)),
+                setProxyType(pickOption(options.proxyTypes, defaultMechanismType)),
                 insecticideClass,
             ];
         default:
@@ -222,7 +221,7 @@ export const setPreventionTypeEpic = (action$: Observable<ActionType<typeof setT
         ofType(ActionTypeEnum.SetType),
         switchMap(action => {
             // Only the first mechanism counts. An unknown one, or none, selects every assay type.
-            const detecting = getAssayTypesDetecting(action.payload?.[0]) ?? assayTypes;
+            const detecting = getAssayTypesDetecting(action.payload?.[0]) ?? mechanismAssayTypes;
             return of(setAssayTypes([...detecting]));
         })
     );
@@ -238,7 +237,7 @@ export const setPreventionInsecticideClassEpic = (
             const isTourOpen = state.malaria.tour.open;
             const actions = _.compact([
                 setInsecticideTypes([]),
-                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : ["MONO_OXYGENASES"]),
+                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : [defaultMechanismType]),
                 setSpecies([]),
                 isTourOpen
                     ? null

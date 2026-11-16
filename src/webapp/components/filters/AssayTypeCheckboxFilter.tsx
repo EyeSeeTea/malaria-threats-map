@@ -45,12 +45,9 @@ export function getAssayTypeFilterOptions(preventionFilters: PreventionFilters) 
 
 function AssayTypeCheckboxFilter({ preventionFilters, setAssayTypes }: Props) {
     const handleChange = (type: string) => () => {
-        let newValues: string[];
-        if (preventionFilters.assayTypes.includes(type)) {
-            newValues = preventionFilters.assayTypes.filter(assayType => assayType !== type);
-        } else {
-            newValues = [...preventionFilters.assayTypes, type];
-        }
+        const newValues = preventionFilters.assayTypes.includes(type)
+            ? preventionFilters.assayTypes.filter(assayType => assayType !== type)
+            : [...preventionFilters.assayTypes, type];
         setAssayTypes(newValues);
         sendMultiFilterAnalytics(
             "assayType",

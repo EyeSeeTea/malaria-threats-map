@@ -7,6 +7,9 @@ import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { belongsToDisease } from "../../../domain/entities/Disease";
 import { Source } from "../actions/base-actions";
 
+/** The mechanism the Resistance mechanisms and Level of involvement maps select when they open. */
+export const defaultMechanismType = "MONO_OXYGENASES";
+
 const initialFilters: PreventionFilters = {
     mapType: PreventionMapType.RESISTANCE_STATUS,
     dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
