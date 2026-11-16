@@ -29,6 +29,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import OngoingAndPlannedTreatmentStudiesChart from "./treatment/OngoingAndPlannedTreatmentStudies/OngoingAndPlannedTreatmentStudiesChart";
 import Hrp23StudiesChart from "./diagnosis/Hrp23StudiesChart";
 import GeneDeletionsChart from "./diagnosis/GeneDeletionsChart";
+import { useTranslation } from "react-i18next";
 
 const Container = styled.div<{ width?: string; padding?: string }>`
     width: ${props => props.width || "100%"};
@@ -202,6 +203,7 @@ const CommonContent: React.FC<{
     isScreenshot?: boolean;
     children?: React.ReactNode;
 }> = ({ selectionData, preventionFilters, setSelectionFilterSelection, isScreenshot = false, children }) => {
+    const { t } = useTranslation();
     const onFiltersChange = (value: any) => {
         sendAnalytics({ type: "event", category: "popup", action: "filter" });
         setSelectionFilterSelection(value);
@@ -233,7 +235,7 @@ const CommonContent: React.FC<{
                 </Typography>
                 {selectionData.filterOptions && selectionData.filterOptions.length > 1 && (
                     <Flex>
-                        <FormLabel component="legend">Species</FormLabel>
+                        <FormLabel component="legend">{t("common.prevention.chart.species")}</FormLabel>
                         <StyledSelect
                             isClearable
                             isMulti
