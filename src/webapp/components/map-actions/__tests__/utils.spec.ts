@@ -14,6 +14,7 @@ import {
     TreatmentFilters,
 } from "../../../store/types";
 import {
+    filtersToString,
     getValueLabelFilters,
     invasiveFiltersToString,
     invasiveValueLabelFilters,
@@ -359,7 +360,7 @@ describe("map-actions utils", () => {
         });
     });
 
-    describe("getValueLabelFilters", () => {
+    describe("theme dispatch", () => {
         const treatmentFilters: TreatmentFilters = {
             mapType: 0,
             dataset: "THERAPEUTIC_EFFICACY_STUDY",
@@ -379,31 +380,68 @@ describe("map-actions utils", () => {
         const preventionFilters = everyFilter(PreventionMapType.RESISTANCE_STATUS);
         const invasiveFilters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM_KEY] });
 
-        const labelsFor = (theme: string) =>
-            getValueLabelFilters(
-                theme,
-                preventionFilters,
-                treatmentFilters,
-                diagnosisFilters,
-                invasiveFilters,
-                MAX_MIN_YEARS,
-                NARROWED_YEARS
-            );
+        describe("getValueLabelFilters", () => {
+            const labelsFor = (theme: string) =>
+                getValueLabelFilters(
+                    theme,
+                    preventionFilters,
+                    treatmentFilters,
+                    diagnosisFilters,
+                    invasiveFilters,
+                    MAX_MIN_YEARS,
+                    NARROWED_YEARS
+                );
 
-        it("sends prevention to preventionValueLabelFilters", () => {
-            expect(labelsFor("prevention")).toEqual({
-                years: NARROWED_RANGE,
-                insecticideClass: PYRETHROIDS,
-                insecticideTypes: `${DELTAMETHRIN} | ${PERMETHRIN}`,
-                testType: `${WHO_TEST_KIT} | ${CDC_BOTTLE}`,
-                species: `${GAMBIAE} | ${FUNESTUS}`,
+            it("sends prevention to preventionValueLabelFilters", () => {
+                expect(labelsFor("prevention")).toEqual({
+                    years: NARROWED_RANGE,
+                    insecticideClass: PYRETHROIDS,
+                    insecticideTypes: `${DELTAMETHRIN} | ${PERMETHRIN}`,
+                    testType: `${WHO_TEST_KIT} | ${CDC_BOTTLE}`,
+                    species: `${GAMBIAE} | ${FUNESTUS}`,
+                });
+            });
+
+            it("sends invasive to invasiveValueLabelFilters", () => {
+                expect(labelsFor("invasive")).toEqual({
+                    years: NARROWED_RANGE,
+                    vectorSpecies: speciesLabel(STEPHENSI_TYPE_FORM_KEY),
+                });
             });
         });
 
-        it("sends invasive to invasiveValueLabelFilters", () => {
-            expect(labelsFor("invasive")).toEqual({
-                years: NARROWED_RANGE,
-                vectorSpecies: speciesLabel(STEPHENSI_TYPE_FORM_KEY),
+        describe("filtersToString", () => {
+            const summaryFor = (theme: string) =>
+                filtersToString(
+                    theme,
+                    preventionFilters,
+                    treatmentFilters,
+                    diagnosisFilters,
+                    invasiveFilters,
+                    MAX_MIN_YEARS,
+                    NARROWED_YEARS,
+                    MAP
+                );
+
+            it("sends prevention to preventionFiltersToString", () => {
+                expect(summaryFor("prevention")).toEqual(
+                    [
+                        entry(INSECTICIDE_CLASS_FILTER, PYRETHROIDS),
+                        entry(INSECTICIDE_TYPES_FILTER, `${DELTAMETHRIN}, ${PERMETHRIN}`),
+                        entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+                        entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
+                        entry(YEARS_FILTER, NARROWED_RANGE),
+                    ].join(SEPARATOR)
+                );
+            });
+
+            it("sends invasive to invasiveFiltersToString", () => {
+                expect(summaryFor("invasive")).toEqual(
+                    [
+                        entry(VECTOR_SPECIES_FILTER, speciesLabel(STEPHENSI_TYPE_FORM_KEY)),
+                        entry(YEARS_FILTER, NARROWED_RANGE),
+                    ].join(SEPARATOR)
+                );
             });
         });
     });
