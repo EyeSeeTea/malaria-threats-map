@@ -28,22 +28,22 @@ import {
 import {
     AFRICA,
     ARABIENSIS,
-    BIOCHEMICAL,
+    BIOCHEMICAL_ASSAY,
     BURKINA_FASO,
     CDC_BOTTLE,
     CONFIRMED_RESISTANCE,
     DELTAMETHRIN,
-    DISCRIMINATING,
+    DISCRIMINATING_ASSAY,
     ESTERASES,
     FUNESTUS,
     GAMBIAE,
     HIGH_INTENSITY,
-    INTENSITY,
+    INTENSITY_ASSAY,
     LOW_INTENSITY,
     MINISTRY_OF_HEALTH,
     MODERATE_INTENSITY,
     MODERATE_TO_HIGH_INTENSITY,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     NOT_ASSESSED,
     NOT_AVAILABLE,
@@ -56,7 +56,7 @@ import {
     RESEARCH_INSTITUTION,
     STEPHENSI_TYPE_FORM,
     SUSCEPTIBLE,
-    SYNERGIST,
+    SYNERGIST_ASSAY,
     UNDETERMINED,
     WEST_AFRICA,
     WHO_TEST_KIT,
@@ -227,8 +227,8 @@ describe("studies-filters", () => {
 
         describe("filterByAssayTypes", () => {
             const studies = [
-                createPreventionStudy({ ASSAY_TYPE: MOLECULAR }),
-                createPreventionStudy({ ASSAY_TYPE: BIOCHEMICAL }),
+                createPreventionStudy({ ASSAY_TYPE: MOLECULAR_ASSAY }),
+                createPreventionStudy({ ASSAY_TYPE: BIOCHEMICAL_ASSAY }),
             ];
 
             it("keeps every study when no assay type is selected", () => {
@@ -236,11 +236,11 @@ describe("studies-filters", () => {
             });
 
             it("keeps only the studies of the selected assay types", () => {
-                expect(studies.map(filterByAssayTypes([BIOCHEMICAL]))).toEqual([false, true]);
+                expect(studies.map(filterByAssayTypes([BIOCHEMICAL_ASSAY]))).toEqual([false, true]);
             });
 
             it("removes every study when no study has a selected assay type", () => {
-                expect(studies.map(filterByAssayTypes([SYNERGIST]))).toEqual([false, false]);
+                expect(studies.map(filterByAssayTypes([SYNERGIST_ASSAY]))).toEqual([false, false]);
             });
         });
 
@@ -447,7 +447,7 @@ describe("studies-filters", () => {
     });
 
     describe("assay discriminators", () => {
-        const assayTypes = [DISCRIMINATING, INTENSITY, SYNERGIST, MOLECULAR, BIOCHEMICAL];
+        const assayTypes = [DISCRIMINATING_ASSAY, INTENSITY_ASSAY, SYNERGIST_ASSAY, MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY];
         const studies = assayTypes.map(assayType => createPreventionStudy({ ASSAY_TYPE: assayType }));
 
         it("filterByResistanceStatus keeps only the discriminating concentration bioassay", () => {
