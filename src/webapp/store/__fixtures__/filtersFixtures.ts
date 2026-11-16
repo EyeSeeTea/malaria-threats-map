@@ -1,5 +1,16 @@
-import { DISCRIMINATING, PYRETHROIDS } from "../../../domain/entities/__fixtures__/studyValues";
-import { InvasiveFilters, InvasiveMapType, PreventionFilters, PreventionMapType } from "../types";
+import { BURKINA_FASO, DISCRIMINATING, DJIBOUTI, PYRETHROIDS } from "../../../domain/entities/__fixtures__/studyValues";
+import { Source } from "../actions/base-actions";
+import { InvasiveFilters, InvasiveMapType, PreventionFilters, PreventionMapType, RegionState } from "../types";
+
+export const MAP: Source = "map";
+export const DOWNLOAD: Source = "download";
+
+/** A year before the range of createYearFilter. */
+export const YEAR_BEFORE_RANGE = 2015;
+
+/** The regions of the default prevention and invasive studies. */
+export const PREVENTION_STUDY_REGION: Readonly<RegionState> = { country: BURKINA_FASO.ISO2 };
+export const INVASIVE_STUDY_REGION: Readonly<RegionState> = { country: DJIBOUTI.ISO2 };
 
 // Functions, not shared objects, so every call gets its own arrays.
 const defaultPreventionFilters = (): PreventionFilters => ({
@@ -21,6 +32,10 @@ const defaultInvasiveFilters = (): InvasiveFilters => ({
     dataset: "INVASIVE_VECTOR_SPECIES",
     vectorSpecies: [],
 });
+
+export function createYearFilter(): number[] {
+    return [2018, 2022];
+}
 
 export function createPreventionFilters(overrides: Partial<PreventionFilters> = {}): PreventionFilters {
     return { ...defaultPreventionFilters(), ...overrides };

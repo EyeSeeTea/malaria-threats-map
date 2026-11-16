@@ -1,4 +1,4 @@
-import { createTranslation } from "../../../types/__fixtures__/translationFixtures";
+import { createTranslation, TYPE_FIELD } from "../../../types/__fixtures__/translationFixtures";
 import { getSynergistTypeOptions } from "../SynergistTypeFilter";
 import {
     CDC_BOTTLE,
@@ -7,7 +7,8 @@ import {
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
-const typeTranslations = (values: string[]) => values.map(value => createTranslation({ FIELD: "TYPE", VALUE_: value }));
+const typeTranslations = (values: string[]) =>
+    values.map(value => createTranslation({ FIELD: TYPE_FIELD, VALUE_: value }));
 
 describe("getSynergistTypeOptions", () => {
     it("offers only the WHO test kit and the CDC bottle, with the value as label", () => {

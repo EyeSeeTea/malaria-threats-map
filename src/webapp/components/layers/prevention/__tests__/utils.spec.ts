@@ -6,28 +6,30 @@ import {
     getMostPriorityUsingMortalityAdjusted,
     studySelector,
 } from "../utils";
-import { NOT_AVAILABLE } from "../../../../../domain/entities/__fixtures__/studyValues";
+import {
+    CONFIRMED_RESISTANCE,
+    HIGH_INTENSITY,
+    LOW_INTENSITY,
+    MODERATE_INTENSITY,
+    MODERATE_TO_HIGH_INTENSITY,
+    NOT_ASSESSED,
+    NOT_AVAILABLE,
+    POSSIBLE_RESISTANCE,
+    SUSCEPTIBLE,
+    UNDETERMINED,
+    UNKNOWN_STATUS,
+} from "../../../../../domain/entities/__fixtures__/studyValues";
 
 const OLDER = "older";
 const RECENT = "recent";
-const CONFIRMED_RESISTANCE = "CONFIRMED_RESISTANCE";
-const SUSCEPTIBLE = "SUSCEPTIBLE";
-const UNDETERMINED = "UNDETERMINED";
-const POSSIBLE_RESISTANCE = "POSSIBLE_RESISTANCE";
 const CONFIRMED_STUDY = "confirmed";
 const FIRST = "first";
 const SECOND = "second";
 const UNKNOWN_STUDY = "unknown";
-const HIGH_INTENSITY = "HIGH_INTENSITY";
-const LOW_INTENSITY = "LOW_INTENSITY";
-const NOT_ASSESSED = "COULD_NOT_BE_RELIABLY_ASSESSED";
-const MODERATE_TO_HIGH_INTENSITY = "MODERATE_TO_HIGH_INTENSITY";
-const MODERATE_INTENSITY = "MODERATE_INTENSITY";
 const NOT_ASSESSED_STUDY = "notAssessed";
 const NA_STUDY = "na";
 const DETECTED = "DETECTED";
 const NOT_DETECTED = "NOT_DETECTED";
-const UNKNOWN_STATUS = "UNKNOWN";
 const FULL_INVOLVEMENT = "FULL_INVOLVEMENT";
 const NO_INVOLVEMENT = "NO_INVOLVEMENT";
 const PARTIAL_INVOLVEMENT = "PARTIAL_INVOLVEMENT";

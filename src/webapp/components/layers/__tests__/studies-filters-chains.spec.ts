@@ -2,14 +2,17 @@ import { createInvasiveStudy, createPreventionStudy } from "../../../../domain/e
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { Source } from "../../../store/actions/base-actions";
-import { createInvasiveFilters, createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
 import {
-    InvasiveFilters,
-    PreventionDataset,
-    PreventionFilters,
-    PreventionMapType,
-    RegionState,
-} from "../../../store/types";
+    createInvasiveFilters,
+    createPreventionFilters,
+    createYearFilter,
+    DOWNLOAD,
+    INVASIVE_STUDY_REGION,
+    MAP,
+    PREVENTION_STUDY_REGION,
+    YEAR_BEFORE_RANGE,
+} from "../../../store/__fixtures__/filtersFixtures";
+import { InvasiveFilters, PreventionDataset, PreventionFilters, PreventionMapType } from "../../../store/types";
 import { filterInvasiveStudies, filterPreventionStudies } from "../studies-filters";
 import {
     ACE1R,
@@ -18,15 +21,18 @@ import {
     DELTAMETHRIN,
     DISCRIMINATING,
     ESTERASES,
+    FEW_MOSQUITOES_NUMBER,
     FUNESTUS,
     GAMBIAE,
     GSTS,
+    HIGH_INTENSITY,
     INTENSITY,
     KDR_L1014F,
     KDR_L1014S,
     MINISTRY_OF_HEALTH,
     MOLECULAR,
     MONO_OXYGENASES,
+    NOT_ASSESSED,
     NOT_AVAILABLE,
     NOT_REPORTED,
     ORGANOPHOSPHATES,
@@ -39,8 +45,6 @@ import {
     WHO_TEST_KIT,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 
-const MAP = "map";
-const DOWNLOAD = "download";
 const OTHER_CLASS = "otherClass";
 const OTHER_INSECTICIDE = "otherInsecticide";
 const OTHER_TEST_TYPE = "otherTestType";
@@ -50,7 +54,6 @@ const OTHER_COUNTRY_STUDY = "otherCountry";
 const KEPT = "kept";
 const NOT_MOH = "notMoH";
 const FEW_MOSQUITOES = "fewMosquitoes";
-const FEW_MOSQUITOES_NUMBER = "20";
 const NA_MORTALITY = "naMortality";
 const NA_INTENSITY = "naIntensity";
 const MOLECULAR_STUDY = "molecular";
@@ -63,17 +66,14 @@ const MONO_OXYGENASES_STUDY = "monoOxygenases";
 const KDR_STUDY = "kdr";
 const MOLECULAR_ASSAY_STUDY = "molecularAssay";
 
-const YEARS = [2018, 2022];
-const OUTSIDE_YEAR = 2015;
-const PREVENTION_REGION: RegionState = { country: "BF" };
-const INVASIVE_REGION: RegionState = { country: "DJ" };
-
 function survivingPrevention(
     studies: PreventionStudy[],
     filters: PreventionFilters,
     from: Source = MAP
 ): ReadonlyArray<string> {
-    return filterPreventionStudies(studies, filters, YEARS, PREVENTION_REGION, from).map(study => study.Code);
+    return filterPreventionStudies(studies, filters, createYearFilter(), PREVENTION_STUDY_REGION, from).map(
+        study => study.Code
+    );
 }
 
 function survivingInvasive(
@@ -81,7 +81,9 @@ function survivingInvasive(
     filters: InvasiveFilters,
     from: Source = MAP
 ): ReadonlyArray<string> {
-    return filterInvasiveStudies(studies, filters, YEARS, INVASIVE_REGION, from).map(study => study.Code);
+    return filterInvasiveStudies(studies, filters, createYearFilter(), INVASIVE_STUDY_REGION, from).map(
+        study => study.Code
+    );
 }
 
 /** A study that passes every filter set by `bioassayFilters`, with the given code and overrides. */
@@ -96,7 +98,7 @@ function bioassayStudy(code: string, overrides: Partial<PreventionStudy> = {}): 
         INSTITUTION_TYPE: MINISTRY_OF_HEALTH,
         NUMBER: "100",
         MORTALITY_ADJUSTED: "0.85",
-        RESISTANCE_INTENSITY: "HIGH_INTENSITY",
+        RESISTANCE_INTENSITY: HIGH_INTENSITY,
         ...overrides,
     });
 }
@@ -117,7 +119,7 @@ const studiesRemovedByEachBioassayFilter = (assayType: string) => [
     bioassayStudy(OTHER_INSECTICIDE, { ASSAY_TYPE: assayType, INSECTICIDE_TYPE: PERMETHRIN }),
     bioassayStudy(OTHER_TEST_TYPE, { ASSAY_TYPE: assayType, TYPE: CDC_BOTTLE }),
     bioassayStudy(OTHER_SPECIES, { ASSAY_TYPE: assayType, SPECIES: FUNESTUS }),
-    bioassayStudy(OUTSIDE_YEARS, { ASSAY_TYPE: assayType, YEAR_START: OUTSIDE_YEAR }),
+    bioassayStudy(OUTSIDE_YEARS, { ASSAY_TYPE: assayType, YEAR_START: YEAR_BEFORE_RANGE }),
     bioassayStudy(OTHER_COUNTRY_STUDY, { ASSAY_TYPE: assayType, ...OTHER_COUNTRY }),
 ];
 
@@ -161,7 +163,7 @@ describe("studies-filters chains", () => {
                     bioassayStudy(NOT_MOH, { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
                     bioassayStudy(FEW_MOSQUITOES, { NUMBER: FEW_MOSQUITOES_NUMBER }),
                     bioassayStudy(NA_INTENSITY, { RESISTANCE_INTENSITY: NOT_AVAILABLE }),
-                    bioassayStudy("unassessedIntensity", { RESISTANCE_INTENSITY: "COULD_NOT_BE_RELIABLY_ASSESSED" }),
+                    bioassayStudy("unassessedIntensity", { RESISTANCE_INTENSITY: NOT_ASSESSED }),
                 ];
 
                 expect(survivingPrevention(studies, filters)).toEqual([KEPT]);
@@ -191,7 +193,7 @@ describe("studies-filters chains", () => {
                     mechanismStudy("otherMechanism", { TYPE: ESTERASES }),
                     mechanismStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
                     mechanismStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: SYNERGIST }),
-                    mechanismStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR }),
+                    mechanismStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     mechanismStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
@@ -271,7 +273,7 @@ describe("studies-filters chains", () => {
                     involvementStudy(OTHER_INSECTICIDE, { INSECTICIDE_TYPE: PERMETHRIN }),
                     involvementStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
                     involvementStudy("otherSynergistType", { TYPE: CDC_BOTTLE }),
-                    involvementStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR }),
+                    involvementStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     involvementStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
@@ -294,7 +296,7 @@ describe("studies-filters chains", () => {
         const studies = [
             createInvasiveStudy({ Code: KEPT }),
             createInvasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
-            createInvasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: OUTSIDE_YEAR }),
+            createInvasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: YEAR_BEFORE_RANGE }),
             createInvasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
             createInvasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
             createInvasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
@@ -349,7 +351,7 @@ describe("studies-filters chains", () => {
                     bioassayStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: DISCRIMINATING }),
                     bioassayStudy(OTHER_TEST_TYPE, { ASSAY_TYPE: SYNERGIST, TYPE: CDC_BOTTLE }),
                     bioassayStudy(OTHER_SPECIES, { ASSAY_TYPE: SYNERGIST, SPECIES: FUNESTUS }),
-                    bioassayStudy(OUTSIDE_YEARS, { ASSAY_TYPE: SYNERGIST, YEAR_START: OUTSIDE_YEAR }),
+                    bioassayStudy(OUTSIDE_YEARS, { ASSAY_TYPE: SYNERGIST, YEAR_START: YEAR_BEFORE_RANGE }),
                     bioassayStudy(OTHER_COUNTRY_STUDY, { ASSAY_TYPE: SYNERGIST, ...OTHER_COUNTRY }),
                 ];
 
@@ -410,7 +412,7 @@ describe("studies-filters chains", () => {
             // Pins today's behaviour, a possible bug pending a decision: the molecular file ignores the
             // selected mechanism and the year range. It applies the region filter twice instead.
             it("ignores the selected type, and the year range", () => {
-                const studies = [molecularStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR })];
+                const studies = [molecularStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE })];
 
                 expect(survivingPrevention(studies, filters, DOWNLOAD)).toEqual([OUTSIDE_YEARS]);
             });
@@ -426,7 +428,7 @@ describe("studies-filters chains", () => {
                     biochemicalStudy(KEPT),
                     biochemicalStudy(NOT_DOWNLOADABLE, { DOWNLOAD: 0 }),
                     biochemicalStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
-                    biochemicalStudy(OUTSIDE_YEARS, { YEAR_START: OUTSIDE_YEAR }),
+                    biochemicalStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                     biochemicalStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
                 ];
 
@@ -467,7 +469,7 @@ describe("studies-filters chains", () => {
             createInvasiveStudy({ Code: KEPT }),
             createInvasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
             createInvasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
-            createInvasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: OUTSIDE_YEAR }),
+            createInvasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: YEAR_BEFORE_RANGE }),
             createInvasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
             createInvasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
         ];

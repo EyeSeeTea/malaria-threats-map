@@ -103,7 +103,7 @@ describe("createInvasiveSelectionData", () => {
                     vectorStage: ADULTS,
                     sumOfTests: "3",
                     larvalHabitat: undefined,
-                    villageOrigin: DJIBOUTI,
+                    villageOrigin: DJIBOUTI.COUNTRY_NAME,
                 },
             ],
             dataSources: [
@@ -172,7 +172,7 @@ describe("createInvasiveSelectionData", () => {
         it("shows the village of origin only when its flag is set", () => {
             expect(
                 [firstRow({ VILLAGE_FLAG: 1 }), firstRow({ VILLAGE_FLAG: 0 })].map(row => row.villageOrigin)
-            ).toEqual([DJIBOUTI, NOT_REPORTED_LABEL]);
+            ).toEqual([DJIBOUTI.COUNTRY_NAME, NOT_REPORTED_LABEL]);
         });
 
         it("leaves the number of tests undefined when it is null", () => {

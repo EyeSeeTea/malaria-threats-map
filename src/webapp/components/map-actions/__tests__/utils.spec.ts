@@ -1,5 +1,10 @@
 import i18next from "i18next";
-import { createInvasiveFilters, createPreventionFilters } from "../../../store/__fixtures__/filtersFixtures";
+import {
+    createInvasiveFilters,
+    createPreventionFilters,
+    DOWNLOAD,
+    MAP,
+} from "../../../store/__fixtures__/filtersFixtures";
 import {
     DiagnosisFilters,
     PreventionDataset,
@@ -42,8 +47,6 @@ const ASSAY_TYPES_FILTER = "assayTypes";
 const SYNERGIST_TYPES_FILTER = "synergistTypes";
 const VECTOR_SPECIES_FILTER = "vectorSpecies";
 const SEPARATOR = " | ";
-const MAP = "map";
-const DOWNLOAD = "download";
 const SOME_KEY = "some.key";
 
 // i18next runs without resources in the tests (src/setupTests.ts), so every label is its key,
