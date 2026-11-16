@@ -10,14 +10,14 @@ import { PreventionFilters, PreventionMapType } from "../../../store/types";
 import { getSpeciesFilterOptions } from "../SpeciesFilter";
 import {
     ARABIENSIS,
-    BIOCHEMICAL,
+    BIOCHEMICAL_ASSAY,
     CDC_BOTTLE,
     DELTAMETHRIN,
     ESTERASES,
     FEW_MOSQUITOES_NUMBER,
     FUNESTUS,
     GAMBIAE,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     NOT_AVAILABLE,
     ORGANOPHOSPHATES,
@@ -47,7 +47,7 @@ function speciesStudy(species: string, overrides: Partial<PreventionStudy> = {})
         INSECTICIDE_TYPE: DELTAMETHRIN,
         TYPE: WHO_TEST_KIT,
         PROXY_TYPE: MONO_OXYGENASES,
-        ASSAY_TYPE: MOLECULAR,
+        ASSAY_TYPE: MOLECULAR_ASSAY,
         YEAR_START: 2020,
         ...overrides,
     });
@@ -124,7 +124,7 @@ describe("getSpeciesFilterOptions", () => {
             mapType: PreventionMapType.RESISTANCE_MECHANISM,
             insecticideClass: PYRETHROIDS,
             type: [MONO_OXYGENASES],
-            assayTypes: [MOLECULAR],
+            assayTypes: [MOLECULAR_ASSAY],
             species: [GAMBIAE],
             synergistTypes: [CDC_BOTTLE],
         });
@@ -133,7 +133,7 @@ describe("getSpeciesFilterOptions", () => {
             const studies = [
                 mechanismStudy(GAMBIAE),
                 mechanismStudy("otherMechanism", { TYPE: ESTERASES }),
-                mechanismStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL }),
+                mechanismStudy("otherAssayType", { ASSAY_TYPE: BIOCHEMICAL_ASSAY }),
                 mechanismStudy(OUTSIDE_YEARS, { YEAR_START: YEAR_BEFORE_RANGE }),
                 mechanismStudy(OTHER_COUNTRY_STUDY, OTHER_COUNTRY),
             ];

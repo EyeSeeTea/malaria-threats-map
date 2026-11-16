@@ -1,6 +1,21 @@
-import { BURKINA_FASO, DISCRIMINATING, DJIBOUTI, PYRETHROIDS } from "../../../domain/entities/__fixtures__/studyValues";
+import {
+    BURKINA_FASO,
+    DISCRIMINATING_ASSAY,
+    DJIBOUTI,
+    PYRETHROIDS,
+} from "../../../domain/entities/__fixtures__/studyValues";
 import { Source } from "../actions/base-actions";
-import { InvasiveFilters, InvasiveMapType, PreventionFilters, PreventionMapType, RegionState } from "../types";
+import {
+    InvasiveFilters,
+    InvasiveMapType,
+    MapTheme,
+    PreventionFilters,
+    PreventionMapType,
+    RegionState,
+} from "../types";
+
+export const PREVENTION_THEME: MapTheme = "prevention";
+export const INVASIVE_THEME: MapTheme = "invasive";
 
 export const MAP: Source = "map";
 export const DOWNLOAD: Source = "download";
@@ -15,7 +30,7 @@ export const INVASIVE_STUDY_REGION: Readonly<RegionState> = { country: DJIBOUTI.
 // Functions, not shared objects, so every call gets its own arrays.
 const defaultPreventionFilters = (): PreventionFilters => ({
     mapType: PreventionMapType.RESISTANCE_STATUS,
-    dataset: DISCRIMINATING,
+    dataset: DISCRIMINATING_ASSAY,
     insecticideClass: PYRETHROIDS,
     insecticideTypes: [],
     synergistTypes: [],
