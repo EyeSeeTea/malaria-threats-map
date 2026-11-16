@@ -8,8 +8,6 @@ import {
     filterByInsecticideClass,
     filterByInsecticideResistanceStatusOptions,
     filterByInsecticideTypes,
-    filterByIntensityStatus,
-    filterByLevelOfInvolvement,
     filterByOnlyDataByHealthMinistries,
     filterByOnlyIncludeBioassaysWithMoreMosquitoes,
     filterByProxyType,
@@ -456,16 +454,8 @@ describe("studies-filters", () => {
             expect(studies.map(filterByResistanceStatus)).toEqual([true, false, false, false, false]);
         });
 
-        it("filterByIntensityStatus keeps only the intensity concentration bioassay", () => {
-            expect(studies.map(filterByIntensityStatus)).toEqual([false, true, false, false, false]);
-        });
-
         it("filterByResistanceMechanism keeps the synergist, molecular and biochemical assays", () => {
             expect(studies.map(filterByResistanceMechanism)).toEqual([false, false, true, true, true]);
-        });
-
-        it("filterByLevelOfInvolvement keeps only the synergist-insecticide bioassay", () => {
-            expect(studies.map(filterByLevelOfInvolvement)).toEqual([false, false, true, false, false]);
         });
     });
 

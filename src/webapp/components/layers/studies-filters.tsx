@@ -95,10 +95,6 @@ export const filterInvasiveByDownload = () => (study: InvasiveStudy) => {
     return study.MTM_DOWNLOAD !== 0;
 };
 
-export const filterByIntensityStatus = (study: any) => {
-    return study.ASSAY_TYPE === "INTENSITY_CONCENTRATION_BIOASSAY";
-};
-
 export const filterValidResistanceIntensityValue = (study: any) => {
     return (
         study.RESISTANCE_INTENSITY === "LOW_INTENSITY" ||
@@ -122,10 +118,6 @@ export const filterByResistanceMechanism = (study: any) => {
         study.ASSAY_TYPE === "BIOCHEMICAL_ASSAY" ||
         study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY"
     );
-};
-
-export const filterByLevelOfInvolvement = (study: any) => {
-    return study.ASSAY_TYPE === "SYNERGIST-INSECTICIDE_BIOASSAY";
 };
 
 export const filterByStudiesWithInsecticideClass = (study: any) => {
