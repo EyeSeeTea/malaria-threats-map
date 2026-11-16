@@ -8,7 +8,11 @@ import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import { Option } from "../BasicSelect";
 import { InvasiveStudy } from "../../../domain/entities/InvasiveStudy";
-import { getVectorSpecies, legacyVectorSpecies } from "../../../domain/entities/VectorSpecies";
+import {
+    getVectorSpecies,
+    legacyVectorSpecies,
+    legacyVectorSpeciesValues,
+} from "../../../domain/entities/VectorSpecies";
 import { Source } from "../../store/actions/base-actions";
 
 const mapStateToProps = (state: State) => ({
@@ -44,6 +48,13 @@ export function keepVectorSpeciesOfferedOnDataDownload(selected: ReadonlyArray<s
     return selected.filter(species => legacyVectorSpecies.includes(species));
 }
 
+/** Analytics keep receiving the code a species had before they came from the data, so its reports do not split. */
+export function getVectorSpeciesAnalyticsLabel(species: string): string {
+    const legacyCode = Array.from(legacyVectorSpeciesValues.entries()).find(([, value]) => value === species)?.[0];
+
+    return legacyCode ?? species;
+}
+
 const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies, setVectorSpecies, from }) => {
     const { t } = useTranslation();
 
@@ -55,6 +66,7 @@ const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}
+            analyticsLabel={getVectorSpeciesAnalyticsLabel}
             optionsStyle={{ fontStyle: "italic" }}
         />
     );

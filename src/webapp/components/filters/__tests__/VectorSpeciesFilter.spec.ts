@@ -7,6 +7,11 @@ import {
     STEPHENSI_TYPE_FORM,
     STEPHENSI_INTERMEDIATE_FORM,
     STEPHENSI_NOT_FOUND,
+    STEPHENSI_TYPE_FORM_KEY,
+    STEPHENSI_MYSORENSIS_KEY,
+    STEPHENSI_INTERMEDIATE_FORM_KEY,
+    STEPHENSI_FORM_UNSPECIFIED_KEY,
+    STEPHENSI_NOT_FOUND_KEY,
 } from "../../../../domain/entities/__fixtures__/studyValues";
 import {
     addVectorSpeciesAppLabels,
@@ -15,6 +20,7 @@ import {
     STEPHENSI_MYSORENSIS_APP_LABEL,
 } from "../../../types/__fixtures__/translationFixtures";
 import {
+    getVectorSpeciesAnalyticsLabel,
     getVectorSpeciesLabel,
     getVectorSpeciesOptions,
     keepVectorSpeciesOfferedOnDataDownload,
@@ -82,6 +88,30 @@ describe("VectorSpeciesFilter", () => {
                 STEPHENSI_TYPE_FORM,
                 NOT_REPORTED,
             ]);
+        });
+    });
+
+    describe("getVectorSpeciesAnalyticsLabel", () => {
+        it("sends the old code of each of the 5 species analytics received before", () => {
+            const species = [
+                STEPHENSI_TYPE_FORM,
+                STEPHENSI_MYSORENSIS,
+                STEPHENSI_INTERMEDIATE_FORM,
+                NOT_REPORTED,
+                STEPHENSI_NOT_FOUND,
+            ];
+
+            expect(species.map(getVectorSpeciesAnalyticsLabel)).toEqual([
+                STEPHENSI_TYPE_FORM_KEY,
+                STEPHENSI_MYSORENSIS_KEY,
+                STEPHENSI_INTERMEDIATE_FORM_KEY,
+                STEPHENSI_FORM_UNSPECIFIED_KEY,
+                STEPHENSI_NOT_FOUND_KEY,
+            ]);
+        });
+
+        it("sends the value of a species that had no code", () => {
+            expect(getVectorSpeciesAnalyticsLabel(STEPHENSI)).toBe(STEPHENSI);
         });
     });
 });
