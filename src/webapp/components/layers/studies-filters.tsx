@@ -21,6 +21,8 @@ import { MOLECULAR_MARKERS_MAP } from "./treatment/MolecularMarkersOngoingStudie
 import { Study } from "../../../domain/entities/Study";
 import { isNA } from "../../utils/number-utils";
 
+export type PreventionStudyFilter = (study: PreventionStudy) => boolean;
+
 export const DELETION_TYPES = {
     HRP2_PROPORTION_DELETION: {
         label: "pfhrp2",
