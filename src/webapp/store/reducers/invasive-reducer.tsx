@@ -71,7 +71,7 @@ const selectInvasiveState = (state: State) => state.invasive;
 export const selectInvasiveStudies = createSelector(selectInvasiveState, invasiveState => invasiveState.studies);
 
 export const selectInvasiveStudiesOfDisease = createSelector(selectInvasiveState, invasiveState =>
-    invasiveState.studies.filter(study => belongsToDisease(invasiveState.filters.disease, study))
+    invasiveState.studies.filter(study => belongsToDisease(study, invasiveState.filters.disease))
 );
 
 export const selectInvasiveStudiesLoading = createSelector(selectInvasiveState, invasiveState => invasiveState.loading);

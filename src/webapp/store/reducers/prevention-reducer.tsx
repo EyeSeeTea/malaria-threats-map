@@ -7,9 +7,6 @@ import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { belongsToDisease } from "../../../domain/entities/Disease";
 import { Source } from "../actions/base-actions";
 
-/** The mechanism the Resistance mechanisms and Level of involvement maps select when they open. */
-export const defaultMechanismType = "MONO_OXYGENASES";
-
 const initialFilters: PreventionFilters = {
     mapType: PreventionMapType.RESISTANCE_STATUS,
     dataset: "DISCRIMINATING_CONCENTRATION_BIOASSAY",
@@ -261,7 +258,7 @@ export const selectPreventionStudiesByMapTypeSelected = createSelector(selectPre
 export const selectPreventionStudiesOfMapTypeAndDisease = createSelector(
     selectPreventionStudiesByMapTypeSelected,
     selectPreventionState,
-    (studies, state) => studies.filter(study => belongsToDisease(state.filters.disease, study))
+    (studies, state) => studies.filter(study => belongsToDisease(study, state.filters.disease))
 );
 
 /** The studies a filter takes its options from: on the map, those of the chosen disease; in Data Download, all of them. */

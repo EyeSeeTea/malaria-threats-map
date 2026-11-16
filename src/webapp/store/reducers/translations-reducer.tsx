@@ -3,7 +3,7 @@ import { ActionTypeEnum } from "../actions";
 import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { State, TranslationsState } from "../types";
-import { TranslationResponse } from "../../types/Translation";
+import { Translation, TranslationResponse } from "../../types/Translation";
 
 const initialState: TranslationsState = Object.freeze({
     translations: [],
@@ -42,6 +42,12 @@ export const selectAssayTypes = createSelector(selectFields, state => state.ASSA
 export const selectTypes = createSelector(selectFields, state => state.TYPE || []);
 
 export const selectProxyTypes = createSelector(selectFields, state => state.PROXY_TYPE || []);
+
+/** The PROXY_TYPE values the xMART translations declare, in their order. */
+export const selectProxyTypeValues = createSelector(selectProxyTypes, (proxyTypes): ReadonlyArray<string> => {
+    const translations: ReadonlyArray<Translation> = proxyTypes;
+    return translations.map(translation => translation.VALUE_);
+});
 
 export const selectSpecies = createSelector(selectFields, state => state.SPECIES || []);
 

@@ -11,8 +11,11 @@ import {
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
-import _ from "lodash";
-import { getSelectableInsecticideClasses, sortInsecticideClasses } from "../../../domain/entities/InsecticideClass";
+import {
+    getAvailableInsecticideClasses,
+    getInsecticideClasses,
+    sortInsecticideClasses,
+} from "../../../domain/entities/InsecticideClass";
 
 const mapStateToProps = (state: State, { from }: OwnProps) => ({
     preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeFrom(state, from),
@@ -31,11 +34,15 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 export { sortInsecticideClasses };
 
-export function getInsecticideClassOptions(insecticideClasses: string[]) {
-    return getSelectableInsecticideClasses(insecticideClasses).map(insecticideClass => ({
+function toInsecticideClassOptions(insecticideClasses: ReadonlyArray<string>) {
+    return insecticideClasses.map(insecticideClass => ({
         value: insecticideClass,
         label: i18next.t(insecticideClass),
     }));
+}
+
+export function getInsecticideClassOptions(insecticideClasses: string[]) {
+    return toInsecticideClassOptions(getAvailableInsecticideClasses(insecticideClasses));
 }
 
 function InsecticideClassFilter({ preventionStudiesOfMapType = [], preventionFilters, setInsecticideClass }: Props) {
@@ -44,9 +51,7 @@ function InsecticideClassFilter({ preventionStudiesOfMapType = [], preventionFil
         setInsecticideClass((event.target as HTMLInputElement).value);
     };
 
-    const insecticideClasses = _.uniq(preventionStudiesOfMapType.map(study => study.INSECTICIDE_CLASS));
-
-    const options = getInsecticideClassOptions(insecticideClasses);
+    const options = toInsecticideClassOptions(getInsecticideClasses(preventionStudiesOfMapType));
 
     return (
         <RadioGroupFilter

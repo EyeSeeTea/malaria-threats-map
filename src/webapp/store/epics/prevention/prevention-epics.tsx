@@ -16,14 +16,14 @@ import {
 import { PreventionMapType, State } from "../../types";
 import { getAnalyticsPageView } from "../../analytics";
 import {
+    defaultMechanism,
     getAssayTypesDetecting,
     getInvolvementMechanisms,
-    getKnownMechanisms,
+    getMechanisms,
 } from "../../../../domain/entities/ResistanceMechanism";
 import { mechanismAssayTypes } from "../../../../domain/entities/AssayType";
-import { getSelectableInsecticideClasses } from "../../../../domain/entities/InsecticideClass";
-import _c from "../../../../domain/entities/generic/Collection";
-import { getInitialDisease, isDefaultOrUnset, pickOption } from "../../../../domain/entities/Disease";
+import { defaultInsecticideClass, getInsecticideClasses } from "../../../../domain/entities/InsecticideClass";
+import { getInitialDisease } from "../../../../domain/entities/Disease";
 import {
     logEventAction,
     logPageViewAction,
@@ -47,11 +47,10 @@ import {
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
 import { diseaseSwitches } from "../common/diseaseSwitches";
-import { defaultMechanismType, selectPreventionStudies } from "../../reducers/prevention-reducer";
-import { selectProxyTypes } from "../../reducers/translations-reducer";
-import { Translation } from "../../../types/Translation";
-
-const defaultInsecticideClass = "PYRETHROIDS";
+import { selectPreventionStudies } from "../../reducers/prevention-reducer";
+import { selectProxyTypeValues } from "../../reducers/translations-reducer";
+import { chooseFilterValue } from "../../filterValues";
+import { keepsMapBehaviourBeforeDisease } from "../../diseaseMapBehaviour";
 
 const preventionStudiesLoaded = [
     ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess,
@@ -66,21 +65,14 @@ type DiseaseOptions = Readonly<{
     proxyTypes: ReadonlyArray<string>;
 }>;
 
-/** The options the filters of a map offer for the chosen disease, as the filters compute them. */
+/** The options the filters of a map offer for the chosen disease, from the same functions the filters call. */
 function getDiseaseOptions(state: State, mapType: PreventionMapType): DiseaseOptions {
     const studies = getStudiesOfDiseaseByMapType(state, mapType);
-    const proxyTranslations: ReadonlyArray<Translation> = selectProxyTypes(state);
-    const translatedProxyTypes = proxyTranslations.map(translation => translation.VALUE_);
 
     return {
-        insecticideClasses: getSelectableInsecticideClasses(
-            _c(studies)
-                .map(study => study.INSECTICIDE_CLASS)
-                .uniq()
-                .toArray()
-        ),
-        mechanisms: getKnownMechanisms(studies.map(study => study.TYPE)),
-        proxyTypes: getInvolvementMechanisms(translatedProxyTypes, studies),
+        insecticideClasses: getInsecticideClasses(studies),
+        mechanisms: getMechanisms(studies),
+        proxyTypes: getInvolvementMechanisms(selectProxyTypeValues(state), studies),
     };
 }
 
@@ -97,16 +89,16 @@ type MapChangeValues = Readonly<{
  */
 function getMapChangeValues(state: State, mapType: PreventionMapType): MapChangeValues {
     const { disease, insecticideClass } = state.prevention.filters;
-    if (isDefaultOrUnset(disease)) {
-        return { mechanism: defaultMechanismType, proxyType: defaultMechanismType, insecticideClass: null };
+    if (keepsMapBehaviourBeforeDisease(disease)) {
+        return { mechanism: defaultMechanism, proxyType: defaultMechanism, insecticideClass: null };
     }
 
     const options = getDiseaseOptions(state, mapType);
-    const checkedClass = pickOption(options.insecticideClasses, defaultInsecticideClass, insecticideClass);
+    const checkedClass = chooseFilterValue(options.insecticideClasses, defaultInsecticideClass, insecticideClass);
 
     return {
-        mechanism: pickOption(options.mechanisms, defaultMechanismType),
-        proxyType: pickOption(options.proxyTypes, defaultMechanismType),
+        mechanism: chooseFilterValue(options.mechanisms, defaultMechanism),
+        proxyType: chooseFilterValue(options.proxyTypes, defaultMechanism),
         insecticideClass: checkedClass === insecticideClass ? null : setInsecticideClass(checkedClass),
     };
 }
@@ -121,15 +113,17 @@ function getActionsAfterDiseaseSwitch(state: State): ReadonlyArray<AnyAction> {
     const { mapType } = state.prevention.filters;
     const options = getDiseaseOptions(state, mapType);
     const emptySynergistTypes = setSynergistTypes([]);
-    const insecticideClass = setInsecticideClass(pickOption(options.insecticideClasses, defaultInsecticideClass));
+    const insecticideClass = setInsecticideClass(
+        chooseFilterValue(options.insecticideClasses, defaultInsecticideClass)
+    );
 
     switch (mapType) {
         case PreventionMapType.RESISTANCE_MECHANISM:
-            return [emptySynergistTypes, setType([pickOption(options.mechanisms, defaultMechanismType)])];
+            return [emptySynergistTypes, setType([chooseFilterValue(options.mechanisms, defaultMechanism)])];
         case PreventionMapType.LEVEL_OF_INVOLVEMENT:
             return [
                 emptySynergistTypes,
-                setProxyType(pickOption(options.proxyTypes, defaultMechanismType)),
+                setProxyType(chooseFilterValue(options.proxyTypes, defaultMechanism)),
                 insecticideClass,
             ];
         default:
@@ -237,7 +231,7 @@ export const setPreventionInsecticideClassEpic = (
             const isTourOpen = state.malaria.tour.open;
             const actions = _.compact([
                 setInsecticideTypes([]),
-                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : [defaultMechanismType]),
+                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : [defaultMechanism]),
                 setSpecies([]),
                 isTourOpen
                     ? null
@@ -329,7 +323,7 @@ export const setPreventionThemeEpic = (
                     ? [setMaxMinYearsAction([start, end]), setFiltersAction([REQUESTED_VIR_START_DATE, end])]
                     : [];
 
-                return of(...base, setInsecticideClass("PYRETHROIDS"));
+                return of(...base, setInsecticideClass(defaultInsecticideClass));
             } else {
                 return of(setInsecticideClass(null));
             }

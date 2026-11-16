@@ -131,3 +131,19 @@ export function createPreventionStudy(overrides: Partial<PreventionStudy> = {}):
 export function createInvasiveStudy(overrides: Partial<InvasiveStudy> = {}): InvasiveStudy {
     return { ...defaultInvasiveStudy, ...overrides };
 }
+
+/** A prevention study of the disease; undefined builds one without the field. */
+export function createPreventionStudyOf(
+    disease: string | undefined,
+    overrides: Partial<PreventionStudy> = {}
+): PreventionStudy {
+    return createPreventionStudy({ DISEASE: disease, ...overrides });
+}
+
+/** An invasive study of the disease; undefined builds one without the field. */
+export function createInvasiveStudyOf(
+    disease: string | undefined,
+    overrides: Partial<InvasiveStudy> = {}
+): InvasiveStudy {
+    return createInvasiveStudy({ DISEASE: disease, ...overrides });
+}

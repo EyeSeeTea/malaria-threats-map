@@ -5,7 +5,6 @@ import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import {
-    defaultMechanismType,
     selectPreventionFilters,
     selectPreventionStudiesOfMapTypeAndDisease,
 } from "../../store/reducers/prevention-reducer";
@@ -14,7 +13,8 @@ import { logEventAction, Source } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
-import { getKnownMechanisms } from "../../../domain/entities/ResistanceMechanism";
+import { defaultMechanism, getKnownMechanisms, getMechanisms } from "../../../domain/entities/ResistanceMechanism";
+import { chooseFilterValue } from "../../store/filterValues";
 
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),
@@ -41,9 +41,10 @@ export function getMechanismTypeOptions(
     preventionStudiesOfMapType: ReadonlyArray<PreventionStudy>,
     types: ReadonlyArray<Translation>
 ) {
-    const codes = from === "map" ? preventionStudiesOfMapType.map(study => study.TYPE) : types.map(type => type.VALUE_);
+    const mechanisms =
+        from === "map" ? getMechanisms(preventionStudiesOfMapType) : getKnownMechanisms(types.map(type => type.VALUE_));
 
-    return getKnownMechanisms(codes).map(value => ({
+    return mechanisms.map(value => ({
         value: value,
         label: i18next.t(`TYPE.${value}`, { defaultValue: value }),
     }));
@@ -62,7 +63,7 @@ export function getMechanismToSelectOnMap(
         return undefined;
     }
 
-    return offeredMechanisms.includes(defaultMechanismType) ? defaultMechanismType : offeredMechanisms[0];
+    return chooseFilterValue(offeredMechanisms, defaultMechanism);
 }
 
 /** The map and Data Download share the selected mechanism, so the map replaces one it does not offer. */

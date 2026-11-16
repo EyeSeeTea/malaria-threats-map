@@ -1,9 +1,8 @@
 import React from "react";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
-import { selectProxyTypes } from "../../store/reducers/translations-reducer";
+import { selectProxyTypeValues } from "../../store/reducers/translations-reducer";
 import {
     selectPreventionFilters,
     selectPreventionStudiesOfMapTypeAndDisease,
@@ -14,7 +13,7 @@ import RadioGroupFilter from "./RadioGroupFilter";
 import { getInvolvementMechanisms } from "../../../domain/entities/ResistanceMechanism";
 
 const mapStateToProps = (state: State) => ({
-    proxyTypes: selectProxyTypes(state),
+    proxyTypeValues: selectProxyTypeValues(state),
     preventionFilters: selectPreventionFilters(state),
     preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeAndDisease(state),
 });
@@ -29,7 +28,7 @@ type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
 function ProxyTypeFilter({
-    proxyTypes = [],
+    proxyTypeValues,
     preventionFilters,
     preventionStudiesOfMapType,
     setProxyType,
@@ -42,13 +41,8 @@ function ProxyTypeFilter({
         logEventAction({ category: "filter", action: "proxyType", label: newValue });
     };
 
-    const suggestions: Translation[] = proxyTypes as Translation[];
-
-    const translatedCodes = suggestions.map(translation => translation.VALUE_);
-    const options = getInvolvementMechanisms(translatedCodes, preventionStudiesOfMapType).map(value => ({
-        value,
-        label: t(`PROXY_TYPE.${value}`),
-    }));
+    const mechanisms = getInvolvementMechanisms(proxyTypeValues, preventionStudiesOfMapType);
+    const options = mechanisms.map(value => ({ value, label: t(`PROXY_TYPE.${value}`) }));
 
     return (
         <RadioGroupFilter

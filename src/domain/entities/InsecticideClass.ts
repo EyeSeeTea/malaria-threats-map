@@ -1,29 +1,35 @@
+import _c from "./generic/Collection";
+import { notAvailable, Study } from "./Study";
+
+/** The class the maps select when they open, and when a map does not offer the selected one. */
+export const defaultInsecticideClass = "PYRETHROIDS";
+
+type InsecticideClassSource = Pick<Study, "INSECTICIDE_CLASS">;
+
 /**
- * The insecticide classes in the order the maps and the dashboards show them. The order is not in
- * the data, so it is declared here, once.
+ * The classes in the order the maps and the dashboards show them, in a new list: NA first, where
+ * the dashboards always showed it, then alphabetical.
  */
-const insecticideClassOrder: ReadonlyArray<string> = [
-    "CARBAMATES",
-    "NEONICOTINOIDS",
-    "ORGANOCHLORINES",
-    "ORGANOPHOSPHATES",
-    "PYRETHROIDS",
-    "PYRROLES",
-];
-
-const notAvailable = "NA";
-
-/** The classes in the declared order, in a new list. A class outside the order goes before the declared ones. */
 export function sortInsecticideClasses(insecticideClasses: ReadonlyArray<string>): string[] {
-    return [...insecticideClasses].sort((a, b) =>
-        insecticideClassOrder.indexOf(a) - insecticideClassOrder.indexOf(b) > 0 ? 1 : -1
-    );
+    return _c([...insecticideClasses])
+        .orderBy([
+            [insecticideClass => insecticideClass !== notAvailable, "asc"],
+            [insecticideClass => insecticideClass, "asc"],
+        ])
+        .toArray();
 }
 
-/**
- * The classes an insecticide class filter offers: NA left out, in the declared order. Repeated
- * classes stay repeated, as before: the callers pass distinct ones.
- */
-export function getSelectableInsecticideClasses(insecticideClasses: ReadonlyArray<string>): string[] {
+/** The classes without NA, in order. Repeated classes stay repeated: the callers pass distinct ones. */
+export function getAvailableInsecticideClasses(insecticideClasses: ReadonlyArray<string>): ReadonlyArray<string> {
     return sortInsecticideClasses(insecticideClasses.filter(insecticideClass => insecticideClass !== notAvailable));
+}
+
+/** The distinct classes the studies carry, without NA, in order. */
+export function getInsecticideClasses(studies: ReadonlyArray<InsecticideClassSource>): ReadonlyArray<string> {
+    return getAvailableInsecticideClasses(
+        _c([...studies])
+            .map(study => study.INSECTICIDE_CLASS)
+            .uniq()
+            .toArray()
+    );
 }

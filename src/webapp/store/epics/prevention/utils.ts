@@ -606,4 +606,4 @@ export const getStudiesByMapType = (state: State, mapType: PreventionMapType): P
 
 /** The studies of the map type that belong to the chosen disease: those the map and its side panel show. */
 export const getStudiesOfDiseaseByMapType = (state: State, mapType: PreventionMapType): PreventionStudy[] =>
-    getStudiesByMapType(state, mapType).filter(study => belongsToDisease(state.prevention.filters.disease, study));
+    getStudiesByMapType(state, mapType).filter(study => belongsToDisease(study, state.prevention.filters.disease));
