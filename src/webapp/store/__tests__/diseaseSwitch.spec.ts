@@ -24,7 +24,6 @@ import {
     KDR_L1014S,
     MALARIA,
     MOLECULAR_ASSAY,
-    ORGANOPHOSPHATES,
     PERMETHRIN,
     PYRETHROIDS,
     SYNERGIST_ASSAY,
@@ -103,27 +102,6 @@ describe("a disease switch through the store", () => {
             type: [ESTERASES],
             assayTypes: [MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY],
             species: [],
-        });
-    });
-
-    it("after a switch on Resistance mechanisms, moves the class on the next map to one the disease offers", () => {
-        const store = storeAfter([
-            fetchResistanceMechanismTypeStudiesSuccess([createPreventionStudy({ DISEASE: DENGUE, TYPE: GSTS })]),
-            fetchResistanceStatusTypeStudiesSuccess([
-                createPreventionStudy({ DISEASE: MALARIA, INSECTICIDE_CLASS: PYRETHROIDS }),
-                createPreventionStudy({ DISEASE: DENGUE, INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
-            ]),
-            setPreventionMapType(PreventionMapType.RESISTANCE_MECHANISM),
-            setPreventionDisease(MALARIA),
-            setInsecticideTypes([DELTAMETHRIN]),
-            setPreventionDisease(DENGUE),
-            setPreventionMapType(PreventionMapType.RESISTANCE_STATUS),
-        ]);
-
-        const { insecticideClass, insecticideTypes } = store.getState().prevention.filters;
-        expect({ insecticideClass, insecticideTypes }).toEqual({
-            insecticideClass: ORGANOPHOSPHATES,
-            insecticideTypes: [],
         });
     });
 });

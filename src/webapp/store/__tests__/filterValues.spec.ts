@@ -1,5 +1,15 @@
-import { CARBAMATES, ORGANOPHOSPHATES, PYRETHROIDS } from "../../../domain/entities/__fixtures__/studyValues";
-import { chooseFilterValue } from "../filterValues";
+import {
+    CARBAMATES,
+    DELTAMETHRIN,
+    ESTERASES,
+    GSTS,
+    KDR_L1014S,
+    MONO_OXYGENASES,
+    ORGANOPHOSPHATES,
+    PERMETHRIN,
+    PYRETHROIDS,
+} from "../../../domain/entities/__fixtures__/studyValues";
+import { chooseFilterValue, getSelectedValuesOffered, getValueToSelectInstead } from "../filterValues";
 
 describe("filterValues", () => {
     describe("chooseFilterValue", () => {
@@ -27,6 +37,44 @@ describe("filterValues", () => {
 
         it("takes the preferred value when nothing is offered and there is no current value", () => {
             expect(chooseFilterValue([], PYRETHROIDS)).toBe(PYRETHROIDS);
+        });
+    });
+
+    // The map and Data Download share the selected values, and the theme change and links set them too,
+    // so a filter can receive a value it does not offer.
+    describe("getValueToSelectInstead", () => {
+        it("keeps a selected value the filter offers", () => {
+            expect(getValueToSelectInstead(GSTS, [MONO_OXYGENASES, GSTS], MONO_OXYGENASES)).toBeUndefined();
+        });
+
+        it("selects the preferred value instead of one the filter does not offer", () => {
+            expect(getValueToSelectInstead(KDR_L1014S, [MONO_OXYGENASES, GSTS], MONO_OXYGENASES)).toBe(MONO_OXYGENASES);
+        });
+
+        it("selects the first option when the filter does not offer the preferred value either", () => {
+            expect(getValueToSelectInstead(KDR_L1014S, [ESTERASES, GSTS], MONO_OXYGENASES)).toBe(ESTERASES);
+        });
+
+        it("changes nothing while the studies load and nothing is offered", () => {
+            expect(getValueToSelectInstead(KDR_L1014S, [], MONO_OXYGENASES)).toBeUndefined();
+        });
+
+        it("changes nothing without a selected value", () => {
+            expect(getValueToSelectInstead(undefined, [MONO_OXYGENASES, GSTS], MONO_OXYGENASES)).toBeUndefined();
+        });
+    });
+
+    describe("getSelectedValuesOffered", () => {
+        it("keeps only the selected values the filter offers", () => {
+            expect(getSelectedValuesOffered([DELTAMETHRIN, PERMETHRIN], [PERMETHRIN])).toEqual([PERMETHRIN]);
+        });
+
+        it("changes nothing when the filter offers every selected value", () => {
+            expect(getSelectedValuesOffered([PERMETHRIN], [DELTAMETHRIN, PERMETHRIN])).toBeUndefined();
+        });
+
+        it("changes nothing while the studies load and nothing is offered", () => {
+            expect(getSelectedValuesOffered([PERMETHRIN], [])).toBeUndefined();
         });
     });
 });

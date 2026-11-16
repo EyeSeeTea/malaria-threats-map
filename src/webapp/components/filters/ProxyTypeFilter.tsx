@@ -10,7 +10,9 @@ import {
 import { setProxyType } from "../../store/actions/prevention-actions";
 import { logEventAction } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
-import { getInvolvementMechanisms } from "../../../domain/entities/ResistanceMechanism";
+import { defaultMechanism, getInvolvementMechanisms } from "../../../domain/entities/ResistanceMechanism";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useReplaceValueNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State) => ({
     proxyTypeValues: selectProxyTypeValues(state),
@@ -43,6 +45,14 @@ function ProxyTypeFilter({
 
     const mechanisms = getInvolvementMechanisms(proxyTypeValues, preventionStudiesOfMapType);
     const options = mechanisms.map(value => ({ value, label: t(`PROXY_TYPE.${value}`) }));
+
+    useReplaceValueNotOffered(
+        replacesValuesNotOfferedOnMap("map", preventionFilters.disease),
+        preventionFilters.proxyType,
+        mechanisms,
+        defaultMechanism,
+        setProxyType
+    );
 
     return (
         <RadioGroupFilter

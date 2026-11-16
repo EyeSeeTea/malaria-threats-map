@@ -10,14 +10,14 @@ import { setInvasiveDisease } from "../../store/actions/invasive-actions";
 import { getDiseases } from "../../../domain/entities/Disease";
 import { Study } from "../../../domain/entities/Study";
 import { Option } from "../BasicSelect";
-import RadioGroupFilter from "./RadioGroupFilter";
+import SingleFilter from "./common/SingleFilter";
 
 type DiseaseSource = Pick<Study, "DISEASE">;
 
 type DiseaseFilterProps = Readonly<{
     studies: ReadonlyArray<DiseaseSource>;
     disease: string | undefined;
-    setDisease: (disease: string) => void;
+    setDisease: (disease: string | undefined) => void;
 }>;
 
 /** The label of a disease: its xMART translation, or its code when it has none. */
@@ -31,27 +31,26 @@ export function getDiseaseFilterOptions(studies: ReadonlyArray<DiseaseSource>): 
 }
 
 /**
- * The disease of a theme. With one disease it shows that disease, selected, as the only option;
- * with two or more the user can switch. Studies without a disease are a data error: with none
- * carrying one, the filter renders nothing.
+ * The disease of a theme, a single-select dropdown that is never empty: the epics select the default
+ * disease, or the first one, as soon as the studies load, and the user cannot clear it. With one
+ * disease it shows that disease, selected, as the only option. Studies without a disease are a data
+ * error: with none carrying one, the filter renders nothing.
  */
 function DiseaseFilter({ studies, disease, setDisease }: DiseaseFilterProps) {
     const { t } = useTranslation();
     const options = React.useMemo(() => getDiseaseFilterOptions(studies), [studies]);
 
-    const handleChange = (event: React.ChangeEvent<unknown>) => {
-        const target = event.target;
-        if (target instanceof HTMLInputElement) setDisease(target.value);
-    };
-
     if (options.length === 0) return null;
 
     return (
-        <RadioGroupFilter
+        <SingleFilter
+            labelPosition="middle"
             label={t("common.filters.disease")}
             options={options}
-            handleChange={handleChange}
+            onChange={setDisease}
             value={disease}
+            isClearable={false}
+            analyticsFilterAction={"disease"}
         />
     );
 }

@@ -11,6 +11,8 @@ import { useTranslation } from "react-i18next";
 import { Option } from "../BasicSelect";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { getSynergistTypes } from "../../../domain/entities/SynergistType";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useDropValuesNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State) => ({
     preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeAndDisease(state),
@@ -34,6 +36,13 @@ const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, preventionStu
     const { t } = useTranslation();
 
     const suggestions = getSynergistTypeFilterOptions(preventionStudiesOfMapType);
+
+    useDropValuesNotOffered(
+        replacesValuesNotOfferedOnMap("map", preventionFilters.disease),
+        preventionFilters.synergistTypes,
+        suggestions.map(option => option.value),
+        setSynergistTypes
+    );
 
     return (
         <MultiFilter

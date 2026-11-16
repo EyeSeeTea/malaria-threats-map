@@ -21,6 +21,8 @@ import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { useTranslation } from "react-i18next";
 import MultiFilter from "./common/MultiFilter";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useDropValuesNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State, { from }: OwnProps) => ({
     species: selectSpecies(state),
@@ -91,9 +93,17 @@ const SpeciesFilter: React.FC<Props> = ({
     yearFilter,
     region,
     setSpecies,
+    from,
 }) => {
     const { t } = useTranslation();
     const suggestions = getSpeciesFilterOptions(preventionFilters, preventionStudiesOfMapType, yearFilter, region);
+
+    useDropValuesNotOffered(
+        replacesValuesNotOfferedOnMap(from, preventionFilters.disease),
+        preventionFilters.species,
+        preventionStudiesOfMapType.map(study => study.SPECIES),
+        setSpecies
+    );
 
     return (
         <MultiFilter

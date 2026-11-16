@@ -127,11 +127,19 @@ describe("disease epics", () => {
             expect(await initialDiseaseAfter(createStateAfter([loaded]), loaded)).toEqual([]);
         });
 
-        it("keeps the disease of the URL, set before the studies load", async () => {
+        it("keeps the disease of the URL, set before the studies load, when the studies carry it", async () => {
             const loaded = fetchResistanceStatusTypeStudiesSuccess([study(MALARIA), study(DENGUE)]);
             const state = createStateAfter([setPreventionDisease(DENGUE), loaded]);
 
             expect(await initialDiseaseAfter(state, loaded)).toEqual([]);
+        });
+
+        // The disease filter is never empty: a disease from a link that the data does not carry would show it so.
+        it("replaces a disease of the URL that the loaded studies do not carry", async () => {
+            const loaded = fetchResistanceStatusTypeStudiesSuccess([study(MALARIA)]);
+            const state = createStateAfter([setPreventionDisease(DENGUE), loaded]);
+
+            expect(await initialDiseaseAfter(state, loaded)).toEqual([setPreventionDisease(MALARIA)]);
         });
 
         it("sets it again when the URL unsets it and the studies are loaded", async () => {
@@ -245,6 +253,9 @@ describe("disease epics", () => {
         });
     });
 
+    // With a disease other than the default, the filters of the new map replace a class, mechanism or proxy
+    // type they do not offer (filterValues.spec, diseaseMapBehaviour.spec), so the map change sets what it
+    // set before the disease filter, whatever the disease.
     describe("setPreventionMapTypeEpic, the class and the mechanism of a map change", () => {
         const classAndMechanismAfterMapChange = async (
             mapType: PreventionMapType,
@@ -259,77 +270,41 @@ describe("disease epics", () => {
         const mechanismStudies = fetchResistanceMechanismTypeStudiesSuccess([
             mechanismStudy(MALARIA, MONO_OXYGENASES),
             mechanismStudy(DENGUE, GSTS),
-            mechanismStudy(DENGUE, ESTERASES),
         ]);
 
-        const statusStudies = fetchResistanceStatusTypeStudiesSuccess([
-            classStudy(MALARIA, PYRETHROIDS),
-            classStudy(DENGUE, PYRETHROIDS),
-            classStudy(DENGUE, ORGANOPHOSPHATES),
-        ]);
+        it.each([
+            ["malaria", MALARIA],
+            ["dengue", DENGUE],
+            ["no disease", undefined],
+        ])("sets the default mechanism on Resistance mechanisms with %s", async (_case, disease) => {
+            const before = [mechanismStudies, setPreventionDisease(disease)];
 
-        describe("with malaria or without a disease, as today", () => {
-            it.each([
-                ["malaria", MALARIA],
-                ["no disease", undefined],
-            ])("sets the default mechanism on Resistance mechanisms with %s", async (_case, disease) => {
-                const before = [mechanismStudies, setPreventionDisease(disease)];
-
-                expect(await classAndMechanismAfterMapChange(PreventionMapType.RESISTANCE_MECHANISM, before)).toEqual([
-                    setType([MONO_OXYGENASES]),
-                ]);
-            });
-
-            it("keeps a class the new map does not offer", async () => {
-                const before = [statusStudies, setPreventionDisease(MALARIA), setInsecticideClass(CARBAMATES)];
-
-                expect(await classAndMechanismAfterMapChange(PreventionMapType.RESISTANCE_STATUS, before)).toEqual([
-                    setType(undefined),
-                ]);
-            });
+            expect(await classAndMechanismAfterMapChange(PreventionMapType.RESISTANCE_MECHANISM, before)).toEqual([
+                setType([MONO_OXYGENASES]),
+            ]);
         });
 
-        describe("with another disease", () => {
-            it("sets the first mechanism of the disease when it has no default one", async () => {
-                const before = [mechanismStudies, setPreventionDisease(DENGUE)];
+        it("leaves a class the new map does not offer to the class filter of that map", async () => {
+            const before = [
+                fetchResistanceStatusTypeStudiesSuccess([classStudy(DENGUE, ORGANOPHOSPHATES)]),
+                setPreventionDisease(DENGUE),
+                setInsecticideClass(CARBAMATES),
+            ];
 
-                expect(await classAndMechanismAfterMapChange(PreventionMapType.RESISTANCE_MECHANISM, before)).toEqual([
-                    setType([ESTERASES]),
-                ]);
-            });
+            expect(await classAndMechanismAfterMapChange(PreventionMapType.RESISTANCE_STATUS, before)).toEqual([
+                setType(undefined),
+            ]);
+        });
 
-            it("moves a class the new map does not offer to the default class", async () => {
-                const before = [statusStudies, setPreventionDisease(DENGUE), setInsecticideClass(CARBAMATES)];
+        it("sets the default proxy type on Level of involvement, whatever the disease", async () => {
+            const before = [
+                fetchSynergistEffectTypeStudiesSuccess([involvementStudy(DENGUE, ESTERASES)]),
+                setPreventionDisease(DENGUE),
+            ];
 
-                expect(await classAndMechanismAfterMapChange(PreventionMapType.RESISTANCE_STATUS, before)).toEqual([
-                    setType(undefined),
-                    setInsecticideClass(PYRETHROIDS),
-                ]);
-            });
-
-            it("keeps a class the new map offers", async () => {
-                const before = [statusStudies, setPreventionDisease(DENGUE), setInsecticideClass(ORGANOPHOSPHATES)];
-
-                expect(await classAndMechanismAfterMapChange(PreventionMapType.RESISTANCE_STATUS, before)).toEqual([
-                    setType(undefined),
-                ]);
-            });
-
-            it("sets the mechanism of Level of involvement among the options of the disease", async () => {
-                const before = [
-                    fetchSynergistEffectTypeStudiesSuccess([
-                        involvementStudy(MALARIA, MONO_OXYGENASES),
-                        involvementStudy(DENGUE, ESTERASES),
-                    ]),
-                    proxyTypeTranslations([MONO_OXYGENASES, ESTERASES]),
-                    setPreventionDisease(DENGUE),
-                    setInsecticideClass(PYRETHROIDS),
-                ];
-
-                expect(await classAndMechanismAfterMapChange(PreventionMapType.LEVEL_OF_INVOLVEMENT, before)).toEqual([
-                    setProxyType(ESTERASES),
-                ]);
-            });
+            expect(await classAndMechanismAfterMapChange(PreventionMapType.LEVEL_OF_INVOLVEMENT, before)).toEqual([
+                setProxyType(MONO_OXYGENASES),
+            ]);
         });
     });
 });

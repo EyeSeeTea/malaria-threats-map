@@ -33,11 +33,18 @@ describe("invasive disease epics", () => {
             expect(await initialDiseaseAfter(createStateAfter([loaded]), loaded)).toEqual([]);
         });
 
-        it("keeps the disease of the URL, set before the studies load", async () => {
+        it("keeps the disease of the URL, set before the studies load, when the studies carry it", async () => {
             const loaded = fetchInvasiveStudiesSuccess([study(MALARIA), study(DENGUE)]);
             const state = createStateAfter([setInvasiveDisease(DENGUE), loaded]);
 
             expect(await initialDiseaseAfter(state, loaded)).toEqual([]);
+        });
+
+        it("replaces a disease of the URL that the loaded studies do not carry", async () => {
+            const loaded = fetchInvasiveStudiesSuccess([study(MALARIA)]);
+            const state = createStateAfter([setInvasiveDisease(DENGUE), loaded]);
+
+            expect(await initialDiseaseAfter(state, loaded)).toEqual([setInvasiveDisease(MALARIA)]);
         });
     });
 

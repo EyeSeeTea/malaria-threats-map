@@ -14,7 +14,7 @@ import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { defaultMechanism, getKnownMechanisms, getMechanisms } from "../../../domain/entities/ResistanceMechanism";
-import { chooseFilterValue } from "../../store/filterValues";
+import { useReplaceValueNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),
@@ -50,37 +50,6 @@ export function getMechanismTypeOptions(
     }));
 }
 
-/**
- * The mechanism the map selects instead of a selected one it does not offer, such as one picked on Data
- * Download: the default, or the first one offered when the map has no studies of the default. Undefined when
- * nothing has to change, also while the studies load and nothing is offered yet.
- */
-export function getMechanismToSelectOnMap(
-    selectedMechanism: string | undefined,
-    offeredMechanisms: ReadonlyArray<string>
-): string | undefined {
-    if (!selectedMechanism || offeredMechanisms.length === 0 || offeredMechanisms.includes(selectedMechanism)) {
-        return undefined;
-    }
-
-    return chooseFilterValue(offeredMechanisms, defaultMechanism);
-}
-
-/** The map and Data Download share the selected mechanism, so the map replaces one it does not offer. */
-function useReplaceMechanismNotOfferedOnMap(
-    from: Source,
-    selectedMechanism: string | undefined,
-    offeredMechanisms: ReadonlyArray<string>,
-    setType: (types: string[]) => void
-) {
-    const mechanismToSelect =
-        from === "map" ? getMechanismToSelectOnMap(selectedMechanism, offeredMechanisms) : undefined;
-
-    React.useEffect(() => {
-        if (mechanismToSelect) setType([mechanismToSelect]);
-    }, [mechanismToSelect, setType]);
-}
-
 function MechanismTypeFilter({
     types = [],
     preventionFilters,
@@ -102,11 +71,15 @@ function MechanismTypeFilter({
         [preventionFilters.type]
     );
 
-    useReplaceMechanismNotOfferedOnMap(
-        from,
+    const selectMechanism = React.useCallback((mechanism: string) => setType([mechanism]), [setType]);
+
+    // The map and Data Download share the selected mechanism, so the map replaces one it does not offer.
+    useReplaceValueNotOffered(
+        from === "map",
         value,
         options.map(option => option.value),
-        setType
+        defaultMechanism,
+        selectMechanism
     );
 
     return (

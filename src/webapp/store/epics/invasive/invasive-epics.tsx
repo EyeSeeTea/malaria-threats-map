@@ -29,8 +29,8 @@ import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { createInvasiveSelectionData } from "./utils";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
-import { getInitialDisease } from "../../../../domain/entities/Disease";
 import { diseaseSwitches } from "../common/diseaseSwitches";
+import { getDiseaseToSelect } from "../common/initialDisease";
 
 export const getInvasiveStudiesEpic = (
     action$: Observable<ActionType<typeof fetchInvasiveStudiesRequest>>,
@@ -114,8 +114,7 @@ export const setInitialInvasiveDiseaseEpic = (action$: Observable<AnyAction>, st
     action$.pipe(
         ofType(ActionTypeEnum.FetchInvasiveStudiesSuccess, ActionTypeEnum.SetInvasiveDisease),
         withLatestFrom(state$),
-        filter(([, state]) => state.invasive.filters.disease === undefined),
-        map(([, state]) => getInitialDisease(state.invasive.studies)),
+        map(([, state]) => getDiseaseToSelect(state.invasive.filters.disease, state.invasive.studies)),
         filter((disease): disease is string => disease !== undefined),
         map(disease => setInvasiveDisease(disease))
     );
