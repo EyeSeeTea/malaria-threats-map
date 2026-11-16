@@ -1,19 +1,19 @@
 import { createPreventionStudy } from "../../../../../domain/entities/__fixtures__/studyFixtures";
 import {
     DELTAMETHRIN,
-    DISCRIMINATING,
+    DISCRIMINATING_ASSAY,
     ESTERASES,
     FUNESTUS,
     GAMBIAE,
-    INTENSITY,
+    INTENSITY_ASSAY,
     KDR_L1014F,
-    MOLECULAR,
+    MOLECULAR_ASSAY,
     MONO_OXYGENASES,
     NOT_AVAILABLE,
     NOT_REPORTED,
     ORGANOPHOSPHATES,
     PERMETHRIN,
-    SYNERGIST,
+    SYNERGIST_ASSAY,
     WHO_TEST_KIT,
     CDC_BOTTLE,
     ACE1R,
@@ -138,7 +138,7 @@ describe("createPreventionSelectionData", () => {
             expect(selectionData(mapType, filtered, [...filtered, otherClass])).toEqual({
                 kind: "common",
                 title: TITLE,
-                subtitle: DISCRIMINATING,
+                subtitle: DISCRIMINATING_ASSAY,
                 filterOptions: [GAMBIAE_OPTION],
                 filterSelection: [GAMBIAE_OPTION],
                 studyObject: recent,
@@ -243,7 +243,7 @@ describe("createPreventionSelectionData", () => {
     describe("Intensity status", () => {
         const mapType = PreventionMapType.INTENSITY_STATUS;
         const intensityStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
-            study(code, { ASSAY_TYPE: INTENSITY, ...overrides });
+            study(code, { ASSAY_TYPE: INTENSITY_ASSAY, ...overrides });
 
         it("builds the whole selection data of a site", () => {
             const fivefold = intensityStudy("fivefold", { INSECTICIDE_INTENSITY: 5, MORTALITY_ADJUSTED: "1" });
@@ -256,7 +256,7 @@ describe("createPreventionSelectionData", () => {
             expect(selectionData(mapType, studies, [...studies, otherClass])).toEqual({
                 kind: "common",
                 title: TITLE,
-                subtitle: INTENSITY,
+                subtitle: INTENSITY_ASSAY,
                 filterOptions: [GAMBIAE_OPTION],
                 filterSelection: [GAMBIAE_OPTION],
                 studyObject: fivefold,
@@ -314,7 +314,7 @@ describe("createPreventionSelectionData", () => {
         const mapType = PreventionMapType.LEVEL_OF_INVOLVEMENT;
         const involvementStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
             study(code, {
-                ASSAY_TYPE: SYNERGIST,
+                ASSAY_TYPE: SYNERGIST_ASSAY,
                 PROXY_TYPE: MONO_OXYGENASES,
                 MECHANISM_PROXY: FULL,
                 SYNERGIST_TYPE: NO_SYNERGIST,
@@ -345,7 +345,7 @@ describe("createPreventionSelectionData", () => {
             expect(selectionData(mapType, studies, [...studies, otherClass])).toEqual({
                 kind: "common",
                 title: TITLE,
-                subtitle: SYNERGIST,
+                subtitle: SYNERGIST_ASSAY,
                 filterOptions: [GAMBIAE_OPTION],
                 filterSelection: [GAMBIAE_OPTION],
                 studyObject: withoutSynergist,
@@ -436,7 +436,7 @@ describe("createPreventionSelectionData", () => {
         const mapType = PreventionMapType.RESISTANCE_MECHANISM;
         const mechanismStudy = (code: string, overrides: Partial<PreventionStudy> = {}) =>
             study(code, {
-                ASSAY_TYPE: MOLECULAR,
+                ASSAY_TYPE: MOLECULAR_ASSAY,
                 TYPE: KDR_L1014F,
                 MECHANISM_STATUS: DETECTED,
                 MECHANISM_FREQUENCY: "45",
@@ -459,7 +459,7 @@ describe("createPreventionSelectionData", () => {
             expect(selectionData(mapType, studies, [...studies, ...others])).toEqual({
                 kind: "common",
                 title: TITLE,
-                subtitle: MOLECULAR,
+                subtitle: MOLECULAR_ASSAY,
                 filterOptions: [GAMBIAE_OPTION],
                 filterSelection: [GAMBIAE_OPTION],
                 studyObject: recent,
@@ -621,7 +621,7 @@ describe("createPreventionSelectionData", () => {
         it("lists the detected mechanisms of the whitelist, in its order, missing from the filtered studies", () => {
             const mechanism = (code: string, overrides: Partial<PreventionStudy>) =>
                 study(code, {
-                    ASSAY_TYPE: MOLECULAR,
+                    ASSAY_TYPE: MOLECULAR_ASSAY,
                     MECHANISM_STATUS: DETECTED,
                     MECHANISM_FREQUENCY: "1",
                     ...overrides,
