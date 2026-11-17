@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
 import {
+    fetchPreventionStudiesRequest,
     fetchResistanceMechanismTypeStudiesSuccess,
     fetchResistanceStatusTypeStudiesSuccess,
     fetchSynergistEffectTypeStudiesSuccess,
@@ -19,7 +20,7 @@ import {
     setPreventionTypeEpic,
     setPreventionYearRangeOfDiseaseEpic,
 } from "../prevention-epics";
-import { REQUESTED_VIR_START_DATE } from "../utils";
+import { getStudiesAlreadyLoadedAction, REQUESTED_VIR_START_DATE } from "../utils";
 import { defaultInsecticideClass } from "../../../../../domain/entities/InsecticideClass";
 import {
     ACE1R,
@@ -397,5 +398,29 @@ describe("setPreventionThemeEpic, opening Data Download", () => {
             setMaxMinYearsAction([...STUDY_YEAR_RANGE]),
             setInsecticideClass(null),
         ]);
+    });
+});
+
+// Dashboards ask for the prevention studies every time they open, and the request marks the map as loading.
+// With the studies already loaded nothing ended it, so the map came back from Dashboards loading forever.
+describe("getStudiesAlreadyLoadedAction", () => {
+    const studiesRequested = fetchPreventionStudiesRequest();
+
+    it("ends the loading a request started when the studies of the map type are already loaded", () => {
+        const loadedAndRequested = [studiesOfTwoRanges, studiesRequested];
+        const state = createStateAfter(loadedAndRequested);
+
+        const action = getStudiesAlreadyLoadedAction(state, PreventionMapType.RESISTANCE_STATUS);
+
+        expect(action).toEqual(studiesOfTwoRanges);
+        expect(createStateAfter([...loadedAndRequested, studiesOfTwoRanges]).prevention.loadingResistanceStatus).toBe(
+            false
+        );
+    });
+
+    it("returns nothing while the studies of the map type still have to be fetched", () => {
+        const state = createStateAfter([studiesRequested]);
+
+        expect(getStudiesAlreadyLoadedAction(state, PreventionMapType.RESISTANCE_STATUS)).toBeUndefined();
     });
 });

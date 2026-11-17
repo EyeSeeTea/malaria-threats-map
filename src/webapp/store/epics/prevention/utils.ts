@@ -1,7 +1,7 @@
 import i18next from "i18next";
 import { ActionType } from "typesafe-actions";
 import { EMPTY, merge, Observable, of } from "rxjs";
-import { catchError, filter, map, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { catchError, map, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import { ofType, StateObservable } from "redux-observable";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { getMinMaxYears, Study } from "../../../../domain/entities/Study";
@@ -511,33 +511,49 @@ type StudyConfig = {
     onError: () => Action;
 };
 
+const studiesLoadedActions: Readonly<Record<PreventionMapType, (studies: PreventionStudy[]) => Action>> = {
+    [PreventionMapType.RESISTANCE_STATUS]: fetchResistanceStatusTypeStudiesSuccess,
+    [PreventionMapType.INTENSITY_STATUS]: fetchResistanceIntensityTypeStudiesSuccess,
+    [PreventionMapType.RESISTANCE_MECHANISM]: fetchResistanceMechanismTypeStudiesSuccess,
+    [PreventionMapType.LEVEL_OF_INVOLVEMENT]: fetchSynergistEffectTypeStudiesSuccess,
+};
+
+/**
+ * A request for the studies of a map type marks it as loading. When they are already loaded, this is the
+ * action that ends that loading without fetching them again; undefined when they still have to be fetched.
+ */
+export const getStudiesAlreadyLoadedAction = (state: State, mapType: PreventionMapType): Action | undefined => {
+    const studies = getStudiesByMapType(state, mapType);
+    return studies.length > 0 ? studiesLoadedActions[mapType](studies) : undefined;
+};
+
 const getStudyConfigs = (api: CompositionRoot["prevention"], state: State): Record<PreventionMapType, StudyConfig> => ({
     [PreventionMapType.RESISTANCE_STATUS]: {
         studies: state.prevention.resistanceStatusStudies,
         loading: state.prevention.loadingResistanceStatus,
         fetchStudies: () => api.getResistanceStatusTypeStudies(),
-        onSuccess: fetchResistanceStatusTypeStudiesSuccess,
+        onSuccess: studiesLoadedActions[PreventionMapType.RESISTANCE_STATUS],
         onError: fetchResistanceStatusTypeStudiesError,
     },
     [PreventionMapType.INTENSITY_STATUS]: {
         studies: state.prevention.resistanceIntensityStudies,
         loading: state.prevention.loadingResistanceIntensity,
         fetchStudies: () => api.getResistanceIntensityTypeStudies(),
-        onSuccess: fetchResistanceIntensityTypeStudiesSuccess,
+        onSuccess: studiesLoadedActions[PreventionMapType.INTENSITY_STATUS],
         onError: fetchResistanceIntensityTypeStudiesError,
     },
     [PreventionMapType.RESISTANCE_MECHANISM]: {
         studies: state.prevention.resistanceMechanismStudies,
         loading: state.prevention.loadingResistanceMechanism,
         fetchStudies: () => api.getResistanceMechanismTypeStudies(),
-        onSuccess: fetchResistanceMechanismTypeStudiesSuccess,
+        onSuccess: studiesLoadedActions[PreventionMapType.RESISTANCE_MECHANISM],
         onError: fetchResistanceMechanismTypeStudiesError,
     },
     [PreventionMapType.LEVEL_OF_INVOLVEMENT]: {
         studies: state.prevention.synergistEffectStudies,
         loading: state.prevention.loadingSynergistEffect,
         fetchStudies: () => api.getSynergistEffectTypeStudies(),
-        onSuccess: fetchSynergistEffectTypeStudiesSuccess,
+        onSuccess: studiesLoadedActions[PreventionMapType.LEVEL_OF_INVOLVEMENT],
         onError: fetchSynergistEffectTypeStudiesError,
     },
 });
@@ -581,11 +597,10 @@ export const buildPreventionStudiesEpic =
         action$.pipe(
             ofType(actionType),
             withLatestFrom(state$),
-            filter(([, state]) => {
-                const config = getStudyConfigs(compositionRoot.prevention, state)[primaryMapType];
-                return config.studies.length === 0;
-            }),
             switchMap(([, state]) => {
+                const studiesAlreadyLoaded = getStudiesAlreadyLoadedAction(state, primaryMapType);
+                if (studiesAlreadyLoaded) return of(studiesAlreadyLoaded);
+
                 const api = compositionRoot.prevention;
                 const configs = getStudyConfigs(api, state);
 
