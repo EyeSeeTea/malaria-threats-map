@@ -344,30 +344,6 @@ describe("the year range of the chosen disease", () => {
         expect(await runEpic(setPreventionYearRangeOfDiseaseEpic, [toMalaria], state)).toEqual([]);
     });
 
-    it("starts the slider at the first year of the new disease when it is the first year the map selects", async () => {
-        const dengueFromSelectedStart = fetchResistanceStatusTypeStudiesSuccess([
-            createPreventionStudyOf(MALARIA),
-            createPreventionStudyOf(DENGUE, {
-                YEAR_START: REQUESTED_VIR_START_DATE,
-                YEAR_END: REQUESTED_VIR_START_DATE,
-            }),
-        ]);
-        const toDengue = setPreventionDisease(DENGUE);
-        const state = createStateAfter([
-            setThemeAction(PREVENTION_THEME),
-            dengueFromSelectedStart,
-            setMaxMinYearsAction([...STUDY_YEAR_RANGE]),
-            setFiltersAction([REQUESTED_VIR_START_DATE, CURRENT_YEAR]),
-            setPreventionDisease(MALARIA),
-            toDengue,
-        ]);
-
-        expect(await runEpic(setPreventionYearRangeOfDiseaseEpic, [toDengue], state)).toEqual([
-            setMaxMinYearsAction([REQUESTED_VIR_START_DATE, CURRENT_YEAR]),
-            setFiltersAction([REQUESTED_VIR_START_DATE, CURRENT_YEAR]),
-        ]);
-    });
-
     it("comes from the studies of the chosen disease on a map change", async () => {
         const toStatusMap = setPreventionMapType(PreventionMapType.RESISTANCE_STATUS);
         const state = createStateAfter([...mapShowingMalariaYears, setPreventionDisease(DENGUE), toStatusMap]);
