@@ -17,8 +17,11 @@ import {
     resetPreventionFiltersOnDiseaseSwitchEpic,
     setInitialPreventionDiseaseEpic,
     setPreventionMapTypeEpic,
+    setPreventionThemeEpic,
     setPreventionTypeEpic,
+    setPreventionYearRangeOfDiseaseEpic,
 } from "../prevention-epics";
+import { REQUESTED_VIR_START_DATE } from "../utils";
 import {
     ACE1R,
     BIOCHEMICAL_ASSAY,
@@ -35,7 +38,12 @@ import {
     SYNERGIST_ASSAY,
     UNKNOWN_MECHANISM,
 } from "../../../../../domain/entities/__fixtures__/studyValues";
-import { createPreventionStudy } from "../../../../../domain/entities/__fixtures__/studyFixtures";
+import {
+    createPreventionStudy,
+    createPreventionStudyOf,
+    CURRENT_YEAR,
+    STUDY_YEAR_RANGE,
+} from "../../../../../domain/entities/__fixtures__/studyFixtures";
 import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy";
 import { createStateAfter } from "../../../__fixtures__/stateFixtures";
 import { ActionTypeEnum } from "../../../actions";
@@ -46,6 +54,8 @@ import {
     createTranslationResponse,
 } from "../../../../types/__fixtures__/translationFixtures";
 import { collectActions, createStateObservable } from "../../../__fixtures__/epicFixtures";
+import { setFiltersAction, setMaxMinYearsAction, setThemeAction } from "../../../actions/base-actions";
+import { DOWNLOAD, PREVENTION_THEME, YEAR_BEFORE_RANGE } from "../../../__fixtures__/filtersFixtures";
 
 function actionsAfterSetType(types: string[] | undefined) {
     return firstValueFrom(setPreventionTypeEpic(of(setType(types))).pipe(toArray()));
@@ -306,5 +316,69 @@ describe("disease epics", () => {
                 setProxyType(MONO_OXYGENASES),
             ]);
         });
+    });
+});
+
+const yearActionsAfter = (action: ReturnType<typeof setPreventionDisease>, state: State) =>
+    collectActions(setPreventionYearRangeOfDiseaseEpic(of(action), createStateObservable(state)));
+
+// A malaria study of the default year and a dengue study of an earlier year, so each disease has its own range.
+const studiesOfTwoRanges = fetchResistanceStatusTypeStudiesSuccess([
+    createPreventionStudyOf(MALARIA),
+    createPreventionStudyOf(DENGUE, { YEAR_START: YEAR_BEFORE_RANGE, YEAR_END: YEAR_BEFORE_RANGE }),
+]);
+
+// The prevention map shows the malaria range, as when its studies load with malaria selected.
+const mapShowingMalariaYears = [
+    setThemeAction(PREVENTION_THEME),
+    studiesOfTwoRanges,
+    setMaxMinYearsAction([...STUDY_YEAR_RANGE]),
+    setFiltersAction([...STUDY_YEAR_RANGE]),
+];
+
+describe("the year range of the chosen disease", () => {
+    it("moves to the range of the new disease on a switch", async () => {
+        const toDengue = setPreventionDisease(DENGUE);
+        const state = createStateAfter([...mapShowingMalariaYears, setPreventionDisease(MALARIA), toDengue]);
+
+        expect(await yearActionsAfter(toDengue, state)).toEqual([
+            setMaxMinYearsAction([YEAR_BEFORE_RANGE, CURRENT_YEAR]),
+            setFiltersAction([REQUESTED_VIR_START_DATE, CURRENT_YEAR]),
+        ]);
+    });
+
+    it("stays when malaria is set and the map already shows its range", async () => {
+        const toMalaria = setPreventionDisease(MALARIA);
+        const state = createStateAfter([...mapShowingMalariaYears, toMalaria]);
+
+        expect(await yearActionsAfter(toMalaria, state)).toEqual([]);
+    });
+
+    it("comes from the studies of the chosen disease on a map change", async () => {
+        const toStatusMap = setPreventionMapType(PreventionMapType.RESISTANCE_STATUS);
+        const state = createStateAfter([...mapShowingMalariaYears, setPreventionDisease(DENGUE), toStatusMap]);
+
+        const actions = await collectActions(setPreventionMapTypeEpic(of(toStatusMap), createStateObservable(state)));
+
+        expect(actions.filter(action => action.type === ActionTypeEnum.MalariaSetMaxMinYears)).toEqual([
+            setMaxMinYearsAction([YEAR_BEFORE_RANGE, CURRENT_YEAR]),
+        ]);
+    });
+});
+
+// Opening Data Download empties the class, and the filter chain the filters below it, so no value of the
+// disease chosen on the map reaches Data Download, which shows the studies of the default disease only and
+// takes its years from them.
+describe("setPreventionThemeEpic, opening Data Download", () => {
+    it("takes its years from the malaria studies of the map type and empties the class", async () => {
+        const state = createStateAfter([studiesOfTwoRanges, setPreventionDisease(DENGUE)]);
+        const toDownload = setThemeAction("prevention", DOWNLOAD);
+
+        const actions$ = setPreventionThemeEpic(of(toDownload), createStateObservable(state));
+
+        expect(await firstValueFrom(actions$.pipe(toArray()))).toEqual([
+            setMaxMinYearsAction([...STUDY_YEAR_RANGE]),
+            setInsecticideClass(null),
+        ]);
     });
 });

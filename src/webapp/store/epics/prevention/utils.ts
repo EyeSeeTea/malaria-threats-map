@@ -6,6 +6,7 @@ import { ofType, StateObservable } from "redux-observable";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { getMinMaxYears, Study } from "../../../../domain/entities/Study";
 import { belongsToDisease } from "../../../../domain/entities/Disease";
+import { getStudiesForYearRange } from "../common/yearRange";
 import { Option } from "../../../components/BasicSelect";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { isNA, isNotNull, isNR } from "../../../utils/number-utils";
@@ -546,7 +547,8 @@ const buildPrimaryStream$ = (config: StudyConfig, state: State): Observable<Acti
         mergeMap(studies =>
             of(
                 ...resetDatesRequired({
-                    minMaxYears: () => getMinMaxYears(studies),
+                    minMaxYears: () =>
+                        getMinMaxYears(getStudiesForYearRange(studies, state.prevention.filters.disease)),
                     theme: "prevention",
                     state,
                     filterStart: REQUESTED_VIR_START_DATE,
@@ -607,3 +609,7 @@ export const getStudiesByMapType = (state: State, mapType: PreventionMapType): P
 /** The studies of the map type that belong to the chosen disease: those the map and its side panel show. */
 export const getStudiesOfDiseaseByMapType = (state: State, mapType: PreventionMapType): PreventionStudy[] =>
     getStudiesByMapType(state, mapType).filter(study => belongsToDisease(study, state.prevention.filters.disease));
+
+/** The studies of the map type the year range is computed from: those of the chosen disease, or all while none is set. */
+export const getYearRangeStudiesByMapType = (state: State, mapType: PreventionMapType): PreventionStudy[] =>
+    getStudiesForYearRange(getStudiesByMapType(state, mapType), state.prevention.filters.disease);

@@ -5,11 +5,13 @@ import {
     AFRICA,
     BURKINA_FASO,
     DELTAMETHRIN,
+    DENGUE,
     DISCRIMINATING_ASSAY,
     DJIBOUTI,
     GAMBIAE,
     INVASIVE_STATUS_INVASIVE,
     LARVAL_SAMPLING,
+    MALARIA,
     MORPHOLOGY,
     NOT_AVAILABLE,
     POSSIBLE_RESISTANCE,
@@ -30,6 +32,12 @@ export const STUDY_CITATION_LONG = "Example citation, long form";
 export const STUDY_INSTITUTION_CITY = "Ouagadougou";
 export const STUDY_INSTITUTE_CURATION = "Example curation institute";
 export const STUDY_INSECTICIDE_CONCENTRATION = "0.05%";
+/** The year every default study starts and ends. */
+export const STUDY_YEAR = 2020;
+/** The year a default study's range ends at: the year range of the maps runs to the current year. */
+export const CURRENT_YEAR = new Date().getFullYear();
+/** The year range of the default studies on the maps and in Data Download. */
+export const STUDY_YEAR_RANGE: ReadonlyArray<number> = [STUDY_YEAR, CURRENT_YEAR];
 
 const defaultStudy: Readonly<Study> = {
     OBJECTID: 1,
@@ -74,8 +82,8 @@ const defaultStudy: Readonly<Study> = {
     TYPE: WHO_TEST_KIT,
     TYPE_SYNERGIST: NOT_AVAILABLE,
     VERSION: 1,
-    YEAR_END: 2020,
-    YEAR_START: 2020,
+    YEAR_END: STUDY_YEAR,
+    YEAR_START: STUDY_YEAR,
     DOWNLOAD: 1,
 };
 
@@ -147,3 +155,8 @@ export function createInvasiveStudyOf(
 ): InvasiveStudy {
     return createInvasiveStudy({ DISEASE: disease, ...overrides });
 }
+
+/** One prevention study of malaria, one of dengue and one without a disease, with distinct ids. */
+export const MALARIA_PREVENTION_STUDY = createPreventionStudyOf(MALARIA, { OBJECTID: 1 });
+export const DENGUE_PREVENTION_STUDY = createPreventionStudyOf(DENGUE, { OBJECTID: 2 });
+export const PREVENTION_STUDY_WITHOUT_DISEASE = createPreventionStudyOf(undefined, { OBJECTID: 3 });

@@ -9,8 +9,8 @@ import { AnyAction } from "redux";
 import {
     buildPreventionStudiesEpic,
     createPreventionSelectionData,
-    getStudiesByMapType,
     getStudiesOfDiseaseByMapType,
+    getYearRangeStudiesByMapType,
     REQUESTED_VIR_START_DATE,
 } from "./utils";
 import { PreventionMapType, State } from "../../types";
@@ -46,10 +46,10 @@ import {
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
 import { diseaseSwitches } from "../common/diseaseSwitches";
-import { selectPreventionStudies } from "../../reducers/prevention-reducer";
+import { getDiseaseToSelect } from "../common/initialDisease";
+import { selectPreventionStudies, selectPreventionStudiesOfMapTypeFrom } from "../../reducers/prevention-reducer";
 import { selectProxyTypeValues } from "../../reducers/translations-reducer";
 import { chooseFilterValue } from "../../filterValues";
-import { getDiseaseToSelect } from "../common/initialDisease";
 
 const preventionStudiesLoaded = [
     ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess,
@@ -148,7 +148,7 @@ export const setPreventionMapTypeEpic = (
             const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
             const logPageView = logPageViewAction(pageView);
 
-            const studies = getStudiesByMapType(state, action.payload);
+            const studies = getYearRangeStudiesByMapType(state, action.payload);
             const dateResets =
                 studies.length > 0
                     ? resetDatesRequired({
@@ -256,7 +256,7 @@ export const setYearsFiltersEpic = (
         switchMap(([$action, $state]) => {
             if ($action.payload === undefined && $state.malaria.theme === "prevention") {
                 const mapType = $state.prevention.filters.mapType;
-                const mapTypeStudies = getStudiesByMapType($state, mapType);
+                const mapTypeStudies = getYearRangeStudiesByMapType($state, mapType);
 
                 const [start, end] = getMinMaxYears(mapTypeStudies);
 
@@ -281,7 +281,7 @@ export const setPreventionThemeEpic = (
 
             if ($action.from === "map") {
                 const mapType = $state.prevention.filters.mapType;
-                const mapTypeStudies = getStudiesByMapType($state, mapType);
+                const mapTypeStudies = getYearRangeStudiesByMapType($state, mapType);
 
                 const [start, end] = getMinMaxYears(mapTypeStudies);
                 const base: unknown[] = mapTypeStudies?.length
@@ -290,7 +290,11 @@ export const setPreventionThemeEpic = (
 
                 return of(...base, setInsecticideClass(defaultInsecticideClass));
             } else {
-                return of(setInsecticideClass(null));
+                // Data Download shows the studies of the default disease only, so its years come from them.
+                const downloadStudies = selectPreventionStudiesOfMapTypeFrom($state, "download");
+                const yearRange = downloadStudies.length ? [setMaxMinYearsAction(getMinMaxYears(downloadStudies))] : [];
+
+                return of(...yearRange, setInsecticideClass(null));
             }
         })
     );
@@ -316,4 +320,31 @@ export const resetPreventionFiltersOnDiseaseSwitchEpic = (
     ).pipe(
         withLatestFrom(state$),
         switchMap(([, state]) => of(...getActionsAfterDiseaseSwitch(state)))
+    );
+
+/**
+ * The year range of the map when its disease is set or switched, from the studies of that disease, as a
+ * map change computes it: it changes only when the first year changes, so with malaria nothing moves.
+ */
+export const setPreventionYearRangeOfDiseaseEpic = (
+    action$: Observable<ActionType<typeof setPreventionDisease>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetPreventionDisease),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            const studies = getYearRangeStudiesByMapType(state, state.prevention.filters.mapType);
+            const dateResets =
+                studies.length > 0
+                    ? resetDatesRequired({
+                          minMaxYears: () => getMinMaxYears(studies),
+                          theme: "prevention",
+                          state,
+                          filterStart: REQUESTED_VIR_START_DATE,
+                      })
+                    : [];
+
+            return of(...dateResets);
+        })
     );

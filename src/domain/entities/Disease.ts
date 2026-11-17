@@ -2,8 +2,8 @@ import _c from "./generic/Collection";
 import { Study } from "./Study";
 
 /**
- * The disease the maps start with. Provisional, like the DISEASE field name, until the client confirms
- * the name and the values of the field.
+ * The disease the maps start with, and the only one the Data Download and Dashboards sections show.
+ * Provisional, like the DISEASE field name, until the client confirms the name and the values of the field.
  */
 export const defaultDisease = "MALARIA";
 
