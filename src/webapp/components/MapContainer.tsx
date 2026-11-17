@@ -39,6 +39,7 @@ import { PreventionMapType } from "../store/types";
 import ReduxQuerySync from "../store/query-middleware";
 import { toVectorSpeciesValues } from "../store/vectorSpeciesUrlValues";
 import { useStore } from "react-redux";
+import { defaultInsecticideClass } from "../../domain/entities/InsecticideClass";
 
 const MapContainer: React.FC = () => {
     const store = useStore();
@@ -96,7 +97,7 @@ const MapContainer: React.FC = () => {
                     selector: (state: State) => state.prevention.filters.insecticideClass,
                     action: (value: string) => {
                         if (!value) {
-                            return setInsecticideClass("PYRETHROIDS");
+                            return setInsecticideClass(defaultInsecticideClass);
                         }
 
                         return setInsecticideClass(value);

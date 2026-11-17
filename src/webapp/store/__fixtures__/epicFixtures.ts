@@ -1,15 +1,22 @@
-import { firstValueFrom, Observable, Subject } from "rxjs";
+import { firstValueFrom, from, Observable, Subject } from "rxjs";
 import { toArray } from "rxjs/operators";
 import { AnyAction } from "redux";
 import { StateObservable } from "redux-observable";
 import { State } from "../types";
+import { createStateAfter } from "./stateFixtures";
 
-/** The state an epic reads, fixed for the whole test. */
-export function createStateObservable(state: State): StateObservable<State> {
-    return new StateObservable(new Subject<State>(), state);
-}
+type Epic<A extends AnyAction, Output> = (action$: Observable<A>, state$: StateObservable<State>) => Observable<Output>;
 
-/** Every action the epic emits for the actions it was given. */
-export function collectActions(output$: Observable<AnyAction>): Promise<AnyAction[]> {
-    return firstValueFrom(output$.pipe(toArray()));
+/**
+ * Every action the epic emits for the actions it is given, reading a state fixed for the whole run:
+ * by default the state the app's reducers start with. The only place the epic specs touch rxjs and
+ * redux-observable.
+ */
+export function runEpic<A extends AnyAction, Output>(
+    epic: Epic<A, Output>,
+    actions: ReadonlyArray<A>,
+    state: State = createStateAfter([])
+): Promise<Output[]> {
+    const state$ = new StateObservable(new Subject<State>(), state);
+    return firstValueFrom(epic(from(actions), state$).pipe(toArray()));
 }

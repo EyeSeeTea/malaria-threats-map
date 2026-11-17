@@ -2,8 +2,8 @@ import _c from "./generic/Collection";
 import { Study } from "./Study";
 
 /**
- * The disease the maps start with. Provisional, like the DISEASE field name, until the client
- * confirms the name and the values of the field.
+ * The disease the maps start with, and the only one the Data Download and Dashboards sections show.
+ * Provisional, like the DISEASE field name, until the client confirms the name and the values of the field.
  */
 export const defaultDisease = "MALARIA";
 
@@ -29,27 +29,6 @@ export function getInitialDisease(studies: ReadonlyArray<DiseaseSource>): string
  * Whether the study belongs to the disease. Every study on the vector maps carries a disease: one
  * without it is a data error and belongs to none, and with no disease set no study belongs.
  */
-export function belongsToDisease(disease: string | undefined, study: DiseaseSource): boolean {
+export function belongsToDisease(study: DiseaseSource, disease: string | undefined): boolean {
     return disease !== undefined && study.DISEASE === disease;
-}
-
-/** Whether the change from one disease to the other is a switch, not the disease being set for the first time. */
-export function isDiseaseSwitch(previous: string | undefined, next: string | undefined): boolean {
-    return previous !== undefined && next !== undefined && previous !== next;
-}
-
-/**
- * The value a single-choice filter takes among the options of a disease: the current value if
- * offered, otherwise the preferred one if offered, otherwise the first option. With no options,
- * because the studies are not loaded yet, the current value, or else the preferred one.
- */
-export function pickOption(offered: ReadonlyArray<string>, preferred: string, current?: string): string {
-    if (offered.length === 0) return current ?? preferred;
-
-    return [current, preferred].find(value => value !== undefined && offered.includes(value)) ?? offered[0];
-}
-
-/** Whether the disease is the default one or not set yet: the maps behave as before the disease filter. */
-export function isDefaultOrUnset(disease: string | undefined): boolean {
-    return disease === undefined || disease === defaultDisease;
 }

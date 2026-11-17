@@ -4,11 +4,8 @@ import { createReducer } from "../reducer-utils";
 import { createSelector } from "reselect";
 import { PreventionDataset, PreventionFilters, PreventionMapType, PreventionState, State } from "../types";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
-import { belongsToDisease } from "../../../domain/entities/Disease";
+import { belongsToDisease, defaultDisease } from "../../../domain/entities/Disease";
 import { Source } from "../actions/base-actions";
-
-/** The mechanism the Resistance mechanisms and Level of involvement maps select when they open. */
-export const defaultMechanismType = "MONO_OXYGENASES";
 
 const initialFilters: PreventionFilters = {
     mapType: PreventionMapType.RESISTANCE_STATUS,
@@ -247,6 +244,11 @@ export const selectPreventionStudies = createSelector(selectPreventionState, sta
     ];
 });
 
+/** The studies of the default disease: the only ones the Data Download and Dashboards sections show. */
+export const selectPreventionStudiesOfDefaultDisease = createSelector(selectPreventionStudies, studies =>
+    studies.filter(study => belongsToDisease(study, defaultDisease))
+);
+
 export const selectPreventionStudiesByMapTypeSelected = createSelector(selectPreventionState, state => {
     const studiesByMapType: Record<PreventionMapType, PreventionStudy[]> = {
         [PreventionMapType.RESISTANCE_STATUS]: state.resistanceStatusStudies,
@@ -261,14 +263,22 @@ export const selectPreventionStudiesByMapTypeSelected = createSelector(selectPre
 export const selectPreventionStudiesOfMapTypeAndDisease = createSelector(
     selectPreventionStudiesByMapTypeSelected,
     selectPreventionState,
-    (studies, state) => studies.filter(study => belongsToDisease(state.filters.disease, study))
+    (studies, state) => studies.filter(study => belongsToDisease(study, state.filters.disease))
 );
 
-/** The studies a filter takes its options from: on the map, those of the chosen disease; in Data Download, all of them. */
+const selectPreventionStudiesOfMapTypeAndDefaultDisease = createSelector(
+    selectPreventionStudiesByMapTypeSelected,
+    studies => studies.filter(study => belongsToDisease(study, defaultDisease))
+);
+
+/**
+ * The studies a filter takes its options from: on the map, those of the chosen disease; in Data
+ * Download, those of the default disease, whatever the map shows.
+ */
 export function selectPreventionStudiesOfMapTypeFrom(state: State, from: Source): PreventionStudy[] {
     return from === "map"
         ? selectPreventionStudiesOfMapTypeAndDisease(state)
-        : selectPreventionStudiesByMapTypeSelected(state);
+        : selectPreventionStudiesOfMapTypeAndDefaultDisease(state);
 }
 
 export const selectResistanceStatusStudies = createSelector(

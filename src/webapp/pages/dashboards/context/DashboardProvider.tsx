@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { selectLastUpdatedDates } from "../../../store/reducers/base-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { fetchPreventionStudiesRequest } from "../../../store/actions/prevention-actions";
-import { selectPreventionStudies } from "../../../store/reducers/prevention-reducer";
+import { selectPreventionStudiesOfDefaultDisease } from "../../../store/reducers/prevention-reducer";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { LastUpdatedDates } from "../../../../domain/entities/LastUpdateDates";
 import SimpleLoader from "../../../components/SimpleLoader";
@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 export const DashboardContext = React.createContext<DashboardState>(null);
 
 const mapStateToProps = (state: State) => ({
-    preventionStudies: selectPreventionStudies(state),
+    preventionStudies: selectPreventionStudiesOfDefaultDisease(state),
     treatmentStudies: selectTreatmentStudies(state),
     lastUpdatedDates: selectLastUpdatedDates(state),
 });

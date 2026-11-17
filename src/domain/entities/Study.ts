@@ -50,6 +50,9 @@ export interface Study {
     DISEASE?: string;
 }
 
+/** The value a study carries in a field whose data is not available. */
+export const notAvailable = "NA";
+
 export type ResistanceIntensity =
     | "NA"
     | "COULD_NOT_BE_RELIABLY_ASSESSED"

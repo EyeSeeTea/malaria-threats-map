@@ -1,24 +1,22 @@
-import i18next from "i18next";
-import { createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
+import { createPreventionStudyOf } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import { DENGUE, MALARIA } from "../../../../domain/entities/__fixtures__/studyValues";
+import { addXmartLabels, removeEnglishResources } from "../../../types/__fixtures__/translationFixtures";
 import { getDiseaseFilterOptions } from "../DiseaseFilter";
 
 const MALARIA_LABEL = "Malaria (xMART)";
 
-const xmartTranslations = { [`DISEASE.${MALARIA}`]: MALARIA_LABEL };
-
 const studiesOf = (diseases: ReadonlyArray<string | undefined>) =>
-    diseases.map(DISEASE => createPreventionStudy({ DISEASE }));
-
-beforeAll(() => {
-    i18next.addResourceBundle("en", "translation", xmartTranslations);
-});
-
-afterAll(() => {
-    i18next.removeResourceBundle("en", "translation");
-});
+    diseases.map(disease => createPreventionStudyOf(disease));
 
 describe("getDiseaseFilterOptions", () => {
+    beforeAll(() => {
+        addXmartLabels({ [`DISEASE.${MALARIA}`]: MALARIA_LABEL });
+    });
+
+    afterAll(() => {
+        removeEnglishResources();
+    });
+
     it("offers nothing when no study carries a disease, so the filter renders nothing", () => {
         expect(getDiseaseFilterOptions(studiesOf([undefined, undefined]))).toEqual([]);
     });
@@ -27,6 +25,11 @@ describe("getDiseaseFilterOptions", () => {
         expect(getDiseaseFilterOptions(studiesOf([MALARIA, MALARIA, undefined]))).toEqual([
             { value: MALARIA, label: MALARIA_LABEL },
         ]);
+    });
+
+    // getInitialDisease selects it: with no malaria in the data the filter shows Dengue, selected.
+    it("offers Dengue as the only option when the studies carry no malaria", () => {
+        expect(getDiseaseFilterOptions(studiesOf([DENGUE, DENGUE]))).toEqual([{ value: DENGUE, label: DENGUE }]);
     });
 
     it("offers every disease once, in the order they first appear, labelled with its code when it has no label", () => {

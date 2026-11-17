@@ -13,6 +13,8 @@ import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import { filterByInsecticideClass } from "../layers/studies-filters";
 import { extractInsecticideTypeOptions } from "../../../domain/entities/PreventionStudy";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useDropValuesNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State, { from }: OwnProps) => ({
     insecticideTypes: selectInsecticideTypes(state),
@@ -34,8 +36,16 @@ const InsecticideTypeFilter: React.FC<Props> = ({
     preventionFilters,
     preventionStudiesOfMapType,
     setInsecticideTypes,
+    from,
 }) => {
     const { t } = useTranslation();
+
+    useDropValuesNotOffered(
+        replacesValuesNotOfferedOnMap(from, preventionFilters.disease),
+        preventionFilters.insecticideTypes,
+        preventionStudiesOfMapType.map(study => study.INSECTICIDE_TYPE),
+        setInsecticideTypes
+    );
 
     const filters = [filterByInsecticideClass(preventionFilters.insecticideClass)];
 

@@ -11,8 +11,14 @@ import {
 import { setInsecticideClass } from "../../store/actions/prevention-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
-import _ from "lodash";
-import { getSelectableInsecticideClasses, sortInsecticideClasses } from "../../../domain/entities/InsecticideClass";
+import {
+    defaultInsecticideClass,
+    getAvailableInsecticideClasses,
+    getInsecticideClasses,
+    sortInsecticideClasses,
+} from "../../../domain/entities/InsecticideClass";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useReplaceValueNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State, { from }: OwnProps) => ({
     preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeFrom(state, from),
@@ -31,22 +37,38 @@ type Props = DispatchProps & StateProps & OwnProps;
 
 export { sortInsecticideClasses };
 
-export function getInsecticideClassOptions(insecticideClasses: string[]) {
-    return getSelectableInsecticideClasses(insecticideClasses).map(insecticideClass => ({
+function toInsecticideClassOptions(insecticideClasses: ReadonlyArray<string>) {
+    return insecticideClasses.map(insecticideClass => ({
         value: insecticideClass,
         label: i18next.t(insecticideClass),
     }));
 }
 
-function InsecticideClassFilter({ preventionStudiesOfMapType = [], preventionFilters, setInsecticideClass }: Props) {
+export function getInsecticideClassOptions(insecticideClasses: string[]) {
+    return toInsecticideClassOptions(getAvailableInsecticideClasses(insecticideClasses));
+}
+
+function InsecticideClassFilter({
+    preventionStudiesOfMapType = [],
+    preventionFilters,
+    setInsecticideClass,
+    from,
+}: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         setInsecticideClass((event.target as HTMLInputElement).value);
     };
 
-    const insecticideClasses = _.uniq(preventionStudiesOfMapType.map(study => study.INSECTICIDE_CLASS));
+    const insecticideClasses = getInsecticideClasses(preventionStudiesOfMapType);
+    const options = toInsecticideClassOptions(insecticideClasses);
 
-    const options = getInsecticideClassOptions(insecticideClasses);
+    useReplaceValueNotOffered(
+        replacesValuesNotOfferedOnMap(from, preventionFilters.disease),
+        preventionFilters.insecticideClass,
+        insecticideClasses,
+        defaultInsecticideClass,
+        setInsecticideClass
+    );
 
     return (
         <RadioGroupFilter

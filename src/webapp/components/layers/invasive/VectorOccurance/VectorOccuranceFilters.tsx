@@ -8,7 +8,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Snackbar } from "../../common/Snackbar";
 import { State } from "../../../../store/types";
 import { selectInvasiveFilters } from "../../../../store/reducers/invasive-reducer";
-import { isDefaultOrUnset } from "../../../../../domain/entities/Disease";
+import { keepsMapBehaviourBeforeDisease } from "../../../../store/diseaseMapBehaviour";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
@@ -21,7 +21,7 @@ type Props = ReturnType<typeof mapStateToProps>;
  * and while no disease is set. Anopheles carries malaria, not dengue.
  */
 export function showsAnophelesReportLink(disease: string | undefined): boolean {
-    return isDefaultOrUnset(disease);
+    return keepsMapBehaviourBeforeDisease(disease);
 }
 
 function VectorOccuranceFilters({ invasiveFilters }: Props) {

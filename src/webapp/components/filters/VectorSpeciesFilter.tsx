@@ -14,6 +14,8 @@ import {
     legacyVectorSpeciesValues,
 } from "../../../domain/entities/VectorSpecies";
 import { Source } from "../../store/actions/base-actions";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useDropValuesNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
@@ -57,12 +59,20 @@ export function getVectorSpeciesAnalyticsLabel(species: string): string {
 
 const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies, setVectorSpecies, from }) => {
     const { t } = useTranslation();
+    const options = getVectorSpeciesOptions(invasiveStudies, from);
+
+    useDropValuesNotOffered(
+        replacesValuesNotOfferedOnMap(from, invasiveFilters.disease),
+        invasiveFilters.vectorSpecies,
+        options.map(option => option.value),
+        setVectorSpecies
+    );
 
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
             placeholder={t("common.filters.select_vector_species_placeholder")}
-            options={getVectorSpeciesOptions(invasiveStudies, from)}
+            options={options}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}

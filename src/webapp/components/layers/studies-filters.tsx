@@ -254,7 +254,7 @@ export const filterByDrugs = (drugs: string[]) => (study: any) => {
     return !drugs.length || drugs.includes(study.DRUG_NAME);
 };
 
-export const filterByDisease = (disease: string | undefined) => (study: Study) => belongsToDisease(disease, study);
+export const filterByDisease = (disease: string | undefined) => (study: Study) => belongsToDisease(study, disease);
 
 export const filterByVectorSpecies = (species: string[]) => (study: any) => {
     return !species.length || species.includes(study.VECTOR_SPECIES);

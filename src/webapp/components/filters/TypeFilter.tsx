@@ -19,6 +19,8 @@ import { logEventAction, Source } from "../../store/actions/base-actions";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { useTranslation } from "react-i18next";
 import MultiFilter from "./common/MultiFilter";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useDropValuesNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State, { from }: OwnProps) => ({
     types: selectTypes(state),
@@ -87,9 +89,17 @@ const TypeFilter: React.FC<Props> = ({
     preventionStudiesOfMapType,
     yearFilter,
     region,
+    from,
 }) => {
     const { t } = useTranslation();
     const suggestions = getTypeFilterOptions(preventionFilters, preventionStudiesOfMapType, yearFilter, region);
+
+    useDropValuesNotOffered(
+        replacesValuesNotOfferedOnMap(from, preventionFilters.disease),
+        preventionFilters.type ?? [],
+        preventionStudiesOfMapType.map(study => study.TYPE),
+        setType
+    );
 
     return (
         <MultiFilter

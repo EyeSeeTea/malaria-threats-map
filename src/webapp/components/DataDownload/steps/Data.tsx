@@ -26,12 +26,12 @@ import LocationMapActions from "../../map-actions/LocationMapActions";
 import {
     selectFilteredPreventionStudies,
     selectPreventionFilters,
-    selectPreventionStudies,
+    selectPreventionStudiesOfDefaultDisease,
 } from "../../../store/reducers/prevention-reducer";
 import {
     selectFilteredInvasiveStudies,
     selectInvasiveFilters,
-    selectInvasiveStudies,
+    selectInvasiveStudiesOfDefaultDisease,
 } from "../../../store/reducers/invasive-reducer";
 import {
     selectDiagnosisFilters,
@@ -75,10 +75,10 @@ import {
 
 const mapStateToProps = (state: State) => ({
     theme: selectTheme(state),
-    preventionStudies: selectPreventionStudies(state),
+    preventionStudies: selectPreventionStudiesOfDefaultDisease(state),
     diagnosisStudies: selectDiagnosisStudies(state),
     treatmentStudies: selectTreatmentStudies(state),
-    invasiveStudies: selectInvasiveStudies(state),
+    invasiveStudies: selectInvasiveStudiesOfDefaultDisease(state),
     preventionFilteredStudies: selectFilteredPreventionStudies(state),
     diagnosisFilteredStudies: selectFilteredDiagnosisStudies(state),
     treatmentFilteredStudies: selectFilteredTreatmentStudies(state),
