@@ -1,6 +1,24 @@
 import { defaultDisease } from "../../domain/entities/Disease";
 import { Source } from "./actions/base-actions";
 
+/** The diseases chosen on the vector themes, the only ones with a disease filter. */
+type VectorThemeDiseases = Readonly<{ prevention: string | undefined; invasive: string | undefined }>;
+
+/**
+ * The disease of the map of a theme: the disease filter on prevention and invasive, and the default
+ * disease on diagnosis and treatment, which have no disease filter and only carry malaria.
+ */
+export function getThemeDisease(theme: string, vectorDiseases: VectorThemeDiseases): string | undefined {
+    switch (theme) {
+        case "prevention":
+            return vectorDiseases.prevention;
+        case "invasive":
+            return vectorDiseases.invasive;
+        default:
+            return defaultDisease;
+    }
+}
+
 /**
  * Whether the maps keep the behaviour they had before the disease filter: with the default disease,
  * and while no disease is set.
