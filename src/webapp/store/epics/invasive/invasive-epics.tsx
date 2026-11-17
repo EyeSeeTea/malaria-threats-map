@@ -31,7 +31,7 @@ import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
 import { diseaseSwitches } from "../common/diseaseSwitches";
 import { getDiseaseToSelect } from "../common/initialDisease";
-import { getStudiesForYearRange } from "../common/yearRange";
+import { getStudiesForYearRange, getYearRangeOfDiseaseActions } from "../common/yearRange";
 import { selectInvasiveStudiesOfDefaultDisease } from "../../reducers/invasive-reducer";
 
 export const getInvasiveStudiesEpic = (
@@ -134,10 +134,6 @@ export const resetInvasiveFiltersOnDiseaseSwitchEpic = (action$: Observable<Acti
         )
     ).pipe(map(() => setInvasiveVectorSpecies([])));
 
-/**
- * The year range of the map when its disease is set or switched, from the studies of that disease, as
- * loading the studies computes it: it changes only when the first year changes, so with malaria nothing moves.
- */
 export const setInvasiveYearRangeOfDiseaseEpic = (
     action$: Observable<ActionType<typeof setInvasiveDisease>>,
     state$: StateObservable<State>
@@ -146,12 +142,8 @@ export const setInvasiveYearRangeOfDiseaseEpic = (
         ofType(ActionTypeEnum.SetInvasiveDisease),
         withLatestFrom(state$),
         switchMap(([, state]) => {
-            const studies = getStudiesForYearRange(state.invasive.studies, state.invasive.filters.disease);
-            const dateResets =
-                studies.length > 0
-                    ? resetDatesRequired({ minMaxYears: () => getMinMaxYears(studies), theme: "invasive", state })
-                    : [];
+            const diseaseStudies = getStudiesForYearRange(state.invasive.studies, state.invasive.filters.disease);
 
-            return of(...dateResets);
+            return of(...getYearRangeOfDiseaseActions({ diseaseStudies, theme: "invasive", state }));
         })
     );

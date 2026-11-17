@@ -108,6 +108,22 @@ describe("the year range of the chosen disease", () => {
         expect(await runEpic(setInvasiveYearRangeOfDiseaseEpic, [toMalaria], state)).toEqual([]);
     });
 
+    it("starts the slider at the first year of the new disease when the selected years already start there", async () => {
+        const toDengue = setInvasiveDisease(DENGUE);
+        const selectedFromDengueStart = setFiltersAction(dengueYears);
+        const state = createStateAfter([
+            ...mapShowingMalariaYears,
+            selectedFromDengueStart,
+            setInvasiveDisease(MALARIA),
+            toDengue,
+        ]);
+
+        expect(await runEpic(setInvasiveYearRangeOfDiseaseEpic, [toDengue], state)).toEqual([
+            setMaxMinYearsAction(dengueYears),
+            setFiltersAction(dengueYears),
+        ]);
+    });
+
     it("comes from the studies of the chosen disease when the map opens the theme", async () => {
         const state = createStateAfter([studiesOfTwoRanges, setInvasiveDisease(DENGUE)]);
 
