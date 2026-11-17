@@ -32,6 +32,7 @@ import {
     BIOCHEMICAL_ASSAY,
     CDC_BOTTLE,
     DELTAMETHRIN,
+    DENGUE,
     DISCRIMINATING_ASSAY,
     ESTERASES,
     FUNESTUS,
@@ -55,6 +56,7 @@ const INSECTICIDE_TYPES_FILTER = "insecticideTypes";
 const ASSAY_TYPES_FILTER = "assayTypes";
 const SYNERGIST_TYPES_FILTER = "synergistTypes";
 const VECTOR_SPECIES_FILTER = "vectorSpecies";
+const DISEASE_FILTER = "disease";
 const SEPARATOR = " | ";
 const SOME_KEY = "some.key";
 
@@ -87,6 +89,15 @@ const everyMechanismFilter = () => ({
     ...everyFilter(PreventionMapType.RESISTANCE_MECHANISM),
     type: [MONO_OXYGENASES, ESTERASES],
 });
+
+// The filter text of a bioassay map, or of Data Download, with every filter of everyFilter set.
+const summaryWithEveryFilterSet = [
+    entry(INSECTICIDE_CLASS_FILTER, PYRETHROIDS),
+    entry(INSECTICIDE_TYPES_FILTER, `${DELTAMETHRIN}, ${PERMETHRIN}`),
+    entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
+    entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
+    entry(YEARS_FILTER, FULL_RANGE),
+].join(SEPARATOR);
 
 describe("map-actions utils", () => {
     beforeAll(() => {
@@ -231,14 +242,6 @@ describe("map-actions utils", () => {
                 entry(YEARS_FILTER, years),
             ].join(SEPARATOR);
 
-        const summaryWithEveryFilterSet = [
-            entry(INSECTICIDE_CLASS_FILTER, PYRETHROIDS),
-            entry(INSECTICIDE_TYPES_FILTER, `${DELTAMETHRIN}, ${PERMETHRIN}`),
-            entry(TEST_TYPE_FILTER, `${WHO_TEST_KIT}, ${CDC_BOTTLE}`),
-            entry(SPECIES_FILTER, `${GAMBIAE}, ${FUNESTUS}`),
-            entry(YEARS_FILTER, FULL_RANGE),
-        ].join(SEPARATOR);
-
         describe("from the map", () => {
             describe.each([PreventionMapType.RESISTANCE_STATUS, PreventionMapType.INTENSITY_STATUS])(
                 "bioassay map type %s",
@@ -369,6 +372,62 @@ describe("map-actions utils", () => {
 
             expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
                 [entry(VECTOR_SPECIES_FILTER, STEPHENSI), entry(YEARS_FILTER, FULL_RANGE)].join(SEPARATOR)
+            );
+        });
+    });
+
+    // A disease without an xMART label shows its value, so DENGUE reads DENGUE.
+    describe("the disease", () => {
+        const everyPreventionMapType = [
+            PreventionMapType.RESISTANCE_STATUS,
+            PreventionMapType.INTENSITY_STATUS,
+            PreventionMapType.RESISTANCE_MECHANISM,
+            PreventionMapType.LEVEL_OF_INVOLVEMENT,
+        ];
+
+        const preventionFiltersOf = (mapType: PreventionMapType) => ({
+            ...filtersWithOnlyInsecticideClass(mapType),
+            disease: DENGUE,
+        });
+
+        it.each(everyPreventionMapType)("%s names the disease in the map summary", mapType => {
+            const labels = preventionValueLabelFilters(preventionFiltersOf(mapType), MAX_MIN_YEARS, MAX_MIN_YEARS);
+
+            expect(labels.disease).toBe(DENGUE);
+        });
+
+        it.each(everyPreventionMapType)("%s names the disease first in the map's filter text", mapType => {
+            const text = preventionFiltersToString(preventionFiltersOf(mapType), MAX_MIN_YEARS, MAX_MIN_YEARS, MAP);
+
+            expect(text.split(SEPARATOR)[0]).toBe(entry(DISEASE_FILTER, DENGUE));
+        });
+
+        it("Vector occurrence names the disease in the map summary and first in the map's filter text", () => {
+            const filters = createInvasiveFilters({ disease: DENGUE });
+
+            expect(invasiveValueLabelFilters(filters, MAX_MIN_YEARS, MAX_MIN_YEARS)).toEqual({
+                disease: DENGUE,
+                years: FULL_RANGE,
+                vectorSpecies: ALL,
+            });
+            expect(invasiveFiltersToString(filters, MAX_MIN_YEARS, MAX_MIN_YEARS, MAP)).toEqual(
+                [
+                    entry(DISEASE_FILTER, DENGUE),
+                    entry(VECTOR_SPECIES_FILTER, ALL),
+                    entry(YEARS_FILTER, FULL_RANGE),
+                ].join(SEPARATOR)
+            );
+        });
+
+        it("leaves the disease out of the Data Download text, even when the map has one", () => {
+            const preventionFilters = { ...everyFilter(PreventionMapType.RESISTANCE_STATUS), disease: DENGUE };
+            const invasiveFilters = createInvasiveFilters({ disease: DENGUE });
+
+            expect(preventionFiltersToString(preventionFilters, MAX_MIN_YEARS, MAX_MIN_YEARS, DOWNLOAD)).toEqual(
+                summaryWithEveryFilterSet
+            );
+            expect(invasiveFiltersToString(invasiveFilters, MAX_MIN_YEARS, MAX_MIN_YEARS, DOWNLOAD)).toEqual(
+                [entry(VECTOR_SPECIES_FILTER, ALL), entry(YEARS_FILTER, FULL_RANGE)].join(SEPARATOR)
             );
         });
     });

@@ -1,4 +1,3 @@
-import { of } from "rxjs";
 import { AnyAction } from "redux";
 import {
     fetchInvasiveStudiesSuccess,
@@ -12,57 +11,54 @@ import {
     setInvasiveYearRangeOfDiseaseEpic,
 } from "../invasive-epics";
 import {
-    createInvasiveStudy,
     createInvasiveStudyOf,
     CURRENT_YEAR,
     STUDY_YEAR_RANGE,
 } from "../../../../../domain/entities/__fixtures__/studyFixtures";
 import { DENGUE, MALARIA } from "../../../../../domain/entities/__fixtures__/studyValues";
 import { createStateAfter } from "../../../__fixtures__/stateFixtures";
-import { State } from "../../../types";
-import { collectActions, createStateObservable } from "../../../__fixtures__/epicFixtures";
+import { runEpic } from "../../../__fixtures__/epicFixtures";
 import { setFiltersAction, setMaxMinYearsAction, setThemeAction } from "../../../actions/base-actions";
 import { DOWNLOAD, INVASIVE_THEME, MAP, YEAR_BEFORE_RANGE } from "../../../__fixtures__/filtersFixtures";
 
-const study = (DISEASE: string | undefined) => createInvasiveStudy({ DISEASE });
-
 describe("invasive disease epics", () => {
     describe("setInitialInvasiveDiseaseEpic", () => {
-        const initialDiseaseAfter = (state: State, action: AnyAction) =>
-            collectActions(setInitialInvasiveDiseaseEpic(of(action), createStateObservable(state)));
+        const initialDiseaseAfter = (before: ReadonlyArray<AnyAction>, action: AnyAction) =>
+            runEpic(setInitialInvasiveDiseaseEpic, [action], createStateAfter(before));
 
         it("sets malaria when the loaded studies carry malaria and another disease", async () => {
-            const loaded = fetchInvasiveStudiesSuccess([study(DENGUE), study(MALARIA)]);
+            const loaded = fetchInvasiveStudiesSuccess([createInvasiveStudyOf(DENGUE), createInvasiveStudyOf(MALARIA)]);
 
-            expect(await initialDiseaseAfter(createStateAfter([loaded]), loaded)).toEqual([
-                setInvasiveDisease(MALARIA),
-            ]);
+            expect(await initialDiseaseAfter([loaded], loaded)).toEqual([setInvasiveDisease(MALARIA)]);
         });
 
         it("sets nothing when the studies carry no disease", async () => {
-            const loaded = fetchInvasiveStudiesSuccess([study(undefined)]);
+            const loaded = fetchInvasiveStudiesSuccess([createInvasiveStudyOf(undefined)]);
 
-            expect(await initialDiseaseAfter(createStateAfter([loaded]), loaded)).toEqual([]);
+            expect(await initialDiseaseAfter([loaded], loaded)).toEqual([]);
         });
 
         it("keeps the disease of the URL, set before the studies load, when the studies carry it", async () => {
-            const loaded = fetchInvasiveStudiesSuccess([study(MALARIA), study(DENGUE)]);
-            const state = createStateAfter([setInvasiveDisease(DENGUE), loaded]);
+            const loaded = fetchInvasiveStudiesSuccess([createInvasiveStudyOf(MALARIA), createInvasiveStudyOf(DENGUE)]);
 
-            expect(await initialDiseaseAfter(state, loaded)).toEqual([]);
+            expect(await initialDiseaseAfter([setInvasiveDisease(DENGUE), loaded], loaded)).toEqual([]);
         });
 
         it("replaces a disease of the URL that the loaded studies do not carry", async () => {
-            const loaded = fetchInvasiveStudiesSuccess([study(MALARIA)]);
-            const state = createStateAfter([setInvasiveDisease(DENGUE), loaded]);
+            const loaded = fetchInvasiveStudiesSuccess([createInvasiveStudyOf(MALARIA)]);
 
-            expect(await initialDiseaseAfter(state, loaded)).toEqual([setInvasiveDisease(MALARIA)]);
+            expect(await initialDiseaseAfter([setInvasiveDisease(DENGUE), loaded], loaded)).toEqual([
+                setInvasiveDisease(MALARIA),
+            ]);
         });
     });
 
     describe("resetInvasiveFiltersOnDiseaseSwitchEpic", () => {
-        const actionsAfterDiseases = (diseases: ReadonlyArray<string>) =>
-            collectActions(resetInvasiveFiltersOnDiseaseSwitchEpic(of(...diseases.map(d => setInvasiveDisease(d)))));
+        const actionsAfterDiseases = (diseases: ReadonlyArray<string | undefined>) =>
+            runEpic(
+                resetInvasiveFiltersOnDiseaseSwitchEpic,
+                diseases.map(disease => setInvasiveDisease(disease))
+            );
 
         it("empties nothing the first time the disease is set", async () => {
             expect(await actionsAfterDiseases([MALARIA])).toEqual([]);
@@ -72,8 +68,8 @@ describe("invasive disease epics", () => {
             expect(await actionsAfterDiseases([MALARIA, DENGUE])).toEqual([setInvasiveVectorSpecies([])]);
         });
 
-        it("empties nothing when the same disease is set again", async () => {
-            expect(await actionsAfterDiseases([DENGUE, DENGUE])).toEqual([]);
+        it("empties nothing when the same disease is set again, nor when it is unset", async () => {
+            expect(await actionsAfterDiseases([DENGUE, DENGUE, undefined])).toEqual([]);
         });
     });
 });
@@ -95,14 +91,11 @@ describe("the year range of the chosen disease", () => {
         setFiltersAction([...STUDY_YEAR_RANGE]),
     ];
 
-    const yearActionsAfter = (action: ReturnType<typeof setInvasiveDisease>, state: State) =>
-        collectActions(setInvasiveYearRangeOfDiseaseEpic(of(action), createStateObservable(state)));
-
     it("moves to the range of the new disease on a switch", async () => {
         const toDengue = setInvasiveDisease(DENGUE);
         const state = createStateAfter([...mapShowingMalariaYears, setInvasiveDisease(MALARIA), toDengue]);
 
-        expect(await yearActionsAfter(toDengue, state)).toEqual([
+        expect(await runEpic(setInvasiveYearRangeOfDiseaseEpic, [toDengue], state)).toEqual([
             setMaxMinYearsAction(dengueYears),
             setFiltersAction(dengueYears),
         ]);
@@ -112,14 +105,13 @@ describe("the year range of the chosen disease", () => {
         const toMalaria = setInvasiveDisease(MALARIA);
         const state = createStateAfter([...mapShowingMalariaYears, toMalaria]);
 
-        expect(await yearActionsAfter(toMalaria, state)).toEqual([]);
+        expect(await runEpic(setInvasiveYearRangeOfDiseaseEpic, [toMalaria], state)).toEqual([]);
     });
 
     it("comes from the studies of the chosen disease when the map opens the theme", async () => {
         const state = createStateAfter([studiesOfTwoRanges, setInvasiveDisease(DENGUE)]);
-        const toTheme = setThemeAction("invasive", MAP);
 
-        expect(await collectActions(setInvasiveThemeEpic(of(toTheme), createStateObservable(state)))).toEqual([
+        expect(await runEpic(setInvasiveThemeEpic, [setThemeAction("invasive", MAP)], state)).toEqual([
             setMaxMinYearsAction(dengueYears),
             setFiltersAction(dengueYears),
         ]);
@@ -130,11 +122,9 @@ describe("the year range of the chosen disease", () => {
 describe("setInvasiveThemeEpic, opening Data Download", () => {
     it("takes its years from the malaria studies", async () => {
         const state = createStateAfter([studiesOfTwoRanges, setInvasiveDisease(DENGUE)]);
-        const toDownload = setThemeAction("invasive", DOWNLOAD);
 
-        expect(await collectActions(setInvasiveThemeEpic(of(toDownload), createStateObservable(state)))).toEqual([
-            setMaxMinYearsAction([...STUDY_YEAR_RANGE]),
-            setFiltersAction([...STUDY_YEAR_RANGE]),
-        ]);
+        const actions = await runEpic(setInvasiveThemeEpic, [setThemeAction("invasive", DOWNLOAD)], state);
+
+        expect(actions).toEqual([setMaxMinYearsAction([...STUDY_YEAR_RANGE]), setFiltersAction([...STUDY_YEAR_RANGE])]);
     });
 });
