@@ -124,6 +124,6 @@ export function resetDatesRequired(props: {
     const [start, end] = minMaxYears();
     const resetDatesIsRequired = state.malaria?.filters[0] !== start && state.malaria?.maxMinYears[0] !== start;
     return resetDatesIsRequired
-        ? [setMaxMinYearsAction([start, end]), setFiltersAction([filterStart ?? start, end])]
+        ? [setMaxMinYearsAction([start, end]), setFiltersAction([Math.max(filterStart ?? start, start), end])]
         : [];
 }

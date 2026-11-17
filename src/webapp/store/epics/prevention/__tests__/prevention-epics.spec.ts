@@ -20,6 +20,7 @@ import {
     setPreventionYearRangeOfDiseaseEpic,
 } from "../prevention-epics";
 import { REQUESTED_VIR_START_DATE } from "../utils";
+import { defaultInsecticideClass } from "../../../../../domain/entities/InsecticideClass";
 import {
     ACE1R,
     BIOCHEMICAL_ASSAY,
@@ -51,7 +52,7 @@ import {
 } from "../../../../types/__fixtures__/translationFixtures";
 import { runEpic } from "../../../__fixtures__/epicFixtures";
 import { setFiltersAction, setMaxMinYearsAction, setThemeAction } from "../../../actions/base-actions";
-import { DOWNLOAD, PREVENTION_THEME, YEAR_BEFORE_RANGE } from "../../../__fixtures__/filtersFixtures";
+import { DOWNLOAD, MAP, PREVENTION_THEME, YEAR_BEFORE_RANGE } from "../../../__fixtures__/filtersFixtures";
 
 function actionsAfterSetType(types: string[] | undefined) {
     return runEpic(setPreventionTypeEpic, [setType(types)]);
@@ -327,13 +328,13 @@ const mapShowingMalariaYears = [
 ];
 
 describe("the year range of the chosen disease", () => {
-    it("moves to the range of the new disease on a switch", async () => {
+    it("moves to the range of the new disease on a switch, the filter from its first year when it is after 2010", async () => {
         const toDengue = setPreventionDisease(DENGUE);
         const state = createStateAfter([...mapShowingMalariaYears, setPreventionDisease(MALARIA), toDengue]);
 
         expect(await runEpic(setPreventionYearRangeOfDiseaseEpic, [toDengue], state)).toEqual([
             setMaxMinYearsAction([YEAR_BEFORE_RANGE, CURRENT_YEAR]),
-            setFiltersAction([REQUESTED_VIR_START_DATE, CURRENT_YEAR]),
+            setFiltersAction([YEAR_BEFORE_RANGE, CURRENT_YEAR]),
         ]);
     });
 
@@ -352,6 +353,35 @@ describe("the year range of the chosen disease", () => {
 
         expect(actions.filter(action => action.type === ActionTypeEnum.MalariaSetMaxMinYears)).toEqual([
             setMaxMinYearsAction([YEAR_BEFORE_RANGE, CURRENT_YEAR]),
+        ]);
+    });
+});
+
+const YEAR_BEFORE_VIR_START = REQUESTED_VIR_START_DATE - 5;
+
+describe("setPreventionThemeEpic, coming back to the map from another theme", () => {
+    const backToMap = setThemeAction(PREVENTION_THEME, MAP);
+
+    it("selects the years from the first year of the studies when it is after 2010", async () => {
+        const state = createStateAfter([studiesOfTwoRanges, setPreventionDisease(DENGUE)]);
+
+        expect(await runEpic(setPreventionThemeEpic, [backToMap], state)).toEqual([
+            setMaxMinYearsAction([YEAR_BEFORE_RANGE, CURRENT_YEAR]),
+            setFiltersAction([YEAR_BEFORE_RANGE, CURRENT_YEAR]),
+            setInsecticideClass(defaultInsecticideClass),
+        ]);
+    });
+
+    it("selects the years from 2010 when the studies start before it", async () => {
+        const studies = fetchResistanceStatusTypeStudiesSuccess([
+            createPreventionStudyOf(MALARIA, { YEAR_START: YEAR_BEFORE_VIR_START, YEAR_END: YEAR_BEFORE_VIR_START }),
+        ]);
+        const state = createStateAfter([studies, setPreventionDisease(MALARIA)]);
+
+        expect(await runEpic(setPreventionThemeEpic, [backToMap], state)).toEqual([
+            setMaxMinYearsAction([YEAR_BEFORE_VIR_START, CURRENT_YEAR]),
+            setFiltersAction([REQUESTED_VIR_START_DATE, CURRENT_YEAR]),
+            setInsecticideClass(defaultInsecticideClass),
         ]);
     });
 });
