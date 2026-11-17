@@ -1,4 +1,4 @@
-import { createInvasiveStudy, createPreventionStudy } from "../../../../domain/entities/__fixtures__/studyFixtures";
+import { createInvasiveStudyOf, createPreventionStudyOf } from "../../../../domain/entities/__fixtures__/studyFixtures";
 import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { Source } from "../../../store/actions/base-actions";
@@ -19,6 +19,7 @@ import {
     BIOCHEMICAL_ASSAY,
     CDC_BOTTLE,
     DELTAMETHRIN,
+    DENGUE,
     DISCRIMINATING_ASSAY,
     ESTERASES,
     FEW_MOSQUITOES_NUMBER,
@@ -29,6 +30,7 @@ import {
     INTENSITY_ASSAY,
     KDR_L1014F,
     KDR_L1014S,
+    MALARIA,
     MINISTRY_OF_HEALTH,
     MOLECULAR_ASSAY,
     MONO_OXYGENASES,
@@ -65,6 +67,8 @@ const BIOCHEMICAL_STUDY = "biochemical";
 const MONO_OXYGENASES_STUDY = "monoOxygenases";
 const KDR_STUDY = "kdr";
 const MOLECULAR_ASSAY_STUDY = "molecularAssay";
+const OTHER_DISEASE = "otherDisease";
+const WITHOUT_DISEASE = "withoutDisease";
 
 function codesKeptByPreventionChain(
     studies: PreventionStudy[],
@@ -86,9 +90,9 @@ function codesKeptByInvasiveChain(
     );
 }
 
-/** A study that passes every filter set by `bioassayFilters`, with the given code and overrides. */
+/** A malaria study that passes every filter set by `bioassayFilters`, with the given code and overrides. */
 function bioassayStudy(code: string, overrides: Partial<PreventionStudy> = {}): PreventionStudy {
-    return createPreventionStudy({
+    return createPreventionStudyOf(MALARIA, {
         Code: code,
         INSECTICIDE_CLASS: PYRETHROIDS,
         INSECTICIDE_TYPE: DELTAMETHRIN,
@@ -103,8 +107,15 @@ function bioassayStudy(code: string, overrides: Partial<PreventionStudy> = {}): 
     });
 }
 
+/** The studies a map chain set to malaria removes: one of another disease, and one without a disease. */
+const studiesOfAnotherOrNoDisease = <S>(study: (code: string, overrides: { DISEASE: string | undefined }) => S) => [
+    study(OTHER_DISEASE, { DISEASE: DENGUE }),
+    study(WITHOUT_DISEASE, { DISEASE: undefined }),
+];
+
 const bioassayFilters = (overrides: Partial<PreventionFilters>) =>
     createPreventionFilters({
+        disease: MALARIA,
         insecticideClass: PYRETHROIDS,
         insecticideTypes: [DELTAMETHRIN],
         type: [WHO_TEST_KIT],
@@ -131,6 +142,7 @@ describe("studies-filters chains", () => {
             it("removes a study for each filter of its chain", () => {
                 const studies = [
                     bioassayStudy(KEPT),
+                    ...studiesOfAnotherOrNoDisease(bioassayStudy),
                     ...studiesRemovedByEachBioassayFilter(DISCRIMINATING_ASSAY),
                     bioassayStudy(NOT_MOH, { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
                     bioassayStudy(FEW_MOSQUITOES, { NUMBER: FEW_MOSQUITOES_NUMBER }),
@@ -159,6 +171,9 @@ describe("studies-filters chains", () => {
             it("removes a study for each filter of its chain", () => {
                 const studies = [
                     bioassayStudy(KEPT, { ASSAY_TYPE: INTENSITY_ASSAY }),
+                    ...studiesOfAnotherOrNoDisease((code, disease) =>
+                        bioassayStudy(code, { ASSAY_TYPE: INTENSITY_ASSAY, ...disease })
+                    ),
                     ...studiesRemovedByEachBioassayFilter(INTENSITY_ASSAY),
                     bioassayStudy(NOT_MOH, { INSTITUTION_TYPE: RESEARCH_INSTITUTION }),
                     bioassayStudy(FEW_MOSQUITOES, { NUMBER: FEW_MOSQUITOES_NUMBER }),
@@ -190,6 +205,7 @@ describe("studies-filters chains", () => {
             it("removes a study for each filter of its chain", () => {
                 const studies = [
                     mechanismStudy(KEPT),
+                    ...studiesOfAnotherOrNoDisease(mechanismStudy),
                     mechanismStudy("otherMechanism", { TYPE: ESTERASES }),
                     mechanismStudy(OTHER_SPECIES, { SPECIES: FUNESTUS }),
                     mechanismStudy(OTHER_ASSAY_TYPE, { ASSAY_TYPE: SYNERGIST_ASSAY }),
@@ -285,6 +301,7 @@ describe("studies-filters chains", () => {
             it("removes a study for each filter of its chain", () => {
                 const studies = [
                     involvementStudy(KEPT),
+                    ...studiesOfAnotherOrNoDisease(involvementStudy),
                     involvementStudy("otherProxyType", { PROXY_TYPE: ESTERASES }),
                     involvementStudy(OTHER_CLASS, { INSECTICIDE_CLASS: ORGANOPHOSPHATES }),
                     involvementStudy(OTHER_INSECTICIDE, { INSECTICIDE_TYPE: PERMETHRIN }),
@@ -311,16 +328,18 @@ describe("studies-filters chains", () => {
 
     describe("map, invasive", () => {
         const studies = [
-            createInvasiveStudy({ Code: KEPT }),
-            createInvasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
-            createInvasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: YEAR_BEFORE_RANGE }),
-            createInvasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
-            createInvasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
-            createInvasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
+            createInvasiveStudyOf(MALARIA, { Code: KEPT }),
+            createInvasiveStudyOf(DENGUE, { Code: OTHER_DISEASE }),
+            createInvasiveStudyOf(undefined, { Code: WITHOUT_DISEASE }),
+            createInvasiveStudyOf(MALARIA, { Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
+            createInvasiveStudyOf(MALARIA, { Code: OUTSIDE_YEARS, YEAR_START: YEAR_BEFORE_RANGE }),
+            createInvasiveStudyOf(MALARIA, { Code: WITHOUT_YEAR, YEAR_START: undefined }),
+            createInvasiveStudyOf(MALARIA, { Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
+            createInvasiveStudyOf(MALARIA, { Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
         ];
 
-        it("Vector occurrence filters by species, year range allowing no year, and region", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
+        it("Vector occurrence filters by disease, species, year range allowing no year, and region", () => {
+            const filters = createInvasiveFilters({ disease: MALARIA, vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
             expect(codesKeptByInvasiveChain(studies, filters)).toEqual([KEPT, WITHOUT_YEAR, NOT_DOWNLOADABLE]);
         });
@@ -347,6 +366,22 @@ describe("studies-filters chains", () => {
                 ];
 
                 expect(codesKeptByPreventionChain(studies, filters, DOWNLOAD)).toEqual([KEPT]);
+            });
+
+            // Data Download narrows its studies to malaria in its source, not in its chain.
+            it("ignores the disease chosen on the map", () => {
+                const studies = [
+                    bioassayStudy(KEPT, { ASSAY_TYPE: dataset }),
+                    ...studiesOfAnotherOrNoDisease((code, disease) =>
+                        bioassayStudy(code, { ASSAY_TYPE: dataset, ...disease })
+                    ),
+                ];
+
+                expect(codesKeptByPreventionChain(studies, { ...filters, disease: DENGUE }, DOWNLOAD)).toEqual([
+                    KEPT,
+                    OTHER_DISEASE,
+                    WITHOUT_DISEASE,
+                ]);
             });
 
             it("ignores the Ministry of Health, mosquitoes and mortality filters of the map", () => {
@@ -488,18 +523,33 @@ describe("studies-filters chains", () => {
 
     describe("download, invasive", () => {
         const studies = [
-            createInvasiveStudy({ Code: KEPT }),
-            createInvasiveStudy({ Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
-            createInvasiveStudy({ Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
-            createInvasiveStudy({ Code: OUTSIDE_YEARS, YEAR_START: YEAR_BEFORE_RANGE }),
-            createInvasiveStudy({ Code: WITHOUT_YEAR, YEAR_START: undefined }),
-            createInvasiveStudy({ Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
+            createInvasiveStudyOf(MALARIA, { Code: KEPT }),
+            createInvasiveStudyOf(MALARIA, { Code: NOT_DOWNLOADABLE, MTM_DOWNLOAD: 0 }),
+            createInvasiveStudyOf(MALARIA, { Code: OTHER_SPECIES, VECTOR_SPECIES: NOT_REPORTED }),
+            createInvasiveStudyOf(MALARIA, { Code: OUTSIDE_YEARS, YEAR_START: YEAR_BEFORE_RANGE }),
+            createInvasiveStudyOf(MALARIA, { Code: WITHOUT_YEAR, YEAR_START: undefined }),
+            createInvasiveStudyOf(MALARIA, { Code: OTHER_COUNTRY_STUDY, ...OTHER_COUNTRY }),
         ];
 
         it("Vector occurrence adds the download flag to the map chain", () => {
-            const filters = createInvasiveFilters({ vectorSpecies: [STEPHENSI_TYPE_FORM] });
+            const filters = createInvasiveFilters({ disease: MALARIA, vectorSpecies: [STEPHENSI_TYPE_FORM] });
 
             expect(codesKeptByInvasiveChain(studies, filters, DOWNLOAD)).toEqual([KEPT, WITHOUT_YEAR]);
+        });
+
+        it("Vector occurrence ignores the disease chosen on the map", () => {
+            const studiesOfEveryDisease = [
+                createInvasiveStudyOf(MALARIA, { Code: KEPT }),
+                createInvasiveStudyOf(DENGUE, { Code: OTHER_DISEASE }),
+                createInvasiveStudyOf(undefined, { Code: WITHOUT_DISEASE }),
+            ];
+            const filters = createInvasiveFilters({ disease: DENGUE });
+
+            expect(codesKeptByInvasiveChain(studiesOfEveryDisease, filters, DOWNLOAD)).toEqual([
+                KEPT,
+                OTHER_DISEASE,
+                WITHOUT_DISEASE,
+            ]);
         });
     });
 });

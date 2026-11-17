@@ -47,7 +47,11 @@ export interface Study {
     YEAR_END: number;
     YEAR_START: number;
     DOWNLOAD: number;
+    DISEASE?: string;
 }
+
+/** The value a study carries in a field whose data is not available. */
+export const notAvailable = "NA";
 
 export type ResistanceIntensity =
     | "NA"

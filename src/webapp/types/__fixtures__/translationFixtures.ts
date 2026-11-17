@@ -5,7 +5,7 @@ import {
     STEPHENSI_MYSORENSIS,
     STEPHENSI_TYPE_FORM,
 } from "../../../domain/entities/__fixtures__/studyValues";
-import { Translation } from "../Translation";
+import { Translation, TranslationResponse } from "../Translation";
 
 export const TYPE_FIELD = "TYPE";
 
@@ -28,6 +28,21 @@ const defaultTranslation: Readonly<Translation> = {
 
 export function createTranslation(overrides: Partial<Translation> = {}): Translation {
     return { ...defaultTranslation, ...overrides };
+}
+
+/** The xMART translations response carrying the translations. */
+export function createTranslationResponse(translations: ReadonlyArray<Translation>): TranslationResponse {
+    return {
+        displayFieldName: "",
+        features: translations.map(attributes => ({ attributes })),
+        fieldAliases: [],
+        fields: [],
+    };
+}
+
+/** The PROXY_TYPE translations of the values, in their order. */
+export function createProxyTypeTranslations(values: ReadonlyArray<string>): Translation[] {
+    return values.map(VALUE_ => createTranslation({ FIELD: "PROXY_TYPE", VALUE_ }));
 }
 
 export const STEPHENSI_TYPE_FORM_APP_LABEL = "Type form (app)";

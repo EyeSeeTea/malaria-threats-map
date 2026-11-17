@@ -131,6 +131,7 @@ export interface PreventionFilters {
     species: string[];
     onlyIncludeBioassaysWithMoreMosquitoes: number;
     onlyByHealthMinistries: boolean;
+    disease: string | undefined;
 }
 
 export interface PreventionState {
@@ -189,6 +190,7 @@ export interface InvasiveFilters {
     mapType: InvasiveMapType;
     dataset: InvasiveDataset;
     vectorSpecies: string[];
+    disease: string | undefined;
 }
 
 export interface InvasiveState {

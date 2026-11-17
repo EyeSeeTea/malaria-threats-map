@@ -5,21 +5,21 @@ import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
 import { selectTypes } from "../../store/reducers/translations-reducer";
 import {
-    defaultMechanismType,
     selectPreventionFilters,
-    selectPreventionStudiesByMapTypeSelected,
+    selectPreventionStudiesOfMapTypeAndDisease,
 } from "../../store/reducers/prevention-reducer";
 import { setType } from "../../store/actions/prevention-actions";
 import { logEventAction, Source } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
 import i18next from "i18next";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
-import { getKnownMechanisms } from "../../../domain/entities/ResistanceMechanism";
+import { defaultMechanism, getKnownMechanisms, getMechanisms } from "../../../domain/entities/ResistanceMechanism";
+import { useReplaceValueNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State) => ({
     types: selectTypes(state),
     preventionFilters: selectPreventionFilters(state),
-    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeAndDisease(state),
 });
 
 const mapDispatchToProps = {
@@ -41,43 +41,13 @@ export function getMechanismTypeOptions(
     preventionStudiesOfMapType: ReadonlyArray<PreventionStudy>,
     types: ReadonlyArray<Translation>
 ) {
-    const codes = from === "map" ? preventionStudiesOfMapType.map(study => study.TYPE) : types.map(type => type.VALUE_);
+    const mechanisms =
+        from === "map" ? getMechanisms(preventionStudiesOfMapType) : getKnownMechanisms(types.map(type => type.VALUE_));
 
-    return getKnownMechanisms(codes).map(value => ({
+    return mechanisms.map(value => ({
         value: value,
         label: i18next.t(`TYPE.${value}`, { defaultValue: value }),
     }));
-}
-
-/**
- * The mechanism the map selects instead of a selected one it does not offer, such as one picked on Data
- * Download: the default, or the first one offered when the map has no studies of the default. Undefined when
- * nothing has to change, also while the studies load and nothing is offered yet.
- */
-export function getMechanismToSelectOnMap(
-    selectedMechanism: string | undefined,
-    offeredMechanisms: ReadonlyArray<string>
-): string | undefined {
-    if (!selectedMechanism || offeredMechanisms.length === 0 || offeredMechanisms.includes(selectedMechanism)) {
-        return undefined;
-    }
-
-    return offeredMechanisms.includes(defaultMechanismType) ? defaultMechanismType : offeredMechanisms[0];
-}
-
-/** The map and Data Download share the selected mechanism, so the map replaces one it does not offer. */
-function useReplaceMechanismNotOfferedOnMap(
-    from: Source,
-    selectedMechanism: string | undefined,
-    offeredMechanisms: ReadonlyArray<string>,
-    setType: (types: string[]) => void
-) {
-    const mechanismToSelect =
-        from === "map" ? getMechanismToSelectOnMap(selectedMechanism, offeredMechanisms) : undefined;
-
-    React.useEffect(() => {
-        if (mechanismToSelect) setType([mechanismToSelect]);
-    }, [mechanismToSelect, setType]);
 }
 
 function MechanismTypeFilter({
@@ -101,11 +71,15 @@ function MechanismTypeFilter({
         [preventionFilters.type]
     );
 
-    useReplaceMechanismNotOfferedOnMap(
-        from,
+    const selectMechanism = React.useCallback((mechanism: string) => setType([mechanism]), [setType]);
+
+    // The map and Data Download share the selected mechanism, so the map replaces one it does not offer.
+    useReplaceValueNotOffered(
+        from === "map",
         value,
         options.map(option => option.value),
-        setType
+        defaultMechanism,
+        selectMechanism
     );
 
     return (

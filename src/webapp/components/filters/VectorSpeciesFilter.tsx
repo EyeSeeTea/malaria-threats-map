@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { State } from "../../store/types";
 import { setInvasiveVectorSpecies } from "../../store/actions/invasive-actions";
-import { selectInvasiveFilters, selectInvasiveStudies } from "../../store/reducers/invasive-reducer";
+import { selectInvasiveFilters, selectInvasiveStudiesOfDisease } from "../../store/reducers/invasive-reducer";
 import MultiFilter from "./common/MultiFilter";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
@@ -14,10 +14,12 @@ import {
     legacyVectorSpeciesValues,
 } from "../../../domain/entities/VectorSpecies";
 import { Source } from "../../store/actions/base-actions";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useDropValuesNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State) => ({
     invasiveFilters: selectInvasiveFilters(state),
-    invasiveStudies: selectInvasiveStudies(state),
+    invasiveStudies: selectInvasiveStudiesOfDisease(state),
 });
 
 const mapDispatchToProps = {
@@ -57,12 +59,20 @@ export function getVectorSpeciesAnalyticsLabel(species: string): string {
 
 const VectorSpeciesFilter: React.FC<Props> = ({ invasiveFilters, invasiveStudies, setVectorSpecies, from }) => {
     const { t } = useTranslation();
+    const options = getVectorSpeciesOptions(invasiveStudies, from);
+
+    useDropValuesNotOffered(
+        replacesValuesNotOfferedOnMap(from, invasiveFilters.disease),
+        invasiveFilters.vectorSpecies,
+        options.map(option => option.value),
+        setVectorSpecies
+    );
 
     return (
         <MultiFilter
             label={t("common.filters.vector_species")}
             placeholder={t("common.filters.select_vector_species_placeholder")}
-            options={getVectorSpeciesOptions(invasiveStudies, from)}
+            options={options}
             onChange={setVectorSpecies}
             value={invasiveFilters.vectorSpecies}
             analyticsMultiFilterAction={"vectorSpecies"}

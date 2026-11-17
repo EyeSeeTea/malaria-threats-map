@@ -1,10 +1,12 @@
 import i18next from "i18next";
 import { ActionType } from "typesafe-actions";
 import { EMPTY, merge, Observable, of } from "rxjs";
-import { catchError, filter, map, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { catchError, map, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import { ofType, StateObservable } from "redux-observable";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { getMinMaxYears, Study } from "../../../../domain/entities/Study";
+import { belongsToDisease } from "../../../../domain/entities/Disease";
+import { getStudiesForYearRange } from "../common/yearRange";
 import { Option } from "../../../components/BasicSelect";
 import { getSiteTitle } from "../../../components/site-title/utils";
 import { isNA, isNotNull, isNR } from "../../../utils/number-utils";
@@ -509,33 +511,49 @@ type StudyConfig = {
     onError: () => Action;
 };
 
+const studiesLoadedActions: Readonly<Record<PreventionMapType, (studies: PreventionStudy[]) => Action>> = {
+    [PreventionMapType.RESISTANCE_STATUS]: fetchResistanceStatusTypeStudiesSuccess,
+    [PreventionMapType.INTENSITY_STATUS]: fetchResistanceIntensityTypeStudiesSuccess,
+    [PreventionMapType.RESISTANCE_MECHANISM]: fetchResistanceMechanismTypeStudiesSuccess,
+    [PreventionMapType.LEVEL_OF_INVOLVEMENT]: fetchSynergistEffectTypeStudiesSuccess,
+};
+
+/**
+ * A request for the studies of a map type marks it as loading. When they are already loaded, this is the
+ * action that ends that loading without fetching them again; undefined when they still have to be fetched.
+ */
+export const getStudiesAlreadyLoadedAction = (state: State, mapType: PreventionMapType): Action | undefined => {
+    const studies = getStudiesByMapType(state, mapType);
+    return studies.length > 0 ? studiesLoadedActions[mapType](studies) : undefined;
+};
+
 const getStudyConfigs = (api: CompositionRoot["prevention"], state: State): Record<PreventionMapType, StudyConfig> => ({
     [PreventionMapType.RESISTANCE_STATUS]: {
         studies: state.prevention.resistanceStatusStudies,
         loading: state.prevention.loadingResistanceStatus,
         fetchStudies: () => api.getResistanceStatusTypeStudies(),
-        onSuccess: fetchResistanceStatusTypeStudiesSuccess,
+        onSuccess: studiesLoadedActions[PreventionMapType.RESISTANCE_STATUS],
         onError: fetchResistanceStatusTypeStudiesError,
     },
     [PreventionMapType.INTENSITY_STATUS]: {
         studies: state.prevention.resistanceIntensityStudies,
         loading: state.prevention.loadingResistanceIntensity,
         fetchStudies: () => api.getResistanceIntensityTypeStudies(),
-        onSuccess: fetchResistanceIntensityTypeStudiesSuccess,
+        onSuccess: studiesLoadedActions[PreventionMapType.INTENSITY_STATUS],
         onError: fetchResistanceIntensityTypeStudiesError,
     },
     [PreventionMapType.RESISTANCE_MECHANISM]: {
         studies: state.prevention.resistanceMechanismStudies,
         loading: state.prevention.loadingResistanceMechanism,
         fetchStudies: () => api.getResistanceMechanismTypeStudies(),
-        onSuccess: fetchResistanceMechanismTypeStudiesSuccess,
+        onSuccess: studiesLoadedActions[PreventionMapType.RESISTANCE_MECHANISM],
         onError: fetchResistanceMechanismTypeStudiesError,
     },
     [PreventionMapType.LEVEL_OF_INVOLVEMENT]: {
         studies: state.prevention.synergistEffectStudies,
         loading: state.prevention.loadingSynergistEffect,
         fetchStudies: () => api.getSynergistEffectTypeStudies(),
-        onSuccess: fetchSynergistEffectTypeStudiesSuccess,
+        onSuccess: studiesLoadedActions[PreventionMapType.LEVEL_OF_INVOLVEMENT],
         onError: fetchSynergistEffectTypeStudiesError,
     },
 });
@@ -545,7 +563,8 @@ const buildPrimaryStream$ = (config: StudyConfig, state: State): Observable<Acti
         mergeMap(studies =>
             of(
                 ...resetDatesRequired({
-                    minMaxYears: () => getMinMaxYears(studies),
+                    minMaxYears: () =>
+                        getMinMaxYears(getStudiesForYearRange(studies, state.prevention.filters.disease)),
                     theme: "prevention",
                     state,
                     filterStart: REQUESTED_VIR_START_DATE,
@@ -578,11 +597,10 @@ export const buildPreventionStudiesEpic =
         action$.pipe(
             ofType(actionType),
             withLatestFrom(state$),
-            filter(([, state]) => {
-                const config = getStudyConfigs(compositionRoot.prevention, state)[primaryMapType];
-                return config.studies.length === 0;
-            }),
             switchMap(([, state]) => {
+                const studiesAlreadyLoaded = getStudiesAlreadyLoadedAction(state, primaryMapType);
+                if (studiesAlreadyLoaded) return of(studiesAlreadyLoaded);
+
                 const api = compositionRoot.prevention;
                 const configs = getStudyConfigs(api, state);
 
@@ -602,3 +620,11 @@ export const getStudiesByMapType = (state: State, mapType: PreventionMapType): P
     };
     return studiesByMapType[mapType] || [];
 };
+
+/** The studies of the map type that belong to the chosen disease: those the map and its side panel show. */
+export const getStudiesOfDiseaseByMapType = (state: State, mapType: PreventionMapType): PreventionStudy[] =>
+    getStudiesByMapType(state, mapType).filter(study => belongsToDisease(study, state.prevention.filters.disease));
+
+/** The studies of the map type the year range is computed from: those of the chosen disease, or all while none is set. */
+export const getYearRangeStudiesByMapType = (state: State, mapType: PreventionMapType): PreventionStudy[] =>
+    getStudiesForYearRange(getStudiesByMapType(state, mapType), state.prevention.filters.disease);

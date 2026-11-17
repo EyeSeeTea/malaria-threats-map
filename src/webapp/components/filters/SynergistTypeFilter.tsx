@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { State } from "../../store/types";
 import {
     selectPreventionFilters,
-    selectPreventionStudiesByMapTypeSelected,
+    selectPreventionStudiesOfMapTypeAndDisease,
 } from "../../store/reducers/prevention-reducer";
 import { setSynergistTypes } from "../../store/actions/prevention-actions";
 import MultiFilter from "./common/MultiFilter";
@@ -11,9 +11,11 @@ import { useTranslation } from "react-i18next";
 import { Option } from "../BasicSelect";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { getSynergistTypes } from "../../../domain/entities/SynergistType";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useDropValuesNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State) => ({
-    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeAndDisease(state),
     preventionFilters: selectPreventionFilters(state),
 });
 
@@ -34,6 +36,13 @@ const SynergistTypeFilter: React.FC<Props> = ({ preventionFilters, preventionStu
     const { t } = useTranslation();
 
     const suggestions = getSynergistTypeFilterOptions(preventionStudiesOfMapType);
+
+    useDropValuesNotOffered(
+        replacesValuesNotOfferedOnMap("map", preventionFilters.disease),
+        preventionFilters.synergistTypes,
+        suggestions.map(option => option.value),
+        setSynergistTypes
+    );
 
     return (
         <MultiFilter

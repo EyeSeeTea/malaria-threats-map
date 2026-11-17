@@ -1,5 +1,6 @@
 import {
     createPreventionStudy,
+    createPreventionStudyOf,
     PREVENTION_SITE_ID,
     PREVENTION_SITE_NAME,
     STUDY_CITATION_LONG,
@@ -12,6 +13,11 @@ import {
     BURKINA_FASO,
     CONFIRMED_RESISTANCE,
     DELTAMETHRIN,
+    DENGUE,
+    GSTS,
+    MALARIA,
+    PYRETHROIDS,
+    CARBAMATES,
     DETECTED,
     DISCRIMINATING_ASSAY,
     ESTERASES,
@@ -40,7 +46,13 @@ import { PreventionStudy } from "../../../../../domain/entities/PreventionStudy"
 import { Option } from "../../../../components/BasicSelect";
 import { PreventionChartDataItem, SelectionData } from "../../../SelectionData";
 import { PreventionMapType, SiteSelection } from "../../../types";
-import { createPreventionSelectionData } from "../utils";
+import { createPreventionSelectionData, getStudiesOfDiseaseByMapType } from "../utils";
+import { createStateAfter } from "../../../__fixtures__/stateFixtures";
+import {
+    fetchResistanceMechanismTypeStudiesSuccess,
+    fetchResistanceStatusTypeStudiesSuccess,
+    setPreventionDisease,
+} from "../../../actions/prevention-actions";
 import { PREVENTION_THEME } from "../../../__fixtures__/filtersFixtures";
 
 const OTHER_SITE_ID = "SITE_BF_002";
@@ -691,6 +703,57 @@ describe("createPreventionSelectionData", () => {
             const data = selectionData(PreventionMapType.RESISTANCE_MECHANISM, filtered, nonFiltered);
 
             expect(data.kind === "common" && data.othersDetected).toEqual([`TYPE.${ESTERASES}`, `TYPE.${ACE1R}`]);
+        });
+    });
+
+    // The side panel follows the disease of the map: "others detected" reads the site's
+    // studies of the chosen disease only, which getStudiesOfDiseaseByMapType gives the three callers.
+    describe("others detected, with studies of two diseases on the site", () => {
+        const siteStudy = (disease: string, code: string, overrides: Partial<PreventionStudy>) =>
+            createPreventionStudyOf(disease, { Code: code, SITE_ID: PREVENTION_SITE_ID, ...overrides });
+
+        it("lists only the other insecticide classes of the chosen disease", () => {
+            const mapType = PreventionMapType.RESISTANCE_STATUS;
+            const filtered = [siteStudy(MALARIA, STUDY, { INSECTICIDE_CLASS: PYRETHROIDS })];
+            const otherClasses = [
+                siteStudy(MALARIA, OTHER_CLASS, {
+                    INSECTICIDE_CLASS: ORGANOPHOSPHATES,
+                    RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
+                }),
+                siteStudy(DENGUE, "dengueClass", {
+                    INSECTICIDE_CLASS: CARBAMATES,
+                    RESISTANCE_STATUS: CONFIRMED_RESISTANCE,
+                }),
+            ];
+            const state = createStateAfter([
+                fetchResistanceStatusTypeStudiesSuccess([...filtered, ...otherClasses]),
+                setPreventionDisease(MALARIA),
+            ]);
+
+            const data = selectionData(mapType, filtered, getStudiesOfDiseaseByMapType(state, mapType));
+
+            expect(data.kind === "common" && data.othersDetected).toEqual([ORGANOPHOSPHATES]);
+        });
+
+        it("lists only the other detected mechanisms of the chosen disease", () => {
+            const mapType = PreventionMapType.RESISTANCE_MECHANISM;
+            const mechanism = (disease: string, code: string, TYPE: string) =>
+                siteStudy(disease, code, {
+                    ASSAY_TYPE: MOLECULAR_ASSAY,
+                    MECHANISM_STATUS: DETECTED,
+                    MECHANISM_FREQUENCY: "1",
+                    TYPE,
+                });
+            const filtered = [mechanism(MALARIA, "kdr", KDR_L1014F)];
+            const others = [mechanism(MALARIA, ESTERASES_STUDY, ESTERASES), mechanism(DENGUE, "dengueGsts", GSTS)];
+            const state = createStateAfter([
+                fetchResistanceMechanismTypeStudiesSuccess([...filtered, ...others]),
+                setPreventionDisease(MALARIA),
+            ]);
+
+            const data = selectionData(mapType, filtered, getStudiesOfDiseaseByMapType(state, mapType));
+
+            expect(data.kind === "common" && data.othersDetected).toEqual([`TYPE.${ESTERASES}`]);
         });
     });
 });

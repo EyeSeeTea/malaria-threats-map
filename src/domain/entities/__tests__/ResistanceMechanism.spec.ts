@@ -1,3 +1,4 @@
+import { createPreventionStudy } from "../__fixtures__/studyFixtures";
 import {
     ACE1R,
     BIOCHEMICAL_ASSAY,
@@ -13,11 +14,21 @@ import {
     UNKNOWN_MECHANISM,
     WHO_TEST_KIT,
 } from "../__fixtures__/studyValues";
-import { getAssayTypesDetecting, getKnownMechanisms } from "../ResistanceMechanism";
+import {
+    defaultMechanism,
+    getAssayTypesDetecting,
+    getInvolvementMechanisms,
+    getKnownMechanisms,
+    getMechanisms,
+} from "../ResistanceMechanism";
 
 const catalogueOrder = [MONO_OXYGENASES, ESTERASES, GSTS, KDR_L1014S, KDR_L1014F, KDR_UNSPECIFIED, ACE1R];
 
 describe("ResistanceMechanism", () => {
+    it("selects mono-oxygenases by default", () => {
+        expect(defaultMechanism).toBe(MONO_OXYGENASES);
+    });
+
     // The cases of the former cleanMechanismTypeOptions: the map, its side panel and the dashboard
     // summary must offer the same mechanisms, in the same order.
     describe("getKnownMechanisms", () => {
@@ -34,6 +45,14 @@ describe("ResistanceMechanism", () => {
 
         it("returns each mechanism once when the input repeats it", () => {
             expect(getKnownMechanisms([GSTS, GSTS, ESTERASES, GSTS])).toEqual([ESTERASES, GSTS]);
+        });
+    });
+
+    describe("getMechanisms", () => {
+        it("returns the catalogue mechanisms the studies carry, in catalogue order", () => {
+            const studies = [ACE1R, WHO_TEST_KIT, GSTS, ACE1R].map(TYPE => createPreventionStudy({ TYPE }));
+
+            expect(getMechanisms(studies)).toEqual([GSTS, ACE1R]);
         });
     });
 
@@ -57,6 +76,29 @@ describe("ResistanceMechanism", () => {
 
         it("returns undefined without a mechanism", () => {
             expect(getAssayTypesDetecting(undefined)).toBeUndefined();
+        });
+    });
+
+    describe("getInvolvementMechanisms", () => {
+        const knownProxyTypes = [MONO_OXYGENASES, NOT_AVAILABLE, ESTERASES, GSTS];
+        const studiesOf = (proxyTypes: ReadonlyArray<string>) =>
+            proxyTypes.map(PROXY_TYPE => createPreventionStudy({ PROXY_TYPE }));
+
+        it("returns only the known proxy types the studies carry, each once, in the order they are known", () => {
+            expect(getInvolvementMechanisms(knownProxyTypes, studiesOf([GSTS, ESTERASES, GSTS]))).toEqual([
+                ESTERASES,
+                GSTS,
+            ]);
+        });
+
+        it("leaves out NA, even when the studies carry it", () => {
+            expect(getInvolvementMechanisms(knownProxyTypes, studiesOf([NOT_AVAILABLE, ESTERASES]))).toEqual([
+                ESTERASES,
+            ]);
+        });
+
+        it("leaves out a proxy type the studies carry that is not known", () => {
+            expect(getInvolvementMechanisms([], studiesOf([ESTERASES]))).toEqual([]);
         });
     });
 });

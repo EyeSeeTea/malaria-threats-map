@@ -3,18 +3,26 @@ import { ActionType } from "typesafe-actions";
 import _ from "lodash";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
-import { skip, switchMap, withLatestFrom } from "rxjs/operators";
+import { filter, map, skip, switchMap, withLatestFrom } from "rxjs/operators";
+import { AnyAction } from "redux";
 
 import {
     buildPreventionStudiesEpic,
     createPreventionSelectionData,
-    getStudiesByMapType,
+    getStudiesOfDiseaseByMapType,
+    getYearRangeStudiesByMapType,
     REQUESTED_VIR_START_DATE,
 } from "./utils";
 import { PreventionMapType, State } from "../../types";
 import { getAnalyticsPageView } from "../../analytics";
-import { getAssayTypesDetecting } from "../../../../domain/entities/ResistanceMechanism";
+import {
+    defaultMechanism,
+    getAssayTypesDetecting,
+    getInvolvementMechanisms,
+    getMechanisms,
+} from "../../../../domain/entities/ResistanceMechanism";
 import { mechanismAssayTypes } from "../../../../domain/entities/AssayType";
+import { defaultInsecticideClass, getInsecticideClasses } from "../../../../domain/entities/InsecticideClass";
 import {
     logEventAction,
     logPageViewAction,
@@ -27,15 +35,73 @@ import {
     setAssayTypes,
     setInsecticideClass,
     setInsecticideTypes,
+    setPreventionDisease,
     setPreventionFilteredStudies,
     setPreventionMapType,
     setProxyType,
     setSpecies,
+    setSynergistTypes,
     setType,
 } from "../../actions/prevention-actions";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
-import { defaultMechanismType } from "../../reducers/prevention-reducer";
 import { resetDatesRequired } from "../common/utils";
+import { diseaseSwitches } from "../common/diseaseSwitches";
+import { getDiseaseToSelect } from "../common/initialDisease";
+import { selectPreventionStudies, selectPreventionStudiesOfMapTypeFrom } from "../../reducers/prevention-reducer";
+import { selectProxyTypeValues } from "../../reducers/translations-reducer";
+import { chooseFilterValue } from "../../filterValues";
+
+const preventionStudiesLoaded = [
+    ActionTypeEnum.FetchResistanceStatusTypeStudiesSuccess,
+    ActionTypeEnum.FetchResistanceIntensityTypeStudiesSuccess,
+    ActionTypeEnum.FetchResistanceMechanismTypeStudiesSuccess,
+    ActionTypeEnum.FetchSynergistEffectTypeStudiesSuccess,
+] as const;
+
+type DiseaseOptions = Readonly<{
+    insecticideClasses: ReadonlyArray<string>;
+    mechanisms: ReadonlyArray<string>;
+    proxyTypes: ReadonlyArray<string>;
+}>;
+
+/** The options the filters of a map offer for the chosen disease, from the same functions the filters call. */
+function getDiseaseOptions(state: State, mapType: PreventionMapType): DiseaseOptions {
+    const studies = getStudiesOfDiseaseByMapType(state, mapType);
+
+    return {
+        insecticideClasses: getInsecticideClasses(studies),
+        mechanisms: getMechanisms(studies),
+        proxyTypes: getInvolvementMechanisms(selectProxyTypeValues(state), studies),
+    };
+}
+
+/**
+ * The top filter of the current map after a disease switch. The existing chain then empties the
+ * filters below it: class, insecticide types, test type or mechanism, species. On Resistance
+ * mechanisms the class is left alone, because the chain would empty the mechanism; the class
+ * filter of the next map replaces it if that map does not offer it.
+ */
+function getActionsAfterDiseaseSwitch(state: State): ReadonlyArray<AnyAction> {
+    const { mapType } = state.prevention.filters;
+    const options = getDiseaseOptions(state, mapType);
+    const emptySynergistTypes = setSynergistTypes([]);
+    const insecticideClass = setInsecticideClass(
+        chooseFilterValue(options.insecticideClasses, defaultInsecticideClass)
+    );
+
+    switch (mapType) {
+        case PreventionMapType.RESISTANCE_MECHANISM:
+            return [emptySynergistTypes, setType([chooseFilterValue(options.mechanisms, defaultMechanism)])];
+        case PreventionMapType.LEVEL_OF_INVOLVEMENT:
+            return [
+                emptySynergistTypes,
+                setProxyType(chooseFilterValue(options.proxyTypes, defaultMechanism)),
+                insecticideClass,
+            ];
+        default:
+            return [emptySynergistTypes, insecticideClass];
+    }
+}
 
 export const fetchAllPreventionStudiesEpic = buildPreventionStudiesEpic(
     ActionTypeEnum.FetchPreventionStudiesRequest,
@@ -82,7 +148,7 @@ export const setPreventionMapTypeEpic = (
             const pageView = getAnalyticsPageView({ page: "prevention", section: action.payload });
             const logPageView = logPageViewAction(pageView);
 
-            const studies = getStudiesByMapType(state, action.payload);
+            const studies = getYearRangeStudiesByMapType(state, action.payload);
             const dateResets =
                 studies.length > 0
                     ? resetDatesRequired({
@@ -93,14 +159,16 @@ export const setPreventionMapTypeEpic = (
                       })
                     : [];
 
+            // With a disease other than the default, the filters of the new map replace the class, the mechanism
+            // or the proxy type it does not offer (useReplaceValueNotOffered).
             if (action.payload === PreventionMapType.RESISTANCE_MECHANISM) {
-                return of(..._.compact([...dateResets, setType([defaultMechanismType]), logPageView]));
+                return of(..._.compact([...dateResets, setType([defaultMechanism]), logPageView]));
             } else if (action.payload === PreventionMapType.INTENSITY_STATUS) {
                 return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.RESISTANCE_STATUS) {
                 return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             } else if (action.payload === PreventionMapType.LEVEL_OF_INVOLVEMENT) {
-                return of(..._.compact([...dateResets, setProxyType("MONO_OXYGENASES"), logPageView]));
+                return of(..._.compact([...dateResets, setProxyType(defaultMechanism), logPageView]));
             } else {
                 return of(..._.compact([...dateResets, setType(undefined), logPageView]));
             }
@@ -128,7 +196,7 @@ export const setPreventionInsecticideClassEpic = (
             const isTourOpen = state.malaria.tour.open;
             const actions = _.compact([
                 setInsecticideTypes([]),
-                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : [defaultMechanismType]),
+                setType(state.prevention.filters.type ? [state.prevention.filters.type[0]] : [defaultMechanism]),
                 setSpecies([]),
                 isTourOpen
                     ? null
@@ -164,7 +232,7 @@ export const setPreventionFilteredStudiesEpic = (
         withLatestFrom(state$),
         switchMap(([, state]) => {
             const mapType = state.prevention.filters.mapType;
-            const nonFilteredStudies = getStudiesByMapType(state, mapType);
+            const nonFilteredStudies = getStudiesOfDiseaseByMapType(state, mapType);
 
             const selectionData = createPreventionSelectionData(
                 state.malaria.theme,
@@ -188,7 +256,7 @@ export const setYearsFiltersEpic = (
         switchMap(([$action, $state]) => {
             if ($action.payload === undefined && $state.malaria.theme === "prevention") {
                 const mapType = $state.prevention.filters.mapType;
-                const mapTypeStudies = getStudiesByMapType($state, mapType);
+                const mapTypeStudies = getYearRangeStudiesByMapType($state, mapType);
 
                 const [start, end] = getMinMaxYears(mapTypeStudies);
 
@@ -213,16 +281,73 @@ export const setPreventionThemeEpic = (
 
             if ($action.from === "map") {
                 const mapType = $state.prevention.filters.mapType;
-                const mapTypeStudies = getStudiesByMapType($state, mapType);
+                const mapTypeStudies = getYearRangeStudiesByMapType($state, mapType);
 
                 const [start, end] = getMinMaxYears(mapTypeStudies);
                 const base: unknown[] = mapTypeStudies?.length
-                    ? [setMaxMinYearsAction([start, end]), setFiltersAction([REQUESTED_VIR_START_DATE, end])]
+                    ? [
+                          setMaxMinYearsAction([start, end]),
+                          setFiltersAction([Math.max(REQUESTED_VIR_START_DATE, start), end]),
+                      ]
                     : [];
 
-                return of(...base, setInsecticideClass("PYRETHROIDS"));
+                return of(...base, setInsecticideClass(defaultInsecticideClass));
             } else {
-                return of(setInsecticideClass(null));
+                // Data Download shows the studies of the default disease only, so its years come from them.
+                const downloadStudies = selectPreventionStudiesOfMapTypeFrom($state, "download");
+                const yearRange = downloadStudies.length ? [setMaxMinYearsAction(getMinMaxYears(downloadStudies))] : [];
+
+                return of(...yearRange, setInsecticideClass(null));
             }
+        })
+    );
+
+export const setInitialPreventionDiseaseEpic = (action$: Observable<AnyAction>, state$: StateObservable<State>) =>
+    action$.pipe(
+        ofType(...preventionStudiesLoaded, ActionTypeEnum.SetPreventionDisease),
+        withLatestFrom(state$),
+        map(([, state]) => getDiseaseToSelect(state.prevention.filters.disease, selectPreventionStudies(state))),
+        filter((disease): disease is string => disease !== undefined),
+        map(disease => setPreventionDisease(disease))
+    );
+
+export const resetPreventionFiltersOnDiseaseSwitchEpic = (
+    action$: Observable<ActionType<typeof setPreventionDisease>>,
+    state$: StateObservable<State>
+) =>
+    diseaseSwitches(
+        action$.pipe(
+            ofType(ActionTypeEnum.SetPreventionDisease),
+            map(action => action.payload)
+        )
+    ).pipe(
+        withLatestFrom(state$),
+        switchMap(([, state]) => of(...getActionsAfterDiseaseSwitch(state)))
+    );
+
+/**
+ * The year range of the map when its disease is set or switched, from the studies of that disease, as a
+ * map change computes it: it changes only when the first year changes, so with malaria nothing moves.
+ */
+export const setPreventionYearRangeOfDiseaseEpic = (
+    action$: Observable<ActionType<typeof setPreventionDisease>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetPreventionDisease),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            const studies = getYearRangeStudiesByMapType(state, state.prevention.filters.mapType);
+            const dateResets =
+                studies.length > 0
+                    ? resetDatesRequired({
+                          minMaxYears: () => getMinMaxYears(studies),
+                          theme: "prevention",
+                          state,
+                          filterStart: REQUESTED_VIR_START_DATE,
+                      })
+                    : [];
+
+            return of(...dateResets);
         })
     );

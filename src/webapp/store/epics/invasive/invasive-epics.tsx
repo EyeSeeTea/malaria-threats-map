@@ -2,13 +2,16 @@ import { ofType, StateObservable } from "redux-observable";
 import { ActionType } from "typesafe-actions";
 import { ActionTypeEnum } from "../../actions";
 import { Observable, of } from "rxjs";
-import { catchError, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { catchError, filter, map, mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { AnyAction } from "redux";
 import {
     fetchInvasiveStudiesError,
     fetchInvasiveStudiesRequest,
     fetchInvasiveStudiesSuccess,
+    setInvasiveDisease,
     setInvasiveFilteredStudiesAction,
     setInvasiveMapType,
+    setInvasiveVectorSpecies,
 } from "../../actions/invasive-actions";
 import {
     setFiltersAction,
@@ -26,6 +29,10 @@ import { InvasiveStudy } from "../../../../domain/entities/InvasiveStudy";
 import { createInvasiveSelectionData } from "./utils";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
+import { diseaseSwitches } from "../common/diseaseSwitches";
+import { getDiseaseToSelect } from "../common/initialDisease";
+import { getStudiesForYearRange } from "../common/yearRange";
+import { selectInvasiveStudiesOfDefaultDisease } from "../../reducers/invasive-reducer";
 
 export const getInvasiveStudiesEpic = (
     action$: Observable<ActionType<typeof fetchInvasiveStudiesRequest>>,
@@ -41,7 +48,8 @@ export const getInvasiveStudiesEpic = (
                     mergeMap((studies: InvasiveStudy[]) => {
                         return of(
                             ...resetDatesRequired({
-                                minMaxYears: () => getMinMaxYears(studies),
+                                minMaxYears: () =>
+                                    getMinMaxYears(getStudiesForYearRange(studies, state.invasive.filters.disease)),
                                 theme: "invasive",
                                 state,
                             }),
@@ -81,7 +89,11 @@ export const setInvasiveThemeEpic = (
                 return of();
             }
 
-            const studies = $state.invasive.studies;
+            // Data Download shows the studies of the default disease only, so its years come from them.
+            const studies =
+                $action.from === "download"
+                    ? selectInvasiveStudiesOfDefaultDisease($state)
+                    : getStudiesForYearRange($state.invasive.studies, $state.invasive.filters.disease);
             const minMax = studies.length ? getMinMaxYears(studies, false) : undefined;
             return of(setMaxMinYearsAction(minMax), setFiltersAction(minMax));
         })
@@ -102,5 +114,44 @@ export const setInvasiveFilteredStudiesEpic = (
             );
 
             return of(setSelectionData(null), setSelectionData(selectionData));
+        })
+    );
+
+export const setInitialInvasiveDiseaseEpic = (action$: Observable<AnyAction>, state$: StateObservable<State>) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.FetchInvasiveStudiesSuccess, ActionTypeEnum.SetInvasiveDisease),
+        withLatestFrom(state$),
+        map(([, state]) => getDiseaseToSelect(state.invasive.filters.disease, state.invasive.studies)),
+        filter((disease): disease is string => disease !== undefined),
+        map(disease => setInvasiveDisease(disease))
+    );
+
+export const resetInvasiveFiltersOnDiseaseSwitchEpic = (action$: Observable<ActionType<typeof setInvasiveDisease>>) =>
+    diseaseSwitches(
+        action$.pipe(
+            ofType(ActionTypeEnum.SetInvasiveDisease),
+            map(action => action.payload)
+        )
+    ).pipe(map(() => setInvasiveVectorSpecies([])));
+
+/**
+ * The year range of the map when its disease is set or switched, from the studies of that disease, as
+ * loading the studies computes it: it changes only when the first year changes, so with malaria nothing moves.
+ */
+export const setInvasiveYearRangeOfDiseaseEpic = (
+    action$: Observable<ActionType<typeof setInvasiveDisease>>,
+    state$: StateObservable<State>
+) =>
+    action$.pipe(
+        ofType(ActionTypeEnum.SetInvasiveDisease),
+        withLatestFrom(state$),
+        switchMap(([, state]) => {
+            const studies = getStudiesForYearRange(state.invasive.studies, state.invasive.filters.disease);
+            const dateResets =
+                studies.length > 0
+                    ? resetDatesRequired({ minMaxYears: () => getMinMaxYears(studies), theme: "invasive", state })
+                    : [];
+
+            return of(...dateResets);
         })
     );

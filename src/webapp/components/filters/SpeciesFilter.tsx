@@ -1,11 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Source } from "../../store/actions/base-actions";
 import { PreventionFilters, PreventionMapType, RegionState, State } from "../../store/types";
 import { selectSpecies } from "../../store/reducers/translations-reducer";
-import {
-    selectPreventionFilters,
-    selectPreventionStudiesByMapTypeSelected,
-} from "../../store/reducers/prevention-reducer";
+import { selectPreventionFilters, selectPreventionStudiesOfMapTypeFrom } from "../../store/reducers/prevention-reducer";
 import { setSpecies } from "../../store/actions/prevention-actions";
 import {
     filterByAssayTypes,
@@ -23,10 +21,12 @@ import { selectFilters, selectRegion } from "../../store/reducers/base-reducer";
 import { PreventionStudy } from "../../../domain/entities/PreventionStudy";
 import { useTranslation } from "react-i18next";
 import MultiFilter from "./common/MultiFilter";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useDropValuesNotOffered } from "./common/useReplaceValuesNotOffered";
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State, { from }: OwnProps) => ({
     species: selectSpecies(state),
-    preventionStudiesOfMapType: selectPreventionStudiesByMapTypeSelected(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeFrom(state, from),
     yearFilter: selectFilters(state),
     region: selectRegion(state),
     preventionFilters: selectPreventionFilters(state),
@@ -38,7 +38,8 @@ const mapDispatchToProps = {
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
-type Props = DispatchProps & StateProps;
+type OwnProps = { from: Source };
+type Props = DispatchProps & StateProps & OwnProps;
 
 export function getSpeciesFilterOptions(
     preventionFilters: PreventionFilters,
@@ -92,9 +93,17 @@ const SpeciesFilter: React.FC<Props> = ({
     yearFilter,
     region,
     setSpecies,
+    from,
 }) => {
     const { t } = useTranslation();
     const suggestions = getSpeciesFilterOptions(preventionFilters, preventionStudiesOfMapType, yearFilter, region);
+
+    useDropValuesNotOffered(
+        replacesValuesNotOfferedOnMap(from, preventionFilters.disease),
+        preventionFilters.species,
+        preventionStudiesOfMapType.map(study => study.SPECIES),
+        setSpecies
+    );
 
     return (
         <MultiFilter

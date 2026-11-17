@@ -16,6 +16,8 @@ import {
 
 export const PREVENTION_THEME: MapTheme = "prevention";
 export const INVASIVE_THEME: MapTheme = "invasive";
+export const DIAGNOSIS_THEME: MapTheme = "diagnosis";
+export const TREATMENT_THEME: MapTheme = "treatment";
 
 export const MAP: Source = "map";
 export const DOWNLOAD: Source = "download";
@@ -40,12 +42,14 @@ const defaultPreventionFilters = (): PreventionFilters => ({
     species: [],
     onlyIncludeBioassaysWithMoreMosquitoes: 0,
     onlyByHealthMinistries: false,
+    disease: undefined,
 });
 
 const defaultInvasiveFilters = (): InvasiveFilters => ({
     mapType: InvasiveMapType.VECTOR_OCCURANCE,
     dataset: "INVASIVE_VECTOR_SPECIES",
     vectorSpecies: [],
+    disease: undefined,
 });
 
 export function createYearFilter(): number[] {

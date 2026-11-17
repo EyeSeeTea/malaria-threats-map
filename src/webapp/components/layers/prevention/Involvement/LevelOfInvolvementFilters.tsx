@@ -1,4 +1,5 @@
 import React from "react";
+import { PreventionDiseaseFilter } from "../../../filters/DiseaseFilter";
 import YearRangeSelector from "../../../YearRangeSelector";
 import SpeciesFilter from "../../../filters/SpeciesFilter";
 
@@ -10,11 +11,12 @@ import InsecticideTypeFilter from "../../../filters/InsecticideTypeFilter";
 export default function LevelOfInvolvementFilters() {
     return (
         <div>
+            <PreventionDiseaseFilter />
             <ProxyTypeFilter />
-            <InsecticideClassFilter />
-            <InsecticideTypeFilter />
+            <InsecticideClassFilter from="map" />
+            <InsecticideTypeFilter from="map" />
             <SynergistTypeFilter />
-            <SpeciesFilter />
+            <SpeciesFilter from="map" />
             <YearRangeSelector />
         </div>
     );

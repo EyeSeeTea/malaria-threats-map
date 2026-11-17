@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Option } from "../../webapp/components/BasicSelect";
-import { sortInsecticideClasses } from "../../webapp/components/filters/InsecticideClassFilter";
+import { sortInsecticideClasses } from "./InsecticideClass";
 import { Study } from "./Study";
 
 export interface PreventionStudy extends Study {

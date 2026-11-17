@@ -14,6 +14,7 @@ import {
     setAssayTypes,
     setInsecticideClass,
     setInsecticideTypes,
+    setPreventionDisease,
     setPreventionMapType,
     setSpecies,
     setSynergistTypes,
@@ -33,11 +34,12 @@ import {
     setTreatmentMapType,
     setTreatmentPlasmodiumSpecies,
 } from "../store/actions/treatment-actions";
-import { setInvasiveMapType, setInvasiveVectorSpecies } from "../store/actions/invasive-actions";
+import { setInvasiveDisease, setInvasiveMapType, setInvasiveVectorSpecies } from "../store/actions/invasive-actions";
 import { PreventionMapType } from "../store/types";
 import ReduxQuerySync from "../store/query-middleware";
 import { toVectorSpeciesValues } from "../store/vectorSpeciesUrlValues";
 import { useStore } from "react-redux";
+import { defaultInsecticideClass } from "../../domain/entities/InsecticideClass";
 
 const MapContainer: React.FC = () => {
     const store = useStore();
@@ -95,7 +97,7 @@ const MapContainer: React.FC = () => {
                     selector: (state: State) => state.prevention.filters.insecticideClass,
                     action: (value: string) => {
                         if (!value) {
-                            return setInsecticideClass("PYRETHROIDS");
+                            return setInsecticideClass(defaultInsecticideClass);
                         }
 
                         return setInsecticideClass(value);
@@ -125,6 +127,14 @@ const MapContainer: React.FC = () => {
                     selector: (state: State) => state.invasive.filters.vectorSpecies,
                     action: (value: string) =>
                         setInvasiveVectorSpecies(value ? toVectorSpeciesValues(value.split(",")) : undefined),
+                },
+                preventionDisease: {
+                    selector: (state: State) => state.prevention.filters.disease,
+                    action: (value: string) => setPreventionDisease(value || undefined),
+                },
+                invasiveDisease: {
+                    selector: (state: State) => state.invasive.filters.disease,
+                    action: (value: string) => setInvasiveDisease(value || undefined),
                 },
                 surveyTypes: {
                     selector: (state: State) => state.diagnosis.filters.surveyTypes,

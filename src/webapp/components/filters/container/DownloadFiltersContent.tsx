@@ -52,20 +52,20 @@ const DownloadFiltersContent: React.FC<Props> = ({
                 case "DISCRIMINATING_CONCENTRATION_BIOASSAY":
                     return (
                         <div>
-                            <InsecticideClassFilter />
-                            <InsecticideTypeFilter />
-                            <TypeFilter />
-                            <SpeciesFilter />
+                            <InsecticideClassFilter from="download" />
+                            <InsecticideTypeFilter from="download" />
+                            <TypeFilter from="download" />
+                            <SpeciesFilter from="download" />
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
                 case "INTENSITY_CONCENTRATION_BIOASSAY":
                     return (
                         <div>
-                            <InsecticideClassFilter />
-                            <InsecticideTypeFilter />
-                            <TypeFilter />
-                            <SpeciesFilter />
+                            <InsecticideClassFilter from="download" />
+                            <InsecticideTypeFilter from="download" />
+                            <TypeFilter from="download" />
+                            <SpeciesFilter from="download" />
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );
@@ -74,7 +74,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                     return (
                         <div>
                             <MechanismTypeFilter from="download" />
-                            <SpeciesFilter />
+                            <SpeciesFilter from="download" />
                             {/* {isSynergyst(preventionFilters) && <SynergistTypeFilter />} */}
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
@@ -82,7 +82,7 @@ const DownloadFiltersContent: React.FC<Props> = ({
                 case "SYNERGIST-INSECTICIDE_BIOASSAY":
                     return (
                         <div>
-                            <SpeciesFilter />
+                            <SpeciesFilter from="download" />
                             <YearRangeSelector showTheatherMode={false} />
                         </div>
                     );

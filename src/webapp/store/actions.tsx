@@ -58,6 +58,7 @@ export enum ActionTypeEnum {
     SetType = "prevention/SET_TYPE",
     SetSynergistTypes = "prevention/SET_SYNERGIST_TYPES",
     SetSpecies = "prevention/SET_SPECIES",
+    SetPreventionDisease = "prevention/SET_DISEASE",
     SetAssayTypes = "prevention/SET_ASSAY_TYPES",
     SetPreventionFilteredStudies = "prevention/SET_FILTER_STUDIES",
     SetPreventionSelectionStudies = "prevention/SET_SELECTION_STUDIES",
@@ -96,6 +97,7 @@ export enum ActionTypeEnum {
     SetInvasiveMapType = "invasive/SET_INVASIVE_MAP_TYPE",
     SetInvasiveDataset = "invasive/SET_INVASIVE_DATASET",
     SetInvasiveVectorSpecies = "invasive/SET_INVASIVE_VECTOR_SPECIES",
+    SetInvasiveDisease = "invasive/SET_INVASIVE_DISEASE",
     SetInvasiveFilteredStudies = "invasive/SET_FILTER_STUDIES",
 
     FetchTranslationsRequest = "translations/FETCH_TRANSLATIONS_REQUEST",

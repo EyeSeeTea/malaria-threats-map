@@ -23,6 +23,7 @@ import { PLASMODIUM_SPECIES_SUGGESTIONS } from "../filters/PlasmodiumSpeciesFilt
 import { preventionSuggestions } from "../filters/PreventionMapTypesSelector";
 import { treatmentSuggestions } from "../filters/TreatmentMapTypesSelector";
 import { getVectorSpeciesLabel } from "../filters/VectorSpeciesFilter";
+import { getDiseaseLabel } from "../filters/DiseaseFilter";
 import { MOLECULAR_MARKERS_LABELS } from "../layers/treatment/MolecularMarkersOngoingStudies/utils";
 
 export function getValueLabelFilters(
@@ -55,6 +56,7 @@ export function preventionValueLabelFilters(
     maxMinYears: number[],
     yearFilters: number[]
 ) {
+    const disease = diseaseValueLabel(preventionFilters.disease);
     const years = getYearsSummary(maxMinYears, yearFilters);
     const insecticideClass = i18next.t(preventionFilters.insecticideClass);
     const insecticideTypes = preventionFilters.insecticideTypes.map(item => i18next.t(item));
@@ -66,6 +68,7 @@ export function preventionValueLabelFilters(
     switch (preventionFilters.mapType) {
         case PreventionMapType.RESISTANCE_STATUS: {
             return {
+                ...disease,
                 years,
                 insecticideClass,
                 insecticideTypes: insecticideTypes?.length
@@ -77,6 +80,7 @@ export function preventionValueLabelFilters(
         }
         case PreventionMapType.INTENSITY_STATUS: {
             return {
+                ...disease,
                 years,
                 insecticideClass,
                 insecticideTypes: insecticideTypes?.length
@@ -88,6 +92,7 @@ export function preventionValueLabelFilters(
         }
         case PreventionMapType.RESISTANCE_MECHANISM: {
             return {
+                ...disease,
                 years,
                 assayTypes: _.compact(assayTypes).join(" | "),
                 mechanismType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
@@ -96,6 +101,7 @@ export function preventionValueLabelFilters(
         }
         case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
             return {
+                ...disease,
                 years,
                 synergistTypes: _.compact(synergistTypes).join(" | "),
                 testType: type?.length ? _.compact(type).join(" | ") : i18next.t("common.map_info_summary.all"),
@@ -140,6 +146,7 @@ export function invasiveValueLabelFilters(
     const vectorSpecies = invasiveFilters.vectorSpecies.map(item => getVectorSpeciesLabel(item));
 
     return {
+        ...diseaseValueLabel(invasiveFilters.disease),
         years,
         vectorSpecies: vectorSpecies?.length
             ? _.compact(vectorSpecies).join(" | ")
@@ -336,7 +343,8 @@ const buildFilters = (
         | "excludeStudies"
         | "plasmodiumSpecies"
         | "drugs"
-        | "molecularMarkers",
+        | "molecularMarkers"
+        | "disease",
     filterValues: string | string[] | undefined
 ) => {
     const value = `${i18next.t(`common.map_info_summary.${type}`)}: `;
@@ -373,18 +381,20 @@ export function preventionFiltersToString(
     const synergistTypes = buildFilters("synergistTypes", preventionFilters.synergistTypes);
 
     if (from === "map") {
+        const disease = diseaseFilterText(preventionFilters.disease);
+
         switch (preventionFilters.mapType) {
             case PreventionMapType.RESISTANCE_STATUS: {
-                return _.compact([insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
+                return _.compact([disease, insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
             }
             case PreventionMapType.INTENSITY_STATUS: {
-                return _.compact([insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
+                return _.compact([disease, insecticideClass, ...insecticideTypes, type, ...species, years]).join(" | ");
             }
             case PreventionMapType.RESISTANCE_MECHANISM: {
-                return _.compact([type, ...assayTypes, ...species, years]).join(" | ");
+                return _.compact([disease, type, ...assayTypes, ...species, years]).join(" | ");
             }
             case PreventionMapType.LEVEL_OF_INVOLVEMENT: {
-                return _.compact([type, ...synergistTypes, ...species, years]).join(" | ");
+                return _.compact([disease, type, ...synergistTypes, ...species, years]).join(" | ");
             }
         }
     } else {
@@ -499,8 +509,9 @@ export function invasiveFiltersToString(
     invasiveFilters: InvasiveFilters,
     maxMinYears: number[],
     yearFilters: number[],
-    _from: Source
+    from: Source
 ) {
+    const disease = from === "map" ? diseaseFilterText(invasiveFilters.disease) : undefined;
     const years = buildFilters("years", getYearsSummary(maxMinYears, yearFilters));
 
     const vectorSpecies = buildFilters(
@@ -508,7 +519,17 @@ export function invasiveFiltersToString(
         invasiveFilters.vectorSpecies.map(item => getVectorSpeciesLabel(item))
     );
 
-    return _.compact([...vectorSpecies, years]).join(" | ");
+    return _.compact([disease, ...vectorSpecies, years]).join(" | ");
+}
+
+/** The disease entry of the map summary, once a disease is set. */
+function diseaseValueLabel(disease: string | undefined) {
+    return disease ? { disease: getDiseaseLabel(disease) } : {};
+}
+
+/** The disease entry of the map's filter text, once a disease is set. Data Download's text has none. */
+function diseaseFilterText(disease: string | undefined) {
+    return disease ? buildFilters("disease", getDiseaseLabel(disease)) : undefined;
 }
 
 function getYearsSummary(maxMinYears: number[], yearFilters: number[]) {

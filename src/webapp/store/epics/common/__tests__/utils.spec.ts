@@ -241,6 +241,7 @@ describe("side panel shared functions", () => {
         const START = 2005;
         const END = 2024;
         const FILTER_START = 2010;
+        const FILTER_START_BEFORE_STUDIES = 2000;
         const minMaxYears = (): [number, number] => [START, END];
 
         const stateWith = (theme: MapTheme, filters: number[], maxMinYears: number[]): State => {
@@ -269,6 +270,19 @@ describe("side panel shared functions", () => {
             expect(
                 resetDatesRequired({ minMaxYears, theme: PREVENTION_THEME, state, filterStart: FILTER_START })
             ).toEqual([setMaxMinYearsAction([START, END]), setFiltersAction([FILTER_START, END])]);
+        });
+
+        it("starts the filter at the studies' first year when filterStart is before it", () => {
+            const state = stateWith(PREVENTION_THEME, [1990, END], [1990, END]);
+
+            expect(
+                resetDatesRequired({
+                    minMaxYears,
+                    theme: PREVENTION_THEME,
+                    state,
+                    filterStart: FILTER_START_BEFORE_STUDIES,
+                })
+            ).toEqual([setMaxMinYearsAction([START, END]), setFiltersAction([START, END])]);
         });
 
         it.each([

@@ -15,6 +15,8 @@ export const setInvasiveDataset = createAction(ActionTypeEnum.SetInvasiveDataset
 
 export const setInvasiveVectorSpecies = createAction(ActionTypeEnum.SetInvasiveVectorSpecies)<string[]>();
 
+export const setInvasiveDisease = createAction(ActionTypeEnum.SetInvasiveDisease)<string | undefined>();
+
 export const setInvasiveFilteredStudiesAction = createAction(ActionTypeEnum.SetInvasiveFilteredStudies)<
     InvasiveStudy[]
 >();

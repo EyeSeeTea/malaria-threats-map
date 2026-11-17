@@ -1,17 +1,23 @@
 import React from "react";
 import { State } from "../../store/types";
 import { connect } from "react-redux";
-import { Translation } from "../../types/Translation";
 import { useTranslation } from "react-i18next";
-import { selectProxyTypes } from "../../store/reducers/translations-reducer";
-import { selectPreventionFilters } from "../../store/reducers/prevention-reducer";
+import { selectProxyTypeValues } from "../../store/reducers/translations-reducer";
+import {
+    selectPreventionFilters,
+    selectPreventionStudiesOfMapTypeAndDisease,
+} from "../../store/reducers/prevention-reducer";
 import { setProxyType } from "../../store/actions/prevention-actions";
 import { logEventAction } from "../../store/actions/base-actions";
 import RadioGroupFilter from "./RadioGroupFilter";
+import { defaultMechanism, getInvolvementMechanisms } from "../../../domain/entities/ResistanceMechanism";
+import { replacesValuesNotOfferedOnMap } from "../../store/diseaseMapBehaviour";
+import { useReplaceValueNotOffered } from "./common/useReplaceValuesNotOffered";
 
 const mapStateToProps = (state: State) => ({
-    proxyTypes: selectProxyTypes(state),
+    proxyTypeValues: selectProxyTypeValues(state),
     preventionFilters: selectPreventionFilters(state),
+    preventionStudiesOfMapType: selectPreventionStudiesOfMapTypeAndDisease(state),
 });
 
 const mapDispatchToProps = {
@@ -23,7 +29,13 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 type Props = DispatchProps & StateProps;
 
-function ProxyTypeFilter({ proxyTypes = [], preventionFilters, setProxyType, logEventAction }: Props) {
+function ProxyTypeFilter({
+    proxyTypeValues,
+    preventionFilters,
+    preventionStudiesOfMapType,
+    setProxyType,
+    logEventAction,
+}: Props) {
     const { t } = useTranslation();
     const handleChange = (event: React.ChangeEvent<unknown>) => {
         const newValue = (event.target as HTMLInputElement).value;
@@ -31,14 +43,16 @@ function ProxyTypeFilter({ proxyTypes = [], preventionFilters, setProxyType, log
         logEventAction({ category: "filter", action: "proxyType", label: newValue });
     };
 
-    const suggestions: Translation[] = proxyTypes as Translation[];
+    const mechanisms = getInvolvementMechanisms(proxyTypeValues, preventionStudiesOfMapType);
+    const options = mechanisms.map(value => ({ value, label: t(`PROXY_TYPE.${value}`) }));
 
-    const options = suggestions
-        .filter(translation => translation.VALUE_ !== "NA")
-        .map(mechanism => ({
-            value: mechanism.VALUE_,
-            label: t(`PROXY_TYPE.${mechanism.VALUE_}`),
-        }));
+    useReplaceValueNotOffered(
+        replacesValuesNotOfferedOnMap("map", preventionFilters.disease),
+        preventionFilters.proxyType,
+        mechanisms,
+        defaultMechanism,
+        setProxyType
+    );
 
     return (
         <RadioGroupFilter

@@ -5,8 +5,15 @@ import { Study } from "../Study";
 export const NOT_AVAILABLE = "NA";
 export const NOT_REPORTED = "NR";
 
+export const MALARIA = "MALARIA";
+export const DENGUE = "DENGUE";
+
 export const PYRETHROIDS = "PYRETHROIDS";
 export const ORGANOPHOSPHATES = "ORGANOPHOSPHATES";
+export const CARBAMATES = "CARBAMATES";
+export const NEONICOTINOIDS = "NEONICOTINOIDS";
+export const ORGANOCHLORINES = "ORGANOCHLORINES";
+export const PYRROLES = "PYRROLES";
 
 export const DELTAMETHRIN = "DELTAMETHRIN";
 export const PERMETHRIN = "PERMETHRIN";
