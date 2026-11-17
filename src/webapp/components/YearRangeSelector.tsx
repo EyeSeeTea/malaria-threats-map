@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Slider, styled as MuiStyled, Divider as MuiDivider, Typography, Box } from "@mui/material";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -20,11 +20,14 @@ const Row = styled.div`
     padding: 0px 15px;
 `;
 
+const sliderWidthPercent = 80;
+const sliderOffsetPercent = (100 - sliderWidthPercent) / 2;
+
 const StyledSlider = MuiStyled(Slider)(() => ({
     display: "table",
     margin: "0 auto",
     padding: "0px 0px 8px 0px",
-    width: "80%",
+    width: `${sliderWidthPercent}%`,
     "& .MuiSlider-valueLabel": {
         fontSize: 10,
         fontWeight: "bold",
@@ -71,28 +74,7 @@ export function range(start: number, end: number, reverse?: boolean) {
 const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode = true }: Props) => {
     const { t } = useTranslation();
 
-    const sliderRef = useRef<HTMLDivElement>(null);
-    const [thumbPositions, setThumbPositions] = useState<[number, number]>([0, 0]);
     const [activeThumb, setActiveThumb] = useState<number>();
-
-    const updateThumbPositions = useCallback(() => {
-        if (!sliderRef.current) return;
-        const sliderLeft = sliderRef.current.getBoundingClientRect().left;
-        const thumbs = sliderRef.current.querySelectorAll(".MuiSlider-thumb") as NodeListOf<HTMLElement>;
-
-        if (thumbs.length !== 2) return;
-        const [thumb1, thumb2] = thumbs;
-        const position1 = thumb1.getBoundingClientRect().left + thumb1.offsetWidth / 2 - sliderLeft;
-        const position2 = thumb2.getBoundingClientRect().left + thumb2.offsetWidth / 2 - sliderLeft;
-
-        setThumbPositions([position1, position2]);
-    }, []);
-
-    useEffect(() => {
-        updateThumbPositions();
-        window.addEventListener("resize", updateThumbPositions);
-        return () => window.removeEventListener("resize", updateThumbPositions);
-    }, [filters, updateThumbPositions]);
 
     const handleChange = (event: Event, newValue: number | number[], activeThumbIndex: number) => {
         const [start, end] = newValue as number[];
@@ -118,7 +100,7 @@ const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode 
             </Typography>
             <Divider />
 
-            <Box ref={sliderRef} sx={{ position: "relative" }}>
+            <Box sx={{ position: "relative" }}>
                 {filters.map((filter, index) => {
                     return (
                         <DynamicLabel
@@ -126,7 +108,6 @@ const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode 
                             value={filter}
                             index={index}
                             filters={filters}
-                            thumbPositions={thumbPositions}
                             activeThumb={activeThumb}
                             maxMinYears={maxMinYears}
                         />
@@ -159,33 +140,29 @@ const YearRangeSelector = ({ maxMinYears, filters, setFilters, showTheatherMode 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(YearRangeSelector);
 
-const DynamicLabel: React.FC<DynamicLabelProps> = ({
-    activeThumb,
-    filters,
-    index,
-    maxMinYears,
-    thumbPositions,
-    value,
-}) => {
+const DynamicLabel: React.FC<DynamicLabelProps> = ({ activeThumb, filters, index, maxMinYears, value }) => {
     const [minYear, maxYear] = filters;
     const steps = maxMinYears[1] - maxMinYears[0];
     const yearOverlapLimit = Math.round(steps / 10); // 10% of the range
     const overlap = Math.abs(minYear - maxYear) <= yearOverlapLimit;
     const offsetY = overlap && activeThumb === index ? -35 : -21.5;
-    const leftPosition = thumbPositions[index] - 22;
+    // The slider takes the middle 80% of the box and shows a value outside its range at the nearest end
+    const valueInRange = Math.min(Math.max(value, maxMinYears[0]), maxMinYears[1]);
+    const thumbPercent = steps > 0 ? ((valueInRange - maxMinYears[0]) / steps) * 100 : 0;
+    const leftPosition = `calc(${sliderOffsetPercent}% + ${(thumbPercent * sliderWidthPercent) / 100}%)`;
 
     return (
         <Box
             sx={{
                 position: "absolute",
-                transform: `translate(50%, ${offsetY}px)`,
-                left: `${leftPosition}px`,
+                transform: `translate(-50%, ${offsetY}px)`,
+                left: leftPosition,
                 pointerEvents: "none",
-                transition: "transform 0.2s ease",
+                transition: "transform 0.2s ease, left 150ms",
             }}
         >
             <Typography fontWeight="bold" sx={{ color: "#2fb3af", fontSize: "10px" }}>
-                {value}
+                {valueInRange}
             </Typography>
         </Box>
     );
@@ -195,7 +172,6 @@ type DynamicLabelProps = {
     activeThumb?: number;
     filters: number[];
     index: number;
-    maxMinYears?: number[];
-    thumbPositions: [number, number];
+    maxMinYears: number[];
     value: number;
 };
