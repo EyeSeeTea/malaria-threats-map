@@ -45,7 +45,6 @@ import {
 } from "../../actions/prevention-actions";
 import { getMinMaxYears } from "../../../../domain/entities/Study";
 import { resetDatesRequired } from "../common/utils";
-import { getYearRangeOfDiseaseActions } from "../common/yearRange";
 import { diseaseSwitches } from "../common/diseaseSwitches";
 import { getDiseaseToSelect } from "../common/initialDisease";
 import { selectPreventionStudies, selectPreventionStudiesOfMapTypeFrom } from "../../reducers/prevention-reducer";
@@ -323,6 +322,10 @@ export const resetPreventionFiltersOnDiseaseSwitchEpic = (
         switchMap(([, state]) => of(...getActionsAfterDiseaseSwitch(state)))
     );
 
+/**
+ * The year range of the map when its disease is set or switched, from the studies of that disease, as a
+ * map change computes it: it changes only when the first year changes, so with malaria nothing moves.
+ */
 export const setPreventionYearRangeOfDiseaseEpic = (
     action$: Observable<ActionType<typeof setPreventionDisease>>,
     state$: StateObservable<State>
@@ -331,15 +334,17 @@ export const setPreventionYearRangeOfDiseaseEpic = (
         ofType(ActionTypeEnum.SetPreventionDisease),
         withLatestFrom(state$),
         switchMap(([, state]) => {
-            const diseaseStudies = getYearRangeStudiesByMapType(state, state.prevention.filters.mapType);
+            const studies = getYearRangeStudiesByMapType(state, state.prevention.filters.mapType);
+            const dateResets =
+                studies.length > 0
+                    ? resetDatesRequired({
+                          minMaxYears: () => getMinMaxYears(studies),
+                          theme: "prevention",
+                          state,
+                          filterStart: REQUESTED_VIR_START_DATE,
+                      })
+                    : [];
 
-            return of(
-                ...getYearRangeOfDiseaseActions({
-                    diseaseStudies,
-                    theme: "prevention",
-                    state,
-                    filterStart: REQUESTED_VIR_START_DATE,
-                })
-            );
+            return of(...dateResets);
         })
     );
