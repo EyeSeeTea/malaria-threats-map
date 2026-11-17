@@ -285,7 +285,10 @@ export const setPreventionThemeEpic = (
 
                 const [start, end] = getMinMaxYears(mapTypeStudies);
                 const base: unknown[] = mapTypeStudies?.length
-                    ? [setMaxMinYearsAction([start, end]), setFiltersAction([REQUESTED_VIR_START_DATE, end])]
+                    ? [
+                          setMaxMinYearsAction([start, end]),
+                          setFiltersAction([Math.max(REQUESTED_VIR_START_DATE, start), end]),
+                      ]
                     : [];
 
                 return of(...base, setInsecticideClass(defaultInsecticideClass));
