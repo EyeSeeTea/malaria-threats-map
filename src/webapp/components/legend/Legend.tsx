@@ -17,7 +17,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Trans, useTranslation } from "react-i18next";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Link } from "react-router-dom";
-import { showsAnophelesReportLink } from "../layers/invasive/VectorOccurance/VectorOccuranceFilters";
+import { getThemeDisease, keepsMapBehaviourBeforeDisease } from "../../store/diseaseMapBehaviour";
 
 const StyledButton = styled(Button)`
     color: black;
@@ -69,11 +69,11 @@ const Body = styled.div`
 `;
 
 /**
- * Whether the legend shows the notice below its help: on the diagnosis maps, and on the invasive map
- * while it invites reports of invasive Anopheles species.
+ * Whether the legend shows the notice below its help: on the diagnosis and invasive maps, with the
+ * default disease or while none is set. The diagnosis maps are always on the default disease.
  */
-export function showsLegendNotice(theme: string, invasiveDisease: string | undefined): boolean {
-    return theme === "diagnosis" || (theme === "invasive" && showsAnophelesReportLink(invasiveDisease));
+export function showsLegendNotice(theme: string, themeDisease: string | undefined): boolean {
+    return (theme === "diagnosis" || theme === "invasive") && keepsMapBehaviourBeforeDisease(themeDisease);
 }
 
 const mapStateToProps = (state: State) => ({
@@ -112,6 +112,10 @@ const Legend: React.FC<Props> = ({
     const [mapTypeHelpKey, setMapTypeHelpKey] = React.useState<string>("");
 
     const { t } = useTranslation();
+    const themeDisease = getThemeDisease(theme, {
+        prevention: preventionFilters.disease,
+        invasive: invasiveFilters.disease,
+    });
 
     const WhoManualLink = "https://www.who.int/publications/i/item/9789240051089";
     const NewWhoManualLink = "https://iris.who.int/handle/10665/356964";
@@ -195,7 +199,7 @@ const Legend: React.FC<Props> = ({
                             <Footer>
                                 <Subtitle fontStyle={"italic"}>{t(`${mapTypeHelpKey}.footer`)}</Subtitle>
                             </Footer>
-                            {showsLegendNotice(theme, invasiveFilters.disease) && (
+                            {showsLegendNotice(theme, themeDisease) && (
                                 <Question>
                                     <ErrorOutlineIcon sx={{ color: "#2fb3af" }} />
                                     <span style={{ marginLeft: "6px" }}>
