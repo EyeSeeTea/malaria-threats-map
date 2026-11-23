@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { State } from "../../../store/types";
-import { studiesToGeoJson } from "../layer-utils";
+import { haveFiltersChanged, studiesToGeoJson } from "../layer-utils";
 import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import {
     selectFilters,
@@ -86,22 +86,17 @@ class InvasiveLayer extends Component<Props> {
     componentDidUpdate(prevProps: Props) {
         this.loadStudiesIfRequired();
 
-        const {
-            invasiveFilters: { mapType, vectorSpecies },
-            filters,
-            region,
-        } = this.props;
+        const { invasiveFilters, filters, region } = this.props;
 
         this.mountLayer(prevProps);
         this.renderLayer();
 
         if (this.props.theme !== "invasive") return;
 
-        const mapTypeChange = prevProps.invasiveFilters.mapType !== mapType;
+        const filtersChange = haveFiltersChanged(prevProps.invasiveFilters, invasiveFilters);
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;
-        const speciesChange = prevProps.invasiveFilters.vectorSpecies.length !== vectorSpecies.length;
-        if (mapTypeChange || yearChange || countryChange || speciesChange) {
+        if (filtersChange || yearChange || countryChange) {
             if (this.popup) {
                 this.popup.remove();
             }
