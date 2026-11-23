@@ -1,6 +1,7 @@
 import { InvasiveStudy } from "../InvasiveStudy";
 import { PreventionStudy } from "../PreventionStudy";
 import { Study } from "../Study";
+import { TreatmentStudy } from "../TreatmentStudy";
 import {
     AFRICA,
     BURKINA_FASO,
@@ -134,6 +135,38 @@ const defaultInvasiveStudy: Readonly<InvasiveStudy> = {
 
 export function createPreventionStudy(overrides: Partial<PreventionStudy> = {}): PreventionStudy {
     return { ...defaultPreventionStudy, ...overrides };
+}
+
+const defaultTreatmentStudy: Readonly<TreatmentStudy> = {
+    ...defaultStudy,
+    CITATION_LONG: STUDY_CITATION_LONG,
+    CITATION_URL: STUDY_CITATION_URL,
+    INSTITUTION: "Example institution",
+    INSTITUTION_CITY: STUDY_INSTITUTION_CITY,
+    SITE_NAME: PREVENTION_SITE_NAME,
+    DRUG_NAME: "DHA-PPQ",
+    N: "50",
+    CONFIRMED_RESIST_PV: NOT_AVAILABLE,
+    POSITIVE_DAY_3: 0,
+    TREATMENT_FAILURE_KM: 0,
+    TREATMENT_FAILURE_PP: 0,
+    FOLLOW_UP: "42",
+    PLASMODIUM_SPECIES: "P._FALCIPARUM",
+    DimensionID: 256,
+    K13_CODE: 0,
+    PROVINCE: BURKINA_FASO.COUNTRY_NAME,
+    groupStudies: [],
+    PROPORTION: 0,
+    GENOTYPE: NOT_AVAILABLE,
+    MUT_CAT: NOT_AVAILABLE,
+    MUT_ORDER: NOT_AVAILABLE,
+    PROP_RELATED: 0,
+    Code: 1,
+    HEALTHFACILITY_NAME: PREVENTION_SITE_NAME,
+};
+
+export function createTreatmentStudy(overrides: Partial<TreatmentStudy> = {}): TreatmentStudy {
+    return { ...defaultTreatmentStudy, ...overrides };
 }
 
 export function createInvasiveStudy(overrides: Partial<InvasiveStudy> = {}): InvasiveStudy {
