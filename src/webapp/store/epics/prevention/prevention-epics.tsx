@@ -28,6 +28,7 @@ import {
     logPageViewAction,
     setFiltersAction,
     setMaxMinYearsAction,
+    setSelection,
     setSelectionData,
     setThemeAction,
 } from "../../actions/base-actions";
@@ -311,6 +312,7 @@ export const setInitialPreventionDiseaseEpic = (action$: Observable<AnyAction>, 
         map(disease => setPreventionDisease(disease))
     );
 
+/** On a disease switch, resets the filters and closes the side panel: the selected site may be of the other disease. */
 export const resetPreventionFiltersOnDiseaseSwitchEpic = (
     action$: Observable<ActionType<typeof setPreventionDisease>>,
     state$: StateObservable<State>
@@ -322,7 +324,7 @@ export const resetPreventionFiltersOnDiseaseSwitchEpic = (
         )
     ).pipe(
         withLatestFrom(state$),
-        switchMap(([, state]) => of(...getActionsAfterDiseaseSwitch(state)))
+        switchMap(([, state]) => of(...getActionsAfterDiseaseSwitch(state), setSelection(null)))
     );
 
 /**
