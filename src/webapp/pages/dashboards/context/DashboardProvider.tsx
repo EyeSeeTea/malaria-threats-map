@@ -8,7 +8,10 @@ import { connect } from "react-redux";
 import { selectLastUpdatedDates } from "../../../store/reducers/base-reducer";
 import { TreatmentStudy } from "../../../../domain/entities/TreatmentStudy";
 import { fetchPreventionStudiesRequest } from "../../../store/actions/prevention-actions";
-import { selectPreventionStudiesOfDefaultDisease } from "../../../store/reducers/prevention-reducer";
+import {
+    selectPreventionStudies,
+    selectPreventionStudiesOfDefaultDisease,
+} from "../../../store/reducers/prevention-reducer";
 import { PreventionStudy } from "../../../../domain/entities/PreventionStudy";
 import { LastUpdatedDates } from "../../../../domain/entities/LastUpdateDates";
 import SimpleLoader from "../../../components/SimpleLoader";
@@ -16,9 +19,18 @@ import { useTranslation } from "react-i18next";
 
 export const DashboardContext = React.createContext<DashboardState>(null);
 
+/**
+ * Whether the studies of the dashboards have arrived. Prevention counts every study, whatever its
+ * disease: the dashboards show only the default disease, and with no study of it they must not stay loading.
+ */
+export function selectDashboardStudiesLoaded(state: State): boolean {
+    return selectPreventionStudies(state).length !== 0 && selectTreatmentStudies(state).length !== 0;
+}
+
 const mapStateToProps = (state: State) => ({
     preventionStudies: selectPreventionStudiesOfDefaultDisease(state),
     treatmentStudies: selectTreatmentStudies(state),
+    studiesLoaded: selectDashboardStudiesLoaded(state),
     lastUpdatedDates: selectLastUpdatedDates(state),
 });
 
@@ -35,6 +47,7 @@ const DashboardProvider: React.FC<Props> = ({
     children,
     preventionStudies,
     treatmentStudies,
+    studiesLoaded,
     fetchPreventionStudies,
     fetchTreatmentStudies,
     lastUpdatedDates,
@@ -81,11 +94,7 @@ const DashboardProvider: React.FC<Props> = ({
                 setDashboardsPreventionStudies,
             }}
         >
-            {preventionStudies.length !== 0 && treatmentStudies.length !== 0 ? (
-                children
-            ) : (
-                <SimpleLoader message={t("common.loading")} />
-            )}
+            {studiesLoaded ? children : <SimpleLoader message={t("common.loading")} />}
         </DashboardContext.Provider>
     );
 };

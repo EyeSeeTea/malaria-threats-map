@@ -17,6 +17,7 @@ import {
     setFiltersAction,
     setThemeAction,
     logPageViewAction,
+    setSelection,
     setSelectionData,
     setMaxMinYearsAction,
 } from "../../actions/base-actions";
@@ -126,13 +127,14 @@ export const setInitialInvasiveDiseaseEpic = (action$: Observable<AnyAction>, st
         map(disease => setInvasiveDisease(disease))
     );
 
+/** On a disease switch, empties the species and closes the side panel: the selected site may be of the other disease. */
 export const resetInvasiveFiltersOnDiseaseSwitchEpic = (action$: Observable<ActionType<typeof setInvasiveDisease>>) =>
     diseaseSwitches(
         action$.pipe(
             ofType(ActionTypeEnum.SetInvasiveDisease),
             map(action => action.payload)
         )
-    ).pipe(map(() => setInvasiveVectorSpecies([])));
+    ).pipe(switchMap(() => of(setInvasiveVectorSpecies([]), setSelection(null))));
 
 /**
  * The year range of the map when its disease is set or switched, from the studies of that disease, as

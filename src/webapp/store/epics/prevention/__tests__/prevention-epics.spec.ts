@@ -52,7 +52,7 @@ import {
     createTranslationResponse,
 } from "../../../../types/__fixtures__/translationFixtures";
 import { runEpic } from "../../../__fixtures__/epicFixtures";
-import { setFiltersAction, setMaxMinYearsAction, setThemeAction } from "../../../actions/base-actions";
+import { setFiltersAction, setMaxMinYearsAction, setSelection, setThemeAction } from "../../../actions/base-actions";
 import { DOWNLOAD, MAP, PREVENTION_THEME, YEAR_BEFORE_RANGE } from "../../../__fixtures__/filtersFixtures";
 
 function actionsAfterSetType(types: string[] | undefined) {
@@ -171,6 +171,9 @@ describe("disease epics", () => {
             classStudy(DENGUE, ORGANOPHOSPHATES),
         ]);
 
+        // Every switch also unselects the site: it may be of the other disease.
+        const unselectSite = setSelection(null);
+
         it("empties nothing the first time the disease is set", async () => {
             expect(await actionsAfterDiseases([MALARIA], [statusStudies])).toEqual([]);
         });
@@ -184,6 +187,7 @@ describe("disease epics", () => {
                 expect(await actionsAfterDiseases([MALARIA, DENGUE], [statusStudies])).toEqual([
                     setSynergistTypes([]),
                     setInsecticideClass(PYRETHROIDS),
+                    unselectSite,
                 ]);
             });
 
@@ -197,6 +201,7 @@ describe("disease epics", () => {
                 expect(await actionsAfterDiseases([MALARIA, DENGUE], [studies])).toEqual([
                     setSynergistTypes([]),
                     setInsecticideClass(CARBAMATES),
+                    unselectSite,
                 ]);
             });
         });
@@ -214,6 +219,7 @@ describe("disease epics", () => {
                 expect(await actionsAfterDiseases([MALARIA, DENGUE], [studies, toMechanismMap])).toEqual([
                     setSynergistTypes([]),
                     setType([MONO_OXYGENASES]),
+                    unselectSite,
                 ]);
             });
 
@@ -227,6 +233,7 @@ describe("disease epics", () => {
                 expect(await actionsAfterDiseases([MALARIA, DENGUE], [studies, toMechanismMap])).toEqual([
                     setSynergistTypes([]),
                     setType([ESTERASES]),
+                    unselectSite,
                 ]);
             });
         });
@@ -247,6 +254,7 @@ describe("disease epics", () => {
                     setSynergistTypes([]),
                     setProxyType(ESTERASES),
                     setInsecticideClass(PYRETHROIDS),
+                    unselectSite,
                 ]);
             });
         });
@@ -255,6 +263,7 @@ describe("disease epics", () => {
             expect(await actionsAfterDiseases([MALARIA, DENGUE], [])).toEqual([
                 setSynergistTypes([]),
                 setInsecticideClass(PYRETHROIDS),
+                unselectSite,
             ]);
         });
     });

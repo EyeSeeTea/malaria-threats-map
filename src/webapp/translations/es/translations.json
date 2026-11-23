@@ -501,6 +501,7 @@
                 "other_insecticide_class_label": "Otros insecticidas a los que se detectó resistencia en este sitio:",
                 "other_mechanisms": "Otros mecanismos detectados",
                 "other_insecticide_class_none": "Ninguno",
+                "species": "Especies",
                 "resistance": {
                     "mosquito_mortality": "% de mortalidad en los mosquitos",
                     "number_of_tests": "Número de pruebas"

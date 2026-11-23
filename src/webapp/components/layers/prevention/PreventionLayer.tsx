@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { PreventionMapType, State } from "../../../store/types";
-import { studiesToGeoJson } from "../layer-utils";
+import { haveFiltersChanged, studiesToGeoJson } from "../layer-utils";
 import setupEffects, { updateSelectionAfterFilter } from "../effects";
 import * as R from "ramda";
 import resistanceStatusSymbols from "./ResistanceStatus/symbols";
@@ -113,54 +113,17 @@ class PreventionLayer extends Component<Props> {
     componentDidUpdate(prevProps: Props) {
         this.loadStudiesIfRequired();
 
-        const {
-            preventionFilters: {
-                mapType,
-                insecticideClass,
-                insecticideTypes,
-                type,
-                species,
-                assayTypes,
-                synergistTypes,
-                onlyByHealthMinistries,
-                onlyIncludeBioassaysWithMoreMosquitoes,
-            },
-            filters,
-            region,
-        } = this.props;
+        const { preventionFilters, filters, region } = this.props;
         this.mountLayer(prevProps);
         this.renderLayer();
 
         if (this.props.theme !== "prevention") return;
 
-        const mapTypeChange = prevProps.preventionFilters.mapType !== mapType;
+        const filtersChange = haveFiltersChanged(prevProps.preventionFilters, preventionFilters);
         const yearChange = prevProps.filters[0] !== filters[0] || prevProps.filters[1] !== filters[1];
         const countryChange = prevProps.region !== region;
-        const insecticideChange = prevProps.preventionFilters.insecticideClass !== insecticideClass;
-        const insecticideTypesChange = prevProps.preventionFilters.insecticideTypes.length !== insecticideTypes.length;
-        const typeChange = prevProps.preventionFilters.type !== type;
-        const speciesChange = prevProps.preventionFilters.species.length !== species.length;
-        const assayTypesChange = prevProps.preventionFilters.assayTypes.length !== assayTypes.length;
-        const synergistTypesChange = prevProps.preventionFilters.synergistTypes.length !== synergistTypes.length;
-        const onlyByHealthMinistriesChange =
-            prevProps.preventionFilters.onlyByHealthMinistries !== onlyByHealthMinistries;
-        const onlyIncludeBioassaysWithMoreMosquitoesChange =
-            prevProps.preventionFilters.onlyIncludeBioassaysWithMoreMosquitoes !==
-            onlyIncludeBioassaysWithMoreMosquitoes;
 
-        if (
-            mapTypeChange ||
-            yearChange ||
-            countryChange ||
-            insecticideChange ||
-            insecticideTypesChange ||
-            typeChange ||
-            speciesChange ||
-            assayTypesChange ||
-            synergistTypesChange ||
-            onlyByHealthMinistriesChange ||
-            onlyIncludeBioassaysWithMoreMosquitoesChange
-        ) {
+        if (filtersChange || yearChange || countryChange) {
             if (this.popup) {
                 this.popup.remove();
             }

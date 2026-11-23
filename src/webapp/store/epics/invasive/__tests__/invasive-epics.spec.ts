@@ -18,7 +18,7 @@ import {
 import { DENGUE, MALARIA } from "../../../../../domain/entities/__fixtures__/studyValues";
 import { createStateAfter } from "../../../__fixtures__/stateFixtures";
 import { runEpic } from "../../../__fixtures__/epicFixtures";
-import { setFiltersAction, setMaxMinYearsAction, setThemeAction } from "../../../actions/base-actions";
+import { setFiltersAction, setMaxMinYearsAction, setSelection, setThemeAction } from "../../../actions/base-actions";
 import { DOWNLOAD, INVASIVE_THEME, MAP, YEAR_BEFORE_RANGE } from "../../../__fixtures__/filtersFixtures";
 
 describe("invasive disease epics", () => {
@@ -64,8 +64,11 @@ describe("invasive disease epics", () => {
             expect(await actionsAfterDiseases([MALARIA])).toEqual([]);
         });
 
-        it("empties the vector species on a switch", async () => {
-            expect(await actionsAfterDiseases([MALARIA, DENGUE])).toEqual([setInvasiveVectorSpecies([])]);
+        it("empties the vector species and unselects the site on a switch", async () => {
+            expect(await actionsAfterDiseases([MALARIA, DENGUE])).toEqual([
+                setInvasiveVectorSpecies([]),
+                setSelection(null),
+            ]);
         });
 
         it("empties nothing when the same disease is set again, nor when it is unset", async () => {

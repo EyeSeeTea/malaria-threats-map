@@ -376,7 +376,7 @@ describe("map-actions utils", () => {
         });
     });
 
-    // A disease without an xMART label shows its value, so DENGUE reads DENGUE.
+    // A disease without an xMART label shows its value, so Dengue reads Dengue.
     describe("the disease", () => {
         const everyPreventionMapType = [
             PreventionMapType.RESISTANCE_STATUS,

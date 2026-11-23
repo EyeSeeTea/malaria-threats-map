@@ -7,13 +7,22 @@ import {
     setSpecies,
     setType,
 } from "../actions/prevention-actions";
-import { PreventionMapType } from "../types";
-import { createPreventionStudyOf } from "../../../domain/entities/__fixtures__/studyFixtures";
+import { fetchInvasiveStudiesSuccess, setInvasiveDisease } from "../actions/invasive-actions";
+import { setSelection } from "../actions/base-actions";
+import { PreventionMapType, SiteSelection } from "../types";
+import {
+    createInvasiveStudyOf,
+    createPreventionStudyOf,
+    INVASIVE_SITE_ID,
+    PREVENTION_SITE_ID,
+} from "../../../domain/entities/__fixtures__/studyFixtures";
 import { createTestStoreAfter } from "../__fixtures__/storeFixtures";
 import {
     BIOCHEMICAL_ASSAY,
+    BURKINA_FASO,
     DELTAMETHRIN,
     DENGUE,
+    DJIBOUTI,
     ESTERASES,
     GAMBIAE,
     GSTS,
@@ -78,5 +87,50 @@ describe("a disease switch through the store", () => {
             assayTypes: [MOLECULAR_ASSAY, BIOCHEMICAL_ASSAY, SYNERGIST_ASSAY],
             species: [],
         });
+    });
+});
+
+describe("the selected site on a disease switch", () => {
+    const preventionSite: SiteSelection = {
+        ISO_2_CODE: BURKINA_FASO.ISO2,
+        SITE_ID: PREVENTION_SITE_ID,
+        coordinates: [-4.3, 11.18],
+    };
+    const invasiveSite: SiteSelection = {
+        ISO_2_CODE: DJIBOUTI.ISO2,
+        SITE_ID: INVASIVE_SITE_ID,
+        coordinates: [43.15, 11.59],
+    };
+
+    const preventionStudies = () =>
+        fetchResistanceStatusTypeStudiesSuccess([createPreventionStudyOf(MALARIA), createPreventionStudyOf(DENGUE)]);
+    const invasiveStudies = () =>
+        fetchInvasiveStudiesSuccess([createInvasiveStudyOf(MALARIA), createInvasiveStudyOf(DENGUE)]);
+
+    const selectionOf = (store: ReturnType<typeof createTestStoreAfter>) => {
+        const { selection, selectionData } = store.getState().malaria;
+        return { selection, selectionData };
+    };
+
+    it("is unselected on prevention, so the side panel closes", () => {
+        const store = createTestStoreAfter([
+            preventionStudies(),
+            setPreventionDisease(MALARIA),
+            setSelection(preventionSite),
+            setPreventionDisease(DENGUE),
+        ]);
+
+        expect(selectionOf(store)).toEqual({ selection: null, selectionData: null });
+    });
+
+    it("is unselected on invasive, so the side panel closes", () => {
+        const store = createTestStoreAfter([
+            invasiveStudies(),
+            setInvasiveDisease(MALARIA),
+            setSelection(invasiveSite),
+            setInvasiveDisease(DENGUE),
+        ]);
+
+        expect(selectionOf(store)).toEqual({ selection: null, selectionData: null });
     });
 });
