@@ -2,10 +2,10 @@ import _c from "./generic/Collection";
 import { Study } from "./Study";
 
 /**
- * The disease the maps start with, and the only one the Data Download and Dashboards sections show.
- * Provisional, like the DISEASE field name, until the client confirms the name and the values of the field.
+ * The disease the maps start with, and the only one the Data Download and Dashboards sections show:
+ * the value the xMART views carry in DISEASE for malaria.
  */
-export const defaultDisease = "MALARIA";
+export const defaultDisease = "Malaria";
 
 type DiseaseSource = Pick<Study, "DISEASE">;
 
